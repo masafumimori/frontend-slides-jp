@@ -186,12 +186,14 @@ async function publicHost(url) {
 }
 
 // Strip what can run or reach out from an SVG: scripts, embedded documents, event handlers,
-// and references that are not fragments or inline images.
+// @import, and references that are not fragments or inline images. Style blocks stay:
+// logos often set their fills there.
 function cleanSvg(svg) {
   return svg
-    .replace(/<(script|foreignObject|iframe|object|embed|style)\b[\s\S]*?<\/\1\s*>/gi, '')
-    .replace(/<(script|foreignObject|iframe|object|embed|style)\b[^>]*\/?>/gi, '')
+    .replace(/<(script|foreignObject|iframe|object|embed)\b[\s\S]*?<\/\1\s*>/gi, '')
+    .replace(/<(script|foreignObject|iframe|object|embed)\b[^>]*\/?>/gi, '')
     .replace(/\s+on[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
     .replace(/\s+(xlink:)?href\s*=\s*("(?!#|data:image\/(png|jpe?g|gif|webp);)[^"]*"|'(?!#|data:image\/(png|jpe?g|gif|webp);)[^']*')/gi, '')
+    .replace(/@import[^;]*;?/gi, '')
     .replace(/url\(\s*['"]?(?!#)[^)]*\)/gi, 'none');
 }
