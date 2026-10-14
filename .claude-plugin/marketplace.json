@@ -1,18 +1,26 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "frontend-slides",
-  "description": "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files.",
+  "description": "Japanese-first HTML presentations in styles drawn from Japanese reference decks.",
   "owner": {
-    "name": "zarazhangrui",
-    "url": "https://github.com/zarazhangrui"
+    "name": "masafumimori",
+    "url": "https://github.com/masafumimori"
   },
   "plugins": [
     {
       "name": "frontend-slides",
-      "description": "Zero-dependency HTML presentation generator with safe presets, bold template-library styles, PPT conversion, and anti-AI-slop design philosophy.",
+      "description": "Japanese-first HTML presentation generator: 11 styles drawn from Japanese reference decks, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
       "source": "./plugins/frontend-slides",
       "category": "productivity",
-      "tags": ["presentations", "slides", "html", "design", "powerpoint", "templates"]
+      "tags": [
+        "design",
+        "html",
+        "japanese",
+        "powerpoint",
+        "presentations",
+        "slides",
+        "templates"
+      ]
     }
   ]
 }

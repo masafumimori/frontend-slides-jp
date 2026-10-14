@@ -1,14 +1,24 @@
 {
   "name": "frontend-slides",
-  "version": "2.1.0",
-  "description": "Zero-dependency HTML presentation generator with safe presets, bold template-library styles, PPT conversion, and anti-AI-slop design philosophy.",
+  "version": "3.0.0",
+  "description": "Japanese-first HTML presentation generator: 11 styles drawn from Japanese reference decks, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
   "skills": "./skills/",
   "author": {
     "name": "zarazhangrui",
     "url": "https://github.com/zarazhangrui"
   },
-  "homepage": "https://github.com/zarazhangrui/frontend-slides",
-  "repository": "https://github.com/zarazhangrui/frontend-slides",
+  "homepage": "https://github.com/masafumimori/frontend-slides",
+  "repository": "https://github.com/masafumimori/frontend-slides",
   "license": "MIT",
-  "keywords": ["presentations", "slides", "html", "design", "powerpoint", "animations", "templates"]
+  "keywords": [
+    "animations",
+    "design",
+    "html",
+    "japanese",
+    "powerpoint",
+    "presentations",
+    "slides",
+    "templates",
+    "日本語"
+  ]
 }
