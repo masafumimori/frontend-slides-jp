@@ -2,7 +2,7 @@
 //   node scripts/shoot.mjs <deck.html> --out <dir> [--width 1920] [--phone] [--jpg]
 // --width sets the image width (the stage is always rendered at 1920×1080).
 // --phone renders in a 390×844 viewport instead, to check the stage scales as a whole.
-// Prints page errors and the families that loaded. Needs Playwright:
+// Prints page errors, console warnings and the families that loaded. Needs Playwright:
 //   PLAYWRIGHT_MODULE=/path/to/node_modules/playwright/index.mjs
 
 import { mkdirSync } from 'node:fs';
@@ -26,6 +26,8 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport, deviceScaleFactor: scale, reducedMotion: 'reduce' });
 const errors = [];
 page.on('pageerror', e => errors.push(String(e)));
+const warnings = [];
+page.on('console', m => { if (['warning', 'error'].includes(m.type())) warnings.push(m.text()); });
 await page.goto('file://' + resolve(deck), { waitUntil: 'networkidle' });
 await page.evaluate(() => document.fonts.ready);
 
@@ -43,4 +45,4 @@ for (let i = 0; i < count; i++) {
 }
 const fonts = await page.evaluate(() => [...new Set([...document.fonts].filter(f => f.status === 'loaded').map(f => f.family))]);
 await browser.close();
-console.log(JSON.stringify({ slides: count, errors, fonts, out }));
+console.log(JSON.stringify({ slides: count, errors, warnings, fonts, out }));

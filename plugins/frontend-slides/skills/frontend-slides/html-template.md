@@ -202,6 +202,7 @@ CSS (visibility controlled by JS classes only):
     cursor: pointer;
 }
 .edit-toggle {
+    position: fixed; top: 16px; left: 16px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
