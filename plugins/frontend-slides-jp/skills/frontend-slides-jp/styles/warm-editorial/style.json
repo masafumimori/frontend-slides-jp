@@ -16,7 +16,8 @@
   "best_for": "BtoC のブランドブック、食品・生活雑貨の商品紹介、採用ピッチのカルチャー章、イベント告知",
   "avoid_for": "決算説明、行政・公共の資料、表や数字が密に並ぶ資料",
   "formats": [
-    "slide-16x9"
+    "slide-16x9",
+    "doc-a4"
   ],
   "writing": "horizontal",
   "needs": [],

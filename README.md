@@ -1,13 +1,13 @@
 # Frontend Slides JP
 
-日本語のプレゼン資料と A4 縦の冊子を、1枚の HTML ファイルとして作る AI エージェント用のスキルです。日本で評価の高い会社紹介・採用ピッチ・決算資料・統合報告書を調べて作った 12 のスタイルから選べます。自社のデザインシステムを渡して、その見た目で作ることもできます。
+日本語のプレゼン資料と A4 縦の冊子を、1枚の HTML ファイルとして作る AI エージェント用のスキルです。日本で評価の高い会社紹介・採用ピッチ・決算資料・統合報告書を調べて作った 15 のスタイルから選べます。自社のデザインシステムを渡して、その見た目で作ることもできます。
 
 [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) のフォークです。元のスキルと区別するため、リポジトリ・プラグイン・スキルの名前はすべて `frontend-slides-jp` にしています。元のスキルと同時に入れても名前はぶつかりません。元のスキルの考え方（AI が作りがちな凡庸なデザインを避ける、選ぶ前に見せる、1920×1080 の固定ステージ）はそのまま引き継いでいます。
 
 ## できること
 
 - **新しく作る。** 目的・枚数・内容・密度を聞いたうえで、スタイルの試作を 3 枚見せ、選んだスタイルでデッキ全体を作ります。
-- **A4 縦の冊子を作る。** 統合報告書・会社案内・ホワイトペーパーのような読ませる資料を、A4 のページを縦に積んだ HTML として作ります。画面ではスクロールで読み、印刷や PDF では 1 ページが A4 1 枚になります。ページの型（表紙、目次、メッセージ、数字のページなど）と、柱・ノンブル・章タブの組み方は `references/document-pages.md` にあります。
+- **A4 縦の冊子を作る。** 統合報告書・会社案内・行政の計画書・社内報告書・採用案内・ホワイトペーパーのような読ませる資料を、A4 のページを縦に積んだ HTML として作ります。画面ではスクロールで読み、印刷や PDF では 1 ページが A4 1 枚になります。ページの型（表紙、目次、メッセージ、数字のページなど）と、柱・ノンブル・章タブの組み方は `references/document-pages.md` にあります。
 - **PowerPoint を変換する。** `.pptx` から文章・画像・ノートを取り出し、選んだスタイルで作り直します。
 - **既存の HTML を直す。** はみ出しや重なりを確かめながら、内容を足したり分けたりします。
 - **共有する。** Vercel で URL を発行するか、PDF に書き出します。
@@ -28,8 +28,20 @@
 | ![](docs/images/swiss-grid.jpg) | **スイス・タイポグリッド** `swiss-grid` | デザイン・建築・文化イベント |
 | ![](docs/images/color-index.jpg) | **章色インデックス** `color-index` | 中期経営計画、複数事業の会社案内 |
 | <img src="docs/images/whitepaper.jpg" width="120"> | **ホワイトペーパー実務型** `whitepaper` | 調査レポート、導入ガイド、リード獲得資料（A4 冊子のみ） |
+| <img src="docs/images/office-report.jpg" width="120"> | **社内報告書** `office-report` | 社内報告、稟議の添付、提案書（A4 冊子のみ） |
+| <img src="docs/images/recruit-guide.jpg" width="120"> | **採用案内** `recruit-guide` | 新卒・中途の採用案内（写真が必要、A4 冊子のみ） |
+| <img src="docs/images/infographic.jpg" width="120"> | **インフォグラフィック** `infographic` | 図解の会社案内、広報誌、「数字で見る」冊子（A4 冊子のみ） |
 
-A4 縦の冊子は、いま `corporate-mono`・`color-index`・`whitepaper` の 3 スタイルで作れます。
+A4 縦の冊子は、明るい地の 10 スタイルで作れます。
+
+- 統合報告書：`corporate-mono`・`photo-editorial`
+- 会社案内：`color-index`・`warm-editorial`・`tategumi-editorial`（縦組み）・`infographic`
+- 行政文書：`public-standard`
+- 社内報告：`office-report`
+- 採用案内：`recruit-guide`
+- 調査レポート：`whitepaper`
+
+`dark-keynote`・`gate-gradient`・`geometric-blue`・`talk-one-message`・`swiss-grid` は投影向けのため、16:9 だけです。
 
 全スタイルは `plugins/frontend-slides-jp/skills/frontend-slides-jp/styles/gallery.html` で一覧できます。用途ごとに並び、明暗・格式・写真の要否で絞り込めます。各スタイルの `reference.html` をブラウザで開くと、4 枚の見本を矢印キーで送れます。
 

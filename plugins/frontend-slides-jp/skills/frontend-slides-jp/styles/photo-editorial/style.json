@@ -13,10 +13,11 @@
   "formality": "high",
   "density": "medium",
   "scheme": "light",
-  "best_for": "統合報告書、ブランドブック、企業の思想を語る資料、採用ピッチの現場紹介",
+  "best_for": "統合報告書（スライド・A4冊子）、ブランドブック、企業の思想を語る資料、採用ピッチの現場紹介",
   "avoid_for": "写真素材が用意できない案件、SaaS の機能説明、図表中心の社内報告",
   "formats": [
-    "slide-16x9"
+    "slide-16x9",
+    "doc-a4"
   ],
   "writing": "horizontal",
   "needs": [

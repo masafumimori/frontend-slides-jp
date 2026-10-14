@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>槙野打刃物製作所 創業百七十年記念誌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@200;300;400;500;600;700;800;900&display=swap">
+<style>
+/* === PAGE BASE: page-base.css, pasted in full === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS: the 16:9 tokens, plus the desk and the page frame === */
+:root {
+  --paper: #F2EEE5;
+  --sumi: #1D1C1A;
+  --ai: #24466B;
+  --sumi-60: rgba(29, 28, 26, .62);
+  --sumi-35: rgba(29, 28, 26, .35);
+  --sumi-10: rgba(29, 28, 26, .10);
+  --rule: rgba(29, 28, 26, .22);
+  --ai-30: #BCC6D1;
+  --ai-55: #8297AE;
+  --desk-bg: #D8D2C6;
+  --page-bg: var(--paper);
+  --mincho: "Noto Serif JP", serif;
+  --latin: "EB Garamond", "Noto Serif JP", serif;
+  /* 版面: 天150・地150・小口(左)128・ノド(右)96。2段組、1段30字×17行、段間46 */
+  --dan: 704px;
+  --dan-gap: 46px;
+}
+
+.page {
+  color: var(--sumi);
+  font-family: var(--mincho);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Vertical runs use the base .tate (vertical-rl + vpal). .v places a run absolutely. */
+.v { position: absolute; margin: 0; }
+.tate > * { margin: 0; }
+.tcy { text-combine-upright: all; font-feature-settings: normal; }
+.lat { font-family: var(--latin); font-variant-numeric: lining-nums; font-feature-settings: "lnum"; }
+.cap {
+  font-family: var(--latin); font-size: 17px; letter-spacing: .22em; text-transform: uppercase; color: var(--sumi-60);
+}
+.page .cap.v { writing-mode: vertical-rl; right: 96px; top: 150px; line-height: 1; }
+
+/* === PAGE FRAME ===
+   Every page is set as the odd (left) page of a right-bound vertical book:
+   the 小口 (fore-edge) is the left edge, so 柱, ノンブル and 爪 all sit in
+   the 128px left margin and reading starts clear of them at the right. */
+.hashira {
+  position: absolute; left: 54px; top: 150px;
+  font-size: 19px; letter-spacing: .12em; line-height: 1; color: var(--sumi-60);
+}
+.hashira b { font-weight: 500; color: var(--sumi); }
+.nombre {
+  position: absolute; left: 48px; bottom: 64px; width: 30px; text-align: center;
+  font-family: var(--latin); font-size: 22px; line-height: 1; color: var(--sumi-60);
+  font-feature-settings: "lnum";
+}
+.nombre::before { content: ""; display: block; width: 1px; height: 48px; background: var(--rule); margin: 0 auto 14px; }
+/* 爪 (thumb index): one step lower per chapter, as in a bound book's fore-edge */
+.tsume {
+  position: absolute; left: 0; width: 36px; height: 190px;
+  top: calc(600px + (var(--ch) - 1) * 190px);
+  background: var(--sumi); color: var(--paper);
+  box-sizing: border-box; padding-top: 22px;
+  display: flex; justify-content: center;
+}
+.tsume span { font-size: 17px; font-weight: 500; letter-spacing: .1em; line-height: 1; }
+
+/* Shared vertical text roles (two-class selectors beat the base line-heights) */
+.page .h-std { font-size: 60px; font-weight: 600; line-height: 1.5; letter-spacing: .02em; }
+.page .h-std em, .page .ai { font-style: normal; color: var(--ai); }
+.page .lead { font-size: 25px; line-height: 2; letter-spacing: .03em; }
+.page .rule-v { position: absolute; width: 1px; background: var(--rule); }
+.page .rule-h { position: absolute; height: 1px; left: 128px; right: 96px; background: var(--rule); }
+
+/* 本文: ベタ組み 23px、1段30字。vpal を切って字送りを揃え、両端揃え・1字下げ */
+.page .honbun { font-size: 23px; line-height: 1.8; letter-spacing: .02em; font-feature-settings: normal; }
+.page .honbun p { text-indent: 1em; }
+/* 全角の略語は正立する。行末で割れないよう nowrap */
+.abbr { white-space: nowrap; }
+
+/* ---------- 1 表紙 ---------- */
+.cover .title { right: 120px; top: 180px; font-size: 128px; font-weight: 600; line-height: 1.42; letter-spacing: .02em; }
+.cover .rule-v { right: 690px; top: 196px; height: 640px; }
+.cover .lead { right: 730px; top: 190px; height: 680px; font-size: 27px; line-height: 2.05; letter-spacing: .04em; }
+.cover .span {
+  position: absolute; left: 120px; top: 1110px;
+  font-family: var(--latin); font-weight: 400; font-size: 168px; line-height: .9; letter-spacing: -.01em;
+  font-feature-settings: "lnum";
+}
+.cover .span .to { display: block; width: 92px; height: 1px; background: var(--sumi); margin: 40px 0 36px 6px; }
+.cover .span .now { color: var(--ai); }
+.cover .span small { display: block; font-size: 22px; letter-spacing: .2em; color: var(--sumi-60); margin-top: 22px; text-transform: uppercase; }
+.cover .maker { position: absolute; left: 120px; bottom: 104px; display: flex; align-items: flex-end; gap: 26px; }
+.cover .mark {
+  width: 64px; height: 64px; box-sizing: border-box; border: 1.5px solid var(--ai); color: var(--ai);
+  display: grid; place-items: center; font-size: 36px; font-weight: 600; line-height: 1;
+}
+.cover .maker .nm { font-size: 30px; font-weight: 600; letter-spacing: .04em; line-height: 1.3; }
+.cover .maker .nm span { display: block; font-size: 18px; font-weight: 400; color: var(--sumi-60); letter-spacing: .03em; margin-top: 6px; }
+.cover .meta { position: absolute; right: 120px; bottom: 104px; text-align: right; color: var(--sumi-60); }
+.cover .meta p { margin: 0; font-size: 20px; letter-spacing: .04em; line-height: 1.7; text-align: right; }
+.cover .meta p.fic { font-size: 17px; }
+
+/* ---------- 2 理念 ---------- */
+.p-rinen .label { right: 132px; top: 150px; font-size: 26px; font-weight: 600; line-height: 1; letter-spacing: .12em; color: var(--sumi-60); }
+.p-rinen .shaze { right: 196px; top: 150px; font-size: 88px; font-weight: 600; line-height: 1.5; letter-spacing: .02em; }
+.p-rinen .shaze em { font-style: normal; color: var(--ai); }
+.p-rinen .rule-v { right: 632px; top: 156px; height: 600px; }
+.p-rinen .yurai { right: 672px; top: 156px; color: var(--sumi-60); }
+.p-rinen .rule-h { top: 877px; }
+.p-rinen .label2 { right: 96px; top: 924px; font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: .06em; }
+.p-rinen .kime { position: absolute; right: 172px; top: 900px; height: 704px; display: flex; flex-direction: row-reverse; }
+.p-rinen .item { width: 290px; height: 704px; border-right: 1px solid var(--rule); box-sizing: border-box; padding: 24px 28px 0 0; display: flex; justify-content: flex-end; }
+.p-rinen .item:last-child { border-left: 1px solid var(--rule); }
+.p-rinen .item .tate { height: 660px; }
+.p-rinen .num { font-size: 32px; font-weight: 500; line-height: 1; margin-left: 20px !important; }
+.p-rinen .ttl { font-size: 40px; font-weight: 600; line-height: 1.35; letter-spacing: .02em; margin-left: 18px !important; }
+.p-rinen .sub { font-size: 22px; line-height: 1.85; letter-spacing: .03em; color: var(--sumi-60); }
+
+/* ---------- 3 ごあいさつ ---------- */
+.p-msg .head { right: 132px; top: 150px; }
+.p-msg .lead { right: 96px; top: 900px; }
+.p-msg .who { right: 274px; top: 900px; }
+.p-msg .who .role { font-size: 18px; line-height: 1.7; letter-spacing: .06em; color: var(--sumi-60); }
+.p-msg .who .name { font-size: 30px; font-weight: 600; line-height: 1.4; letter-spacing: .12em; margin-top: 0; }
+.p-msg .rule-v { right: 374px; top: 150px; height: 1454px; }
+.p-msg .body {
+  position: absolute; right: 398px; top: 150px;
+  width: 704px; height: calc(2 * var(--dan) + var(--dan-gap));
+  column-count: 2; column-gap: var(--dan-gap); column-fill: auto;
+}
+.p-msg .sign { text-align: end; margin-top: 0; }
+.p-msg .sign .date { font-size: 23px; color: var(--sumi-60); }
+.p-msg .sign .nm { font-size: 28px; font-weight: 600; letter-spacing: .16em; }
+.p-msg .body p.sign { text-indent: 0; }
+
+/* ---------- 4 沿革: 2段の縦の年表 ---------- */
+.p-hist .head { right: 132px; top: 150px; font-size: 56px; }
+.p-hist .lead { right: 96px; top: 900px; }
+.p-hist .rule-v { right: 334px; top: 150px; height: 1454px; }
+.p-hist .tier { position: absolute; right: 358px; width: 752px; height: var(--dan); display: flex; flex-direction: row-reverse; }
+.p-hist .tier.t1 { top: 150px; }
+.p-hist .tier.t2 { top: 900px; }
+.p-hist .axis { position: absolute; left: 0; right: 0; top: 44px; height: 1px; background: var(--sumi); }
+.p-hist .ev { position: relative; width: 188px; height: var(--dan); border-right: 1px solid var(--rule); box-sizing: border-box; }
+.p-hist .ev:last-child { border-left: 1px solid var(--rule); }
+.p-hist .yr {
+  position: absolute; right: 14px; top: 8px;
+  font-family: var(--latin); font-size: 24px; line-height: 1; font-feature-settings: "lnum"; color: var(--sumi-60);
+}
+.p-hist .ev.chg .yr { color: var(--sumi); font-weight: 500; }
+.p-hist .ev.chg::before {
+  content: ""; position: absolute; right: -6px; top: 39px; width: 11px; height: 11px; background: var(--ai);
+}
+.p-hist .ev .tate { position: absolute; right: 16px; top: 76px; height: 610px; }
+.p-hist .era { font-size: 22px; font-weight: 500; line-height: 1.6; letter-spacing: .04em; color: var(--sumi-60); margin-left: 10px !important; }
+.p-hist .ttl { font-size: 30px; font-weight: 600; line-height: 1.4; letter-spacing: .02em; margin-left: 10px !important; }
+.p-hist .ev.chg .ttl { color: var(--ai); }
+.p-hist .sub { font-size: 20px; line-height: 1.85; letter-spacing: .03em; color: var(--sumi-60); }
+/* 小さな出来事: 主な出来事の下、1px の罫のあとに年と1行 */
+.p-hist .ev .minor { top: 452px; height: 250px; }
+.p-hist .ev .minor::before { content: ""; position: absolute; right: 0; top: -26px; width: 28px; height: 1px; background: var(--rule); }
+.p-hist .minor p { font-size: 20px; line-height: 1.85; letter-spacing: .03em; color: var(--sumi-60); }
+.p-hist .minor .y { color: var(--sumi); }
+
+/* ---------- 5 図: 縦の結論＋横組みのデータの島 ---------- */
+.p-fig .head { right: 132px; top: 150px; font-size: 64px; line-height: 1.45; }
+.p-fig .lead { right: 444px; top: 156px; }
+.p-fig .rule-v { right: 636px; top: 156px; height: 690px; }
+.p-fig .body { right: 660px; top: 150px; width: 414px; height: var(--dan); }
+.p-fig .rule-h { top: 877px; }
+.island { position: absolute; left: 128px; right: 96px; top: 900px; }
+.island .lbl, .island .chart-h, .island .note, .island td, .island th { font-feature-settings: "palt"; }
+.p-fig .kpis { display: flex; align-items: flex-end; border-bottom: 1px solid var(--sumi); padding-bottom: 26px; }
+.p-fig .kpi { padding-right: 52px; }
+.p-fig .kpi + .kpi { padding-left: 44px; border-left: 1px solid var(--rule); }
+.p-fig .kpi .lbl { font-size: 20px; color: var(--sumi-60); letter-spacing: .03em; margin-bottom: 12px; }
+.p-fig .kpi .n { font-family: var(--latin); font-feature-settings: "lnum"; font-weight: 500; line-height: .82; white-space: nowrap; }
+.p-fig .kpi .n small { font-family: var(--mincho); font-weight: 600; margin-left: 6px; }
+.p-fig .kpi.big .n { font-size: 176px; color: var(--ai); letter-spacing: -.02em; }
+.p-fig .kpi.big .n small { font-size: 50px; }
+.p-fig .kpi.sm .n { font-size: 76px; }
+.p-fig .kpi.sm .n small { font-size: 24px; }
+.island .chart-h { display: flex; justify-content: space-between; align-items: baseline; margin: 36px 0 4px; font-size: 21px; }
+.island .chart-h span { color: var(--sumi-60); font-size: 18px; }
+.page .island-note { position: absolute; left: 128px; right: 96px; bottom: 116px; margin: 0; font-size: 17px; line-height: 1.7; color: var(--sumi-60); text-align: left; }
+
+/* d-stacked-100, fitted: years and percentages in EB Garamond, shades of ai, no bold */
+#d-stacked-100 {
+  --d-paper: var(--paper); --d-ink: var(--sumi); --d-sub: var(--sumi-60); --d-rule: var(--rule);
+  --d-accent: var(--ai); --d-s1: var(--ai-55); --d-s2: var(--ai-30); --d-s3: var(--sumi-10);
+  --font-jp: var(--mincho); --font-latin: var(--latin);
+  width: 1016px; height: 400px;
+}
+/* BEGIN d-stacked-100 */
+#d-stacked-100 svg { width: 100%; height: 100%; display: block; }
+#d-stacked-100 .seg { stroke: var(--d-paper); stroke-width: 3; }
+#d-stacked-100 .sw { stroke: none; }
+#d-stacked-100 .s0 { fill: var(--d-accent); }
+#d-stacked-100 .s1 { fill: var(--d-s1); }
+#d-stacked-100 .s2 { fill: var(--d-s2); }
+#d-stacked-100 .s3 { fill: var(--d-s3); }
+#d-stacked-100 .pct { font: 500 22px var(--font-latin); text-anchor: middle; dominant-baseline: central; fill: var(--d-ink); }
+#d-stacked-100 .pct.on-dark { fill: var(--d-ink); }
+#d-stacked-100 .pct.is-accent { font-weight: 500; fill: var(--d-paper); }
+#d-stacked-100 .row { font: 400 22px var(--font-latin); fill: var(--d-sub); text-anchor: end; dominant-baseline: central; }
+#d-stacked-100 .row.last { fill: var(--d-ink); }
+#d-stacked-100 .key { font: 400 20px var(--font-jp); fill: var(--d-ink); dominant-baseline: central; }
+#d-stacked-100 .grid { stroke: var(--d-rule); stroke-width: 1; }
+#d-stacked-100 .tick { font: 400 17px var(--font-latin); fill: var(--d-sub); text-anchor: middle; }
+/* END d-stacked-100 */
+
+/* ---------- 6 会社概要 ---------- */
+.p-data .head { right: 132px; top: 150px; font-size: 84px; line-height: 1; letter-spacing: .02em; font-weight: 600; }
+.p-data .lead { right: 252px; top: 156px; }
+.p-data .rule-v { right: 384px; top: 156px; height: 690px; }
+.p-data .sites { position: absolute; right: 408px; top: 150px; height: var(--dan); display: flex; flex-direction: row-reverse; }
+.p-data .site { width: 176px; height: var(--dan); border-right: 1px solid var(--rule); box-sizing: border-box; padding: 20px 28px 0 0; display: flex; justify-content: flex-end; }
+.p-data .site:last-child { border-left: 1px solid var(--rule); }
+.p-data .site .tate { height: 660px; }
+.p-data .site .nm { font-size: 34px; font-weight: 600; line-height: 1.4; letter-spacing: .04em; margin-left: 16px !important; }
+.p-data .site .sub { font-size: 22px; line-height: 1.9; letter-spacing: .03em; color: var(--sumi-60); }
+.p-data .site.chg .nm { color: var(--ai); }
+.p-data table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--sumi); }
+.p-data th, .p-data td { text-align: left; vertical-align: baseline; padding: 9px 12px 8px; border-bottom: 1px solid var(--rule); line-height: 1.6; letter-spacing: .02em; }
+.p-data th { width: 200px; font-size: 20px; font-weight: 400; color: var(--sumi-60); }
+.p-data td { font-size: 21px; }
+.p-data td .lat { font-size: 23px; }
+.p-data tr.chg td { color: var(--ai); }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- 1 表紙 -->
+<section class="page cover">
+  <h1 class="tate v title">百七十年、<br>同じ火床で<br><span class="ai">打ちつづける。</span></h1>
+  <div class="rule-v"></div>
+  <p class="tate v lead">安政三年に鍛冶町の外れで創業した槙野打刃物は、<br>今年、創業百七十年を迎えました。<br>包丁と鋏の、これまでとこれからの記録です。</p>
+  <div class="span">1856<span class="to"></span><span class="now">2026</span><small>170th anniversary</small></div>
+  <div class="maker">
+    <div class="mark">槙</div>
+    <div class="nm">株式会社 槙野打刃物製作所<span>創業百七十年記念誌</span></div>
+  </div>
+  <div class="meta">
+    <p>二〇二六年十月　発行</p>
+    <p class="fic">本誌の社名・人物・数値はすべて架空です</p>
+  </div>
+</section>
+
+<!-- 2 理念 -->
+<section class="page p-rinen">
+  <div class="tate hashira">槙野打刃物　創業百七十年誌　<b>一　理念</b></div>
+  <div class="tsume tate" style="--ch:1"><span>一　理念</span></div>
+  <div class="nombre">02</div>
+  <div class="cap v">Philosophy</div>
+  <h3 class="tate v label">社是</h3>
+  <h2 class="tate v shaze">よく切れて、<br><em>永く研げる</em><br>刃物をつくる。</h2>
+  <div class="rule-v"></div>
+  <p class="tate v lead yurai">社是は四代目の槙野宗吉が、<br>昭和<span class="tcy">23</span>年の株式会社化に際して定めました。<br>切れ味は買った日にわかり、研げるかどうかは<br>十年後にわかる。その両方を約束する言葉です。</p>
+  <div class="rule-h"></div>
+  <h3 class="tate v label2">三つの決めごと</h3>
+  <div class="kime">
+    <div class="item">
+      <div class="tate"><div class="num">一</div><p class="ttl">鋼は、自分の<br>火床で鍛える</p><p class="sub">地金と鋼の鍛接は外に出さない。<br>焼き入れの温度は火の色で決める。</p></div>
+    </div>
+    <div class="item">
+      <div class="tate"><div class="num">二</div><p class="ttl">研ぎ直しは、<br>何本でも受ける</p><p class="sub">よその刃物も断らない。<br>研ぎ減りは、刃物の履歴と考える。</p></div>
+    </div>
+    <div class="item">
+      <div class="tate"><div class="num">三</div><p class="ttl">銘は、柄の<br>内側に刻む</p><p class="sub">名は目立たせず、柄に隠して残す。<br>使う人の手を、刃物の主役にする。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ごあいさつ -->
+<section class="page p-msg">
+  <div class="tate hashira">槙野打刃物　創業百七十年誌　<b>二　ごあいさつ</b></div>
+  <div class="tsume tate" style="--ch:2"><span>二　ごあいさつ</span></div>
+  <div class="nombre">03</div>
+  <div class="cap v">Message</div>
+  <h2 class="tate v h-std head">研ぎ減りした分だけ、<br>刃物は手になじむ。</h2>
+  <p class="tate v lead">七代目の当主が、百七十年の仕事と、<br>研ぎ直しに戻ってくる刃物から学んだこと、<br>そしてこれからの工房について語ります。</p>
+  <div class="tate v who"><p class="role">七代目当主　代表取締役社長</p><p class="name">槙野 宗一郎</p></div>
+  <div class="rule-v"></div>
+  <div class="tate body honbun">
+    <p>槙野打刃物は、安政三年に初代の槙野半兵衛が鍛冶町の外れに火床を構えたことに始まります。最初に打ったのは鎌と鍬でした。包丁を打つようになったのは三代目の明治<span class="tcy">22</span>年、料理人のための和包丁に絞ったのは私の祖父の代、昭和<span class="tcy">47</span>年のことです。つくるものは百七十年のあいだに三度かわりましたが、火床の火は一度も絶やしていません。</p>
+    <p>当主を継いで十二年になります。この間にいちばん驚いたのは、研ぎ直しに戻ってくる包丁の多さです。昨年は一万二千本を超え、そのうち三本に一本は海外の料理人からの預かりものでした。刃が指一本ぶん細くなった柳刃を、三十年使ったと言って差し出されたとき、私たちの仕事は売った日に終わるのではなく、そこから始まるのだと教えられました。</p>
+    <p>研ぎ減りした分だけ、刃物は手になじみます。だから私たちは、よく切れることと同じだけ、永く研げることを大切にしてきました。鋼を自分の火床で鍛え、焼き入れの温度を火の色で見極めるのも、何十年も先の研ぎに耐える刃を残すためです。</p>
+    <p>創業百七十年を迎える今年、本社工房の隣に第三工房を建てました。鍛造から研ぎまでの工程をガラス越しに見られるようにし、研ぎ直しの受付も工房の中に移します。職人は<span class="tcy">21</span>人から<span class="tcy">28</span>人に増やし、技を一人に寄せない体制をつくります。</p>
+    <p>百七十年のあいだには、火床を閉じかけた年もありました。平成の初めに家庭用の量産品が安く出回り、注文が半分に減ったとき、父は機械を入れる代わりに、研ぎ直しの窓口を開くことを選びました。売る本数が減っても、預かる本数が増えれば工房は続く。その判断が、いまの仕事の芯になっています。</p>
+    <p>次の百年も、同じ火床で打ちつづけます。これまで槙野の刃物を使い、研ぎに預けてくださった皆さまに、心から御礼を申し上げます。</p>
+    <p class="sign"><span class="date">二〇二六年十月</span><br><span class="nm">槙野宗一郎</span></p>
+  </div>
+</section>
+
+<!-- 4 沿革 -->
+<section class="page p-hist">
+  <div class="tate hashira">槙野打刃物　創業百七十年誌　<b>三　沿革</b></div>
+  <div class="tsume tate" style="--ch:3"><span>三　沿革</span></div>
+  <div class="nombre">04</div>
+  <div class="cap v">History</div>
+  <h2 class="tate v h-std head">つくる刃物は、<br>百七十年で<em>三度</em>かわった。</h2>
+  <p class="tate v lead">鎌と鍬から台所の包丁へ、家庭から料理人へ、<br>そして国内から海外の料理人へ。<br>藍の印は、つくるものがかわった年です。</p>
+  <div class="rule-v"></div>
+  <div class="tier t1">
+    <div class="axis"></div>
+    <div class="ev">
+      <span class="yr">1856</span>
+      <div class="tate"><p class="era">安政三年</p><p class="ttl">創業</p><p class="sub">初代槙野半兵衛が火床を構え、<br>鎌と鍬を打ちはじめる。</p></div>
+      <div class="tate v minor"><p class="y">文久二年</p><p>二基目の火床を据える。</p></div>
+    </div>
+    <div class="ev chg">
+      <span class="yr">1889</span>
+      <div class="tate"><p class="era">明治<span class="tcy">22</span>年</p><p class="ttl">包丁を打つ</p><p class="sub">三代目が菜切りと出刃を打ち、<br>農具から台所の刃物へ移る。</p></div>
+      <div class="tate v minor"><p class="y">明治<span class="tcy">37</span>年</p><p>大阪の問屋と<br>取引を始める。</p></div>
+    </div>
+    <div class="ev">
+      <span class="yr">1923</span>
+      <div class="tate"><p class="era">大正<span class="tcy">12</span>年</p><p class="ttl">鋏の工房を開く</p><p class="sub">裁ち鋏と植木鋏の注文を受け、<br>鋏の職人を三人迎える。</p></div>
+      <div class="tate v minor"><p class="y">昭和<span class="tcy">10</span>年</p><p>裁ち鋏が博覧会で<br>銅賞を受ける。</p></div>
+    </div>
+    <div class="ev">
+      <span class="yr">1948</span>
+      <div class="tate"><p class="era">昭和<span class="tcy">23</span>年</p><p class="ttl">株式会社となる</p><p class="sub">四代目槙野宗吉が社是を定め、<br>株式会社槙野打刃物製作所に。</p></div>
+      <div class="tate v minor"><p class="y">昭和<span class="tcy">39</span>年</p><p>本社工房を建て替える。</p></div>
+    </div>
+  </div>
+  <div class="tier t2">
+    <div class="axis"></div>
+    <div class="ev chg">
+      <span class="yr">1972</span>
+      <div class="tate"><p class="era">昭和<span class="tcy">47</span>年</p><p class="ttl">料理人の包丁へ</p><p class="sub">五代目が家庭用の量産をやめ、<br>柳刃・出刃・薄刃に絞る。</p></div>
+      <div class="tate v minor"><p class="y">昭和<span class="tcy">58</span>年</p><p>六代目が継ぐ。</p></div>
+    </div>
+    <div class="ev">
+      <span class="yr">1995</span>
+      <div class="tate"><p class="era">平成七年</p><p class="ttl">研ぎ直しの窓口</p><p class="sub">よその刃物も含めて、<br>研ぎ直しを一本から受ける。</p></div>
+      <div class="tate v minor"><p class="y">平成<span class="tcy">16</span>年</p><p>研ぎ場を<br>本社の隣に移す。</p></div>
+    </div>
+    <div class="ev chg">
+      <span class="yr">2014</span>
+      <div class="tate"><p class="era">平成<span class="tcy">26</span>年</p><p class="ttl">海外の料理人へ</p><p class="sub">七代目が継ぎ、欧州と北米の<br>料理店へ直接卸しはじめる。</p></div>
+      <div class="tate v minor"><p class="y">平成<span class="tcy">30</span>年</p><p>取引が<span class="tcy">20</span>か国・<br>地域を超える。</p></div>
+    </div>
+    <div class="ev">
+      <span class="yr">2026</span>
+      <div class="tate"><p class="era">令和八年</p><p class="ttl">創業百七十年</p><p class="sub">本社工房の隣に第三工房を建て、<br>鍛造から研ぎまでを見学に開く。</p></div>
+      <div class="tate v minor"><p class="y">令和<span class="tcy">10</span>年</p><p>職人を<span class="tcy">28</span>人に<br>増やす（予定）。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 図 -->
+<section class="page p-fig">
+  <div class="tate hashira">槙野打刃物　創業百七十年誌　<b>四　いまの仕事</b></div>
+  <div class="tsume tate" style="--ch:4"><span>四　いまの仕事</span></div>
+  <div class="nombre">05</div>
+  <div class="cap v">Business today</div>
+  <h2 class="tate v h-std head">売上の四割を、<br><em>海外の料理人</em>が<br>占めるようになった。</h2>
+  <p class="tate v lead">二〇〇五年度に三パーセントだった海外向けは、<br>二〇二五年度に<span class="tcy">41</span>パーセントになった。<br>国内の料理人向けも、三割近くを保っている。</p>
+  <div class="rule-v"></div>
+  <div class="tate v body honbun">
+    <p>伸びたのは、刃物を一本ずつ売る取引ではなく、研ぎ直しまで任される取引です。欧州と北米の料理店には、包丁と一緒に研ぎの預かり袋を納め、年に二回、工房で研いでから送り返しています。<span class="abbr">ＥＵ</span>向けの出荷は二〇二五年度で全体の四分の一を占め、研ぎ直しの受付本数も十年で倍になりました。家庭用は百貨店の売場を絞り、直営の京橋店に集めています。</p>
+  </div>
+  <div class="rule-h"></div>
+  <div class="island">
+    <div class="kpis">
+      <div class="kpi big"><div class="lbl">海外の料理人向けの売上比率　二〇二五年度</div><div class="n">41<small>%</small></div></div>
+      <div class="kpi sm"><div class="lbl">取引国・地域</div><div class="n">28<small>か国・地域</small></div></div>
+      <div class="kpi sm"><div class="lbl">研ぎ直しの受付</div><div class="n">1.2<small>万本</small></div></div>
+    </div>
+    <div class="chart-h">売上の構成比の推移<span>単位 パーセント　年度</span></div>
+    <div id="d-stacked-100"><svg aria-label="売上の構成比の推移" data-w="1016" data-h="400"></svg></div>
+  </div>
+  <p class="island-note">出典　槙野打刃物製作所 売上実績（二〇〇五〜二〇二五年度、架空のデータ）。研ぎ直しの受付本数は他社製を含む。</p>
+</section>
+
+<!-- 6 会社概要 -->
+<section class="page p-data">
+  <div class="tate hashira">槙野打刃物　創業百七十年誌　<b>五　会社概要</b></div>
+  <div class="tsume tate" style="--ch:5"><span>五　会社概要</span></div>
+  <div class="nombre">06</div>
+  <div class="cap v">Corporate data</div>
+  <h2 class="tate v head">会社概要</h2>
+  <p class="tate v lead">鍛造の本社工房と、研ぎの第三工房、<br>預かりの研ぎ場、京橋の直営店。<br>四つの場所で、<span class="tcy">46</span>人が働いています。</p>
+  <div class="rule-v"></div>
+  <div class="sites">
+    <div class="site"><div class="tate"><p class="nm">本社工房</p><p class="sub">鍛造と焼き入れ。<br>創業の地に火床三基。</p></div></div>
+    <div class="site chg"><div class="tate"><p class="nm">第三工房</p><p class="sub">研ぎと仕上げ、見学。<br>令和八年九月に竣工。</p></div></div>
+    <div class="site"><div class="tate"><p class="nm">研ぎ場</p><p class="sub">研ぎ直しの受付と発送。<br>国内外から年一万二千本。</p></div></div>
+    <div class="site"><div class="tate"><p class="nm">京橋店</p><p class="sub">直営の売場と研ぎ相談。<br>家庭用はここに集める。</p></div></div>
+  </div>
+  <div class="island">
+    <table>
+      <tr><th>商号</th><td>株式会社 槙野打刃物製作所</td></tr>
+      <tr><th>創業</th><td><span class="lat">1856</span>年（安政三年）</td></tr>
+      <tr><th>設立</th><td><span class="lat">1948</span>年<span class="lat">4</span>月（株式会社に改組）</td></tr>
+      <tr><th>代表者</th><td>代表取締役社長　槙野 宗一郎（七代目当主）</td></tr>
+      <tr><th>資本金</th><td><span class="lat">4,800</span>万円</td></tr>
+      <tr><th>売上高</th><td><span class="lat">7.8</span>億円（<span class="lat">2025</span>年度）</td></tr>
+      <tr><th>従業員</th><td><span class="lat">46</span>名（うち職人 <span class="lat">21</span>名、<span class="lat">2028</span>年度に <span class="lat">28</span>名へ）</td></tr>
+      <tr><th>事業内容</th><td>和包丁・鋏の製造と販売、刃物の研ぎ直しと修理</td></tr>
+      <tr><th>本社・本社工房</th><td>岐阜県美濃川市鍛冶屋町 <span class="lat">3-12</span></td></tr>
+      <tr class="chg"><th>第三工房</th><td>本社工房の隣接地（<span class="lat">2026</span>年<span class="lat">9</span>月竣工、見学は予約制）</td></tr>
+      <tr><th>直営店</th><td>槙野 京橋店（東京都中央区）</td></tr>
+      <tr><th>取引国・地域</th><td><span class="lat">28</span>か国・地域（<span class="lat">2025</span>年度）</td></tr>
+    </table>
+  </div>
+  <p class="island-note">二〇二六年九月三十日現在。社名・人物・所在地・数値はすべて架空です。</p>
+</section>
+
+</main>
+
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+addEventListener('resize', fit);
+</script>
+<script>(() => {
+// BEGIN d-stacked-100
+// Fitted: the box comes from data-w/data-h; years in EB Garamond, the latest year in ink.
+function drawStacked100(svg, data) {
+  const W = +svg.dataset.w || svg.clientWidth || 1680, H = +svg.dataset.h || svg.clientHeight || 600;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a, p = svg) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); p.appendChild(n); return n; };
+  const tx = (s, a, p) => { const n = el('text', a, p); n.textContent = s; return n; };
+  const tw = (s, cls) => { const n = tx(s, { class: cls }); const w = n.getComputedTextLength(); n.remove(); return Math.ceil(w); };
+  let k = 1;
+  const cls = data.series.map(s => s.accent ? 's0' : 's' + k++);
+  const m = { l: Math.max(...data.rows.map(r => tw(r.label, 'row'))) + 28, r: 0, t: 64, b: 40 };
+  let lx = m.l, ly = 20;
+  data.series.forEach((s, i) => {
+    const w = 34 + tw(s.key, 'key');
+    if (lx > m.l && lx + w > W - m.r) { lx = m.l; ly += 36; }
+    el('rect', { class: 'sw ' + cls[i], x: lx, y: ly - 11, width: 22, height: 22 });
+    tx(s.key, { class: 'key', x: lx + 34, y: ly });
+    lx += w + 40;
+  });
+  m.t += ly - 20;
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, rh = ih / data.rows.length, bh = Math.min(48, rh * 0.68);
+  [25, 50, 75].forEach(p => el('line', { class: 'grid', x1: m.l + iw * p / 100, x2: m.l + iw * p / 100, y1: m.t, y2: m.t + ih }));
+  [0, 25, 50, 75, 100].forEach((p, i, a) => tx(`${p}`, { class: 'tick', x: m.l + iw * p / 100, y: H - 6, ...(i === a.length - 1 ? { style: 'text-anchor:end' } : i === 0 ? { style: 'text-anchor:start' } : {}) }));
+  data.rows.forEach((r, i) => {
+    const cy = m.t + rh * (i + 0.5), sum = r.v.reduce((a, b) => a + b, 0);
+    tx(r.label, { class: 'row' + (i === data.rows.length - 1 ? ' last' : ''), x: m.l - 20, y: cy });
+    let x = m.l;
+    r.v.forEach((v, j) => {
+      const w = iw * v / sum, lab = `${Math.round(v / sum * 100)}`;
+      const c = 'pct' + (cls[j] === 's0' ? ' is-accent' : '');
+      el('rect', { class: 'seg ' + cls[j], x, y: cy - bh / 2, width: w, height: bh });
+      if (w >= tw(lab, c) + 16) tx(lab, { class: c, x: x + w / 2, y: cy });
+      else if (w > 0 && document.fonts.status === 'loaded') console.warn('d-stacked-100: ' + r.label + ' ' + data.series[j].key + ' too narrow for its label');
+      x += w;
+    });
+  });
+}
+{
+  const svg = document.querySelector('#d-stacked-100 svg');
+  const data = {
+    series: [{ key: '海外の料理人', accent: true }, { key: '国内の料理人・料理店' }, { key: '家庭用' }, { key: '研ぎ直し・修理' }],
+    rows: [
+      { label: '2005', v: [3, 38, 52, 7] },
+      { label: '2010', v: [8, 41, 44, 7] },
+      { label: '2015', v: [19, 38, 34, 9] },
+      { label: '2020', v: [31, 31, 27, 11] },
+      { label: '2025', v: [41, 27, 19, 13] }
+    ]
+  };
+  const draw = () => { svg.replaceChildren(); drawStacked100(svg, data); };
+  draw(); document.fonts.ready.then(draw);
+}
+// END d-stacked-100
+})();</script>
+</body>
+</html>

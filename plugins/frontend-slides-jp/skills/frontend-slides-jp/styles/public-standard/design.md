@@ -125,3 +125,40 @@ Content frame: top edge, running header at 48, head block at 136 (label plus two
 - [ ] Icons, illustrations, shadows, rounded corners or gradients added to "soften" it.
 - [ ] Running header or page number missing, or the page count not matching the deck.
 - [ ] A one-class `p` selector losing to the base's `.slide p` line-height and drifting off the grid. Compare row baselines with the reference.
+
+## 7. Document pages
+
+`reference-a4.html` is an administrative plan (行政計画) excerpt: cover, contents, a two-column background page with the plan-position figure, the policy tree, the KPI table, and the promotion / contact back page. Same four colors, same three rule weights, same label → number → description; only the sizes change. Sizes are px at the 1240×1754 page.
+
+Tokens. The `:root` block above, with `--desk-bg: #E9E9EC`, `--page-bg: #FFFFFF`, `--margin-x: 96px`, `--text-w: 1048px`, `--t-label: 20px`, `--t-note: 17px`, `--t-body: 22px`, `--t-h2: 54px`, `--t-h1: 96px`, and one more family: `--font-body: 'BIZ UDPGothic', 'Noto Sans JP', sans-serif`. Body paragraphs, leads, notes, sources and table sub-lines use the UD face; headings, labels and table headings stay in Noto Sans JP; every figure stays in `.num` (IBM Plex Sans). BIZ UDPGothic is `body-only` in the catalog, so it never sets a heading.
+
+**Page frame.**
+- Top edge: `.page::before`, 8px `--blue` across the full width at top 0, on every page including the cover.
+- Running head `.rh`: top 64, inset 96, 18px `--ink-2`, 1px `--rule` 14px below. Left `<b>汐見市</b>` plus the document name; right `<b>第N章</b>` plus the chapter name (the bold part in ink 500). The contents page puts `目次` on the right.
+- Folio `.folio`: bottom 56, right 96, Plex 19px `<b>24</b> / 60` (current page ink 600). Page numbers are the main volume's, so an excerpt keeps them.
+- Chapter tab `.tab`: a ladder of all six chapter numbers on the outer edge (x 1176–1240, top 240, 52px per step, 1px `--rule` between steps and on its left side). The current step has a 4px blue inset bar on its left, a blue Plex 600 numeral and `aria-current`; below the ladder (top 576) the chapter name is set vertically in 18px ink 700 with the number in `text-combine-upright`. The current chapter is shown by bar, weight and name, never by color alone. The contents page lights no step and sets `目次` vertically.
+- Foot slot `.foot`: left 96, right 220, bottom 52, ※ notes in 17px `--ink-2`, bottom-aligned with the folio. Keep it to two lines (about 53 字 each); content above it ends by about 1600.
+
+**Head block.** `.head` at top 140: the 20px blue label naming the section (`3-3　施策の体系`), 16px, the two-line H2 at 54px/700/1.38 ending in `。`, then a 26px BIZ UDPGothic lead of two lines. It ends near 450; the body starts at 470–490.
+
+**Numbering.** Government-document conventions: `第N章` in the label and running head, `1-1` section headings, `（1）` sub-headings, `図3-1` / `表5-1` captions, `※1` notes. Captions `.cap` sit on a 2px ink rule with the number in blue Plex 500, the title 24px/700 and a unit or key note right-aligned in 18px. A source line `.src` (17px `--ink-2`, `出典：` with the issuer, date and 「架空のデータ」 for invented numbers) sits directly under every figure and table.
+
+**Cover.** Blue top edge, label (策定年月・本編/概要版) at 140, `第3次` 44px/700, the title 96px/700 in two lines broken at the plan name, the period line 30px/500 with Plex figures, and the basic goal in 26px. Below, one schematic visual on a 2px rule: the future network, drawn with the style's line language only (railway as an ink band with white dashes, the lines being strengthened as 5px blue, feeders 2.5px `--ink-2`, demand-responsive zones as dashed outlines with a `--rule` hatch, hubs as white squares with a 3px ink border) and a legend of drawn samples plus words. Then a four-cell spec strip on a 2px ink rule (Plex 48px numbers with 22px units, 1px rules between cells), and the organisation and the bordered document tag along the bottom, with the fictional-data note under the tag.
+
+**Contents.** Label `Contents`, 72px `目次`, lead; a 2px-topped `ol` of six chapters sharing the height (Plex 30px blue `01`, a 19px `第1章`, 34px/700 chapter name, 20px section list, right-aligned Plex page). Chapters included in the excerpt carry a blue 18px/700 `本書に収録` label and an ink 600 page number. A row of three KPI blocks (4px blue rule, 72px number) closes the page.
+
+**Reading page.** Two 500px columns with a 48px gutter at top 480: `1-1` heading on a 2px ink rule (26px/700, blue Plex number), `（1）` sub-headings 22px/700, paragraphs in BIZ UDPGothic 22px/1.8 with a 1em indent (about 22 字 per line). Split the columns by hand at a paragraph boundary; never let a sentence or number break across the columns. A full-width figure follows (here 図1-1 計画の位置づけ: blocks are rules plus text, the plan itself on the 4px blue rule, the upper plan above, the law and related plans either side, the implementation plan below, arrows 2px ink labelled 即する／根拠／整合／具体化).
+
+**Figure page.** Diagrams from `references/diagrams.md` at 1048px wide, drawn in the style's rules, never in boxes. The reference adapts `d-logic-tree` into the policy tree (基本目標 → 基本方針 → 施策 → 主な指標): leaves on equal rows with an 18px gap between groups, each parent centred on its children, elbow links 1.5px `--ink-2`. The goal sits on a 4px blue rule with a blue key, each policy on a 2px ink rule with `方針 N` (blue Plex), measures as 1px-ruled rows (blue Plex `1-1`, 21px/500 label), each group opening with 2px ink. The bar column becomes the indicator column. Priority measures carry a 4px blue left bar and a bordered blue `重点` tag, explained in a key at the right of the caption. Size the SVG with `data-w`/`data-h`, because `clientWidth` under the page zoom is not the layout size. A 用語解説 block (2px rule, two columns of term 19px/700 + definition 18px) may follow the figure.
+
+**Table page.** Three KPI blocks first (4px blue rule, `912 → 1,000万人` with the past value 30px `--ink-2` and the target 76px Plex 500), then the table: header 18px/700 `--ink-2` under the caption rule and over a 2px ink line, rows with 1px rules and 13px padding, indicator name 21px/700 with its unit in （ ） and the method in an 18px UD sub-line, 基準年度 as its own column, values right-aligned Plex 28px, target in 600. Direction is a glyph plus a word (`↑ 増やす`, `↓ 減らす`, `→ 維持`), never a color. The main indicator gets a blue number and a blue `主指標` label, nothing else.
+
+**Back page.** Head block, the timeline grammar (2px ink rule, five spans, a blue 20px month above, Latin caps step 18px, title 22px/700, description broken by hand at about 9 字), the 4px blue segment over the step done by the council; a roles table (who 21px/700 with an 18px sub-line, role 20px UD, count in Plex); then the contact block on a 4px blue rule: department 30px/700, a `dl` of address, phone, FAX and mail, and a side column with where to read the plan, the universal-design statement and the issue date.
+
+**Document slop signs (in addition to section 6).**
+- [ ] A page without the top edge, running head, folio or tab, or a tab whose current chapter is shown only by color.
+- [ ] A figure or table without its `図N-N` / `表N-N` number or without a source line under it.
+- [ ] Information carried by color alone: a status cell tinted green or red, a map line told apart only by hue. Add a glyph, a word, a weight or a pattern.
+- [ ] A policy tree or position chart built from rounded or four-sided boxes instead of rules.
+- [ ] Body text in Noto Sans JP instead of the UD face, or a heading set in BIZ UDPGothic.
+- [ ] A sentence or number broken across the two columns.

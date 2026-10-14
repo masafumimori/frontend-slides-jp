@@ -141,3 +141,35 @@ Outer margin 128px. Body text columns start at 128px on paper slides, 640px next
 - [ ] Missing folio, or a folio that does not start at the text column.
 - [ ] A slide with no photo for more than two slides in a row. The rhythm alternates photo-led and paper-led slides.
 - [ ] Line breaks that split a Japanese phrase; break after 、 or 。 with `<br>`.
+
+## 7. Document pages
+
+`reference-a4.html` is a 6-page integrated report (cover, statement, top message, value-creation loop, highlights, data). Sizes are px at the 1240×1754 page. Tokens are the same as section 2, except `--m: 96px` (side margin, text width 1048px) and `--desk-bg: #1a1918` (the dark desk replaces `--stage-bg`). Documents carry no `.rv` motion or photo zoom. Pages are numbered as a printed book: even pages are left-hand pages (`.page.even`), odd pages right-hand (`.page.odd`), and the tab and folio sit on the outer edge.
+
+Frame (every page except the cover, same place on every page):
+
+- **Running head** (`.rh`, top 64px, 96px both sides). Left: `<b>Ayaori</b>　Integrated Report 2026`, the slide folio's brand line, Archivo 75% 600 18px with 0.16em tracking, mute with the brand in ink 700. Right: the chapter number in red, the Latin chapter name in mute, then the Japanese chapter name in Noto Sans JP 500 17px ink.
+- **Chapter tab** (`.tab`, top 240px, 40×232px, outer edge). The cover's 20px red tab grows into a red block with the chapter number and Latin name set vertically in white Archivo 75% 700 15px with 0.2em tracking. It is navigation, like the red contents numbers, so it does not count as the page's one red mark. It may sit on a photo band, as the cover tab does.
+- **Folio** (`.folio`, bottom 56px, outer edge at 96px). The page number alone in Archivo 75% 700 20px ink, 0.12em tracking. The brand moved up into the running head.
+- **Margins**: 140px top to the kicker, 120px bottom to the last line. Photos break the margins only as bands that bleed left and right (or the full cover); the running head, captions and folio always sit on paper.
+
+Page head (reading pages): the kicker row from 4.4 at top 140px (`NN — Chapter` red, the period or subject in mute, 28px apart, 19px), then the Mincho headline at 64px 800, line-height 1.36, 28px below, broken by hand into two lines with one red keyword. That keeps the kicker about a third of the headline. Lead: Noto Sans JP 26px, line-height 1.75, `#3a3a3a`, 30px below, two hand-broken lines.
+
+Photos: use the shot list in 4.6 by role, each photo once. Every photo carries a caption on paper, 12–16px under the photo: an Archivo 75% 600 15px ink label (the subject in English) and a 17px mute sentence. Never put a caption or any text on the photo except on the cover, where all type sits on the calm sky or dark area chosen with `object-position`.
+
+Page types:
+
+- **Cover.** The context photo (4.6 no. 4) full bleed, cropped so the top 40% is calm sky (`object-position: 62% 50%`). Ink type on the sky: masthead labels at top 96px, 150px caps in three lines at top 176px with the red year, the 44px Mincho sub at 586px. The caption and the meta (period, fictional-data line) at left 700px, top 772px, 17px, on the sky. The 20×168px red tab at `right: 0; top: 96px`. On a photo whose calm area is dark, set the same type in white as on the slide cover. No frame.
+- **Statement.** Paper above, the place (4.6 no. 2) below as a bleed band 1240×560px at top 1000px. The head is indented to 160px for air: red label, 168px red caps in two lines, 44px Mincho statement in three lines (line-height 1.62), then 23px body at 800px wide (about 34 字 a line). Caption at top 1576px.
+- **Message.** The gesture (4.6 no. 1) as a bleed band 1240×500px at top 120px, under the running head, standing in for a portrait; the caption says whose hands they are. Kicker at 728px, Mincho headline 60px with the red keyword, then two columns from top 1000px (`column-count: 2`, 48px gap, 560px tall, `column-fill: auto`): body 22px, line-height 1.8, justified with a 1字 indent; section heads in Noto Serif JP 700 25px. The signature closes the page right-aligned at top 1572px: date and role 18px, the name in Mincho 700 30px with 0.12em tracking. No quote-mark graphics.
+- **Figure.** Paper only. Head, then the figure box at top 536px under a 1px ink rule, 1048×680px, its source line under it, then a row of three facts (the capitals behind the loop) on a 1px ink rule: Archivo mute label, 25px Mincho name, 64px number with a 20px unit, a two-line 17px note. The reference fits `d-cycle` to the station line of 4.5: square rectangles with a 1.5px ink stroke on paper, the current stage filled ink with white text, step labels `01 COTTON` in red Archivo 75% 700 17px, names in Mincho 28px, the ring and arrowheads 1.5px ink, and the closing arc (last step back to the first) dashed red `6 6` like the loop line. The centre value is the red hero number (Archivo 62% 800 150px, unit 42px). The SVG reads its size from `data-w`/`data-h`.
+- **Highlights.** Head, then from top 548px a 584px left column: the hero KPI on a 1px ink rule (22px label, Archivo 62% 800 210px red number, 56px unit, mute note with the change in red bold), then three KPI rows (label with a 17px mute note under it, 60px ink number right-aligned, 1px `--rule` between). On the right a material photo (4.6 no. 3) inset at 416×600px inside the margin, its caption under it. The bar chart from 4.5 spans the text width at top 1262px: 104px bars on a 148px pitch, the last bar 160px in red, then its source line.
+- **Data.** Paper only. Head, then the five-year table, built like the Table slide of section 5, over the full width: Archivo 75% 600 17px uppercase header over a 1px ink rule, group rows (`FINANCIAL 財務`) over a 1px ink rule, 21px labels with the unit in 16px mute, Archivo 62% 800 32px numbers right-aligned, past years in `#4a4a4a` and the latest in ink, one red value. Source line under it, then the company profile: red label, two 500px columns of 120px label / value pairs at 19px under 1px rules. The editorial note (`ABOUT THIS REPORT`) sits in the notes slot at top 1556px.
+
+Document slop signs (in addition to section 6):
+
+- [ ] A running head, caption or folio set on a photo, or a photo band that leaves the running head nowhere to sit.
+- [ ] A photo without a caption, or the same photo on two pages.
+- [ ] Condensed caps used as the headline on reading pages. Caps name the cover and the statement page; reading pages lead with the Mincho headline.
+- [ ] The tab or folio on the inner edge, or moving between pages.
+- [ ] Two columns ragged with `auto-phrase`, or body text below 22px.

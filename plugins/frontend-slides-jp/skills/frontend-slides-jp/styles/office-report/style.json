@@ -1,0 +1,31 @@
+{
+  "slug": "office-report",
+  "name": "Office Report",
+  "name_ja": "社内報告書",
+  "tagline": "A ruled working document: a margin index where every number hangs (chapters, tables, figures, 要旨, 注), a document meta block and approval boxes on page 1, and one quiet green for the answer.",
+  "summary_ja": "白地に墨と深緑1色。左の余白に章番号・表番号・図番号・要旨・注を吊るす「余白の索引」を全ページに通し、1ページ目に文書番号・版・機密区分の表、承認欄、結論先出しの要旨を置く。Word で書く社内報告・提案書の型。",
+  "group": "business",
+  "mood": ["serious", "calm", "dense"],
+  "formality": "high",
+  "density": "high",
+  "scheme": "light",
+  "best_for": "社内報告書、提案書、稟議の添付資料、調査報告、経営会議資料",
+  "avoid_for": "社外向けのブランド冊子、採用案内、投影するプレゼン、写真で魅せる資料",
+  "formats": ["doc-a4"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "BIZ UDPMincho",
+    "latin": ["IBM Plex Sans"]
+  },
+  "colors": {
+    "ink": "#1C1E1D",
+    "sub": "#575C59",
+    "line": "#B9BEBA",
+    "tint": "#F1F3F0",
+    "green": "#2E5E45",
+    "paper": "#FFFFFF"
+  },
+  "refs": ["日本企業の社内提案書・稟議添付資料の慣行（文書番号・版・機密区分・承認欄・要旨・以上）", "統合報告書のデータ付録（高密度の2段組と細い罫の表）"]
+}

@@ -1,8 +1,9 @@
 // Screenshots every .slide of a deck, or every .page of a doc-a4 document,
 // one image each. The format comes from the file: .page without .slide is doc-a4.
-//   node scripts/shoot.mjs <file.html> --out <dir> [--width N] [--phone] [--jpg]
+//   node scripts/shoot.mjs <file.html> --out <dir> [--width N] [--phone] [--jpg] [--first N]
 // --width sets the image width (the stage always renders at its formats.json size).
 // --phone renders in a 390×844 viewport instead, to check the stage scales as a whole.
+// --first N shoots only the first N slides or pages (thumbnails use --first 4).
 // Prints page errors, console warnings and the families that loaded. Needs Playwright:
 //   PLAYWRIGHT_MODULE=/path/to/node_modules/playwright/index.mjs
 
@@ -16,7 +17,7 @@ const flag = name => args.includes(name);
 const opt = (name, fallback) => (args.includes(name) ? args[args.indexOf(name) + 1] : fallback);
 const deck = args[0];
 const out = opt('--out', null);
-if (!deck || !out) throw new Error('usage: shoot.mjs <deck.html> --out <dir> [--width N] [--phone] [--jpg]');
+if (!deck || !out) throw new Error('usage: shoot.mjs <deck.html> --out <dir> [--width N] [--phone] [--jpg] [--first N]');
 
 const formats = JSON.parse(readFileSync(fileURLToPath(new URL('../formats.json', import.meta.url)), 'utf8'));
 const source = readFileSync(deck, 'utf8');
@@ -41,7 +42,8 @@ await page.goto('file://' + resolve(deck), { waitUntil: 'networkidle' });
 await page.evaluate(() => document.fonts.ready);
 
 const count = await page.locator(unit).count();
-for (let i = 0; i < count; i++) {
+const shots = Math.min(count, Number(opt('--first', count)));
+for (let i = 0; i < shots; i++) {
   const file = `${out}/${String(i + 1).padStart(2, '0')}.${type === 'jpeg' ? 'jpg' : 'png'}`;
   const shot = { path: file, type, ...(type === 'jpeg' ? { quality: 78 } : {}) };
   if (format === 'doc-a4') {

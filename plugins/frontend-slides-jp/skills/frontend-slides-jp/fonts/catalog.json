@@ -510,7 +510,7 @@
         800,
         900
       ],
-      "css": "family=Archivo:wght@100;200;300;400;500;600;700;800;900"
+      "css": "family=Archivo:wdth,wght@62..125,100..900"
     },
     {
       "family": "Barlow",
@@ -634,7 +634,7 @@
         800,
         900
       ],
-      "css": "family=Fraunces:wght@100;200;300;400;500;600;700;800;900"
+      "css": "family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,100;1,9..144,300..700,100"
     },
     {
       "family": "EB Garamond",

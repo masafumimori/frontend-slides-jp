@@ -56,6 +56,11 @@ for (const slug of readdirSync(stylesDir, { withFileTypes: true }).filter(d => d
   if (colors.length > 6) fail(`${colors.length} color tokens; at most 6`);
   for (const [name, hex] of colors) if (!/^#[0-9A-Fa-f]{6}$/.test(hex)) fail(`color ${name} "${hex}" is not #RRGGBB`);
 
+  // heading, body and latin load in every reference; an extra family may serve one format only.
+  const core = [style.fonts?.heading, style.fonts?.body, ...(style.fonts?.latin ?? [])].filter(Boolean);
+  const extra = (style.fonts?.extra ?? []).filter(Boolean);
+  const extraLoaded = new Set();
+
   // Every format a style claims needs its own working reference and thumbnails.
   if (!style.formats?.length) fail('formats is empty');
   for (const f of style.formats ?? []) {
@@ -65,18 +70,20 @@ for (const slug of readdirSync(stylesDir, { withFileTypes: true }).filter(d => d
     if (!existsSync(join(dir, file))) { fail(`${f}: missing ${file}`); continue; }
     const html = readFileSync(join(dir, file), 'utf8');
     if (!html.includes(bases[format.base])) fail(`${file} does not paste ${format.base} verbatim`);
-    for (const family of families) {
+    for (const family of core) {
       if (!html.includes(family.replaceAll(' ', '+'))) fail(`${file} does not load "${family}" from Google Fonts`);
     }
+    for (const family of extra) if (html.includes(family.replaceAll(' ', '+'))) extraLoaded.add(family);
     for (const [, src] of html.matchAll(/(?:src|href)="(?!https?:|data:|#)([^"]+)"/g)) {
       if (!existsSync(join(dir, src))) fail(`${file} points at missing ${src}`);
     }
     const units = (html.match(new RegExp(`class="${format.unit}[\\s"]`, 'g')) ?? []).length;
     if (units < 4) fail(`${file} has fewer than 4 .${format.unit} sections`);
     for (const n of ['01', '02', '03', '04']) {
-      if (!existsSync(join(dir, format.thumbs, `${n}.jpg`))) fail(`missing ${format.thumbs}/${n}.jpg (node scripts/shoot.mjs styles/${slug}/${file} --out styles/${slug}/${format.thumbs} --width ${f === 'doc-a4' ? 400 : 640} --jpg)`);
+      if (!existsSync(join(dir, format.thumbs, `${n}.jpg`))) fail(`missing ${format.thumbs}/${n}.jpg (node scripts/shoot.mjs styles/${slug}/${file} --out styles/${slug}/${format.thumbs} --width ${f === 'doc-a4' ? 400 : 640} --jpg --first 4)`);
     }
   }
+  for (const family of extra) if (!extraLoaded.has(family)) fail(`no reference loads extra font "${family}" from Google Fonts`);
 
   const { fonts, colors: palette, refs, ...meta } = style;
   index.push({
