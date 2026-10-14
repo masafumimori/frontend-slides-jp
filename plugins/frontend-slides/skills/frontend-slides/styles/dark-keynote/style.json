@@ -3,16 +3,40 @@
   "name": "Dark Keynote",
   "name_ja": "ダーク・キーノート",
   "tagline": "Near-black stage with one rendered product, hairline-thin giant numerals for specs, and a single yellow accent that marks only the current product.",
-  "mood": ["premium", "quiet", "confident"],
+  "summary_ja": "黒に近い面に製品を1つ。細い巨大な数字で仕様を見せる製品発表の型。",
+  "group": "stage",
+  "mood": [
+    "premium",
+    "quiet",
+    "confident"
+  ],
   "formality": "medium",
   "density": "low",
   "scheme": "dark",
   "best_for": "製品発表会、配信イベント、ハードウェア・家電の新製品紹介",
   "avoid_for": "明るい会議室でのプロジェクター投影、文字量の多い報告書、決算説明",
-  "formats": ["slide-16x9"],
+  "formats": [
+    "slide-16x9"
+  ],
   "writing": "horizontal",
   "needs": [],
-  "fonts": { "heading": "Noto Sans JP", "body": "Noto Sans JP", "latin": ["Jost", "IBM Plex Mono"] },
-  "colors": { "bg": "#0F1012", "panel": "#17181B", "fg": "#F3F1EC", "fg-2": "#C9C6BF", "fg-3": "#B4B1AA", "accent": "#FFD23F" },
-  "refs": ["家電・ハードウェアの製品発表会（配信前提の新規の型）"]
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "Noto Sans JP",
+    "latin": [
+      "Jost",
+      "IBM Plex Mono"
+    ]
+  },
+  "colors": {
+    "bg": "#0F1012",
+    "panel": "#17181B",
+    "fg": "#F3F1EC",
+    "fg-2": "#C9C6BF",
+    "fg-3": "#B4B1AA",
+    "accent": "#FFD23F"
+  },
+  "refs": [
+    "家電・ハードウェアの製品発表会（配信前提の新規の型）"
+  ]
 }

@@ -5,6 +5,8 @@
       "name": "Color Index",
       "name_ja": "章色インデックス",
       "tagline": "Navy skeleton with one color per business chapter; the top rule, square markers, charts and the right-edge thumb tab switch to the current chapter's color.",
+      "summary_ja": "紺を骨格に事業ごとに1色。天罫・■見出し・グラフ・右端の爪見出しが章の色に切り替わる。",
+      "group": "business",
       "mood": [
         "structured",
         "trustworthy",
@@ -35,13 +37,21 @@
       ],
       "preview_md": "styles/color-index/preview.md",
       "design_md": "styles/color-index/design.md",
-      "reference_html": "styles/color-index/reference.html"
+      "reference_html": "styles/color-index/reference.html",
+      "thumbs": [
+        "styles/color-index/thumbs/01.jpg",
+        "styles/color-index/thumbs/02.jpg",
+        "styles/color-index/thumbs/03.jpg",
+        "styles/color-index/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "corporate-mono",
       "name": "Corporate Mono",
       "name_ja": "コーポレート単色",
       "tagline": "White ground and one corporate color used only on full-bleed gates, the left chapter band and chart shades.",
+      "summary_ja": "白地に弁柄1色。全面の扉、左の縦帯の章ナビ、グラフの濃淡の3役にだけ色を使う。",
+      "group": "business",
       "mood": [
         "trustworthy",
         "calm",
@@ -74,13 +84,21 @@
       ],
       "preview_md": "styles/corporate-mono/preview.md",
       "design_md": "styles/corporate-mono/design.md",
-      "reference_html": "styles/corporate-mono/reference.html"
+      "reference_html": "styles/corporate-mono/reference.html",
+      "thumbs": [
+        "styles/corporate-mono/thumbs/01.jpg",
+        "styles/corporate-mono/thumbs/02.jpg",
+        "styles/corporate-mono/thumbs/03.jpg",
+        "styles/corporate-mono/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "dark-keynote",
       "name": "Dark Keynote",
       "name_ja": "ダーク・キーノート",
       "tagline": "Near-black stage with one rendered product, hairline-thin giant numerals for specs, and a single yellow accent that marks only the current product.",
+      "summary_ja": "黒に近い面に製品を1つ。細い巨大な数字で仕様を見せる製品発表の型。",
+      "group": "stage",
       "mood": [
         "premium",
         "quiet",
@@ -114,13 +132,21 @@
       ],
       "preview_md": "styles/dark-keynote/preview.md",
       "design_md": "styles/dark-keynote/design.md",
-      "reference_html": "styles/dark-keynote/reference.html"
+      "reference_html": "styles/dark-keynote/reference.html",
+      "thumbs": [
+        "styles/dark-keynote/thumbs/01.jpg",
+        "styles/dark-keynote/thumbs/02.jpg",
+        "styles/dark-keynote/thumbs/03.jpg",
+        "styles/dark-keynote/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "gate-gradient",
       "name": "Gate Gradient",
       "name_ja": "グラデーション扉",
       "tagline": "Only the cover and chapter gates carry a deep pine sky with a vermilion horizon; every content slide is white with ink and one vermilion accent.",
+      "summary_ja": "扉だけが深い松葉色の空と朱の水平線。本文は白地に墨と朱の1色。",
+      "group": "tech",
       "mood": [
         "tech",
         "confident",
@@ -153,13 +179,21 @@
       ],
       "preview_md": "styles/gate-gradient/preview.md",
       "design_md": "styles/gate-gradient/design.md",
-      "reference_html": "styles/gate-gradient/reference.html"
+      "reference_html": "styles/gate-gradient/reference.html",
+      "thumbs": [
+        "styles/gate-gradient/thumbs/01.jpg",
+        "styles/gate-gradient/thumbs/02.jpg",
+        "styles/gate-gradient/thumbs/03.jpg",
+        "styles/gate-gradient/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "geometric-blue",
       "name": "Geometric Blue",
       "name_ja": "青白と幾何モチーフ",
       "tagline": "Royal blue and white only, with a square-cell motif that is data: the cover grid is the attention matrix of the headline itself.",
+      "summary_ja": "モチーフは飾りではなくデータ。表紙の格子は見出しをモデルに読ませた注意の重みを描く。",
+      "group": "tech",
       "mood": [
         "technical",
         "precise",
@@ -191,13 +225,21 @@
       ],
       "preview_md": "styles/geometric-blue/preview.md",
       "design_md": "styles/geometric-blue/design.md",
-      "reference_html": "styles/geometric-blue/reference.html"
+      "reference_html": "styles/geometric-blue/reference.html",
+      "thumbs": [
+        "styles/geometric-blue/thumbs/01.jpg",
+        "styles/geometric-blue/thumbs/02.jpg",
+        "styles/geometric-blue/thumbs/03.jpg",
+        "styles/geometric-blue/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "photo-editorial",
       "name": "Photo Editorial",
       "name_ja": "写真主導エディトリアル",
       "tagline": "Full-bleed documentary photos carry the color; the page itself is white, black and one selvedge red, with condensed Latin caps naming and Mincho telling.",
+      "summary_ja": "写真が色を運び、紙面は白・黒・赤の3色。欧文の大文字が名乗り、明朝が語る。",
+      "group": "editorial",
       "mood": [
         "authentic",
         "confident",
@@ -231,13 +273,21 @@
       ],
       "preview_md": "styles/photo-editorial/preview.md",
       "design_md": "styles/photo-editorial/design.md",
-      "reference_html": "styles/photo-editorial/reference.html"
+      "reference_html": "styles/photo-editorial/reference.html",
+      "thumbs": [
+        "styles/photo-editorial/thumbs/01.jpg",
+        "styles/photo-editorial/thumbs/02.jpg",
+        "styles/photo-editorial/thumbs/03.jpg",
+        "styles/photo-editorial/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "public-standard",
       "name": "Public Standard",
       "name_ja": "公共・標準",
       "tagline": "Zero decoration: a 12-column grid, an 8px spacing scale, three weights of rule and careful Japanese and Latin typesetting, with one blue kept to the top edge and labels.",
+      "summary_ja": "装飾ゼロ。12カラム、8pxの余白スケール、3段の罫線、精密な和欧組版だけで品位を出す。",
+      "group": "business",
       "mood": [
         "trustworthy",
         "neutral",
@@ -269,13 +319,21 @@
       ],
       "preview_md": "styles/public-standard/preview.md",
       "design_md": "styles/public-standard/design.md",
-      "reference_html": "styles/public-standard/reference.html"
+      "reference_html": "styles/public-standard/reference.html",
+      "thumbs": [
+        "styles/public-standard/thumbs/01.jpg",
+        "styles/public-standard/thumbs/02.jpg",
+        "styles/public-standard/thumbs/03.jpg",
+        "styles/public-standard/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "swiss-grid",
       "name": "Swiss Typogrid",
       "name_ja": "スイス・タイポグリッド",
       "tagline": "A visible 12×6 grid that every element snaps to: black 900-weight type, off-white paper and one signal red.",
+      "summary_ja": "12列×6段のグリッドを見せ、全要素をその線に揃える。黒・白・信号赤のポスター。",
+      "group": "stage",
       "mood": [
         "rigorous",
         "bold",
@@ -306,13 +364,21 @@
       ],
       "preview_md": "styles/swiss-grid/preview.md",
       "design_md": "styles/swiss-grid/design.md",
-      "reference_html": "styles/swiss-grid/reference.html"
+      "reference_html": "styles/swiss-grid/reference.html",
+      "thumbs": [
+        "styles/swiss-grid/thumbs/01.jpg",
+        "styles/swiss-grid/thumbs/02.jpg",
+        "styles/swiss-grid/thumbs/03.jpg",
+        "styles/swiss-grid/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "talk-one-message",
       "name": "One-Message Talk",
       "name_ja": "1枚1メッセージの登壇",
       "tagline": "Light gray-blue ground, one black-weight navy conclusion per slide, and every duration drawn as cells where one cell is one minute.",
+      "summary_ja": "明るい地に極太の結論を1枚に1つ。時間はすべて「1マス＝1分」で描く。",
+      "group": "stage",
       "mood": [
         "clear",
         "confident",
@@ -343,13 +409,21 @@
       ],
       "preview_md": "styles/talk-one-message/preview.md",
       "design_md": "styles/talk-one-message/design.md",
-      "reference_html": "styles/talk-one-message/reference.html"
+      "reference_html": "styles/talk-one-message/reference.html",
+      "thumbs": [
+        "styles/talk-one-message/thumbs/01.jpg",
+        "styles/talk-one-message/thumbs/02.jpg",
+        "styles/talk-one-message/thumbs/03.jpg",
+        "styles/talk-one-message/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "tategumi-editorial",
       "name": "Tategumi Editorial",
       "name_ja": "縦組みエディトリアル",
       "tagline": "Headings and prose set vertically, read right to left like a book; data stays horizontal as one island on the left, and indigo marks only what changes.",
+      "summary_ja": "見出しと地の文は縦組みで右から左へ。データだけを横組みの島として左に置く。",
+      "group": "editorial",
       "mood": [
         "literary",
         "dignified",
@@ -382,13 +456,21 @@
       ],
       "preview_md": "styles/tategumi-editorial/preview.md",
       "design_md": "styles/tategumi-editorial/design.md",
-      "reference_html": "styles/tategumi-editorial/reference.html"
+      "reference_html": "styles/tategumi-editorial/reference.html",
+      "thumbs": [
+        "styles/tategumi-editorial/thumbs/01.jpg",
+        "styles/tategumi-editorial/thumbs/02.jpg",
+        "styles/tategumi-editorial/thumbs/03.jpg",
+        "styles/tategumi-editorial/thumbs/04.jpg"
+      ]
     },
     {
       "slug": "warm-editorial",
       "name": "Warm Editorial",
       "name_ja": "ブランド温色",
       "tagline": "Cream paper, one big edge-anchored circle per slide, and two-plate illustrations whose fill sits slightly out of register with the ink line.",
+      "summary_ja": "クリーム地に端へ寄せた円を1つ。イラストは塗りと線を2回描き、版ずれの手触りで揃える。",
+      "group": "editorial",
       "mood": [
         "warm",
         "friendly",
@@ -419,7 +501,13 @@
       ],
       "preview_md": "styles/warm-editorial/preview.md",
       "design_md": "styles/warm-editorial/design.md",
-      "reference_html": "styles/warm-editorial/reference.html"
+      "reference_html": "styles/warm-editorial/reference.html",
+      "thumbs": [
+        "styles/warm-editorial/thumbs/01.jpg",
+        "styles/warm-editorial/thumbs/02.jpg",
+        "styles/warm-editorial/thumbs/03.jpg",
+        "styles/warm-editorial/thumbs/04.jpg"
+      ]
     }
   ]
 }

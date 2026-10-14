@@ -9,7 +9,11 @@ One folder per style: `styles/<slug>/`. A brand imported from a company design s
 | `design.md` | Phase 3, for the chosen style only | The design system: thesis, tokens, type scale, devices, slide grammar, slop signs |
 | `reference.html` | Phase 3, for the chosen style only | A working 4-slide deck (cover, gate, conclusion + number, diagram). Copy its CSS, not its copy |
 
-After adding or editing a style, run `node scripts/check-styles.mjs`. It validates every folder and rewrites `selection-index.json`.
+After adding or editing a style:
+
+1. `node scripts/shoot.mjs styles/<slug>/reference.html --out styles/<slug>/thumbs --width 640 --jpg` writes the four thumbnails.
+2. `node scripts/check-styles.mjs` validates every folder and rewrites `selection-index.json`.
+3. `node scripts/build-gallery.mjs` rewrites `gallery.html`.
 
 ## `style.json`
 
@@ -19,6 +23,8 @@ After adding or editing a style, run `node scripts/check-styles.mjs`. It validat
   "name": "Corporate Mono",
   "name_ja": "コーポレート単色",
   "tagline": "White ground and one corporate color used only on gates, the chapter band and chart shades.",
+  "summary_ja": "白地に弁柄1色。全面の扉、左の縦帯の章ナビ、グラフの濃淡の3役にだけ色を使う。",
+  "group": "business",
   "mood": ["trustworthy", "calm"],
   "formality": "high",
   "density": "medium",
@@ -34,7 +40,7 @@ After adding or editing a style, run `node scripts/check-styles.mjs`. It validat
 }
 ```
 
-- `formality`, `density`: `low` | `medium` | `high`. `scheme`: `light` | `dark`. `writing`: `horizontal` | `vertical`.
+- `formality`, `density`: `low` | `medium` | `high`. `scheme`: `light` | `dark`. `writing`: `horizontal` | `vertical`. `group` (the gallery section): `business` | `tech` | `stage` | `editorial`.
 - `needs`: inputs the style cannot do without, such as `"photos"`.
 - Every family in `fonts` must exist in `fonts/catalog.json`. The heading family must have `role: "any"`, or `"vertical-heading"` when `writing` is `vertical`.
 - `colors`: the tokens `reference.html` declares on `:root`, at most 6.

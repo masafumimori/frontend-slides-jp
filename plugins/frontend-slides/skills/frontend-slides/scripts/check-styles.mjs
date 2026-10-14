@@ -20,8 +20,9 @@ const ENUMS = {
   density: ['low', 'medium', 'high'],
   scheme: ['light', 'dark'],
   writing: ['horizontal', 'vertical'],
+  group: ['business', 'tech', 'stage', 'editorial'],
 };
-const REQUIRED = ['slug', 'name', 'name_ja', 'tagline', 'mood', 'formality', 'density', 'scheme',
+const REQUIRED = ['slug', 'name', 'name_ja', 'tagline', 'summary_ja', 'group', 'mood', 'formality', 'density', 'scheme',
   'best_for', 'avoid_for', 'formats', 'writing', 'needs', 'fonts', 'colors', 'refs'];
 
 const errors = [];
@@ -66,6 +67,9 @@ for (const slug of readdirSync(stylesDir, { withFileTypes: true }).filter(d => d
     }
     if ((html.match(/class="slide[\s"]/g) ?? []).length < 4) fail('reference.html has fewer than 4 .slide sections');
   }
+  for (const n of ['01', '02', '03', '04']) {
+    if (!existsSync(join(dir, 'thumbs', `${n}.jpg`))) fail(`missing thumbs/${n}.jpg (node scripts/shoot.mjs styles/${slug}/reference.html --out styles/${slug}/thumbs --width 640 --jpg)`);
+  }
 
   const { fonts, colors: palette, refs, ...meta } = style;
   index.push({
@@ -75,6 +79,7 @@ for (const slug of readdirSync(stylesDir, { withFileTypes: true }).filter(d => d
     preview_md: `styles/${slug}/preview.md`,
     design_md: `styles/${slug}/design.md`,
     reference_html: `styles/${slug}/reference.html`,
+    thumbs: ['01', '02', '03', '04'].map(n => `styles/${slug}/thumbs/${n}.jpg`),
   });
 }
 

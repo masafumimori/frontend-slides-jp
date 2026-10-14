@@ -28,7 +28,7 @@ Focus on:
 
 Avoid generic AI-generated aesthetics:
 
-- Overused font families (Inter, Roboto, Arial, system fonts)
+- Overused font families (Inter, Roboto, Arial, system fonts). Families a style names, including Inter Tight, are deliberate and fine
 - Cliched color schemes (particularly purple gradients on white backgrounds)
 - Predictable layouts and component patterns
 - Cookie-cutter design that lacks context-specific character
@@ -56,6 +56,7 @@ These come from the Japanese reference decks the styles were built from. Every s
 - At most three items sit in one row; four or more become a list, a 2×2 grid or a table.
 - In a KPI callout the number is 3-4× the size of its unit. In tables, units stay at caption size or larger.
 - Charts are 2D, keep their size and position across slides, and carry a source line.
+- Never leave a placeholder where an image belongs (grey boxes, empty frames, "photo here"). Without real images, redesign the slide as text, initials or a diagram.
 - Section gates look different from content slides (full-bleed color or image unless the style defines another gate). Decks under about 10 slides may skip gates.
 
 ## Fixed Stage Rules
@@ -162,11 +163,13 @@ Do not ask the user whether they want options or a preset picker. The default di
 
 If the user already gave a vibe, use it. If they did not, infer the likely mood from the occasion, audience, content, and stakes. Keep the options diverse enough that the user can react visually instead of needing to articulate taste up front.
 
-If the user names a style, honor it as one option and generate the remaining preview slots around it.
+If the user names a style and asks only for that style, skip the index: read that style's `preview.md` and go straight to Phase 3. If they name a style as one option among others, honor it as one preview and fill the remaining slots from the index.
 
 If the user brings a company design system, logo, brand guide or URL, follow [references/brand-import.md](references/brand-import.md) first. The resulting brand style is always one of the three previews.
 
 Read [styles/selection-index.json](styles/selection-index.json). Do not read any `design.md` or `reference.html` yet.
+
+If the user wants to browse every style before choosing, open [styles/gallery.html](styles/gallery.html) for them.
 
 **Preview mix rules:**
 
@@ -227,8 +230,9 @@ If the user selected a listed style or a brand, read that one style's `design.md
 - Copy CSS from `reference.html`; write new copy for the user's content. Never reuse its fictional company, numbers or slogans.
 - Build missing slide types from the `design.md` slide-grammar section.
 - `reference.html` omits inline editing; add it from [html-template.md](html-template.md).
-- Mark invented numbers, names and sources as fictional when the user gave you only a topic.
-- Before delivery, screenshot every slide at 1920×1080 and once at a phone viewport, then walk the style's slop-signs checklist and the Design Rules against them. Look for overlap by eye: `scrollHeight` and bounding-box checks miss panels that cover each other.
+- When the user gave only a topic, mark invented names, numbers and sources as fictional: one line in the cover meta and a short note in each data slide's source line (for example 「数値は架空」).
+- The density choice changes how much goes on each slide and how many slides there are, never the style's type scale.
+- Before delivery, screenshot every slide with `node scripts/shoot.mjs <deck.html> --out <dir>` and once with `--phone`, then walk the style's slop-signs checklist and the Design Rules against them. Look for overlap by eye: `scrollHeight` and bounding-box checks miss panels that cover each other.
 
 If the user selected a self-generated custom wildcard, treat that preview's CSS and layout as the design recipe:
 
@@ -380,6 +384,8 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 | [styles/README.md](styles/README.md) | Style folder format; run `node scripts/check-styles.mjs` after edits | Adding or editing a style |
 | [references/brand-import.md](references/brand-import.md) | Turning a company design system into a style | Phase 2, when the user brings a brand |
 | [fonts/catalog.json](fonts/catalog.json) | Japanese and Latin families with measured palt/vpal and css queries | Phase 2 and 3 (fonts) |
+| [styles/gallery.html](styles/gallery.html) | Browsable page of every style for the user | Phase 2, when the user wants to browse |
+| [scripts/shoot.mjs](scripts/shoot.mjs) | Screenshot every slide, at 1920×1080 or `--phone` | Phase 3 verification |
 | [viewport-base.css](viewport-base.css)             | Mandatory fixed-stage CSS — copy into every presentation             | Phase 3 (generation)      |
 | [html-template.md](html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      |
 | [animation-patterns.md](animation-patterns.md)     | CSS/JS animation snippets and effect-to-feeling guide                | Phase 3 (generation)      |

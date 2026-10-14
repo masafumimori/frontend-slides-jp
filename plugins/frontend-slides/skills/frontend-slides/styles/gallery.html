@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Style Gallery</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter+Tight:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f1;--card:#fff;--ink:#16161a;--sub:#6b6965;--rule:#e2dfd9;--acc:#d6461f}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121214;--card:#1b1b1f;--ink:#efede9;--sub:#9b978f;--rule:#2d2c30;--acc:#ff7a4d}}
+:root[data-theme=dark]{--bg:#121214;--card:#1b1b1f;--ink:#efede9;--sub:#9b978f;--rule:#2d2c30;--acc:#ff7a4d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 14px/1.7 'Noto Sans JP',sans-serif;font-feature-settings:"palt";line-break:strict;word-break:auto-phrase}
+.wrap{max-width:1320px;margin:0 auto;padding:56px 24px 96px}
+.top{display:flex;flex-wrap:wrap;gap:24px 40px;align-items:flex-end;justify-content:space-between;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+.eyebrow{font:700 11px/1 'Inter Tight',sans-serif;letter-spacing:.22em;color:var(--acc);margin:0 0 14px}
+h1{font-weight:900;font-size:clamp(30px,4.4vw,52px);line-height:1.2;margin:0}
+.lede{color:var(--sub);margin:12px 0 0;max-width:40em}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font:700 13px/1 'Noto Sans JP';padding:10px 14px;border-radius:999px;border:1px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 18px;margin:18px 0 0;font-size:13px}
+nav.toc a{color:var(--sub);text-decoration:none}nav.toc a:hover{color:var(--ink)}
+.group{margin-top:56px}
+.group>header{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.group h2{font-size:22px;font-weight:900;margin:0}.group header p{margin:0;color:var(--sub);font-size:13px}
+.group .n{margin-left:auto;font:700 13px 'Inter Tight';color:var(--sub)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px}
+.style{background:var(--card);border:1px solid var(--rule);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.style[hidden]{display:none}
+.cover img,.strip img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--rule)}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-top:2px solid var(--card);background:var(--card)}
+.cover:hover img,.strip a:hover img{opacity:.88}
+.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+h3{margin:0;font-size:19px;font-weight:900;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h3 code{font:500 12px 'Inter Tight',monospace;color:var(--sub)}
+.summary{margin:0;color:var(--sub)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:13px}
+dt{color:var(--sub)}dd{margin:0}
+.chips{display:flex;gap:5px;align-items:center}.chips span{width:16px;height:16px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px var(--rule)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:auto 0 0}.tags span{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--rule);color:var(--sub)}
+.empty{color:var(--sub);margin-top:40px}
+@media (max-width:440px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<div class="top">
+  <div><p class="eyebrow">FRONTEND-SLIDES · STYLES</p><h1>スタイル一覧</h1>
+  <p class="lede">11種のスタイルを用途ごとに並べています。表紙を押すと4枚の見本が開き、矢印キーで送れます。使いたいスタイルは名前か右の英字名でスキルに伝えてください。</p></div>
+  <div class="filters" role="group" aria-label="絞り込み">
+    <button data-f="all" aria-pressed="true">すべて</button>
+    <button data-f="light" aria-pressed="false">明るい地</button>
+    <button data-f="dark" aria-pressed="false">暗い地</button>
+    <button data-f="formal" aria-pressed="false">フォーマル</button>
+    <button data-f="nophoto" aria-pressed="false">写真なしで作れる</button>
+  </div>
+</div>
+<nav class="toc"><a href="#color-index">章色インデックス</a><a href="#corporate-mono">コーポレート単色</a><a href="#public-standard">公共・標準</a><a href="#gate-gradient">グラデーション扉</a><a href="#geometric-blue">青白と幾何モチーフ</a><a href="#dark-keynote">ダーク・キーノート</a><a href="#swiss-grid">スイス・タイポグリッド</a><a href="#talk-one-message">1枚1メッセージの登壇</a><a href="#photo-editorial">写真主導エディトリアル</a><a href="#tategumi-editorial">縦組みエディトリアル</a><a href="#warm-editorial">ブランド温色</a></nav>
+
+<section class="group" data-group="business">
+  <header><h2>ビジネス</h2><p>会社紹介・経営計画・公式報告</p><span class="n">3</span></header>
+  <div class="grid">
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="color-index">
+    <a class="cover" href="color-index/reference.html" target="_blank" rel="noopener"><img src="color-index/thumbs/01.jpg" alt="章色インデックスの表紙" loading="lazy"></a>
+    <div class="strip"><a href="color-index/reference.html#2" target="_blank" rel="noopener"><img src="color-index/thumbs/02.jpg" alt="" loading="lazy"></a><a href="color-index/reference.html#3" target="_blank" rel="noopener"><img src="color-index/thumbs/03.jpg" alt="" loading="lazy"></a><a href="color-index/reference.html#4" target="_blank" rel="noopener"><img src="color-index/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>章色インデックス<code>color-index</code></h3>
+      <p class="summary">紺を骨格に事業ごとに1色。天罫・■見出し・グラフ・右端の爪見出しが章の色に切り替わる。</p>
+      <dl>
+        <dt>向く場面</dt><dd>中期経営計画、複数事業の会社案内、事業別の長い報告書</dd>
+        <dt>書体</dt><dd>Noto Sans JP / Barlow / Barlow Semi Condensed</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#1E3348" title="#1E3348"></span><span style="--c:#1D232A" title="#1D232A"></span><span style="--c:#F5F4F0" title="#F5F4F0"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 多め</span></p>
+    </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="corporate-mono">
+    <a class="cover" href="corporate-mono/reference.html" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/01.jpg" alt="コーポレート単色の表紙" loading="lazy"></a>
+    <div class="strip"><a href="corporate-mono/reference.html#2" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/02.jpg" alt="" loading="lazy"></a><a href="corporate-mono/reference.html#3" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/03.jpg" alt="" loading="lazy"></a><a href="corporate-mono/reference.html#4" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>コーポレート単色<code>corporate-mono</code></h3>
+      <p class="summary">白地に弁柄1色。全面の扉、左の縦帯の章ナビ、グラフの濃淡の3役にだけ色を使う。</p>
+      <dl>
+        <dt>向く場面</dt><dd>会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料</dd>
+        <dt>書体</dt><dd>IBM Plex Sans JP / Hanken Grotesk</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#9C3A21" title="#9C3A21"></span><span style="--c:#1E1A17" title="#1E1A17"></span><span style="--c:#FFFFFF" title="#FFFFFF"></span><span style="--c:#6B635D" title="#6B635D"></span><span style="--c:#E8D2C8" title="#E8D2C8"></span><span style="--c:#C98A73" title="#C98A73"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 中くらい</span></p>
+    </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="public-standard">
+    <a class="cover" href="public-standard/reference.html" target="_blank" rel="noopener"><img src="public-standard/thumbs/01.jpg" alt="公共・標準の表紙" loading="lazy"></a>
+    <div class="strip"><a href="public-standard/reference.html#2" target="_blank" rel="noopener"><img src="public-standard/thumbs/02.jpg" alt="" loading="lazy"></a><a href="public-standard/reference.html#3" target="_blank" rel="noopener"><img src="public-standard/thumbs/03.jpg" alt="" loading="lazy"></a><a href="public-standard/reference.html#4" target="_blank" rel="noopener"><img src="public-standard/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>公共・標準<code>public-standard</code></h3>
+      <p class="summary">装飾ゼロ。12カラム、8pxの余白スケール、3段の罫線、精密な和欧組版だけで品位を出す。</p>
+      <dl>
+        <dt>向く場面</dt><dd>行政・自治体の報告、公式な会議資料、仕様や制度の説明、アクセシビリティが要件の資料</dd>
+        <dt>書体</dt><dd>Noto Sans JP / IBM Plex Sans</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#FFFFFF" title="#FFFFFF"></span><span style="--c:#1A1A1C" title="#1A1A1C"></span><span style="--c:#55555C" title="#55555C"></span><span style="--c:#D6D6DB" title="#D6D6DB"></span><span style="--c:#0A3BD1" title="#0A3BD1"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 多め</span></p>
+    </div>
+  </article></div>
+</section>
+<section class="group" data-group="tech">
+  <header><h2>テック</h2><p>テック企業・研究開発・技術説明</p><span class="n">2</span></header>
+  <div class="grid">
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="gate-gradient">
+    <a class="cover" href="gate-gradient/reference.html" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/01.jpg" alt="グラデーション扉の表紙" loading="lazy"></a>
+    <div class="strip"><a href="gate-gradient/reference.html#2" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/02.jpg" alt="" loading="lazy"></a><a href="gate-gradient/reference.html#3" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/03.jpg" alt="" loading="lazy"></a><a href="gate-gradient/reference.html#4" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>グラデーション扉<code>gate-gradient</code></h3>
+      <p class="summary">扉だけが深い松葉色の空と朱の水平線。本文は白地に墨と朱の1色。</p>
+      <dl>
+        <dt>向く場面</dt><dd>テック企業の会社紹介、採用ピッチ、カンファレンスのスポンサー資料</dd>
+        <dt>書体</dt><dd>Noto Sans JP / Bricolage Grotesque</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#141816" title="#141816"></span><span style="--c:#565C59" title="#565C59"></span><span style="--c:#DADDDB" title="#DADDDB"></span><span style="--c:#FFFFFF" title="#FFFFFF"></span><span style="--c:#DE4A16" title="#DE4A16"></span><span style="--c:#04302B" title="#04302B"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 標準</span><span>文字量 中くらい</span></p>
+    </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="geometric-blue">
+    <a class="cover" href="geometric-blue/reference.html" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/01.jpg" alt="青白と幾何モチーフの表紙" loading="lazy"></a>
+    <div class="strip"><a href="geometric-blue/reference.html#2" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/02.jpg" alt="" loading="lazy"></a><a href="geometric-blue/reference.html#3" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/03.jpg" alt="" loading="lazy"></a><a href="geometric-blue/reference.html#4" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>青白と幾何モチーフ<code>geometric-blue</code></h3>
+      <p class="summary">モチーフは飾りではなくデータ。表紙の格子は見出しをモデルに読ませた注意の重みを描く。</p>
+      <dl>
+        <dt>向く場面</dt><dd>研究開発の紹介、エンジニア採用ピッチ、技術説明、法人向けの技術提案</dd>
+        <dt>書体</dt><dd>IBM Plex Sans JP / Archivo / IBM Plex Mono</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#1534D6" title="#1534D6"></span><span style="--c:#0A1A5E" title="#0A1A5E"></span><span style="--c:#E9EDFD" title="#E9EDFD"></span><span style="--c:#FFFFFF" title="#FFFFFF"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 標準</span><span>文字量 中くらい</span></p>
+    </div>
+  </article></div>
+</section>
+<section class="group" data-group="stage">
+  <header><h2>登壇・発表</h2><p>カンファレンス・製品発表・イベント</p><span class="n">3</span></header>
+  <div class="grid">
+  <article class="style" data-scheme="dark" data-formality="medium" data-photos="false" id="dark-keynote">
+    <a class="cover" href="dark-keynote/reference.html" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/01.jpg" alt="ダーク・キーノートの表紙" loading="lazy"></a>
+    <div class="strip"><a href="dark-keynote/reference.html#2" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/02.jpg" alt="" loading="lazy"></a><a href="dark-keynote/reference.html#3" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/03.jpg" alt="" loading="lazy"></a><a href="dark-keynote/reference.html#4" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>ダーク・キーノート<code>dark-keynote</code></h3>
+      <p class="summary">黒に近い面に製品を1つ。細い巨大な数字で仕様を見せる製品発表の型。</p>
+      <dl>
+        <dt>向く場面</dt><dd>製品発表会、配信イベント、ハードウェア・家電の新製品紹介</dd>
+        <dt>書体</dt><dd>Noto Sans JP / Jost / IBM Plex Mono</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#0F1012" title="#0F1012"></span><span style="--c:#17181B" title="#17181B"></span><span style="--c:#F3F1EC" title="#F3F1EC"></span><span style="--c:#C9C6BF" title="#C9C6BF"></span><span style="--c:#B4B1AA" title="#B4B1AA"></span><span style="--c:#FFD23F" title="#FFD23F"></span></dd>
+      </dl>
+      <p class="tags"><span>暗い地</span><span>格式 標準</span><span>文字量 少なめ</span></p>
+    </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="swiss-grid">
+    <a class="cover" href="swiss-grid/reference.html" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/01.jpg" alt="スイス・タイポグリッドの表紙" loading="lazy"></a>
+    <div class="strip"><a href="swiss-grid/reference.html#2" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/02.jpg" alt="" loading="lazy"></a><a href="swiss-grid/reference.html#3" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/03.jpg" alt="" loading="lazy"></a><a href="swiss-grid/reference.html#4" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>スイス・タイポグリッド<code>swiss-grid</code></h3>
+      <p class="summary">12列×6段のグリッドを見せ、全要素をその線に揃える。黒・白・信号赤のポスター。</p>
+      <dl>
+        <dt>向く場面</dt><dd>デザイン・建築・文化イベントの告知、展覧会や講演会のプログラム、ポートフォリオ</dd>
+        <dt>書体</dt><dd>Noto Sans JP / Schibsted Grotesk</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#F5F4F0" title="#F5F4F0"></span><span style="--c:#0B0B0B" title="#0B0B0B"></span><span style="--c:#E10600" title="#E10600"></span><span style="--c:#8C8B87" title="#8C8B87"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 標準</span><span>文字量 中くらい</span></p>
+    </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="talk-one-message">
+    <a class="cover" href="talk-one-message/reference.html" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/01.jpg" alt="1枚1メッセージの登壇の表紙" loading="lazy"></a>
+    <div class="strip"><a href="talk-one-message/reference.html#2" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/02.jpg" alt="" loading="lazy"></a><a href="talk-one-message/reference.html#3" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/03.jpg" alt="" loading="lazy"></a><a href="talk-one-message/reference.html#4" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>1枚1メッセージの登壇<code>talk-one-message</code></h3>
+      <p class="summary">明るい地に極太の結論を1枚に1つ。時間はすべて「1マス＝1分」で描く。</p>
+      <dl>
+        <dt>向く場面</dt><dd>勉強会、技術カンファレンス、社内LT、プロジェクター投影</dd>
+        <dt>書体</dt><dd>Noto Sans JP / Inter Tight</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#F0F2F5" title="#F0F2F5"></span><span style="--c:#0D2A4A" title="#0D2A4A"></span><span style="--c:#5E6E82" title="#5E6E82"></span><span style="--c:#E2621B" title="#E2621B"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 標準</span><span>文字量 少なめ</span></p>
+    </div>
+  </article></div>
+</section>
+<section class="group" data-group="editorial">
+  <header><h2>ブランド・編集</h2><p>ブランドブック・思想・周年</p><span class="n">3</span></header>
+  <div class="grid">
+  <article class="style" data-scheme="light" data-formality="high" data-photos="true" id="photo-editorial">
+    <a class="cover" href="photo-editorial/reference.html" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/01.jpg" alt="写真主導エディトリアルの表紙" loading="lazy"></a>
+    <div class="strip"><a href="photo-editorial/reference.html#2" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/02.jpg" alt="" loading="lazy"></a><a href="photo-editorial/reference.html#3" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/03.jpg" alt="" loading="lazy"></a><a href="photo-editorial/reference.html#4" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>写真主導エディトリアル<code>photo-editorial</code></h3>
+      <p class="summary">写真が色を運び、紙面は白・黒・赤の3色。欧文の大文字が名乗り、明朝が語る。</p>
+      <dl>
+        <dt>向く場面</dt><dd>統合報告書、ブランドブック、企業の思想を語る資料、採用ピッチの現場紹介</dd>
+        <dt>書体</dt><dd>Noto Serif JP / Noto Sans JP / Archivo</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#FFFFFF" title="#FFFFFF"></span><span style="--c:#141414" title="#141414"></span><span style="--c:#C8261B" title="#C8261B"></span><span style="--c:#8C8A86" title="#8C8A86"></span><span style="--c:#DAD7D1" title="#DAD7D1"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 中くらい</span><span>写真が必要</span></p>
+    </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="tategumi-editorial">
+    <a class="cover" href="tategumi-editorial/reference.html" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/01.jpg" alt="縦組みエディトリアルの表紙" loading="lazy"></a>
+    <div class="strip"><a href="tategumi-editorial/reference.html#2" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/02.jpg" alt="" loading="lazy"></a><a href="tategumi-editorial/reference.html#3" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/03.jpg" alt="" loading="lazy"></a><a href="tategumi-editorial/reference.html#4" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>縦組みエディトリアル<code>tategumi-editorial</code></h3>
+      <p class="summary">見出しと地の文は縦組みで右から左へ。データだけを横組みの島として左に置く。</p>
+      <dl>
+        <dt>向く場面</dt><dd>老舗の長期構想、周年記念、社史、文化財団・自治体の理念やビジョンの説明</dd>
+        <dt>書体</dt><dd>Noto Serif JP / EB Garamond</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#F2EEE5" title="#F2EEE5"></span><span style="--c:#1D1C1A" title="#1D1C1A"></span><span style="--c:#24466B" title="#24466B"></span><span style="--c:#BCC6D1" title="#BCC6D1"></span><span style="--c:#8297AE" title="#8297AE"></span><span style="--c:#121110" title="#121110"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 中くらい</span><span>縦組み</span></p>
+    </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="low" data-photos="false" id="warm-editorial">
+    <a class="cover" href="warm-editorial/reference.html" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/01.jpg" alt="ブランド温色の表紙" loading="lazy"></a>
+    <div class="strip"><a href="warm-editorial/reference.html#2" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/02.jpg" alt="" loading="lazy"></a><a href="warm-editorial/reference.html#3" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/03.jpg" alt="" loading="lazy"></a><a href="warm-editorial/reference.html#4" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <div class="body">
+      <h3>ブランド温色<code>warm-editorial</code></h3>
+      <p class="summary">クリーム地に端へ寄せた円を1つ。イラストは塗りと線を2回描き、版ずれの手触りで揃える。</p>
+      <dl>
+        <dt>向く場面</dt><dd>BtoC のブランドブック、食品・生活雑貨の商品紹介、採用ピッチのカルチャー章、イベント告知</dd>
+        <dt>書体</dt><dd>Noto Sans JP / Fraunces</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#F3EBDD" title="#F3EBDD"></span><span style="--c:#2E2420" title="#2E2420"></span><span style="--c:#DD5A2B" title="#DD5A2B"></span><span style="--c:#EDB33E" title="#EDB33E"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 カジュアル</span><span>文字量 少なめ</span></p>
+    </div>
+  </article></div>
+</section>
+<p class="empty" hidden>条件に合うスタイルはありません。</p>
+</div>
+<script>
+const tests={all:()=>true,light:e=>e.dataset.scheme==='light',dark:e=>e.dataset.scheme==='dark',formal:e=>e.dataset.formality==='high',nophoto:e=>e.dataset.photos==='false'};
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  let shown=0;
+  document.querySelectorAll('.style').forEach(e=>{const ok=tests[b.dataset.f](e);e.hidden=!ok;shown+=ok});
+  document.querySelectorAll('.group').forEach(g=>g.hidden=!g.querySelector('.style:not([hidden])'));
+  document.querySelector('.empty').hidden=shown>0;
+}));
+</script></body></html>

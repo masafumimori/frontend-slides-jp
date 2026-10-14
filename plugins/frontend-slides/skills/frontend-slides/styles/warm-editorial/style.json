@@ -3,6 +3,8 @@
   "name": "Warm Editorial",
   "name_ja": "ブランド温色",
   "tagline": "Cream paper, one big edge-anchored circle per slide, and two-plate illustrations whose fill sits slightly out of register with the ink line.",
+  "summary_ja": "クリーム地に端へ寄せた円を1つ。イラストは塗りと線を2回描き、版ずれの手触りで揃える。",
+  "group": "editorial",
   "mood": [
     "warm",
     "friendly",

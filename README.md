@@ -27,7 +27,7 @@
 | ![](docs/images/swiss-grid.jpg) | **スイス・タイポグリッド** `swiss-grid` | デザイン・建築・文化イベント |
 | ![](docs/images/color-index.jpg) | **章色インデックス** `color-index` | 中期経営計画、複数事業の会社案内 |
 
-各スタイルは `plugins/frontend-slides/skills/frontend-slides/styles/<slug>/` にあり、`reference.html` をブラウザで開くと 4 枚の見本を矢印キーで送れます。
+全スタイルは `plugins/frontend-slides/skills/frontend-slides/styles/gallery.html` で一覧できます。用途ごとに並び、明暗・格式・写真の要否で絞り込めます。各スタイルの `reference.html` をブラウザで開くと、4 枚の見本を矢印キーで送れます。
 
 ## 日本語のための工夫
 
@@ -93,6 +93,8 @@ URL の発行には Vercel のアカウント、PDF の書き出しには Node.j
 ```bash
 node plugins/frontend-slides/skills/frontend-slides/scripts/check-styles.mjs
 ```
+
+サムネイルの撮影（`scripts/shoot.mjs`）と一覧ページの再生成（`scripts/build-gallery.mjs`）の手順も `styles/README.md` にあります。
 
 スタイルを作るときに調べた参考事例の分析は `docs/research/` にあります。
 

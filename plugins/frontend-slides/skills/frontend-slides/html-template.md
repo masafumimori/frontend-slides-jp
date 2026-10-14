@@ -187,7 +187,7 @@ Inline editing is a lightweight post-draft affordance. Do not ask the user wheth
 HTML:
 ```html
 <div class="edit-hotzone"></div>
-<button class="edit-toggle" id="editToggle" title="Edit mode (E)">✏️</button>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">Edit</button>
 ```
 
 CSS (visibility controlled by JS classes only):
@@ -214,7 +214,54 @@ CSS (visibility controlled by JS classes only):
 }
 ```
 
-JS (three interaction methods):
+JS: the editor. Text edits auto-save to localStorage per file; Ctrl/Cmd+S downloads a clean copy with the edits baked in.
+
+```javascript
+class DeckEditor {
+    constructor() {
+        this.isActive = false;
+        this.key = 'deck-edit:' + location.pathname;
+        this.fields = [...document.querySelectorAll(
+            '.slide :is(h1, h2, h3, h4, p, li, td, th, dt, dd, blockquote, figcaption), .slide [data-edit]'
+        )];
+        const saved = JSON.parse(localStorage.getItem(this.key) || '{}');
+        this.fields.forEach((el, i) => {
+            if (saved[i] !== undefined) el.innerHTML = saved[i];
+            el.addEventListener('input', () => this.save());
+        });
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); this.exportFile(); }
+        });
+    }
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        this.fields.forEach(el => el.toggleAttribute('contenteditable', this.isActive));
+        document.body.classList.toggle('editing', this.isActive);
+        document.getElementById('editToggle').classList.toggle('active', this.isActive);
+    }
+    save() {
+        localStorage.setItem(this.key, JSON.stringify(this.fields.map(el => el.innerHTML)));
+    }
+    exportFile() {
+        const doc = document.documentElement.cloneNode(true);
+        doc.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+        doc.querySelector('body').classList.remove('editing');
+        doc.querySelector('#editToggle')?.classList.remove('active', 'show');
+        const blob = new Blob(['<!DOCTYPE html>\n' + doc.outerHTML], { type: 'text/html' });
+        const a = Object.assign(document.createElement('a'), {
+            href: URL.createObjectURL(blob),
+            download: location.pathname.split('/').pop() || 'presentation.html',
+        });
+        a.click();
+        URL.revokeObjectURL(a.href);
+    }
+}
+const editor = new DeckEditor();
+```
+
+Slide navigation must ignore keys while the user types: in the `SlidePresentation` keydown handler, return early when `e.target.isContentEditable`.
+
+Wire the toggle (three interaction methods):
 ```javascript
 // 1. Click handler on the toggle button
 document.getElementById('editToggle').addEventListener('click', () => {
