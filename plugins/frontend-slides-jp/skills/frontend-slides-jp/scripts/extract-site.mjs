@@ -142,7 +142,10 @@ for (const [i, url] of urls.entries()) {
     let ext = 'svg', data;
     if (l.kind === 'img') {
       const res = l.src && images.get(l.src);
-      if (!res) continue;
+      // Save only bytes that came from a public address: the address of the connection itself,
+      // so a name that resolves differently later cannot point it at this machine or its network.
+      const addr = res && (await res.serverAddr().catch(() => null));
+      if (!res || !addr || !publicAddress(addr.ipAddress)) continue;
       ext = (res.headers()['content-type'] ?? '').match(/image\/(svg|png|jpe?g|webp|gif)/)?.[1].replace('jpeg', 'jpg');
       const body = await res.body().catch(() => null);
       if (!ext || !body || body.length > 2_000_000) continue;
@@ -210,5 +213,30 @@ function cleanSvg(markup) {
     }
   };
   copy(root, out.documentElement);
-  return new XMLSerializer().serializeToString(out);
+  const result = new XMLSerializer().serializeToString(out);
+  // The file may later be pasted into HTML. Parse the result the way the HTML parser does and
+  // refuse it if anything outside the allowlist appears there.
+  const check = document.createElement('div');
+  check.innerHTML = result;
+  for (const el of check.querySelectorAll('*')) {
+    if (!ELEMENTS.has(el.localName.toLowerCase()) || el.namespaceURI !== NS) return null;
+    for (const { name, value } of el.attributes) {
+      if (!ATTRS.test(name) || /^on/i.test(name)) return null;
+      if (/href$/i.test(name) && !/^#[\w-]+$/.test(value)) return null;
+      if (/url\s*\(/i.test(value) && css(value) !== value) return null;
+    }
+    if (el.localName === 'style' && css(el.textContent) !== el.textContent) return null;
+  }
+  return result;
+}
+
+// True for an IP address outside loopback, private, link-local, CGNAT and unique-local ranges.
+function publicAddress(a) {
+  a = String(a).replace(/^\[|\]$/g, '').replace(/^::ffff:/i, '');
+  if (/^\d+\.\d+\.\d+\.\d+$/.test(a)) {
+    const [p, q] = a.split('.').map(Number);
+    return !(p === 0 || p === 10 || p === 127 || (p === 169 && q === 254) || (p === 172 && q >= 16 && q <= 31)
+      || (p === 192 && q === 168) || (p === 100 && q >= 64 && q <= 127) || p >= 224);
+  }
+  return a.includes(':') && !/^(::1?$|f[cd]|fe[89ab])/i.test(a);
 }
