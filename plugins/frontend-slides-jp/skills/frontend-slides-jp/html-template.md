@@ -147,6 +147,54 @@ Reference architecture for generating slide presentations. Every presentation fo
 </html>
 ```
 
+## A4 Document Structure (doc-a4)
+
+A `doc-a4` document is a column of fixed A4 pages read by scrolling. It pastes [page-base.css](page-base.css) instead of `viewport-base.css`, has no slide navigation, and prints one A4 page per `.page`.
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>統合報告書 2026</title>
+    <!-- Fonts: the css queries from fonts/catalog.json, as for slides -->
+    <style>
+        /* === PAGE BASE: paste page-base.css here, in full === */
+
+        /* === STYLE TOKENS: copy :root from the style's reference-a4.html === */
+
+        /* === PAGE FRAME: running head, folio, chapter tab === */
+        .rh    { position: absolute; top: 64px; left: 96px; right: 96px; display: flex; justify-content: space-between; }
+        .folio { position: absolute; bottom: 56px; right: 96px; }
+        .tab   { position: absolute; right: 0; top: 240px; writing-mode: vertical-rl; }
+    </style>
+</head>
+<body>
+    <main class="doc-stage" id="docStage">
+        <section class="page cover">…</section>
+        <section class="page" data-chapter="02">
+            <header class="rh"><span>SAMPLE CORP.</span><span>02 · 事業</span></header>
+            …
+            <span class="folio">12</span>
+        </section>
+    </main>
+    <script>
+        /* === FIT: scale the 1240px column to the window width; print resets it === */
+        const stage = document.getElementById('docStage');
+        const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+        fit();
+        window.addEventListener('resize', fit);
+    </script>
+</body>
+</html>
+```
+
+- Every page is a `<section class="page">` of exactly 1240×1754. Content never reflows; split a page that overflows.
+- The fit uses CSS `zoom`, so the scroll height follows the scaled pages. Print sets `zoom: 0.64`, which turns 1240×1754 into 210×297mm.
+- Inline editing works as in a deck: add the `DeckEditor` below; its field selector covers `.page` as well as `.slide`. A document has no navigation keys to guard. Text inside SVG charts is not editable.
+- Page types, reading rules and the page frame are in [references/document-pages.md](references/document-pages.md).
+
 ## Required JavaScript Features
 
 Every presentation must include:
@@ -223,7 +271,7 @@ class DeckEditor {
         this.isActive = false;
         this.key = 'deck-edit:' + location.pathname;
         this.fields = [...document.querySelectorAll(
-            '.slide :is(h1, h2, h3, h4, p, li, td, th, dt, dd, blockquote, figcaption), .slide [data-edit]'
+            ':is(.slide, .page) :is(h1, h2, h3, h4, p, li, td, th, dt, dd, blockquote, figcaption), :is(.slide, .page) [data-edit]'
         )];
         const saved = JSON.parse(localStorage.getItem(this.key) || '{}');
         this.fields.forEach((el, i) => {

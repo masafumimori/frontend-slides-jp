@@ -12,6 +12,7 @@
 #   1. Starts a local server to serve the HTML (fonts and assets need HTTP)
 #   2. Uses Playwright to screenshot each slide at 1920x1080
 #   3. Combines all screenshots into a single PDF
+#      (a doc-a4 document is printed directly as A4 pages instead)
 #   4. Cleans up the server and temp files
 #
 # The PDF preserves colors, fonts, and layout — but not animations.
@@ -85,6 +86,7 @@ fi
 # Resolve output to absolute path
 OUTPUT_DIR=$(dirname "$OUTPUT_PDF")
 mkdir -p "$OUTPUT_DIR"
+OUTPUT_DIR=$(cd "$OUTPUT_DIR" && pwd)
 OUTPUT_PDF="$OUTPUT_DIR/$(basename "$OUTPUT_PDF")"
 
 echo ""
@@ -216,6 +218,19 @@ await page.evaluate(() => document.fonts.ready);
 
 // Extra wait for animations to settle on the first slide
 await page.waitForTimeout(1500);
+
+// A doc-a4 document (.page without .slide) prints as vector A4 pages:
+// page-base.css already gives one A4 page per .page.
+const isDoc = await page.evaluate(() => document.querySelector('.page') && !document.querySelector('.slide'));
+if (isDoc) {
+  await page.emulateMedia({ media: 'print' });
+  await page.pdf({ path: OUTPUT_PDF, preferCSSPageSize: true, printBackground: true });
+  const pages = await page.evaluate(() => document.querySelectorAll('.page').length);
+  console.log(`  Printed ${pages} A4 pages`);
+  await browser.close();
+  server.close();
+  process.exit(0);
+}
 
 // Count slides
 const slideCount = await page.evaluate(() => {

@@ -1,0 +1,128 @@
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}

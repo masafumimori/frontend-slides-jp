@@ -7,11 +7,12 @@ One folder per style: `styles/<slug>/`. A brand imported from a company design s
 | `style.json` | Indexing only | Selection metadata, fonts, color tokens. Source for `selection-index.json` |
 | `preview.md` | Phase 2, for each shortlisted style | Enough to build one cover slide: palette, fonts, signature moves, cover recipe |
 | `design.md` | Phase 3, for the chosen style only | The design system: thesis, tokens, type scale, devices, slide grammar, slop signs |
-| `reference.html` | Phase 3, for the chosen style only | A working 4-slide deck (cover, gate, conclusion + number, diagram). Copy its CSS, not its copy |
+| `reference.html` | Phase 3, for the chosen style only | A working 4-slide deck (cover, gate, conclusion + number, diagram). Copy its CSS, not its copy. Required when `formats` has `slide-16x9` |
+| `reference-a4.html` | Phase 3, for an A4 document in this style | A working document of at least 4 A4 pages (cover, contents or statement, a reading page, a figure page). Required when `formats` has `doc-a4` |
 
 After adding or editing a style:
 
-1. `node scripts/shoot.mjs styles/<slug>/reference.html --out styles/<slug>/thumbs --width 640 --jpg` writes the four thumbnails.
+1. `node scripts/shoot.mjs styles/<slug>/reference.html --out styles/<slug>/thumbs --width 640 --jpg` writes the four thumbnails. For `doc-a4`, shoot `reference-a4.html` into `thumbs-a4` the same way (`--width 400`).
 2. `node scripts/check-styles.mjs` validates every folder and rewrites `selection-index.json`.
 3. `node scripts/build-gallery.mjs` rewrites `gallery.html`.
 
@@ -40,6 +41,7 @@ After adding or editing a style:
 }
 ```
 
+- `formats`: the keys of [formats.json](../formats.json) this style ships a reference for. Each one needs its reference file and thumbnails folder.
 - `formality`, `density`: `low` | `medium` | `high`. `scheme`: `light` | `dark`. `writing`: `horizontal` | `vertical`. `group` (the gallery section): `business` | `tech` | `stage` | `editorial`.
 - `needs`: inputs the style cannot do without, such as `"photos"`.
 - Every family in `fonts` must exist in `fonts/catalog.json`. The heading family must have `role: "any"`, or `"vertical-heading"` when `writing` is `vertical`.
@@ -59,6 +61,7 @@ Sections, in this order. Sizes are px at the 1920×1080 stage.
 4. **Signature devices.** Each device, the job it does, and where it may appear.
 5. **Slide grammar.** The four reference slides, then how to derive comparison, table, quote, timeline, team and closing slides from the same system.
 6. **Slop signs.** Observable failures to check before delivery, as a checklist.
+7. **Document pages** (only when `formats` has `doc-a4`). How the style's devices become the page frame (running head, folio, chapter tab), the cover, and the reading and figure pages of [references/document-pages.md](../references/document-pages.md). Sizes are px at the 1240×1754 page.
 
 ## `reference.html`
 
