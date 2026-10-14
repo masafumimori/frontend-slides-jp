@@ -16,7 +16,8 @@
   "best_for": "中期経営計画、複数事業の会社案内、事業別の長い報告書",
   "avoid_for": "単一事業の短い登壇、エンタメ、子ども向け",
   "formats": [
-    "slide-16x9"
+    "slide-16x9",
+    "doc-a4"
   ],
   "writing": "horizontal",
   "needs": [],

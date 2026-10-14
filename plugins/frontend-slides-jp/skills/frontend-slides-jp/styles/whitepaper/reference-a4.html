@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>月次決算 実態調査レポート 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=BIZ+UDPGothic:wght@400;700&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS === */
+:root {
+    --navy: #13294B;
+    --em: #00806B;
+    --ink: #1B2430;
+    --mute: #5B6676;
+    --band: #EDF0F4;
+    --paper: #FFFFFF;
+
+    --rule: color-mix(in srgb, var(--navy) 20%, var(--paper));
+    --em-tint: color-mix(in srgb, var(--em) 12%, var(--paper));
+    --navy-70: color-mix(in srgb, var(--navy) 70%, var(--paper));
+    --navy-40: color-mix(in srgb, var(--navy) 40%, var(--paper));
+    --navy-15: color-mix(in srgb, var(--navy) 15%, var(--paper));
+
+    --jp-head: "IBM Plex Sans JP", sans-serif;
+    --jp-body: "BIZ UDPGothic", sans-serif;
+    --num: "Barlow Semi Condensed", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+
+    --desk-bg: #D9DDE3;
+    --page-bg: var(--paper);
+}
+
+body { color: var(--ink); font-family: var(--jp-body); }
+.page { font-family: var(--jp-body); color: var(--ink); }
+.page * { box-sizing: border-box; margin: 0; padding: 0; }
+.en { font-family: var(--num); }
+
+/* === PAGE FRAME ===
+   Top band 0–120: navy hairline, category label + document name left, chapter right.
+   Bottom band 1634–1754: logo left, CTA link centre, folio right.
+   Chapter ladder on the right edge: all four chapters, the current one filled. */
+.band-top { position: absolute; left: 0; right: 0; top: 0; height: 120px; background: var(--band); border-top: 8px solid var(--navy); }
+.rh { position: absolute; top: 60px; left: 96px; right: 96px; height: 30px; display: flex; justify-content: space-between; align-items: center; font-size: 19px; }
+.rh .cat { display: flex; align-items: center; gap: 16px; font-weight: 700; color: var(--navy); }
+.rh .cat b { font-family: var(--jp-head); font-size: 16px; font-weight: 700; color: var(--paper); background: var(--em); padding: 3px 12px 4px; letter-spacing: 0.04em; }
+.rh .chap { display: flex; align-items: baseline; gap: 12px; color: var(--navy); font-weight: 700; }
+.rh .chap .en { font-size: 22px; font-weight: 600; color: var(--em); }
+
+.band-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: var(--band); }
+.bb { position: absolute; left: 96px; right: 96px; bottom: 50px; height: 34px; display: flex; justify-content: space-between; align-items: center; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--num); font-weight: 700; font-size: 22px; letter-spacing: 0.12em; color: var(--navy); }
+.logo i { display: grid; gap: 3px; width: 22px; }
+.logo i::before, .logo i::after { content: ""; display: block; height: 8px; background: currentColor; }
+.logo i::after { width: 62%; background: var(--em); }
+.cta-link { font-size: 19px; font-weight: 700; color: var(--navy); text-decoration: underline; text-decoration-color: var(--em); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.cta-link .en { font-weight: 600; color: var(--em); margin-left: 6px; }
+.folio { font-family: var(--num); font-weight: 600; font-size: 20px; color: var(--navy); letter-spacing: 0.04em; }
+.folio small { font-size: 18px; color: var(--mute); font-weight: 500; }
+
+.ladder { position: absolute; right: 0; top: 200px; width: 44px; display: grid; gap: 6px; }
+.ladder > span { height: 236px; background: var(--band); color: var(--mute); writing-mode: vertical-rl; font-feature-settings: "vpal"; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: flex-start; padding-top: 18px; gap: 8px; letter-spacing: 0.04em; }
+.ladder > span .en { text-combine-upright: all; font-size: 17px; font-weight: 600; }
+.ladder > span.on { background: var(--navy); color: var(--paper); }
+.ladder > span.on .en { color: #7FD8C7; }
+
+/* === PAGE HEAD: kicker, numbered headline, lead === */
+.ph { position: absolute; left: 96px; right: 96px; top: 168px; }
+.kicker { font-family: var(--num); font-size: 20px; font-weight: 600; letter-spacing: 0.16em; color: var(--em); text-transform: uppercase; display: flex; align-items: center; gap: 14px; }
+.kicker::after { content: ""; width: 48px; height: 2px; background: var(--em); }
+.h1 { font-family: var(--jp-head); font-weight: 700; font-size: 58px; line-height: 1.38; color: var(--navy); margin-top: 22px; }
+.h1 em { font-style: normal; color: var(--em); }
+.lead { font-size: 26px; line-height: 1.75; color: var(--ink); margin-top: 26px; letter-spacing: 0.02em; }
+
+/* Numbered section heading: 1-1 in mono, rule under */
+.nh { display: flex; align-items: baseline; gap: 16px; font-family: var(--jp-head); font-weight: 700; font-size: 30px; line-height: 1.45; color: var(--navy); padding-bottom: 14px; border-bottom: 2px solid var(--navy); margin-bottom: 20px; }
+.nh .no { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--em); flex: none; }
+
+.body { font-size: 22px; line-height: 1.8; letter-spacing: 0.02em; }
+.body p + p { margin-top: 0.9em; }
+.cols > p + p { margin-top: 0; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; }
+
+/* Foot slot for notes and sources, above the bottom band */
+.foot { position: absolute; left: 96px; right: 96px; bottom: 150px; font-size: 17px; line-height: 1.7; color: var(--mute); border-top: 1px solid var(--rule); padding-top: 14px; }
+
+/* === SIGNATURE: the spec strip ===
+   Every number in the document carries one: question, n, period, answer type.
+   It sits directly under the figure or number it qualifies, never in a footnote. */
+.spec { display: inline-flex; align-items: stretch; border: 1.5px solid var(--navy); font-family: var(--mono); font-size: 17px; line-height: 1; color: var(--navy); white-space: nowrap; }
+.spec > span { padding: 8px 12px; display: flex; align-items: center; }
+.spec > span + span { border-left: 1px solid var(--rule); }
+.spec .q { background: var(--navy); color: var(--paper); font-weight: 600; }
+.spec .fx { color: var(--mute); }
+.spec .jp { font-family: var(--jp-body); font-size: 16px; }
+
+/* === COVER === */
+.cover { background: var(--paper); }
+.cv-field { position: absolute; left: 0; right: 0; top: 0; height: 1130px; background: var(--navy); color: var(--paper);
+    background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 104.8px 100%; background-position: 96px 0; }
+.cv-top { position: absolute; left: 96px; right: 96px; top: 80px; display: flex; justify-content: space-between; align-items: center; }
+.cv-top .logo { color: var(--paper); }
+.cv-top .doc { font-family: var(--num); font-weight: 600; font-size: 20px; letter-spacing: 0.18em; color: #BFC8D6; }
+.cv-cat { position: absolute; left: 96px; top: 236px; display: flex; align-items: center; gap: 18px; }
+.cv-cat b { font-family: var(--jp-head); font-size: 22px; font-weight: 700; background: var(--em); color: var(--paper); padding: 6px 16px 8px; }
+.cv-cat span { font-family: var(--num); font-size: 20px; letter-spacing: 0.16em; color: #BFC8D6; font-weight: 500; }
+.cv-title { position: absolute; left: 96px; right: 96px; top: 308px; font-family: var(--jp-head); font-weight: 700; font-size: 92px; line-height: 1.24; color: var(--paper); }
+.cv-title .en { font-weight: 600; color: #7FD8C7; }
+.cv-sub { position: absolute; left: 96px; right: 140px; top: 590px; font-family: var(--jp-head); font-weight: 500; font-size: 32px; line-height: 1.6; color: #DCE2EA; }
+.cv-sub strong { color: var(--paper); font-weight: 700; border-bottom: 3px solid #4FC2AC; }
+
+/* Business-day ledger: ten business days, filled to the measured average */
+.bd { position: absolute; left: 96px; right: 96px; top: 806px; height: 240px; }
+.bd-head { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 17px; color: #BFC8D6; margin-bottom: 14px; }
+.bd-row { position: relative; display: grid; grid-template-columns: repeat(10, 1fr); height: 96px; border-left: 1px solid rgba(255,255,255,0.35); }
+.bd-row span { border-right: 1px solid rgba(255,255,255,0.35); border-top: 1px solid rgba(255,255,255,0.35); border-bottom: 1px solid rgba(255,255,255,0.35); font-family: var(--num); font-size: 22px; font-weight: 500; color: #BFC8D6; padding: 10px 12px; text-align: right; }
+.bd-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 63%; background: rgba(255,255,255,0.14); border-right: 4px solid #4FC2AC; }
+.bd-goal { position: absolute; left: 30%; top: -10px; bottom: -10px; border-left: 2px dashed var(--paper); }
+.bd-lab { position: absolute; top: 160px; font-family: var(--jp-head); font-size: 20px; line-height: 1.4; color: var(--paper); }
+.bd-lab .en { font-size: 40px; font-weight: 600; }
+.bd-lab.avg { left: 63%; padding-left: 16px; }
+.bd-lab.goal { right: 70%; padding-right: 16px; text-align: right; color: #DCE2EA; }
+
+.cv-spec { position: absolute; left: 96px; right: 96px; top: 1214px; }
+.cv-spec dd.wide { grid-column: span 3; }
+.cv-spec h2 { font-family: var(--jp-head); font-size: 24px; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.cv-spec h2 .en { font-size: 18px; letter-spacing: 0.16em; color: var(--em); font-weight: 600; }
+.cv-spec dl { display: grid; grid-template-columns: 180px 1fr 180px 1fr; border-top: 2px solid var(--navy); }
+.cv-spec dt, .cv-spec dd { padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 20px; line-height: 1.5; }
+.cv-spec dt { font-family: var(--mono); font-size: 17px; color: var(--mute); padding-top: 19px; }
+.cv-spec dd { padding-right: 28px; }
+.cv-spec dd .en { font-size: 22px; font-weight: 600; }
+.cv-foot { position: absolute; left: 96px; right: 96px; bottom: 72px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 18px; color: var(--mute); line-height: 1.6; }
+.cv-foot .logo { font-size: 26px; }
+
+/* === CONTENTS PAGE === */
+.intro { position: absolute; left: 96px; right: 96px; top: 168px; }
+.keys { position: absolute; left: 96px; right: 96px; top: 604px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
+.key { border-top: 6px solid var(--navy); padding-top: 22px; }
+.key .no { font-family: var(--mono); font-size: 18px; color: var(--em); font-weight: 600; }
+.key .big { font-family: var(--num); font-weight: 600; font-size: 128px; line-height: 1; color: var(--navy); margin-top: 14px; letter-spacing: -0.01em; }
+.key .big small { font-family: var(--jp-head); font-size: 34px; font-weight: 700; margin-left: 6px; letter-spacing: 0; }
+.key.hit .big { color: var(--em); }
+.key .desc { font-size: 22px; line-height: 1.7; margin-top: 16px; min-height: 113px; }
+.key .spec { margin-top: 18px; font-size: 15px; }
+.key .spec > span { padding: 7px 9px; }
+
+.toc { position: absolute; left: 96px; right: 96px; top: 1080px; }
+.toc h2 { font-family: var(--num); font-size: 20px; font-weight: 600; letter-spacing: 0.16em; color: var(--em); margin-bottom: 14px; }
+.toc ol { list-style: none; border-top: 2px solid var(--navy); }
+.toc li { display: grid; grid-template-columns: 90px 1fr 80px; align-items: baseline; padding: 20px 0 20px; border-bottom: 1px solid var(--rule); }
+.toc .n { font-family: var(--num); font-size: 40px; font-weight: 600; color: var(--navy); line-height: 1; }
+.toc .t { font-family: var(--jp-head); font-size: 28px; font-weight: 700; color: var(--navy); line-height: 1.4; }
+.toc .t small { display: block; font-family: var(--jp-body); font-size: 19px; font-weight: 400; color: var(--mute); margin-top: 4px; }
+.toc .p { font-family: var(--num); font-size: 26px; font-weight: 600; text-align: right; color: var(--navy); }
+
+/* === READING PAGE === */
+.read { position: absolute; left: 96px; right: 96px; top: 572px; }
+.read .cols > div > .nh:not(:first-child) { margin-top: 40px; }
+.spec-demo { margin-top: 18px !important; }
+.spec-demo .spec { font-size: 15px; }
+.spec-demo .spec > span { padding: 6px 8px; }
+.pull { margin-top: 30px; padding: 22px 24px 24px; background: var(--em-tint); border-left: 6px solid var(--em); }
+.pull .big { font-family: var(--num); font-size: 64px; font-weight: 600; color: var(--em); line-height: 1; }
+.pull .big small { font-family: var(--jp-head); font-size: 22px; font-weight: 700; margin-left: 4px; }
+.pull p { font-size: 20px; line-height: 1.65; margin: 10px 0 14px; }
+.pull .spec { font-size: 15px; background: var(--paper); }
+.pull .spec > span { padding: 6px 8px; }
+
+/* === FIGURE PAGE: d-stacked-100 fitted === */
+.fig { position: absolute; left: 96px; right: 96px; top: 640px; }
+.fig-cap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.fig-cap h3 { font-family: var(--jp-head); font-size: 24px; font-weight: 700; color: var(--navy); }
+.fig-box { height: 560px; }
+.fig-read { position: absolute; left: 96px; right: 96px; top: 1290px; }
+#d-stacked-100 { --d-ink: var(--ink); --d-paper: var(--paper); --d-accent: var(--em); --d-sub: var(--navy); --d-mid: var(--navy-40); --d-tint: var(--navy-15); --d-rule: var(--rule); --font-jp: var(--jp-head); --font-latin: var(--num); }
+#d-stacked-100 svg { width: 100%; height: 100%; display: block; }
+#d-stacked-100 .seg { stroke: var(--d-paper); stroke-width: 3; }
+#d-stacked-100 .sw { stroke: var(--d-rule); stroke-width: 1; }
+#d-stacked-100 .s0 { fill: var(--d-accent); }
+#d-stacked-100 .s1 { fill: var(--d-sub); }
+#d-stacked-100 .s2 { fill: var(--d-mid); }
+#d-stacked-100 .s3 { fill: var(--d-tint); }
+#d-stacked-100 .s4 { fill: var(--d-rule); }
+#d-stacked-100 .pct { font: 600 26px var(--font-latin); text-anchor: middle; dominant-baseline: central; fill: var(--d-ink); }
+#d-stacked-100 .pct.on-dark { fill: var(--d-paper); }
+#d-stacked-100 .pct.is-accent { font-weight: 700; fill: var(--d-paper); }
+#d-stacked-100 .row { font: 700 22px var(--font-jp); fill: var(--d-ink); text-anchor: end; dominant-baseline: central; }
+#d-stacked-100 .row.all { fill: var(--navy); }
+#d-stacked-100 .key { font: 500 20px var(--font-jp); fill: var(--d-ink); dominant-baseline: central; }
+#d-stacked-100 .grid { stroke: var(--d-rule); stroke-width: 1; }
+#d-stacked-100 .tick { font: 500 18px var(--font-latin); fill: var(--mute); text-anchor: middle; }
+#d-stacked-100 .tot { font: 400 18px var(--mono); fill: var(--navy); text-anchor: end; dominant-baseline: central; }
+#d-stacked-100 .tot-h { font: 400 17px var(--mono); fill: var(--mute); text-anchor: end; }
+#d-stacked-100 .sep { stroke: var(--navy); stroke-width: 1.5; }
+
+/* === CASE PAGE: 課題 → 効果 bands, then ✕ failures === */
+.case { position: absolute; left: 96px; right: 96px; top: 556px; }
+.case-id { display: flex; gap: 0; border: 1.5px solid var(--navy); margin-bottom: 24px; }
+.case-id > div { padding: 14px 20px; font-size: 19px; line-height: 1.5; }
+.case-id > div + div { border-left: 1px solid var(--rule); }
+.case-id .co { font-family: var(--jp-head); font-weight: 700; font-size: 24px; color: var(--navy); background: var(--band); }
+.lane { display: grid; grid-template-columns: 220px 1fr; margin-top: 14px; }
+.lane > h4 { font-family: var(--jp-head); font-size: 24px; font-weight: 700; color: var(--paper); padding: 22px 20px; line-height: 1.4; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+.lane > h4 .en { font-size: 17px; font-weight: 600; letter-spacing: 0.14em; opacity: 0.8; }
+.lane.before > h4 { background: var(--navy); }
+.lane.after > h4 { background: var(--em); }
+.lane > div { border: 1.5px solid var(--navy); border-left: 0; padding: 22px 28px; }
+.lane.after > div { border-color: var(--em); }
+.lane ul { list-style: none; font-size: 21px; line-height: 1.65; display: grid; gap: 8px; }
+.lane li { padding-left: 1.2em; text-indent: -1.2em; }
+.lane li::before { content: "■"; color: var(--navy); margin-right: 0.35em; font-size: 0.7em; vertical-align: 0.15em; }
+.fx3 { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 28px; }
+.fx3 > div + div { border-left: 1px solid var(--rule); padding-left: 28px; }
+.fx3 .lab { font-family: var(--jp-head); font-size: 19px; font-weight: 700; color: var(--navy); }
+.fx3 .v { font-family: var(--num); font-weight: 600; color: var(--em); font-size: 76px; line-height: 1.05; margin-top: 6px; }
+.fx3 .v small { font-family: var(--jp-head); font-size: 20px; font-weight: 700; margin-left: 2px; }
+.fx3 .from { font-family: var(--mono); font-size: 17px; color: var(--mute); margin-top: 6px; }
+.arrow { height: 34px; display: flex; justify-content: center; align-items: center; margin-top: 12px; }
+.arrow::before { content: ""; width: 0; height: 0; border-left: 26px solid transparent; border-right: 26px solid transparent; border-top: 22px solid var(--navy-40); }
+.fail { position: absolute; left: 96px; right: 96px; top: 1200px; }
+.fail .nh { margin-bottom: 18px; }
+.fail-grid { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 24px; }
+.fail-grid > div { background: var(--band); padding: 22px 22px 24px; }
+.fail-grid h5 { font-family: var(--jp-head); font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.45; display: flex; gap: 10px; }
+.fail-grid h5::before { content: "✕"; color: var(--paper); background: #A23B3B; flex: none; width: 30px; height: 30px; display: grid; place-items: center; font-size: 18px; margin-top: 2px; }
+.fail-grid p { font-size: 19px; line-height: 1.7; margin-top: 12px; }
+
+/* === BACK COVER: CTA + survey outline + company === */
+.cta { position: absolute; left: 96px; right: 96px; top: 560px; background: var(--navy); color: var(--paper); padding: 48px 56px 52px; }
+.cta .lab { font-family: var(--jp-head); font-size: 20px; font-weight: 700; color: #7FD8C7; display: flex; gap: 12px; align-items: center; }
+.cta h3 { font-family: var(--jp-head); font-size: 44px; font-weight: 700; line-height: 1.45; margin-top: 16px; }
+.cta .steps { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 34px; border-top: 1px solid rgba(255,255,255,0.3); }
+.cta .steps > div { padding: 22px 24px 0 0; }
+.cta .steps > div + div { padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.3); }
+.cta .steps .en { font-family: var(--mono); font-size: 17px; color: #7FD8C7; }
+.cta .steps b { display: block; font-family: var(--jp-head); font-size: 24px; margin-top: 8px; }
+.cta .steps p { font-size: 19px; line-height: 1.65; margin-top: 8px; color: #DCE2EA; }
+.cta .url { margin-top: 38px; display: flex; align-items: center; justify-content: space-between; background: var(--paper); color: var(--navy); padding: 20px 28px; }
+.cta .url span { font-family: var(--jp-head); font-size: 22px; font-weight: 700; }
+.cta .url b { font-family: var(--mono); font-size: 26px; font-weight: 600; color: var(--em); }
+.tables { position: absolute; left: 96px; right: 96px; top: 1186px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; }
+.tables h4 { font-family: var(--jp-head); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+.tables dl { display: grid; grid-template-columns: 128px 1fr; border-top: 2px solid var(--navy); }
+.tables dt, .tables dd { padding: 11px 0; border-bottom: 1px solid var(--rule); font-size: 18px; line-height: 1.55; }
+.tables dt { color: var(--mute); font-family: var(--jp-head); font-weight: 500; }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ 1. COVER ============ -->
+<section class="page cover">
+    <div class="cv-field">
+        <div class="cv-top">
+            <span class="logo"><i></i>KAZOERU</span>
+            <span class="doc">WHITE PAPER · RESEARCH 2026.10</span>
+        </div>
+        <div class="cv-cat"><b>経理・財務 実態調査</b><span>MONTHLY CLOSE SURVEY 2026</span></div>
+        <h1 class="cv-title">経理部門の<br>月次決算 実態調査</h1>
+        <p class="cv-sub">締めに6営業日以上かかる企業の6割は、<br><strong>作業ではなく「資料待ち」</strong>に時間を使っている。</p>
+        <div class="bd">
+            <div class="bd-head"><span>BD = 翌月の営業日</span><span>Q03 締め日数 · n=412</span></div>
+            <div class="bd-row">
+                <div class="bd-fill"></div>
+                <div class="bd-goal"></div>
+                <span>BD1</span><span>BD2</span><span>BD3</span><span>BD4</span><span>BD5</span><span>BD6</span><span>BD7</span><span>BD8</span><span>BD9</span><span>BD10</span>
+            </div>
+            <div class="bd-lab goal">回答者が目標とする<br>締め日数 <span class="en">3.0</span></div>
+            <div class="bd-lab avg">現在の平均<br>締め日数 <span class="en">6.3</span></div>
+        </div>
+    </div>
+    <div class="cv-spec">
+        <h2><span class="en">SURVEY OUTLINE</span>調査概要</h2>
+        <dl>
+            <dt>対象</dt><dd>従業員50名以上の企業で月次決算に携わる経理担当者</dd>
+            <dt>n</dt><dd><span class="en">412</span> 名（うち管理職 <span class="en">138</span> 名）</dd>
+            <dt>期間</dt><dd><span class="en">2026.07.07 – 07.18</span></dd>
+            <dt>方法</dt><dd>インターネット調査、全<span class="en">12</span>問</dd>
+            <dt>内訳</dt><dd class="wide">100名未満 <span class="en">96</span>　100〜299名 <span class="en">118</span>　300〜999名 <span class="en">104</span>　1,000名以上 <span class="en">94</span></dd>
+        </dl>
+    </div>
+    <div class="cv-foot">
+        <span>本書の調査データ・企業名・事例はすべて架空のものです。<br>株式会社カゾエル 経理DX研究室 編</span>
+        <span class="logo"><i></i>KAZOERU</span>
+    </div>
+</section>
+
+<!-- ============ 2. INTRODUCTION + CONTENTS ============ -->
+<section class="page">
+    <div class="band-top"></div>
+    <header class="rh"><span class="cat"><b>調査レポート</b>月次決算 実態調査 2026</span><span class="chap"><span class="en">00</span>はじめに</span></header>
+    <nav class="ladder" aria-label="章"><span><span class="en">01</span>調査の背景</span><span><span class="en">02</span>調査結果</span><span><span class="en">03</span>導入事例</span><span><span class="en">04</span>進め方</span></nav>
+
+    <div class="intro">
+        <p class="kicker">Introduction</p>
+        <h2 class="h1">締めが遅い原因は、<br>経理の手の遅さではなく<em>「待ち」</em>にある</h2>
+        <p class="lead">月次決算の早期化は、多くの経理部門が掲げながら進まない目標です。本書は経理担当者412名への調査から、締めの日数を決めているのは作業量ではなく、他部署から資料が届くまでの待ち時間であることを示します。</p>
+    </div>
+
+    <div class="keys">
+        <div class="key">
+            <p class="no">FINDING 01</p>
+            <p class="big">6.3<small>営業日</small></p>
+            <p class="desc">月次決算の締めにかかる平均日数。目標の3.0営業日の2倍にあたる。</p>
+            <span class="spec"><span class="q">Q03</span><span>n=412</span><span>2026.07</span><span class="fx jp">架空</span></span>
+        </div>
+        <div class="key">
+            <p class="no">FINDING 02</p>
+            <p class="big">46<small>%</small></p>
+            <p class="desc">締めに6営業日以上かかる企業の割合。1,000名以上の企業でも41%。</p>
+            <span class="spec"><span class="q">Q03</span><span>n=412</span><span>2026.07</span><span class="fx jp">架空</span></span>
+        </div>
+        <div class="key hit">
+            <p class="no">FINDING 03</p>
+            <p class="big">61<small>%</small></p>
+            <p class="desc">6営業日以上の企業で、遅れの主因に「他部署からの資料待ち」を挙げた割合。</p>
+            <span class="spec"><span class="q">Q08</span><span>n=190</span><span>2026.07</span><span class="fx jp">架空</span></span>
+        </div>
+    </div>
+
+    <div class="toc">
+        <h2>CONTENTS</h2>
+        <ol>
+            <li><span class="n">01</span><span class="t">調査の背景<small>締めの日数は、なぜ経営の問題になるのか</small></span><span class="p">03</span></li>
+            <li><span class="n">02</span><span class="t">調査結果<small>締め日数の分布と、遅れを生む工程</small></span><span class="p">04</span></li>
+            <li><span class="n">03</span><span class="t">導入事例<small>資料待ちを見える化した中堅卸の8か月</small></span><span class="p">05</span></li>
+            <li><span class="n">04</span><span class="t">早期化の進め方<small>自社の締めを測る無料診断のご案内</small></span><span class="p">06</span></li>
+        </ol>
+    </div>
+
+    <div class="band-bot"></div>
+    <footer class="bb"><span class="logo"><i></i>KAZOERU</span><span class="cta-link">月次決算の早期化診断を申し込む<span class="en">→</span></span><span class="folio">02 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ 3. READING PAGE: chapter 01 ============ -->
+<section class="page">
+    <div class="band-top"></div>
+    <header class="rh"><span class="cat"><b>調査レポート</b>月次決算 実態調査 2026</span><span class="chap"><span class="en">01</span>調査の背景</span></header>
+    <nav class="ladder" aria-label="章"><span class="on"><span class="en">01</span>調査の背景</span><span><span class="en">02</span>調査結果</span><span><span class="en">03</span>導入事例</span><span><span class="en">04</span>進め方</span></nav>
+
+    <div class="ph">
+        <p class="kicker">Chapter 01 · Background</p>
+        <h2 class="h1">締めが3日遅れると、<br>経営会議は<em>1週間</em>遅れる</h2>
+        <p class="lead">月次の数字は、確定した日ではなく、経営会議に載った日に意味を持ちます。締めの遅れは経理の残業で終わらず、翌月の打ち手の遅れとして経営に跳ね返ります。</p>
+    </div>
+
+    <div class="read">
+        <div class="cols body">
+            <div>
+                <h3 class="nh"><span class="no">1-1</span>数字が会議に間に合わない</h3>
+                <p>多くの企業は、月次の業績を翌月の第2週か第3週に開く経営会議で確認します。締めが5営業日目に終われば第2週の会議に間に合いますが、8営業日目までずれ込むと、資料の作成と確認を挟んで翌週の会議に回ります。</p>
+                <p>締めの3日の遅れが、判断の1週間の遅れになるのはこのためです。売上の落ち込みや原価の上昇に気づいても、手を打てるのは翌々月になります。</p>
+                <div class="pull">
+                    <p class="big">58<small>%</small></p>
+                    <p class="desc">経営会議の資料に、前月ではなく前々月の数字を使った経験がある管理職の割合。</p>
+                    <span class="spec"><span class="q">Q11</span><span>n=138</span><span>2026.07</span><span class="fx jp">架空</span></span>
+                </div>
+            </div>
+            <div>
+                <h3 class="nh"><span class="no">1-2</span>早期化が進まない構造</h3>
+                <p>早期化の取り組みは、これまで経理の作業を速くする方向で進んできました。仕訳の自動化や会計ソフトの更新はその代表です。しかし締めの日数を決めているのは、経理の作業時間だけではありません。</p>
+                <p>経費精算、売上の確定、在庫の棚卸し、外注費の請求書。締めに必要な資料の多くは営業や購買、現場の部署から届きます。経理がどれだけ速く処理しても、最後の1枚が届くまで締めは終わりません。</p>
+                <h3 class="nh"><span class="no">1-3</span>本書の数字の読み方</h3>
+                <p>本調査では、この「待ち」がどこで、どれだけ発生しているかを工程ごとに尋ねました。設問ごとに回答者が異なるため、本書の数字にはすべて、設問番号、回答者数 n、調査期間を記した札を付けています。</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="foot">注：経営会議の開催時期は一般的な例として示した。数値は本調査（架空のデータ）による。</p>
+    <div class="band-bot"></div>
+    <footer class="bb"><span class="logo"><i></i>KAZOERU</span><span class="cta-link">月次決算の早期化診断を申し込む<span class="en">→</span></span><span class="folio">03 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ 4. FIGURE PAGE: chapter 02 ============ -->
+<section class="page">
+    <div class="band-top"></div>
+    <header class="rh"><span class="cat"><b>調査レポート</b>月次決算 実態調査 2026</span><span class="chap"><span class="en">02</span>調査結果</span></header>
+    <nav class="ladder" aria-label="章"><span><span class="en">01</span>調査の背景</span><span class="on"><span class="en">02</span>調査結果</span><span><span class="en">03</span>導入事例</span><span><span class="en">04</span>進め方</span></nav>
+
+    <div class="ph">
+        <p class="kicker">Chapter 02 · Findings</p>
+        <h2 class="h1">従業員1,000名以上の企業でも、<br><em>4割</em>が締めに6営業日以上かかる</h2>
+        <p class="lead">規模が大きいほど締めは早いと考えられがちですが、差は小さく、6営業日以上の割合は最も低い1,000名以上の層でも41%でした。人員やシステムの差では、待ちの時間は縮まりません。</p>
+    </div>
+
+    <div class="fig" id="d-stacked-100">
+        <div class="fig-cap">
+            <h3>従業員規模別 月次決算の締め日数</h3>
+            <span class="spec"><span class="q">Q03</span><span>n=412</span><span>2026.07.07–07.18</span><span class="jp">単一回答</span><span class="fx jp">架空データ</span></span>
+        </div>
+        <div class="fig-box"><svg aria-label="従業員規模別の締め日数の構成比"></svg></div>
+    </div>
+
+    <div class="fig-read">
+        <div class="cols body">
+            <p>100名未満では52%が6営業日以上かかり、1,000名以上では41%に下がります。ただし規模が10倍以上になっても、差は11ポイントにとどまります。</p>
+            <p>3営業日以内に締める企業は、どの規模でも2割以下でした。この層は共通して、資料の提出期限を部署ごとに決め、遅れを毎月記録しています（Q09）。</p>
+        </div>
+    </div>
+
+    <p class="foot">出典：株式会社カゾエル「月次決算 実態調査 2026」（架空のデータ）。構成比は四捨五入のため合計が100%にならない場合がある。</p>
+    <div class="band-bot"></div>
+    <footer class="bb"><span class="logo"><i></i>KAZOERU</span><span class="cta-link">月次決算の早期化診断を申し込む<span class="en">→</span></span><span class="folio">04 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ 5. CASE PAGE: chapter 03 ============ -->
+<section class="page">
+    <div class="band-top"></div>
+    <header class="rh"><span class="cat"><b>調査レポート</b>月次決算 実態調査 2026</span><span class="chap"><span class="en">03</span>導入事例</span></header>
+    <nav class="ladder" aria-label="章"><span><span class="en">01</span>調査の背景</span><span><span class="en">02</span>調査結果</span><span class="on"><span class="en">03</span>導入事例</span><span><span class="en">04</span>進め方</span></nav>
+
+    <div class="ph">
+        <p class="kicker">Chapter 03 · Case</p>
+        <h2 class="h1">資料待ちを見える化して、<br>締めを<em>8営業日から4営業日</em>に</h2>
+        <p class="lead">食品卸のA社は、経理の作業を増やさずに締めを半分にしました。変えたのは、資料が届くまでの時間を部署ごとに測り、毎月共有したことだけです。</p>
+    </div>
+
+    <div class="case">
+        <h3 class="nh"><span class="no">3-1</span>食品卸 A社の8か月</h3>
+        <div class="case-id">
+            <div class="co">A社（架空）</div>
+            <div>食品卸 · 従業員 620名 · 経理 9名</div>
+            <div>導入 2025年11月 · 期間 8か月</div>
+        </div>
+        <div class="lane before">
+            <h4><span class="en">BEFORE</span>導入前の課題</h4>
+            <div><ul>
+                <li>営業所の経費精算が毎月BD4以降に集中し、締めがBD8までずれ込んでいた。</li>
+                <li>どの部署の資料が遅れているかを、経理が電話で確認していた。</li>
+            </ul></div>
+        </div>
+        <div class="arrow"></div>
+        <div class="lane after">
+            <h4><span class="en">AFTER</span>導入後の効果</h4>
+            <div class="fx3">
+                <div><p class="lab">締め日数</p><p class="v">4<small>営業日</small></p><p class="from">8 → 4 BD</p></div>
+                <div><p class="lab">月末月初の残業</p><p class="v">18<small>時間/人</small></p><p class="from">42 → 18 h</p></div>
+                <div><p class="lab">資料の差し戻し</p><p class="v">9<small>件/月</small></p><p class="from">31 → 9 件</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fail">
+        <h3 class="nh"><span class="no">3-2</span>早期化でよくある3つの失敗</h3>
+        <div class="fail-grid">
+            <div><h5>締め日だけを<br>前倒しする</h5><p>提出期限を早めても、遅れの理由が残れば差し戻しと修正仕訳が増え、確定はむしろ遅れる。</p></div>
+            <div><h5>経理の作業から<br>自動化する</h5><p>処理が速くなっても、資料が届くまでの待ちは縮まらない。先に待ちの長い工程を測る。</p></div>
+            <div><h5>遅れた部署を<br>名指しで責める</h5><p>記録が責める材料になると、提出は早まらず報告が遅れる。遅れの理由を一緒に記録する。</p></div>
+        </div>
+    </div>
+
+    <p class="foot">注：A社の企業名・数値は説明のための架空の事例。効果は導入前3か月と導入後3か月の平均の比較。</p>
+    <div class="band-bot"></div>
+    <footer class="bb"><span class="logo"><i></i>KAZOERU</span><span class="cta-link">月次決算の早期化診断を申し込む<span class="en">→</span></span><span class="folio">05 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ 6. BACK COVER: CTA + data ============ -->
+<section class="page">
+    <div class="band-top"></div>
+    <header class="rh"><span class="cat"><b>調査レポート</b>月次決算 実態調査 2026</span><span class="chap"><span class="en">04</span>早期化の進め方</span></header>
+    <nav class="ladder" aria-label="章"><span><span class="en">01</span>調査の背景</span><span><span class="en">02</span>調査結果</span><span><span class="en">03</span>導入事例</span><span class="on"><span class="en">04</span>進め方</span></nav>
+
+    <div class="ph">
+        <p class="kicker">Chapter 04 · Next step</p>
+        <h2 class="h1">まず、自社の締めのどこに<br><em>待ち</em>があるかを測る</h2>
+        <p class="lead">早期化の最初の一歩は、仕組みを入れることではなく、資料が届くまでの日数を部署ごとに知ることです。本調査と同じ12問で、自社の締めを診断できます。</p>
+    </div>
+
+    <div class="cta">
+        <p class="lab">無料 · オンライン30分</p>
+        <h3>月次決算 早期化診断</h3>
+        <div class="steps">
+            <div><span class="en">STEP 1</span><b>12問に回答</b><p>本調査と同じ設問に、担当者が10分で答えます。</p></div>
+            <div><span class="en">STEP 2</span><b>待ちの工程を特定</b><p>回答412社と比べ、待ちの長い工程を示します。</p></div>
+            <div><span class="en">STEP 3</span><b>報告会 30分</b><p>短縮できる日数と、最初の打ち手をお伝えします。</p></div>
+        </div>
+        <div class="url"><span>お申し込みはこちら</span><b>kazoeru.example/close-check</b></div>
+    </div>
+
+    <div class="tables">
+        <div>
+            <h4>調査概要</h4>
+            <dl>
+                <dt>調査名</dt><dd>月次決算 実態調査 2026</dd>
+                <dt>対象</dt><dd>従業員50名以上の企業の経理担当者</dd>
+                <dt>有効回答</dt><dd>412名（管理職138名）</dd>
+                <dt>期間</dt><dd>2026年7月7日〜7月18日</dd>
+                <dt>方法</dt><dd>インターネット調査（架空のデータ）</dd>
+            </dl>
+        </div>
+        <div>
+            <h4>発行者</h4>
+            <dl>
+                <dt>社名</dt><dd>株式会社カゾエル（架空）</dd>
+                <dt>事業</dt><dd>月次決算の進行管理クラウドの開発・提供</dd>
+                <dt>編集</dt><dd>経理DX研究室</dd>
+                <dt>発行</dt><dd>2026年10月</dd>
+                <dt>問い合わせ</dt><dd>research@kazoeru.example</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="band-bot"></div>
+    <footer class="bb"><span class="logo"><i></i>KAZOERU</span><span class="cta-link">月次決算の早期化診断を申し込む<span class="en">→</span></span><span class="folio">06 <small>/ 06</small></span></footer>
+</section>
+
+</main>
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+
+/* === d-stacked-100 from references/diagrams.html, fitted: n per row in mono, a rule under the 全体 row === */
+(() => {
+function drawStacked100(svg, data) {
+  const W = svg.clientWidth || 1048, H = svg.clientHeight || 560;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a, p = svg) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); p.appendChild(n); return n; };
+  const tx = (s, a, p) => { const n = el('text', a, p); n.textContent = s; return n; };
+  const tw = (s, cls) => { const n = tx(s, { class: cls }); const w = n.getComputedTextLength(); n.remove(); return Math.ceil(w); };
+  let k = 1;
+  const cls = data.series.map(s => s.accent ? 's0' : 's' + k++);
+  const totOf = r => r.total == null ? '' : typeof r.total === 'number' ? r.total.toLocaleString('ja-JP') : String(r.total);
+  const hasTot = data.rows.some(r => r.total != null), totHead = data.totalLabel ?? '';
+  const totW = hasTot ? Math.max(tw(totHead, 'tot-h'), ...data.rows.map(r => tw(totOf(r), 'tot'))) : 0;
+  const m = { l: Math.max(Math.max(...data.rows.map(r => tw(r.label, 'row'))) + 32, W * 0.101), r: hasTot ? totW + 32 : 40, t: 64, b: 44 };
+  let lx = m.l, ly = 22;
+  data.series.forEach((s, i) => {
+    const w = 36 + tw(s.key, 'key');
+    if (lx > m.l && lx + w > W - m.r) { lx = m.l; ly += 38; }
+    el('rect', { class: 'sw ' + cls[i], x: lx, y: ly - 14, width: 26, height: 26 });
+    tx(s.key, { class: 'key', x: lx + 36, y: ly });
+    lx += w + 44;
+  });
+  m.t += ly - 22;
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, rh = ih / data.rows.length, bh = Math.min(68, rh * 0.62);
+  [25, 50, 75].forEach(p => el('line', { class: 'grid', x1: m.l + iw * p / 100, x2: m.l + iw * p / 100, y1: m.t, y2: m.t + ih }));
+  [0, 25, 50, 75, 100].forEach(p => tx(`${p}%`, { class: 'tick', x: m.l + iw * p / 100, y: H - 8 }));
+  if (hasTot && totHead) tx(totHead, { class: 'tot-h', x: W, y: m.t - 12 });
+  data.rows.forEach((r, i) => {
+    const cy = m.t + rh * (i + 0.5), sum = r.v.reduce((a, b) => a + b, 0);
+    tx(r.label, { class: 'row' + (r.all ? ' all' : ''), x: m.l - 24, y: cy });
+    let x = m.l;
+    r.v.forEach((v, j) => {
+      const w = iw * v / sum, dark = cls[j] === 's0' || cls[j] === 's1', lab = `${Math.round(v / sum * 100)}%`;
+      const c = 'pct' + (cls[j] === 's0' ? ' is-accent' : dark ? ' on-dark' : '');
+      el('rect', { class: 'seg ' + cls[j], x, y: cy - bh / 2, width: w, height: bh });
+      if (w >= tw(lab, c) + 16) tx(lab, { class: c, x: x + w / 2, y: cy });
+      x += w;
+    });
+    if (r.total != null) tx(totOf(r), { class: 'tot', x: W, y: cy });
+    if (r.all) el('line', { class: 'sep', x1: 0, x2: W, y1: m.t + rh * (i + 1), y2: m.t + rh * (i + 1) });
+  });
+}
+const svg = document.querySelector('#d-stacked-100 svg');
+const data = {
+  series: [{ key: '6営業日以上', accent: true }, { key: '4〜5営業日' }, { key: '3営業日以内' }],
+  totalLabel: 'n',
+  rows: [
+    { label: '全体', v: [46, 37, 17], total: 'n=412', all: true },
+    { label: '100名未満', v: [52, 33, 15], total: 'n=96' },
+    { label: '100〜299名', v: [47, 38, 15], total: 'n=118' },
+    { label: '300〜999名', v: [44, 37, 19], total: 'n=104' },
+    { label: '1,000名以上', v: [41, 39, 20], total: 'n=94' }
+  ]
+};
+const draw = () => { svg.replaceChildren(); drawStacked100(svg, data); };
+draw(); document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
   "name": "frontend-slides-jp",
-  "version": "3.0.0",
-  "description": "Japanese-first HTML presentation generator: 11 styles drawn from Japanese reference decks, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
+  "version": "3.1.0",
+  "description": "Japanese-first HTML presentations and A4 documents: 12 styles drawn from Japanese reference decks and reports, 50 diagram patterns, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
   "skills": "./skills/",
   "author": {
     "name": "zarazhangrui",

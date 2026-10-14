@@ -18,7 +18,8 @@
       "best_for": "中期経営計画、複数事業の会社案内、事業別の長い報告書",
       "avoid_for": "単一事業の短い登壇、エンタメ、子ども向け",
       "formats": [
-        "slide-16x9"
+        "slide-16x9",
+        "doc-a4"
       ],
       "writing": "horizontal",
       "needs": [],
@@ -37,13 +38,26 @@
       ],
       "preview_md": "styles/color-index/preview.md",
       "design_md": "styles/color-index/design.md",
-      "reference_html": "styles/color-index/reference.html",
-      "thumbs": [
-        "styles/color-index/thumbs/01.jpg",
-        "styles/color-index/thumbs/02.jpg",
-        "styles/color-index/thumbs/03.jpg",
-        "styles/color-index/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/color-index/reference.html",
+          "thumbs": [
+            "styles/color-index/thumbs/01.jpg",
+            "styles/color-index/thumbs/02.jpg",
+            "styles/color-index/thumbs/03.jpg",
+            "styles/color-index/thumbs/04.jpg"
+          ]
+        },
+        "doc-a4": {
+          "html": "styles/color-index/reference-a4.html",
+          "thumbs": [
+            "styles/color-index/thumbs-a4/01.jpg",
+            "styles/color-index/thumbs-a4/02.jpg",
+            "styles/color-index/thumbs-a4/03.jpg",
+            "styles/color-index/thumbs-a4/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "corporate-mono",
@@ -60,10 +74,11 @@
       "formality": "high",
       "density": "medium",
       "scheme": "light",
-      "best_for": "会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料",
+      "best_for": "会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料、統合報告書、会社案内",
       "avoid_for": "エンタメ、子ども向け、写真で魅せるブランド発表",
       "formats": [
-        "slide-16x9"
+        "slide-16x9",
+        "doc-a4"
       ],
       "writing": "horizontal",
       "needs": [],
@@ -84,13 +99,26 @@
       ],
       "preview_md": "styles/corporate-mono/preview.md",
       "design_md": "styles/corporate-mono/design.md",
-      "reference_html": "styles/corporate-mono/reference.html",
-      "thumbs": [
-        "styles/corporate-mono/thumbs/01.jpg",
-        "styles/corporate-mono/thumbs/02.jpg",
-        "styles/corporate-mono/thumbs/03.jpg",
-        "styles/corporate-mono/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/corporate-mono/reference.html",
+          "thumbs": [
+            "styles/corporate-mono/thumbs/01.jpg",
+            "styles/corporate-mono/thumbs/02.jpg",
+            "styles/corporate-mono/thumbs/03.jpg",
+            "styles/corporate-mono/thumbs/04.jpg"
+          ]
+        },
+        "doc-a4": {
+          "html": "styles/corporate-mono/reference-a4.html",
+          "thumbs": [
+            "styles/corporate-mono/thumbs-a4/01.jpg",
+            "styles/corporate-mono/thumbs-a4/02.jpg",
+            "styles/corporate-mono/thumbs-a4/03.jpg",
+            "styles/corporate-mono/thumbs-a4/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "dark-keynote",
@@ -132,13 +160,17 @@
       ],
       "preview_md": "styles/dark-keynote/preview.md",
       "design_md": "styles/dark-keynote/design.md",
-      "reference_html": "styles/dark-keynote/reference.html",
-      "thumbs": [
-        "styles/dark-keynote/thumbs/01.jpg",
-        "styles/dark-keynote/thumbs/02.jpg",
-        "styles/dark-keynote/thumbs/03.jpg",
-        "styles/dark-keynote/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/dark-keynote/reference.html",
+          "thumbs": [
+            "styles/dark-keynote/thumbs/01.jpg",
+            "styles/dark-keynote/thumbs/02.jpg",
+            "styles/dark-keynote/thumbs/03.jpg",
+            "styles/dark-keynote/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "gate-gradient",
@@ -179,13 +211,17 @@
       ],
       "preview_md": "styles/gate-gradient/preview.md",
       "design_md": "styles/gate-gradient/design.md",
-      "reference_html": "styles/gate-gradient/reference.html",
-      "thumbs": [
-        "styles/gate-gradient/thumbs/01.jpg",
-        "styles/gate-gradient/thumbs/02.jpg",
-        "styles/gate-gradient/thumbs/03.jpg",
-        "styles/gate-gradient/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/gate-gradient/reference.html",
+          "thumbs": [
+            "styles/gate-gradient/thumbs/01.jpg",
+            "styles/gate-gradient/thumbs/02.jpg",
+            "styles/gate-gradient/thumbs/03.jpg",
+            "styles/gate-gradient/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "geometric-blue",
@@ -225,13 +261,17 @@
       ],
       "preview_md": "styles/geometric-blue/preview.md",
       "design_md": "styles/geometric-blue/design.md",
-      "reference_html": "styles/geometric-blue/reference.html",
-      "thumbs": [
-        "styles/geometric-blue/thumbs/01.jpg",
-        "styles/geometric-blue/thumbs/02.jpg",
-        "styles/geometric-blue/thumbs/03.jpg",
-        "styles/geometric-blue/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/geometric-blue/reference.html",
+          "thumbs": [
+            "styles/geometric-blue/thumbs/01.jpg",
+            "styles/geometric-blue/thumbs/02.jpg",
+            "styles/geometric-blue/thumbs/03.jpg",
+            "styles/geometric-blue/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "photo-editorial",
@@ -273,13 +313,17 @@
       ],
       "preview_md": "styles/photo-editorial/preview.md",
       "design_md": "styles/photo-editorial/design.md",
-      "reference_html": "styles/photo-editorial/reference.html",
-      "thumbs": [
-        "styles/photo-editorial/thumbs/01.jpg",
-        "styles/photo-editorial/thumbs/02.jpg",
-        "styles/photo-editorial/thumbs/03.jpg",
-        "styles/photo-editorial/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/photo-editorial/reference.html",
+          "thumbs": [
+            "styles/photo-editorial/thumbs/01.jpg",
+            "styles/photo-editorial/thumbs/02.jpg",
+            "styles/photo-editorial/thumbs/03.jpg",
+            "styles/photo-editorial/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "public-standard",
@@ -319,13 +363,17 @@
       ],
       "preview_md": "styles/public-standard/preview.md",
       "design_md": "styles/public-standard/design.md",
-      "reference_html": "styles/public-standard/reference.html",
-      "thumbs": [
-        "styles/public-standard/thumbs/01.jpg",
-        "styles/public-standard/thumbs/02.jpg",
-        "styles/public-standard/thumbs/03.jpg",
-        "styles/public-standard/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/public-standard/reference.html",
+          "thumbs": [
+            "styles/public-standard/thumbs/01.jpg",
+            "styles/public-standard/thumbs/02.jpg",
+            "styles/public-standard/thumbs/03.jpg",
+            "styles/public-standard/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "swiss-grid",
@@ -364,13 +412,17 @@
       ],
       "preview_md": "styles/swiss-grid/preview.md",
       "design_md": "styles/swiss-grid/design.md",
-      "reference_html": "styles/swiss-grid/reference.html",
-      "thumbs": [
-        "styles/swiss-grid/thumbs/01.jpg",
-        "styles/swiss-grid/thumbs/02.jpg",
-        "styles/swiss-grid/thumbs/03.jpg",
-        "styles/swiss-grid/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/swiss-grid/reference.html",
+          "thumbs": [
+            "styles/swiss-grid/thumbs/01.jpg",
+            "styles/swiss-grid/thumbs/02.jpg",
+            "styles/swiss-grid/thumbs/03.jpg",
+            "styles/swiss-grid/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "talk-one-message",
@@ -409,13 +461,17 @@
       ],
       "preview_md": "styles/talk-one-message/preview.md",
       "design_md": "styles/talk-one-message/design.md",
-      "reference_html": "styles/talk-one-message/reference.html",
-      "thumbs": [
-        "styles/talk-one-message/thumbs/01.jpg",
-        "styles/talk-one-message/thumbs/02.jpg",
-        "styles/talk-one-message/thumbs/03.jpg",
-        "styles/talk-one-message/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/talk-one-message/reference.html",
+          "thumbs": [
+            "styles/talk-one-message/thumbs/01.jpg",
+            "styles/talk-one-message/thumbs/02.jpg",
+            "styles/talk-one-message/thumbs/03.jpg",
+            "styles/talk-one-message/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "tategumi-editorial",
@@ -456,13 +512,17 @@
       ],
       "preview_md": "styles/tategumi-editorial/preview.md",
       "design_md": "styles/tategumi-editorial/design.md",
-      "reference_html": "styles/tategumi-editorial/reference.html",
-      "thumbs": [
-        "styles/tategumi-editorial/thumbs/01.jpg",
-        "styles/tategumi-editorial/thumbs/02.jpg",
-        "styles/tategumi-editorial/thumbs/03.jpg",
-        "styles/tategumi-editorial/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/tategumi-editorial/reference.html",
+          "thumbs": [
+            "styles/tategumi-editorial/thumbs/01.jpg",
+            "styles/tategumi-editorial/thumbs/02.jpg",
+            "styles/tategumi-editorial/thumbs/03.jpg",
+            "styles/tategumi-editorial/thumbs/04.jpg"
+          ]
+        }
+      }
     },
     {
       "slug": "warm-editorial",
@@ -501,13 +561,69 @@
       ],
       "preview_md": "styles/warm-editorial/preview.md",
       "design_md": "styles/warm-editorial/design.md",
-      "reference_html": "styles/warm-editorial/reference.html",
-      "thumbs": [
-        "styles/warm-editorial/thumbs/01.jpg",
-        "styles/warm-editorial/thumbs/02.jpg",
-        "styles/warm-editorial/thumbs/03.jpg",
-        "styles/warm-editorial/thumbs/04.jpg"
-      ]
+      "references": {
+        "slide-16x9": {
+          "html": "styles/warm-editorial/reference.html",
+          "thumbs": [
+            "styles/warm-editorial/thumbs/01.jpg",
+            "styles/warm-editorial/thumbs/02.jpg",
+            "styles/warm-editorial/thumbs/03.jpg",
+            "styles/warm-editorial/thumbs/04.jpg"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "whitepaper",
+      "name": "Whitepaper",
+      "name_ja": "ホワイトペーパー実務型",
+      "tagline": "Fixed top and bottom bands, navy plus one green, and a spec strip that ties every number to its question, n and survey period.",
+      "summary_ja": "上下の固定帯（カテゴリーと章 / ロゴ・CTA・ノンブル）に紺と緑の2色。すべての数字に設問番号・n 数・調査期間の札を付け、事例は課題→効果の帯、失敗例は ✕ で示す。",
+      "group": "business",
+      "mood": [
+        "practical",
+        "trustworthy",
+        "evidence-led"
+      ],
+      "formality": "medium",
+      "density": "high",
+      "scheme": "light",
+      "best_for": "BtoB のホワイトペーパー、調査レポート、導入ガイド、リード獲得資料",
+      "avoid_for": "投影するプレゼン、写真で魅せるブランドブック、エンタメ",
+      "formats": [
+        "doc-a4"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "IBM Plex Sans JP",
+        "body": "BIZ UDPGothic",
+        "latin": [
+          "Barlow Semi Condensed",
+          "IBM Plex Mono"
+        ]
+      },
+      "palette": [
+        "#13294B",
+        "#00806B",
+        "#1B2430",
+        "#5B6676",
+        "#EDF0F4",
+        "#FFFFFF"
+      ],
+      "preview_md": "styles/whitepaper/preview.md",
+      "design_md": "styles/whitepaper/design.md",
+      "references": {
+        "doc-a4": {
+          "html": "styles/whitepaper/reference-a4.html",
+          "thumbs": [
+            "styles/whitepaper/thumbs-a4/01.jpg",
+            "styles/whitepaper/thumbs-a4/02.jpg",
+            "styles/whitepaper/thumbs-a4/03.jpg",
+            "styles/whitepaper/thumbs-a4/04.jpg"
+          ]
+        }
+      }
     }
   ]
 }

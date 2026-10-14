@@ -1,0 +1,31 @@
+{
+  "slug": "whitepaper",
+  "name": "Whitepaper",
+  "name_ja": "ホワイトペーパー実務型",
+  "tagline": "Fixed top and bottom bands, navy plus one green, and a spec strip that ties every number to its question, n and survey period.",
+  "summary_ja": "上下の固定帯（カテゴリーと章 / ロゴ・CTA・ノンブル）に紺と緑の2色。すべての数字に設問番号・n 数・調査期間の札を付け、事例は課題→効果の帯、失敗例は ✕ で示す。",
+  "group": "business",
+  "mood": ["practical", "trustworthy", "evidence-led"],
+  "formality": "medium",
+  "density": "high",
+  "scheme": "light",
+  "best_for": "BtoB のホワイトペーパー、調査レポート、導入ガイド、リード獲得資料",
+  "avoid_for": "投影するプレゼン、写真で魅せるブランドブック、エンタメ",
+  "formats": ["doc-a4"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "IBM Plex Sans JP",
+    "body": "BIZ UDPGothic",
+    "latin": ["Barlow Semi Condensed", "IBM Plex Mono"]
+  },
+  "colors": {
+    "navy": "#13294B",
+    "em": "#00806B",
+    "ink": "#1B2430",
+    "mute": "#5B6676",
+    "band": "#EDF0F4",
+    "paper": "#FFFFFF"
+  },
+  "refs": ["才流 お役立ち資料の作成テンプレート（縦型）", "中外製薬 アニュアルレポート2025", "大成建設 統合報告書2025"]
+}

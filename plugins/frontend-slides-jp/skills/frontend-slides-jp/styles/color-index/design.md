@@ -125,3 +125,40 @@ Check before delivery:
 - [ ] No `※` source note under a chart or a figure.
 - [ ] Icons, emoji, drop shadows, glassmorphism or rounded pill buttons. The style is flat rectangles and 1px rules.
 - [ ] Centered body text, or text under 16px.
+
+## 7. Document pages
+
+`reference-a4.html` is a six-page company brochure (会社案内) for the same fictional company as the deck: cover, contents, message, a figure page (01), a highlights-and-table page (03) and company data. Sizes are px at the 1240×1754 page. The deck's devices carry over unchanged in meaning; only their sizes change.
+
+**Tokens.** The `:root` block of `reference-a4.html` keeps the deck's hues and adds two things:
+
+- `--ch3-text: #8A6A1E`. The ochre `#997622` measures 4.23:1 on white and 3.84:1 on paper, so it fails 4.5:1 for small text. On the 03 page, `--c` stays `#997622` for fills, rules, bars, the tab and text at 24px or larger (h1 `<em>`, highlight figures at 100px). Every chapter-colored text under 24px (running head, kicker, `■` labels, key table cell, contents role) reads `--c-text`, which is `#8A6A1E` (5.05:1 on white, 4.59:1 on paper) for chapter 03 and equals `--c` for the other three, which pass on their own (teal 5.24, terracotta 4.95, moss 5.08). Never darken the fills to match.
+- Front and back matter (`00 はじめに`, `05 会社情報`) are chapters in `--base`. The tab column therefore has six entries: navy, the four business hues, navy.
+
+**Page frame** (every page but the cover; generated from the `CHAPTERS` array so it cannot drift):
+
+- Top rule: 10px full bleed in `--c`, as on slides.
+- Running head at top 64, from x 96 to 1144: `IZUMIRA` Barlow 700 18px tracking 0.2em in navy plus the document name 18px mute on the left; on the right the chapter number (Barlow 600 20px) and name (Noto 700 20px) in `--c-text`, then the role after a 1px `--line-strong` divider in 18px mute.
+- Thumb tabs (爪見出し) at `right: 0`, `top: 240 + i × 184`, each 176px tall. Closed: 28px wide, `--paper`, 1px `--line` left border, number Barlow 600 16px `--line-strong`. Open: 60px, filled with the chapter color, number 20px white, vertical name Noto 700 20px white (20px bold counts as large text, so white on ochre at 4.23:1 passes 3:1). Contents opens all six (`data-tabs="all"`); every other page opens only its own. Content stops at x 1144, 32px clear of an open tab.
+- Foot at bottom 56: the `※` note 17px mute on the left (max 880px), folio `05 / 16` on the right in Barlow 600 20px ink with the total in 18px mute. Content ends at y 1634 or above.
+
+**Type on pages.** Kicker Barlow 600 20px tracking 0.16em in `--c-text`, h1 Noto 700 60px / 1.4 (message 64px) with one `<em>` in `--c`, lead 26px / 1.75, body 22px / 1.8 in two 500px columns with a 48px gutter (about 24 字 a line with palt), justified with `word-break: normal` and a 1em indent. Captions and sources 17px. Figure : unit stays about 3:1 (highlight 100 / 32, contents 38 / 17).
+
+**Cover.** No tabs: the cover *is* the thumb index. White ground, navy rule, mark at top 96, Latin kicker at top 300, a 100px Noto 900 navy display in three lines, a 30px bold lead, then the sales mix as four strips 104px tall with 12px gaps, starting at top 1030 under a `■` label. Each strip bleeds off the right edge, its width proportional to sales (largest = 1000px), with the number, the chapter name 26px bold and the share in Barlow Semi Condensed 60px, all white. Meta row at bottom 72 over a 1px rule, ending with the note that names and figures are fictional.
+
+**Contents.** The color legend, as on slides: `目次` 72px navy, a three-line explanation of the color system next to the consolidated total under a 2px navy rule, a 28px composition bar over the full text width with a 0–100% scale, then one 132px row per chapter (grid `12px 52px 1fr 190px 150px 56px`): a 12×84 chip, number and role in the chapter's text color, name 30px bold with an 18px description, sales and share right-aligned, page number.
+
+**Reading page (message).** Kicker, quoted h1, a three-line lead, three numbered points under a 2px navy rule (figure 64px navy), two body columns, then the signature under a 64×4 navy bar. No portrait photo and no placeholder: type carries the page.
+
+**Figure page.** `d-flow-v` fitted to the style: rows of 124px under a 1px ink rule, 1px `--line` rules between rows, square nodes 40px with a 2px ink border (no circles; the style is flat rectangles), a 2px `--line-strong` connector. The key step gets the full-row `--c-tint`, a 6px inset `--c` bar on the left, a filled `--c` node and its title in `--c-text`. The `■` label sits above, the source line directly under the rows, two body columns below.
+
+**Table and highlights.** Three highlight figures in a row under a 1px ink rule split by 1px `--line` dividers, figures in `--c` at 100px. The table follows §5: 16px mute heads above a 1px ink rule, 1px `--line` row rules, figures right-aligned in Barlow Semi Condensed. One key row on `--c-tint` with a 6px `--c` inset bar; share bars in `--c-mid`, the key row's in `--c`; a computed total row closed by a 1px ink rule. No zebra stripes.
+
+**Data page.** A `dl` profile table (200px labels, 1px rules) and the bases in a 2×2 grid, each block topped by a 4px rule and `■` bullets in its business color: this is a legend page like contents, so all four colors may appear. Contact and URL sit above the foot under a 2px navy rule.
+
+Document slop signs, in addition to §6:
+
+- [ ] The chapter color appears in the running head or tab but not in the page's figure or table.
+- [ ] Ochre text under 24px set in `#997622` instead of `--c-text`.
+- [ ] A running head, tab or folio that moves between pages, or a tab whose open entry disagrees with the running head.
+- [ ] Body columns ragged at the right because `word-break: auto-phrase` from the base was left on body text.
