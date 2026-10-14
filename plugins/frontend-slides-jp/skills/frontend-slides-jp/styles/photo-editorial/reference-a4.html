@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>綾織織布 統合報告書 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Archivo needs the wdth axis for the condensed caps (design.md section 2). -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Noto+Serif+JP:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===========================================
+   PHOTO-EDITORIAL: tokens (same as reference.html, plus the page values)
+   =========================================== */
+:root {
+  --paper: #FFFFFF;
+  --ink: #141414;
+  --red: #C8261B;          /* 赤耳: selvedge red */
+  --mute: #8C8A86;         /* captions, rules */
+  --rule: rgba(20,20,20,.18);
+  --bar: #DAD7D1;           /* chart bars that are not the key bar */
+
+  --f-latin: 'Archivo', sans-serif;      /* used at wdth 62–75 = condensed caps */
+  --f-mincho: 'Noto Serif JP', serif;
+  --f-gothic: 'Noto Sans JP', sans-serif;
+
+  --m: 96px;               /* page side margin; text width 1048px */
+  --desk-bg: #1a1918;      /* the dark desk, like the slide stage */
+  --page-bg: var(--paper);
+}
+
+* { box-sizing: border-box; }
+.page * { margin: 0; padding: 0; }
+
+.page {
+  color: var(--ink);
+  font-family: var(--f-gothic);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Condensed caps: the naming voice. .page raises specificity over the base heading rule. */
+.page .caps {
+  font-family: var(--f-latin);
+  font-stretch: 62%;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: .86;
+  letter-spacing: -.005em;
+}
+.label {
+  font-family: var(--f-latin);
+  font-stretch: 75%;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.mincho { font-family: var(--f-mincho); font-weight: 700; letter-spacing: 0; }
+.red { color: var(--red); }
+.num { font-family: var(--f-latin); font-stretch: 62%; font-weight: 800; letter-spacing: 0; font-feature-settings: "tnum" 1, "lnum" 1; }
+
+/* Photo panels: no scrim, no overlay, no radius. Crop with object-position only. */
+.photo { position: absolute; overflow: hidden; }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; max-width: none; max-height: none; }
+.pcap { position: absolute; font-size: 17px; line-height: 1.7; letter-spacing: .03em; color: var(--mute); }
+.pcap .label { font-size: 15px; color: var(--ink); margin-right: 14px; }
+
+/* ===========================================
+   PAGE FRAME: running head, chapter tab, folio
+   =========================================== */
+.rh {
+  position: absolute; top: 64px; left: var(--m); right: var(--m); height: 24px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--f-latin); font-stretch: 75%; font-weight: 600;
+  font-size: 18px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute);
+}
+.rh b { color: var(--ink); font-weight: 700; }
+.rh .ch b { color: var(--red); margin-right: 14px; }
+.rh .ja { font-family: var(--f-gothic); font-weight: 500; font-size: 17px; letter-spacing: .03em; margin-left: 14px; color: var(--ink); }
+
+/* The cover's 20px red tab becomes the chapter tab on the outer edge. */
+.tab {
+  position: absolute; top: 240px; width: 40px; height: 232px; background: var(--red); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.tab span {
+  writing-mode: vertical-rl;
+  font-family: var(--f-latin); font-stretch: 75%; font-weight: 700;
+  font-size: 15px; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
+}
+.folio {
+  position: absolute; bottom: 56px;
+  font-family: var(--f-latin); font-stretch: 75%; font-weight: 700;
+  font-size: 20px; letter-spacing: .12em; color: var(--ink);
+}
+/* Outer edge: even pages are left-hand pages, odd pages right-hand. */
+.page.even .tab { left: 0; }
+.page.odd .tab { right: 0; }
+.page.even .folio { left: var(--m); }
+.page.odd .folio { right: var(--m); }
+
+/* Page head shared by reading pages */
+.kicker { display: flex; gap: 28px; align-items: baseline; }
+.kicker .label { color: var(--red); }
+.kicker .label.m { color: var(--mute); }
+.page .h2 { font-family: var(--f-mincho); font-weight: 800; font-size: 64px; line-height: 1.36; letter-spacing: 0; margin-top: 28px; }
+.page .lead { font-size: 26px; line-height: 1.75; letter-spacing: .02em; color: #3a3a3a; margin-top: 30px; text-align: left; word-break: auto-phrase; }
+.page .src { font-size: 17px; line-height: 1.6; letter-spacing: .02em; color: #4a4a4a; text-align: left; }
+
+/* ===========================================
+   01 COVER: full-bleed photo, ink caps in the calm sky
+   =========================================== */
+.p-cover { background: #0d0c0b; }
+.p-cover .photo { inset: 0; }
+.p-cover .photo img { object-position: 62% 50%; }
+.p-cover .masthead { position: absolute; top: 96px; left: var(--m); display: flex; gap: 36px; align-items: baseline; }
+.p-cover .masthead .label { font-size: 18px; color: var(--ink); }
+.p-cover .masthead .label b { font-weight: 700; }
+.p-cover h1 { position: absolute; left: var(--m); top: 176px; font-size: 150px; color: var(--ink); }
+.p-cover h1 .year { color: var(--red); }
+.p-cover .sub { position: absolute; left: var(--m); top: 586px; font-size: 44px; line-height: 1.5; color: var(--ink); }
+.p-cover .meta {
+  position: absolute; left: 700px; top: 772px; width: 444px; text-align: left;
+  font-size: 17px; line-height: 1.75; letter-spacing: .03em; color: #2a2a2a;
+}
+.p-cover .meta .label { display: block; font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+.p-cover .ctab { position: absolute; right: 0; top: 96px; width: 20px; height: 168px; background: var(--red); }
+
+/* ===========================================
+   02 STATEMENT: caps + Mincho, the place in a bleed band below
+   =========================================== */
+.p-stmt .head { position: absolute; left: 160px; top: 168px; width: 980px; }
+.p-stmt .head .label { color: var(--red); }
+.p-stmt .head .caps { font-size: 168px; color: var(--red); margin-top: 30px; }
+.p-stmt .head .st { font-size: 44px; line-height: 1.62; margin-top: 44px; }
+.p-stmt .head .body { font-size: 23px; line-height: 1.85; letter-spacing: .02em; color: #3a3a3a; margin-top: 36px; width: 800px; }
+.p-stmt .photo { left: 0; right: 0; top: 1000px; height: 560px; }
+.p-stmt .photo img { object-position: 50% 62%; }
+.p-stmt .pcap { left: 160px; top: 1576px; width: 900px; }
+
+/* ===========================================
+   03 MESSAGE: gesture band, quoted headline, two columns
+   =========================================== */
+.p-msg .photo { left: 0; right: 0; top: 120px; height: 500px; }
+.p-msg .photo img { object-position: 50% 46%; }
+.p-msg .pcap { left: var(--m); top: 636px; width: 1000px; }
+.p-msg .head { position: absolute; left: var(--m); top: 728px; width: 1048px; }
+.p-msg .h2 { font-size: 60px; margin-top: 24px; }
+.p-msg .cols {
+  position: absolute; left: var(--m); top: 1000px; width: 1048px; height: 560px;
+  column-count: 2; column-gap: 48px; column-fill: auto;
+}
+.p-msg .cols h3 { font-family: var(--f-mincho); font-weight: 700; font-size: 25px; line-height: 1.5; margin: 0 0 6px; break-after: avoid; }
+.p-msg .cols p { font-size: 22px; line-height: 1.8; text-indent: 1em; margin-bottom: 16px; }
+.p-msg .cols p + h3 { margin-top: 8px; }
+.p-msg .sign {
+  position: absolute; right: var(--m); top: 1572px; display: flex; gap: 22px; align-items: baseline;
+  font-size: 18px; letter-spacing: .03em; color: #3a3a3a;
+}
+.p-msg .sign .nm { font-family: var(--f-mincho); font-weight: 700; font-size: 30px; letter-spacing: .12em; color: var(--ink); }
+
+/* ===========================================
+   04 VALUE CREATION: d-cycle fitted to the station-line look
+   =========================================== */
+.p-vc .head { position: absolute; left: var(--m); top: 140px; width: 1048px; }
+.p-vc .fig { position: absolute; left: var(--m); top: 536px; width: 1048px; height: 680px; border-top: 1px solid var(--ink); padding-top: 24px; }
+.p-vc .fig .src { position: absolute; left: 0; top: 694px; width: 1048px; }
+.p-vc .caps3 { position: absolute; left: var(--m); top: 1336px; width: 1048px; }
+.p-vc .caps3 .ttl { font-size: 18px; font-weight: 500; letter-spacing: .03em; }
+.p-vc .caps3 .ttl span { color: var(--mute); margin-left: 14px; }
+.p-vc .caps3 .row { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 22px; border-top: 1px solid var(--ink); }
+.p-vc .cap-i { padding: 22px 24px 0 28px; border-left: 1px solid var(--rule); }
+.p-vc .cap-i:first-child { padding-left: 0; border-left: 0; }
+.p-vc .cap-i .label { font-size: 16px; color: var(--mute); }
+.p-vc .cap-i .nm { font-family: var(--f-mincho); font-weight: 700; font-size: 25px; margin-top: 8px; line-height: 1.3; }
+.p-vc .cap-i .v { display: flex; gap: 6px; align-items: baseline; margin-top: 12px; }
+.p-vc .cap-i .v .num { font-size: 64px; line-height: .8; }
+.p-vc .cap-i .v .u { font-size: 20px; font-weight: 700; }
+.p-vc .cap-i .note { font-size: 17px; line-height: 1.6; color: #4a4a4a; margin-top: 12px; text-align: left; }
+
+/* d-cycle: pattern CSS, scoped by the wrapper id and restyled to the station line */
+#d-cycle { --d-paper: var(--paper); --d-ink: var(--ink); --d-sub: #4a4a4a; --d-mid: var(--ink); --d-accent: var(--red); --font-jp: var(--f-gothic); --font-latin: var(--f-latin); }
+#d-cycle svg { width: 100%; height: 100%; display: block; max-width: none; max-height: none; overflow: visible; }
+#d-cycle .node { fill: var(--d-paper); stroke: var(--d-ink); stroke-width: 1.5; }
+#d-cycle .node.is-wear { fill: var(--d-ink); }
+#d-cycle .ring { fill: none; stroke: var(--d-mid); stroke-width: 1.5; }
+#d-cycle .ring.is-return { stroke: var(--red); stroke-dasharray: 6 6; stroke-width: 2; }
+#d-cycle .head { fill: var(--d-mid); }
+#d-cycle .head-r { fill: var(--red); }
+#d-cycle .no { font-family: var(--font-latin); font-stretch: 75%; font-weight: 700; font-size: 17px; letter-spacing: .14em; fill: var(--red); }
+#d-cycle .nm { font-family: var(--f-mincho); font-weight: 700; font-size: 28px; fill: var(--d-ink); }
+#d-cycle .sub { font-family: var(--font-jp); font-weight: 400; font-size: 19px; fill: var(--d-sub); }
+#d-cycle .on-ink .nm { fill: #fff; }
+#d-cycle .on-ink .sub { fill: rgba(255,255,255,.82); }
+#d-cycle .on-ink .no { fill: #fff; }
+#d-cycle .c-lb { font-family: var(--font-jp); font-weight: 500; font-size: 21px; fill: var(--d-ink); }
+#d-cycle .c-v { font-family: var(--font-latin); font-stretch: 62%; font-weight: 800; font-size: 150px; fill: var(--d-accent); }
+#d-cycle .c-u { font-family: var(--font-jp); font-weight: 700; font-size: 42px; fill: var(--d-accent); }
+#d-cycle .c-from { font-family: var(--font-jp); font-weight: 400; font-size: 19px; fill: var(--mute); }
+
+/* ===========================================
+   05 HIGHLIGHTS: hero number, KPI rows, material photo, bar chart
+   =========================================== */
+.p-hl .head { position: absolute; left: var(--m); top: 140px; width: 1048px; }
+.p-hl .hero { position: absolute; left: var(--m); top: 548px; width: 584px; border-top: 1px solid var(--ink); padding-top: 26px; }
+.p-hl .hero .k-label { font-size: 22px; font-weight: 500; letter-spacing: .03em; }
+.p-hl .hero .k-val { display: flex; align-items: baseline; gap: 10px; margin-top: 22px; color: var(--red); }
+.p-hl .hero .k-val .num { font-size: 210px; line-height: .8; letter-spacing: -.01em; }
+.p-hl .hero .k-val .u { font-size: 56px; font-weight: 700; }
+.p-hl .hero .k-note { font-size: 19px; color: var(--mute); letter-spacing: .03em; margin-top: 22px; }
+.p-hl .hero .k-note b { color: var(--red); font-weight: 700; }
+.p-hl .kpis { position: absolute; left: var(--m); top: 872px; width: 584px; list-style: none; }
+.p-hl .kpis li { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 16px 0 14px; border-top: 1px solid var(--rule); line-height: 1.4; letter-spacing: 0; }
+.p-hl .kpis li:last-child { border-bottom: 1px solid var(--rule); }
+.p-hl .kpis .k-label { font-size: 20px; font-weight: 500; letter-spacing: .03em; }
+.p-hl .kpis .k-label small { display: block; font-size: 17px; font-weight: 400; color: var(--mute); margin-top: 4px; }
+.p-hl .kpis .k-val { display: flex; align-items: baseline; gap: 6px; }
+.p-hl .kpis .k-val .num { font-size: 60px; line-height: .8; }
+.p-hl .kpis .k-val .u { font-size: 22px; font-weight: 700; }
+.p-hl .photo { right: var(--m); top: 548px; width: 416px; height: 600px; }
+.p-hl .photo img { object-position: 22% 50%; }
+.p-hl .pcap { right: var(--m); top: 1160px; width: 416px; }
+.p-hl .chart { position: absolute; left: var(--m); top: 1262px; width: 1048px; }
+.p-hl .chart .ttl { font-size: 18px; font-weight: 500; letter-spacing: .03em; }
+.p-hl .chart .ttl span { color: var(--mute); margin-left: 14px; }
+.p-hl .chart svg { display: block; margin-top: 14px; }
+.p-hl .chart .src { margin-top: 14px; }
+
+/* ===========================================
+   06 DATA: five-year table and company profile, thin rules only
+   =========================================== */
+.p-data .head { position: absolute; left: var(--m); top: 140px; width: 1048px; }
+.p-data .body { position: absolute; left: var(--m); top: 500px; width: 1048px; }
+.p-data .tbl { width: 1048px; border-collapse: collapse; }
+.p-data .tbl th { font-family: var(--f-latin); font-stretch: 75%; font-weight: 600; font-size: 17px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); text-align: right; padding: 0 0 12px; border-bottom: 1px solid var(--ink); }
+.p-data .tbl th:first-child { text-align: left; }
+.p-data .tbl th.now { color: var(--ink); }
+.p-data .tbl td { font-size: 21px; line-height: 1.4; letter-spacing: .02em; padding: 15px 0 13px; border-bottom: 1px solid var(--rule); text-align: right; }
+.p-data .tbl td:first-child { text-align: left; }
+.p-data .tbl td:first-child small { font-size: 16px; color: var(--mute); margin-left: 10px; }
+.p-data .tbl td .num { font-size: 32px; line-height: 1; }
+.p-data .tbl td.now .num { color: var(--ink); }
+.p-data .tbl td.past .num { color: #4a4a4a; }
+.p-data .tbl tr.grp td { font-family: var(--f-latin); font-stretch: 75%; font-weight: 700; font-size: 15px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); padding: 22px 0 8px; border-bottom: 1px solid var(--ink); }
+.p-data .tbl tr.grp td span { font-family: var(--f-gothic); letter-spacing: .03em; margin-left: 12px; color: var(--mute); font-weight: 500; }
+.p-data .tbl td.key .num { color: var(--red); }
+.p-data .tsrc { margin-top: 14px; }
+.p-data .prof { margin-top: 64px; }
+.p-data .prof .label { color: var(--red); font-size: 17px; }
+.p-data .prof .grid { display: grid; grid-template-columns: 500px 500px; column-gap: 48px; margin-top: 16px; border-top: 1px solid var(--ink); }
+.p-data .prof dl { display: grid; grid-template-columns: 120px 1fr; }
+.p-data .prof dt, .p-data .prof dd { font-size: 19px; line-height: 1.6; padding: 12px 0 11px; border-bottom: 1px solid var(--rule); }
+.p-data .prof dt { color: var(--mute); font-weight: 500; letter-spacing: .03em; }
+.p-data .prof dd { letter-spacing: .02em; }
+.p-data .about { position: absolute; left: var(--m); top: 1556px; width: 1048px; display: flex; gap: 28px; align-items: baseline; }
+.p-data .about .label { font-size: 15px; color: var(--ink); white-space: nowrap; }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- 01 COVER -->
+<section class="page p-cover" aria-label="表紙">
+  <div class="photo"><img src="assets/photo4.jpg" alt="川沿いの蔵の前に干された藍染めの糸の束と、荷車を押して歩く職人"></div>
+  <div class="masthead">
+    <span class="label"><b>Ayaori Weaving Co., Ltd.</b></span>
+    <span class="label">Integrated Report</span>
+  </div>
+  <h1 class="caps">Woven<br>to be worn<br>longer. <span class="year">2026</span></h1>
+  <p class="sub mincho">百年着られる布を、<br>今日も一反ずつ。</p>
+  <p class="meta"><span class="label">Cover / 本社工房の干し場</span>ロープ染色を終えた糸は、川風で三日かけて乾かす。<br>対象期間　2025年4月1日 — 2026年3月31日<br>本誌は架空の企業の見本です。数値はすべて架空です。</p>
+  <div class="ctab"></div>
+</section>
+
+<!-- 02 STATEMENT -->
+<section class="page even p-stmt" aria-label="私たちが守るもの">
+  <header class="rh"><span><b>Ayaori</b>　Integrated Report 2026</span><span class="ch"><b>01</b>Philosophy<span class="ja">理念</span></span></header>
+  <aside class="tab"><span>01 Philosophy</span></aside>
+  <div class="head">
+    <div class="label">01 — Philosophy</div>
+    <div class="caps">What we<br>keep.</div>
+    <p class="st mincho">速く織れる機械は、ある。<br>それでも、この四十二台の<br>シャトル織機を止めない。</p>
+    <p class="body">旧式の織機が一日に織れるのは、50メートルほどです。そのかわり糸に無理な張りをかけず、空気を含んだ厚みと、赤耳と呼ぶ布の端を残します。私たちが守っているのは機械ではなく、この布が百年着られるという約束です。</p>
+  </div>
+  <div class="photo"><img src="assets/photo2.jpg" alt="天窓の光が差し込む織布場に並ぶシャトル織機"></div>
+  <p class="pcap"><span class="label">Weaving Hall</span>本社工房の織布場。1950年代のシャトル織機42台が、今も毎日動いている。</p>
+  <span class="folio">02</span>
+</section>
+
+<!-- 03 MESSAGE -->
+<section class="page odd p-msg" aria-label="トップメッセージ">
+  <header class="rh"><span><b>Ayaori</b>　Integrated Report 2026</span><span class="ch"><b>02</b>Message<span class="ja">トップメッセージ</span></span></header>
+  <div class="photo"><img src="assets/photo1.jpg" alt="藍甕から染めたての糸の束を引き上げる手"></div>
+  <aside class="tab"><span>02 Message</span></aside>
+  <p class="pcap"><span class="label">Indigo Vat</span>朝いちばんの甕の様子を確かめるのは、創業以来、代表の仕事と決まっている。</p>
+  <div class="head">
+    <div class="kicker"><span class="label">02 — Message</span><span class="label m">From the President</span></div>
+    <h2 class="h2"><span class="red">直せる服</span>しか、<br>つくらないと決めました。</h2>
+  </div>
+  <div class="cols">
+    <h3>九十五年目の工房で</h3>
+    <p>綾織織布は1931年、川沿いの小さな工房で十二台の力織機から始まりました。いま本社工房で動いているシャトル織機は四十二台。一台が一日に織れるのは50メートルほどで、新しい織機の十分の一にも届きません。それでもこの機械を止めないのは、ゆっくり織った布にしかない厚みと、赤耳と呼ぶ布の端があるからです。</p>
+    <h3>売上より、着られた年数を</h3>
+    <p>2025年度の売上高は64.2億円で、前年からの伸びは4.8%にとどまりました。一方で修理の受付は18,420件と前年の1.3倍に増え、一着が着られる平均年数は9.4年になりました。業界の平均はおよそ3.5年です。この差を、私たちは自分たちの価値だと考えています。</p>
+    <h3>布を、もう一度糸に</h3>
+    <p>次の挑戦は、回収した生地をほどいて糸に戻し、もう一度織ることです。今年度の再織率は3.2%で、2030年に20%という目標から見れば入口に立ったばかりです。紡績の協力工場と三年をかけて、短くなった繊維を新しい綿と撚り合わせる方法を探ってきました。百年着られる布を、今日も一反ずつ。数字で確かめながら進みます。</p>
+  </div>
+  <div class="sign"><span>2026年8月</span><span>代表取締役社長</span><span class="nm">藍川 修平</span></div>
+  <span class="folio">03</span>
+</section>
+
+<!-- 04 VALUE CREATION -->
+<section class="page even p-vc" aria-label="価値創造プロセス">
+  <header class="rh"><span><b>Ayaori</b>　Integrated Report 2026</span><span class="ch"><b>03</b>Value Creation<span class="ja">価値創造</span></span></header>
+  <aside class="tab"><span>03 Value Creation</span></aside>
+  <div class="head">
+    <div class="kicker"><span class="label">03 — Value Creation</span><span class="label m">The Loop</span></div>
+    <h2 class="h2">服が工房に戻るたびに、<br>着られる年数は<span class="red">9.4年</span>まで延びた。</h2>
+    <p class="lead">綿を選ぶところから、ほどいて織り直すところまでを自社で受け持ちます。<br>修理で戻ってきた服は、次の一着を設計するための記録にもなります。</p>
+  </div>
+  <div class="fig" id="d-cycle">
+    <svg role="img" aria-label="綿から織り直しまでの5段階の循環" data-w="1048" data-h="656"></svg>
+    <p class="src">出典：当社 生産・修理記録（2025年度）。平均着用年数は修理受付時の聞き取り（n=4,812）、業界平均は当社調べ。架空のデータ。</p>
+  </div>
+  <div class="caps3">
+    <div class="ttl">このループを支える資本<span>2026年3月末時点</span></div>
+    <div class="row">
+      <div class="cap-i"><div class="label">Human</div><div class="nm">織工・縫製士</div><div class="v"><span class="num">64</span><span class="u">名</span></div><p class="note">うち修理を専任で<br>受け持つ職人は18名</p></div>
+      <div class="cap-i"><div class="label">Manufactured</div><div class="nm">シャトル織機</div><div class="v"><span class="num">42</span><span class="u">台</span></div><p class="note">1950年代製を、<br>部品から自社で整備</p></div>
+      <div class="cap-i"><div class="label">Natural</div><div class="nm">自社の藍畑</div><div class="v"><span class="num">3.8</span><span class="u">ha</span></div><p class="note">染料の蒅（すくも）を<br>工房で仕込む</p></div>
+    </div>
+  </div>
+  <span class="folio">04</span>
+</section>
+
+<!-- 05 HIGHLIGHTS -->
+<section class="page odd p-hl" aria-label="数字で見る一年">
+  <header class="rh"><span><b>Ayaori</b>　Integrated Report 2026</span><span class="ch"><b>04</b>Highlights<span class="ja">ハイライト</span></span></header>
+  <aside class="tab"><span>04 Highlights</span></aside>
+  <div class="head">
+    <div class="kicker"><span class="label">04 — Highlights</span><span class="label m">FY2025</span></div>
+    <h2 class="h2">売上より先に、<br><span class="red">直した数</span>を数えた一年。</h2>
+    <p class="lead">修理の受付は前年の1.3倍に増えました。売上の伸びは4.8%にとどまりますが、<br>一着が着られる年数は9.4年まで延びています。</p>
+  </div>
+  <div class="hero">
+    <div class="k-label">修理受付件数</div>
+    <div class="k-val"><span class="num">18,420</span><span class="u">件</span></div>
+    <div class="k-note">前年比 <b>+31.0%</b>　FY2024は14,060件</div>
+  </div>
+  <ul class="kpis">
+    <li><span class="k-label">平均着用年数<small>業界平均 3.5年（当社調べ）</small></span><span class="k-val"><span class="num">9.4</span><span class="u">年</span></span></li>
+    <li><span class="k-label">再織率<small>回収した生地のうち糸に戻した割合</small></span><span class="k-val"><span class="num">3.2</span><span class="u">%</span></span></li>
+    <li><span class="k-label">売上高<small>前年比 +4.8%</small></span><span class="k-val"><span class="num">64.2</span><span class="u">億円</span></span></li>
+  </ul>
+  <div class="photo"><img src="assets/photo3.jpg" alt="赤い耳糸が走るセルビッジデニムの端"></div>
+  <p class="pcap"><span class="label">Selvedge</span>赤耳。旧式の力織機だけが残す布の端で、私たちの布はここで見分けられる。</p>
+  <div class="chart">
+    <div class="ttl">修理受付件数の推移<span>単位：件　FY2019–FY2025</span></div>
+    <svg width="1048" height="236" viewBox="0 0 1048 236" aria-hidden="true">
+      <g font-family="Archivo" font-stretch="75%" font-weight="600" font-size="17" letter-spacing="1.5">
+      <rect x="0" y="152" width="104" height="44" fill="var(--bar)"/>
+      <text x="0" y="142" fill="var(--mute)">4,210</text>
+      <text x="0" y="224" fill="var(--ink)">FY19</text>
+      <rect x="148" y="133" width="104" height="63" fill="var(--bar)"/>
+      <text x="148" y="123" fill="var(--mute)">6,050</text>
+      <text x="148" y="224" fill="var(--ink)">FY20</text>
+      <rect x="296" y="109" width="104" height="87" fill="var(--bar)"/>
+      <text x="296" y="99" fill="var(--mute)">8,330</text>
+      <text x="296" y="224" fill="var(--ink)">FY21</text>
+      <rect x="444" y="82" width="104" height="114" fill="var(--bar)"/>
+      <text x="444" y="72" fill="var(--mute)">10,900</text>
+      <text x="444" y="224" fill="var(--ink)">FY22</text>
+      <rect x="592" y="66" width="104" height="130" fill="var(--bar)"/>
+      <text x="592" y="56" fill="var(--mute)">12,480</text>
+      <text x="592" y="224" fill="var(--ink)">FY23</text>
+      <rect x="740" y="49" width="104" height="147" fill="var(--bar)"/>
+      <text x="740" y="39" fill="var(--mute)">14,060</text>
+      <text x="740" y="224" fill="var(--ink)">FY24</text>
+      <rect x="888" y="4" width="160" height="192" fill="var(--red)"/>
+      <text x="904" y="36" fill="#fff" font-size="22">18,420</text>
+      <text x="888" y="224" fill="var(--red)">FY25</text>
+      <line x1="0" y1="196" x2="1048" y2="196" stroke="var(--ink)" stroke-width="1"/>
+      </g></svg>
+    <p class="src">出典：当社 修理受付記録（FY2019–FY2025、直営店4店と郵送受付の合計）。数値はすべて架空のデータ。</p>
+  </div>
+  <span class="folio">05</span>
+</section>
+
+<!-- 06 DATA -->
+<section class="page even p-data" aria-label="財務・非財務データ">
+  <header class="rh"><span><b>Ayaori</b>　Integrated Report 2026</span><span class="ch"><b>05</b>Data<span class="ja">データ</span></span></header>
+  <aside class="tab"><span>05 Data</span></aside>
+  <div class="head">
+    <div class="kicker"><span class="label">05 — Data</span><span class="label m">Financial &amp; Non-financial</span></div>
+    <h2 class="h2">修理と再織の数字を、<br>売上と同じ表で報告する。</h2>
+    <p class="lead">長く着られることを成長と呼ぶ以上、その数字も毎年、同じ物差しで開示します。</p>
+  </div>
+  <div class="body">
+  <table class="tbl">
+    <thead><tr><th>指標</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th class="now">FY2025</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="5">Financial<span>財務</span></td></tr>
+      <tr><td>売上高<small>億円</small></td><td class="past"><span class="num">55.1</span></td><td class="past"><span class="num">58.0</span></td><td class="past"><span class="num">61.3</span></td><td class="now"><span class="num">64.2</span></td></tr>
+      <tr><td>営業利益<small>億円</small></td><td class="past"><span class="num">4.1</span></td><td class="past"><span class="num">4.6</span></td><td class="past"><span class="num">5.0</span></td><td class="now"><span class="num">5.5</span></td></tr>
+      <tr><td>営業利益率<small>%</small></td><td class="past"><span class="num">7.4</span></td><td class="past"><span class="num">7.9</span></td><td class="past"><span class="num">8.2</span></td><td class="now"><span class="num">8.6</span></td></tr>
+      <tr class="grp"><td colspan="5">Non-financial<span>非財務</span></td></tr>
+      <tr><td>修理受付件数<small>件</small></td><td class="past"><span class="num">10,900</span></td><td class="past"><span class="num">12,480</span></td><td class="past"><span class="num">14,060</span></td><td class="now key"><span class="num">18,420</span></td></tr>
+      <tr><td>平均着用年数<small>年</small></td><td class="past"><span class="num">8.1</span></td><td class="past"><span class="num">8.5</span></td><td class="past"><span class="num">8.9</span></td><td class="now"><span class="num">9.4</span></td></tr>
+      <tr><td>再織率<small>%</small></td><td class="past"><span class="num">0.8</span></td><td class="past"><span class="num">1.5</span></td><td class="past"><span class="num">2.4</span></td><td class="now"><span class="num">3.2</span></td></tr>
+      <tr><td>従業員数<small>名・期末</small></td><td class="past"><span class="num">241</span></td><td class="past"><span class="num">248</span></td><td class="past"><span class="num">255</span></td><td class="now"><span class="num">262</span></td></tr>
+    </tbody>
+  </table>
+  <p class="src tsrc">出典：当社 有価証券報告書に準じた社内集計、修理受付記録。会計年度は4月1日から翌年3月31日まで。数値はすべて架空のデータ。</p>
+  <div class="prof">
+    <div class="label">Company Profile　<span style="font-family:var(--f-gothic);letter-spacing:.03em">会社概要</span></div>
+    <div class="grid">
+      <dl>
+        <dt>商号</dt><dd>綾織織布株式会社</dd>
+        <dt>創業</dt><dd>1931年（昭和6年）</dd>
+        <dt>本社工房</dt><dd>岡山県井原市</dd>
+        <dt>代表者</dt><dd>代表取締役社長　藍川 修平</dd>
+      </dl>
+      <dl>
+        <dt>資本金</dt><dd>1億円</dd>
+        <dt>従業員数</dt><dd>262名（2026年3月末）</dd>
+        <dt>事業内容</dt><dd>デニム生地の製織・縫製・修理</dd>
+        <dt>拠点</dt><dd>本社工房、直営店4店、修理センター</dd>
+      </dl>
+    </div>
+  </div>
+  </div>
+  <div class="about"><span class="label">About this report</span><p class="src">対象期間は2025年4月1日〜2026年3月31日、対象範囲は綾織織布株式会社単体です。本書は見本として作成した架空の企業の報告書で、社名・人物・数値はすべて架空です。</p></div>
+  <span class="folio">06</span>
+</section>
+
+</main>
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+addEventListener('resize', fit);
+</script>
+<script>(() => {
+// BEGIN d-cycle
+// Fitted: the box size comes from data-w/data-h; the 05 → 01 arc is the dashed red return,
+// and the "wear" node is filled ink, as the station line marks its current stage.
+function drawCycle(svg, data) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const W = +svg.dataset.w || svg.clientWidth || 1680, H = +svg.dataset.h || svg.clientHeight || 620;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); (parent || svg).appendChild(n); return n; };
+  const lines = (x, y, rows, cls, lh, parent) => { const t = el('text', { x, y, class: cls, 'text-anchor': 'middle' }, parent); rows.forEach((s, i) => { const ts = el('tspan', { x, dy: i ? lh : 0 }, t); ts.textContent = s; }); return t; };
+  const n = data.nodes.length, round = n <= 3, padX = 32, padY = 20, sep = 16;
+  const defs = el('defs', {});
+  const mk = el('marker', { id: 'd-cycle-head', viewBox: '0 0 20 20', refX: 20, refY: 10, markerWidth: 16, markerHeight: 16, markerUnits: 'userSpaceOnUse', orient: 'auto' }, defs);
+  el('path', { d: 'M0,0 L20,10 L0,20 z', class: 'head' }, mk);
+  const mkr = el('marker', { id: 'd-cycle-head-r', viewBox: '0 0 20 20', refX: 20, refY: 10, markerWidth: 16, markerHeight: 16, markerUnits: 'userSpaceOnUse', orient: 'auto' }, defs);
+  el('path', { d: 'M0,0 L20,10 L0,20 z', class: 'head-r' }, mkr);
+  const ringG = el('g', {}), nodeG = el('g', {}), textG = el('g', {});
+  const blocks = data.nodes.map((nd, i) => {
+    const g = el('g', { class: nd.key ? 'on-ink' : '' }, textG);
+    lines(0, -42, [String(i + 1).padStart(2, '0') + ' ' + nd.en], 'no', 0, g);
+    lines(0, -4, [nd.name], 'nm', 0, g);
+    lines(0, 34, nd.sub, 'sub', 28, g);
+    return g;
+  });
+  const bb = blocks.map(g => g.getBBox());
+  const tw = Math.max(...bb.map(b => b.width));
+  const tHalf = Math.max(...bb.map(b => Math.max(-b.y, b.y + b.height)));
+  const ang = i => (n === 2 ? Math.PI : -Math.PI / 2) + 2 * Math.PI * i / n;
+  const sins = data.nodes.map((_, i) => Math.sin(ang(i))), hi = Math.max(...sins), lo = Math.min(...sins);
+  const r = round ? Math.hypot(tw / 2, tHalf) + 12 : 0, nh = round ? 0 : 2 * (tHalf + padY);
+  const nwMin = tw + 2 * padX, nwPref = Math.max(nwMin, W * (n <= 4 ? 0.25 : 0.2));
+  const layout = nw => {
+    const halfH = round ? r : nh / 2;
+    const cx = W / 2, rx = round ? Math.min(W / 4, W / 2 - r - 20) : W / 2 - nw / 2 - 20;
+    const above = ry => Math.max(ry, halfH - ry * lo), below = ry => Math.max(ry, halfH + ry * hi);
+    let ry = H / 2;
+    while (ry > 0 && above(ry) + below(ry) > H - 12) ry -= 2;
+    const cy = 6 + above(ry);
+    const at = a => [cx + rx * Math.cos(a), cy + ry * Math.sin(a)];
+    const centers = data.nodes.map((_, i) => at(ang(i)));
+    const hit = centers.some((p, i) => centers.some((q, j) => j > i && (round
+      ? Math.hypot(p[0] - q[0], p[1] - q[1]) < 2 * r + sep
+      : Math.abs(p[0] - q[0]) < nw + sep && Math.abs(p[1] - q[1]) < nh + sep)));
+    return { nw, cx, centers, at, hit };
+  };
+  let L = layout(nwPref);
+  for (let nw = nwPref - 4; L.hit && nw >= nwMin; nw -= 4) L = layout(nw);
+  if (L.hit) console.warn(`d-cycle: ${n} nodes do not fit ${W}x${H} without overlapping; shorten the labels or give the body more room`);
+  const { nw, cx, centers, at } = L;
+  const inside = (p, c, pad) => round ? Math.hypot(p[0] - c[0], p[1] - c[1]) < r + pad : Math.abs(p[0] - c[0]) < nw / 2 + pad && Math.abs(p[1] - c[1]) < nh / 2 + pad;
+  for (let i = 0; i < n; i++) {
+    const a0 = ang(i), a1 = ang(i) + 2 * Math.PI / n, c0 = centers[i], c1 = centers[(i + 1) % n];
+    const pts = [];
+    for (let a = a0; a <= a1; a += 0.002) { const p = at(a); if (!inside(p, c0, 0) && !inside(p, c1, 6)) pts.push(p); }
+    const back = i === n - 1;
+    if (pts.length > 1) el('path', { d: 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' L'), class: back ? 'ring is-return' : 'ring', 'marker-end': `url(#${back ? 'd-cycle-head-r' : 'd-cycle-head'})` }, ringG);
+  }
+  centers.forEach(([x, y], i) => {
+    if (round) el('circle', { cx: x, cy: y, r, class: 'node' }, nodeG);
+    else el('rect', { x: x - nw / 2, y: y - nh / 2, width: nw, height: nh, class: data.nodes[i].key ? 'node is-wear' : 'node' }, nodeG);
+    blocks[i].setAttribute('transform', `translate(${x},${y})`);
+  });
+  const c = data.center, ty = centers.reduce((s, p) => s + p[1], 0) / n;
+  lines(cx, ty - 86, [c.label], 'c-lb', 0);
+  const v = lines(cx, ty + 50, [c.value], 'c-v', 0);
+  const u = el('tspan', { dx: 6, class: 'c-u' }, v); u.textContent = c.unit;
+  lines(cx, ty + 94, [c.from], 'c-from', 0);
+}
+{
+  const data = {
+    center: { label: '一着の平均着用年数', value: '9.4', unit: '年', from: '業界平均は 3.5年' },
+    nodes: [
+      { en: 'COTTON', name: '綿を選ぶ', sub: ['産地まで追える', 'オーガニック綿100%'] },
+      { en: 'INDIGO', name: '藍で染める', sub: ['浸けては干す', 'ロープ染色を12回'] },
+      { en: 'WEAVE', name: '織る・縫う', sub: ['織機1台で1日50m', '縫製に9日'] },
+      { en: 'MEND', name: '着る・直す', sub: ['一着あたり', '平均2.1回の修理'], key: true },
+      { en: 'REWEAVE', name: '織り直す', sub: ['回収した生地の', '3.2%を糸に戻す'] }
+    ]
+  };
+  const svg = document.querySelector('#d-cycle svg');
+  const draw = () => { svg.replaceChildren(); drawCycle(svg, data); };
+  draw(); document.fonts.ready.then(draw);
+}
+// END d-cycle
+})();</script>
+</body>
+</html>

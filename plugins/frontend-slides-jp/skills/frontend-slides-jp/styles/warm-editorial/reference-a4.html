@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ひなた醸造 ブランドブック 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,100;1,9..144,300..700,100&family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
+<style>
+/* === PAGE BASE: page-base.css, verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS === */
+:root {
+  --cream: #F3EBDD;
+  --ink: #2E2420;
+  --tomato: #DD5A2B;
+  --squash: #EDB33E;
+  --ink-sub: color-mix(in srgb, var(--ink) 68%, var(--cream));
+  --ink-rule: color-mix(in srgb, var(--ink) 22%, var(--cream));
+  --tomato-30: color-mix(in srgb, var(--tomato) 30%, var(--cream));
+  --tomato-55: color-mix(in srgb, var(--tomato) 55%, var(--cream));
+
+  --jp: 'Noto Sans JP', sans-serif;
+  --latin: 'Fraunces', serif;
+
+  --m-x: 96px;
+  --line: 5px;
+
+  --desk-bg: #1b1512;
+  --page-bg: var(--cream);
+}
+
+* { box-sizing: border-box; }
+body { font-family: var(--jp); color: var(--ink); }
+.page { font-family: var(--jp); color: var(--ink); -webkit-font-smoothing: antialiased; }
+.page h1, .page h2, .page h3, .page p, .page ol, .page ul, .page dl, .page dd { margin: 0; padding: 0; }
+.page ol, .page ul { list-style: none; }
+
+/* Illustration language: every drawing is one symbol rendered twice.
+   The fill pass sits at the origin; the ink pass is offset up-right,
+   like a two-plate print slightly out of register. */
+.ill { overflow: visible; display: block; }
+.ill .pf { --s: none; }
+.ill .pl { --fo: none; --fy: none; --fc: none; --s: var(--ink); transform: translate(9px, -7px); }
+.ill .pf { --fo: var(--tomato); --fy: var(--squash); --fc: var(--cream); }
+.on-tomato .ill .pf { --fo: var(--squash); --fy: var(--cream); --fc: var(--cream); }
+.on-squash .ill .pf { --fo: var(--tomato); --fy: var(--cream); --fc: var(--cream); }
+.sym .o { fill: var(--fo, none); }
+.sym .y { fill: var(--fy, none); }
+.sym .c { fill: var(--fc, none); }
+.sym .o, .sym .y, .sym .c, .sym .l {
+  stroke: var(--s, none);
+  stroke-width: var(--line);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.sym .l { fill: none; }
+
+.cap {
+  font-family: var(--latin);
+  font-variation-settings: "opsz" 9, "SOFT" 100;
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+.nm { font-family: var(--latin); font-variation-settings: "opsz" 144, "SOFT" 100; font-weight: 600; font-size: 1.12em; letter-spacing: 0; margin: 0 0.06em; font-feature-settings: "lnum"; }
+
+/* === PAGE FRAME: running head, folio, chapter tab === */
+.rh {
+  position: absolute; top: 64px; left: var(--m-x); right: 200px;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.rh .cap { color: var(--ink-sub); }
+.rh .chap { font-size: 20px; font-weight: 500; letter-spacing: 0.03em; }
+.rh .chap b {
+  font-family: var(--latin); font-weight: 500; font-variation-settings: "opsz" 9, "SOFT" 100;
+  letter-spacing: 0.1em; margin-right: 12px; color: var(--tomato);
+}
+.corner {
+  position: absolute; right: -150px; top: -150px;
+  width: 300px; height: 300px; border-radius: 50%; background: var(--tomato);
+}
+.corner b {
+  position: absolute; left: 34px; top: 170px;
+  font-family: var(--latin); font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-style: italic; font-weight: 400; font-size: 60px; line-height: 1; color: var(--cream);
+}
+.tab {
+  position: absolute; right: 36px; top: 214px; width: 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+.tab i { display: block; width: 4px; height: 44px; border-radius: 2px; background: var(--tomato); }
+.tab span { width: 28px; display: block; text-align: start; font-size: 20px; font-weight: 500; letter-spacing: 0.12em; }
+.folio {
+  position: absolute; right: var(--m-x); bottom: 56px;
+  font-family: var(--latin); font-variation-settings: "opsz" 9, "SOFT" 100;
+  font-size: 18px; letter-spacing: 0.2em; color: var(--ink-sub);
+}
+.note {
+  position: absolute; left: var(--m-x); right: 260px; bottom: 102px;
+  font-size: 17px; line-height: 1.6; letter-spacing: 0.03em; color: var(--ink-sub);
+  text-align: left;
+}
+
+/* === READING ELEMENTS === */
+.kick { position: absolute; left: var(--m-x); top: 140px; font-size: 20px; letter-spacing: 0.3em; color: var(--tomato); }
+.hl { position: absolute; left: var(--m-x); top: 184px; font-size: 60px; font-weight: 700; line-height: 1.4; letter-spacing: 0; }
+.lead { font-size: 26px; line-height: 1.8; letter-spacing: 0.02em; color: var(--ink-sub); }
+.cols { display: grid; grid-template-columns: 500px 500px; column-gap: 48px; }
+.cols p { font-size: 23px; line-height: 1.8; }
+/* Figures in running text: Fraunces at reading weight, never the headline bump */
+.lead .nm, .cols .nm, .body .nm { font-weight: 400; font-size: 1.06em; margin: 0 0.04em; }
+.sq::before { content: ""; display: inline-block; width: 18px; height: 18px; background: var(--tomato); margin-right: 14px; transform: translateY(1px); }
+
+/* ---------- 01 cover ---------- */
+.cover .sun { position: absolute; width: 1200px; height: 1200px; right: -360px; bottom: -340px; border-radius: 50%; background: var(--tomato); }
+.cover .topcap { position: absolute; left: var(--m-x); right: var(--m-x); top: 64px; display: flex; justify-content: space-between; }
+.cover .mast {
+  position: absolute; left: 82px; top: 180px;
+  font-family: var(--latin); font-style: italic; font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-size: 236px; line-height: 0.9; letter-spacing: -0.02em;
+}
+.cover .mast em { font-style: normal; color: var(--tomato); }
+.cover h1 { position: absolute; left: var(--m-x); top: 470px; font-size: 80px; font-weight: 700; line-height: 1.32; letter-spacing: 0; }
+.cover .stamp { position: absolute; right: var(--m-x); top: 196px; text-align: right; font-size: 22px; font-weight: 500; line-height: 1.7; letter-spacing: 0.03em; }
+.cover .stamp .cap { display: block; color: var(--tomato); margin-bottom: 6px; }
+.cover .meta { position: absolute; left: var(--m-x); bottom: 96px; font-size: 19px; line-height: 1.7; letter-spacing: 0.03em; color: var(--ink-sub); }
+.cover .taru { position: absolute; width: 560px; left: 590px; top: 1000px; }
+.cover .soy { position: absolute; width: 200px; left: 470px; top: 1450px; transform: rotate(-12deg); }
+.cover .negi { position: absolute; width: 300px; left: 930px; top: 1400px; transform: rotate(58deg); }
+
+/* ---------- 02 statement ---------- */
+.statement .field { position: absolute; width: 1000px; height: 1000px; left: -500px; top: 820px; border-radius: 50%; background: var(--squash); }
+.statement .soy { position: absolute; width: 230px; left: 70px; top: 930px; transform: rotate(-18deg); }
+.statement .tawara { position: absolute; width: 270px; left: 150px; top: 1170px; transform: rotate(8deg); }
+.statement .salt { position: absolute; width: 220px; left: 50px; top: 1430px; }
+.statement .hl { font-size: 66px; }
+.statement .body { position: absolute; left: 560px; right: var(--m-x); top: 540px; }
+.statement .body p { font-size: 23px; line-height: 1.8; }
+.statement .body p + p { margin-top: 24px; }
+.statement .sign { margin-top: 36px; display: flex; align-items: baseline; gap: 22px; }
+.statement .sign .cap { color: var(--ink-sub); font-size: 15px; }
+.statement .sign b { font-size: 26px; font-weight: 700; letter-spacing: 0.06em; }
+.statement .sign small { font-size: 19px; color: var(--ink-sub); }
+.statement .vows { position: absolute; left: 560px; right: var(--m-x); top: 1210px; border-top: 3px solid var(--ink); }
+.statement .vows li { display: grid; grid-template-columns: 96px 1fr; align-items: baseline; padding: 22px 0 24px; border-bottom: 2px solid var(--ink-rule); }
+.statement .vows .n { font-family: var(--latin); font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 48px; line-height: 1; }
+.statement .vows li:first-child .n { color: var(--tomato); font-style: italic; }
+.statement .vows .t { font-size: 28px; font-weight: 700; display: block; }
+.statement .vows .d { font-size: 20px; line-height: 1.6; color: var(--ink-sub); letter-spacing: 0.03em; margin-top: 4px; }
+
+/* ---------- 03 business ---------- */
+.biz .flow { position: absolute; left: var(--m-x); right: var(--m-x); top: 376px; }
+.biz .lead { width: 1048px; }
+.biz .cols { margin-top: 36px; }
+.biz .grp { margin-top: 56px; }
+.biz .grp + .grp { margin-top: 44px; }
+.biz .grp h3 { font-size: 26px; font-weight: 700; padding-bottom: 14px; border-bottom: 3px solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; }
+.biz .grp h3 .cap { font-size: 15px; color: var(--ink-sub); }
+.biz .row { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
+.biz .item { padding-top: 26px; }
+.biz .item .ill { width: 124px; margin: 8px 0 14px; }
+.biz .item .name { font-size: 24px; font-weight: 700; line-height: 1.45; letter-spacing: 0; }
+.biz .item .desc { font-size: 18px; line-height: 1.6; color: var(--ink-sub); margin-top: 6px; text-align: left; letter-spacing: 0.02em; }
+.biz .item .price { margin-top: 8px; font-family: var(--latin); font-variation-settings: "opsz" 72, "SOFT" 100; font-weight: 500; font-size: 30px; line-height: 1.1; font-feature-settings: "lnum"; }
+.biz .item .price small { font-family: var(--jp); font-size: 18px; font-weight: 700; margin-left: 4px; }
+.biz .item .price i { font-style: normal; font-family: var(--jp); font-size: 17px; font-weight: 400; color: var(--ink-sub); margin-left: 6px; }
+
+/* ---------- 04 story / d-flow-v ---------- */
+.story .lead { position: absolute; left: var(--m-x); width: 1048px; top: 376px; }
+.story .fig { position: absolute; left: var(--m-x); top: 520px; width: 1048px; height: 680px; border-top: 3px solid var(--ink); }
+.story .src { position: absolute; left: var(--m-x); top: 1216px; font-size: 17px; color: var(--ink-sub); letter-spacing: 0.03em; }
+.story .voice { position: absolute; left: var(--m-x); top: 1300px; width: 700px; }
+.story .voice .mark { position: absolute; left: -6px; top: -40px; font-family: var(--latin); font-style: italic; font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 140px; line-height: 1; color: var(--tomato); }
+.story .voice blockquote { margin: 0; padding-left: 92px; font-size: 32px; font-weight: 700; line-height: 1.6; }
+.story .voice .who { margin-top: 18px; padding-left: 92px; font-size: 20px; color: var(--ink-sub); }
+.story .voice .who .cap { display: block; font-size: 15px; margin-bottom: 4px; color: var(--tomato); }
+.story .ladle { position: absolute; width: 300px; right: 90px; top: 1270px; transform: rotate(-16deg); }
+
+/* BEGIN d-flow-v (fitted: 1048×680, warm-editorial tokens) */
+#d-flow-v {
+  --d-paper: var(--cream); --d-ink: var(--ink); --d-sub: var(--ink-sub); --d-rule: var(--ink-rule);
+  --d-mid: var(--ink); --d-accent: var(--tomato);
+  --font-jp: var(--jp); --font-latin: var(--latin);
+}
+#d-flow-v .rows { display: grid; grid-template-columns: 138px 64px 248px 1fr 168px; grid-auto-rows: 1fr; height: 100%; }
+#d-flow-v .rows > * { display: flex; align-items: center; border-bottom: 2px solid var(--d-rule); }
+#d-flow-v .rows > .node { border-bottom: 0; position: relative; justify-content: center; }
+#d-flow-v .node::before { content: ""; position: absolute; left: 50%; margin-left: -2px; width: 4px; top: 0; bottom: 0; background: var(--d-mid); }
+#d-flow-v .node.first::before { top: 50%; border-radius: 2px 2px 0 0; }
+#d-flow-v .node.last::before { bottom: 50%; border-radius: 0 0 2px 2px; }
+#d-flow-v .node span { position: relative; width: 50px; height: 50px; border-radius: 50%; background: var(--d-paper); border: 4px solid var(--d-ink); font: 500 24px/42px var(--font-latin); font-variation-settings: "opsz" 72, "SOFT" 100; text-align: center; }
+#d-flow-v .node.is-key span { background: var(--d-accent); border-color: var(--d-ink); color: var(--d-paper); font-style: italic; }
+#d-flow-v .when { font: 700 22px/1.35 var(--font-jp); color: var(--d-sub); }
+#d-flow-v .when .nm { font-size: 1.3em; font-weight: 500; margin: 0 0.04em 0 0; }
+#d-flow-v .when.is-key { color: var(--d-accent); }
+#d-flow-v .ttl { font-size: 26px; font-weight: 700; padding-left: 22px; line-height: 1.4; }
+#d-flow-v .ttl.is-key { color: var(--d-accent); }
+#d-flow-v .dsc { font-size: 20px; line-height: 1.6; padding-right: 24px; color: var(--d-ink); letter-spacing: 0.02em; }
+#d-flow-v .who { font-size: 19px; color: var(--d-sub); line-height: 1.45; }
+/* END d-flow-v */
+
+/* ---------- 05 numbers ---------- */
+.nums .lead { position: absolute; left: var(--m-x); width: 1048px; top: 376px; }
+.nums .kpi { position: absolute; left: var(--m-x); top: 540px; width: 470px; }
+.nums .kpi .lab { font-size: 26px; font-weight: 700; line-height: 1.45; }
+.nums .kpi .lab small { display: block; margin-top: 6px; font-size: 19px; font-weight: 400; color: var(--ink-sub); line-height: 1.6; }
+.nums .big {
+  margin-top: 46px; font-family: var(--latin); font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-weight: 400; font-size: 260px; line-height: 0.8; letter-spacing: -0.03em; color: var(--tomato); font-feature-settings: "lnum";
+}
+.nums .big span { font-size: 86px; letter-spacing: 0; margin-left: 8px; color: var(--ink); }
+.nums .chart { position: absolute; left: 640px; top: 540px; width: 504px; }
+.nums .chart .cap { display: block; color: var(--ink-sub); margin-bottom: 14px; }
+.nums .chart svg { display: block; width: 504px; height: 420px; }
+.nums .trio { position: absolute; left: var(--m-x); right: var(--m-x); top: 1080px; border-top: 3px solid var(--ink); display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 48px; padding-top: 26px; }
+.nums .trio b { display: block; font-family: var(--latin); font-variation-settings: "opsz" 72, "SOFT" 100; font-weight: 500; font-size: 64px; line-height: 1.05; font-feature-settings: "lnum"; }
+.nums .trio b i { font-style: normal; font-family: var(--jp); font-size: 24px; font-weight: 700; margin-left: 6px; }
+.nums .trio p { margin-top: 10px; font-size: 20px; line-height: 1.6; color: var(--ink-sub); text-align: left; }
+.nums .cols { position: absolute; left: var(--m-x); top: 1330px; }
+.nums .cols h3 { grid-column: 1 / -1; font-size: 24px; font-weight: 700; margin-bottom: 14px; }
+.nums .bag { position: absolute; width: 170px; right: 128px; top: 372px; transform: rotate(12deg); }
+
+/* ---------- 06 back cover ---------- */
+.back .sun { position: absolute; width: 1100px; height: 1100px; right: -330px; bottom: -300px; border-radius: 50%; background: var(--tomato); }
+.back .hl { font-size: 66px; }
+.back .lead { position: absolute; left: var(--m-x); top: 392px; width: 1048px; }
+.back .shops { position: absolute; left: var(--m-x); right: var(--m-x); top: 540px; display: grid; grid-template-columns: 500px 500px; column-gap: 48px; }
+.back .shops { align-items: start; }
+.back .shops > section:first-child { grid-row: span 2; }
+.back .shops .mail { margin-top: 40px; }
+.back .shops h3 { font-size: 22px; font-weight: 700; padding-bottom: 12px; border-bottom: 3px solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; }
+.back .shops h3 .cap { font-size: 15px; color: var(--ink-sub); }
+.back .shops li { padding: 18px 0 20px; border-bottom: 2px solid var(--ink-rule); }
+.back .shops li .n { font-size: 26px; font-weight: 700; display: block; line-height: 1.45; }
+.back .shops li .n em { font-style: normal; font-size: 17px; font-weight: 700; color: var(--tomato); margin-left: 10px; }
+.back .shops li .a { font-size: 19px; line-height: 1.6; color: var(--ink-sub); display: block; margin-top: 4px; letter-spacing: 0.02em; }
+.back .shops li .a .t { font-family: var(--latin); font-variation-settings: "opsz" 9, "SOFT" 100; font-feature-settings: "lnum"; color: var(--ink); }
+.back .contact { position: absolute; left: var(--m-x); top: 1200px; width: 420px; }
+.back .contact .cap { color: var(--tomato); display: block; margin-bottom: 14px; }
+.back .contact dl { border-top: 3px solid var(--ink); }
+.back .contact dt { margin-top: 18px; font-size: 18px; color: var(--ink-sub); }
+.back .contact dd { font-size: 24px; font-weight: 700; line-height: 1.5; letter-spacing: 0.02em; }
+.back .contact dd .t { font-family: var(--latin); font-variation-settings: "opsz" 72, "SOFT" 100; font-weight: 500; font-size: 34px; font-feature-settings: "lnum"; letter-spacing: 0.02em; }
+.back .contact dd small { display: block; font-size: 18px; font-weight: 400; color: var(--ink-sub); }
+.back .noren { position: absolute; width: 450px; left: 610px; top: 1090px; }
+.back .bowl { position: absolute; width: 230px; left: 960px; top: 1450px; }
+.back .steam { position: absolute; width: 130px; left: 1010px; top: 1402px; }
+.back .folio { color: var(--ink); }
+.back .note { right: 760px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-taru" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M36 78 H164 L154 168 Q100 184 46 168 Z"/>
+      <path class="y" d="M30 78 Q30 64 100 64 Q170 64 170 78 Q170 92 100 92 Q30 92 30 78 Z"/>
+      <path class="y" d="M74 66 Q76 38 100 36 Q124 38 126 66 Z"/>
+      <path class="l" d="M40 108 Q100 120 160 108 M46 146 Q100 158 154 146 M70 128 H94"/>
+    </symbol>
+    <symbol id="i-soy" viewBox="0 0 200 200" class="sym">
+      <path class="y" d="M30 104 Q30 70 64 70 Q98 70 98 104 Q98 138 64 138 Q30 138 30 104 Z"/>
+      <path class="y" d="M104 84 Q104 50 138 50 Q172 50 172 84 Q172 118 138 118 Q104 118 104 84 Z"/>
+      <path class="y" d="M80 150 Q80 120 110 120 Q140 120 140 150 Q140 180 110 180 Q80 180 80 150 Z"/>
+      <path class="l" d="M56 100 H72 M130 80 H146 M102 148 H118"/>
+    </symbol>
+    <symbol id="i-negi" viewBox="0 0 200 200" class="sym">
+      <path class="c" d="M88 192 V112 H112 V192 Q100 198 88 192 Z"/>
+      <path class="y" d="M90 112 Q66 66 50 12 Q84 50 100 96 Q116 50 150 16 Q136 68 110 112 Z"/>
+      <path class="l" d="M100 128 V184 M94 192 Q86 198 80 196 M106 192 Q114 198 120 196"/>
+    </symbol>
+    <symbol id="i-tawara" viewBox="0 0 200 200" class="sym">
+      <path class="y" d="M34 66 Q100 50 166 66 Q184 100 166 134 Q100 150 34 134 Q16 100 34 66 Z"/>
+      <path class="l" d="M64 60 Q56 100 64 140 M100 56 V144 M136 60 Q144 100 136 140 M24 100 H10 M176 100 H190"/>
+    </symbol>
+    <symbol id="i-salt" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M56 84 Q36 124 54 166 Q100 186 146 166 Q164 124 144 84 Z"/>
+      <path class="c" d="M50 84 Q100 52 150 84 Z"/>
+      <path class="l" d="M100 66 V48 M74 124 H96 M108 146 H128"/>
+    </symbol>
+    <symbol id="i-pack" viewBox="0 0 200 200" class="sym">
+      <path class="y" d="M54 30 H146 L156 172 Q100 184 44 172 Z"/>
+      <path class="o" d="M72 92 Q72 84 80 84 H120 Q128 84 128 92 V132 Q128 140 120 140 H80 Q72 140 72 132 Z"/>
+      <path class="l" d="M52 54 H148 M86 112 H114"/>
+    </symbol>
+    <symbol id="i-jar" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M62 64 Q22 110 48 164 Q100 188 152 164 Q178 110 138 64 Z"/>
+      <path class="y" d="M54 62 Q54 46 100 46 Q146 46 146 62 Q146 76 100 76 Q54 76 54 62 Z"/>
+      <path class="l" d="M100 46 V30 M70 120 H94 M110 146 H132"/>
+    </symbol>
+    <symbol id="i-bowl" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M20 92 H180 Q174 168 100 172 Q26 168 20 92 Z"/>
+      <ellipse class="y" cx="100" cy="92" rx="80" ry="14"/>
+      <path class="l" d="M72 176 H128"/>
+    </symbol>
+    <symbol id="i-steam" viewBox="0 0 200 200" class="sym">
+      <path class="l" d="M60 190 q-22 -24 0 -48 q22 -24 0 -48 q-22 -24 0 -48"/>
+      <path class="l" d="M110 170 q-22 -24 0 -48 q22 -24 0 -48 q-22 -24 0 -48"/>
+      <path class="l" d="M160 190 q-22 -24 0 -48 q22 -24 0 -48"/>
+    </symbol>
+    <symbol id="i-onigiri" viewBox="0 0 200 200" class="sym">
+      <path class="c" d="M100 28 Q116 28 146 96 Q172 156 146 172 H54 Q28 156 54 96 Q84 28 100 28 Z"/>
+      <path class="o" d="M46 128 H154 Q164 164 146 172 H54 Q36 164 46 128 Z"/>
+      <path class="l" d="M82 82 H98 M104 104 H122 M72 152 H96"/>
+    </symbol>
+    <symbol id="i-cup" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M48 80 H152 L142 166 Q100 180 58 166 Z"/>
+      <path class="y" d="M50 80 Q50 70 100 70 Q150 70 150 80 Q150 90 100 90 Q50 90 50 80 Z"/>
+      <path class="l" d="M82 56 q-10 -14 0 -28 q10 -14 0 -28 M118 56 q-10 -14 0 -28 M76 124 H100"/>
+    </symbol>
+    <symbol id="i-ladle" viewBox="0 0 200 200" class="sym">
+      <path class="y" d="M30 118 H134 Q134 176 82 176 Q30 176 30 118 Z"/>
+      <path class="l" d="M132 120 Q160 70 178 14 M56 142 H80"/>
+    </symbol>
+    <symbol id="i-noren" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M30 46 H170 V156 Q170 164 162 164 H38 Q30 164 30 156 Z"/>
+      <path class="y" d="M86 92 Q86 86 92 86 H108 Q114 86 114 92 V108 Q114 114 108 114 H92 Q86 114 86 108 Z"/>
+      <path class="l" d="M16 40 H184 M76 60 V164 M124 60 V164 M44 140 H62"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="doc-stage" id="docStage">
+
+  <!-- 01 cover -->
+  <section class="page cover">
+    <div class="sun"></div>
+    <div class="topcap"><span class="cap">Hinata Miso Works</span><span class="cap">Brand Book / Vol.01</span></div>
+    <div class="mast">hina<em>ta</em></div>
+    <div class="stamp"><span class="cap">Autumn 2027</span>東京・蔵前に、<br>はじめてのお店。</div>
+    <h1>木桶で<span class="nm">10</span>か月。<br>待つことも、<br>仕込みのうち。</h1>
+    <div class="on-tomato">
+      <svg class="ill negi" viewBox="0 0 200 200"><use href="#i-negi" class="pf"/><use href="#i-negi" class="pl"/></svg>
+      <svg class="ill taru" viewBox="0 0 200 200"><use href="#i-taru" class="pf"/><use href="#i-taru" class="pl"/></svg>
+      <svg class="ill soy" viewBox="0 0 200 200"><use href="#i-soy" class="pf"/><use href="#i-soy" class="pl"/></svg>
+    </div>
+    <p class="meta">株式会社ひなた醸造<br>ブランドブック 第1版<br>2027年10月 発行<br>社名・店舗・数値はすべて架空です</p>
+  </section>
+
+  <!-- 02 statement -->
+  <section class="page statement">
+    <div class="field"></div>
+    <div class="on-squash">
+      <svg class="ill soy" viewBox="0 0 200 200"><use href="#i-soy" class="pf"/><use href="#i-soy" class="pl"/></svg>
+      <svg class="ill tawara" viewBox="0 0 200 200"><use href="#i-tawara" class="pf"/><use href="#i-tawara" class="pl"/></svg>
+      <svg class="ill salt" viewBox="0 0 200 200"><use href="#i-salt" class="pf"/><use href="#i-salt" class="pl"/></svg>
+    </div>
+    <header class="rh"><span class="cap">Hinata Brand Book 2027</span><span class="chap"><b>01</b>わたしたちのこと</span></header>
+    <div class="tab"><i></i><span class="tate">わたしたちのこと</span></div>
+    <p class="kick cap">Our Story</p>
+    <h2 class="hl">大豆と米糀と塩。<br>蔵がつくるのは、<br>それだけです。</h2>
+    <div class="body">
+      <p>ひなた醸造は<span class="nm">1931</span>年、安曇野の湧き水のそばで日向家が始めた小さな味噌蔵です。いまも蔵には杉の木桶が<span class="nm">48</span>本並び、いちばん古い桶は創業の翌年に組まれました。</p>
+      <p>材料は大豆と米糀と塩だけで、酒精も色を整える添加物も使いません。温めて熟成を急がせることもせず、夏の暑さと冬の寒さを、蔵の中でそのまま一年ぶん通します。</p>
+      <p>時間がかかるぶん、たくさんは作れません。そのかわり、毎朝の一杯がすこし楽しみになる味噌を、顔の見える店で手渡しています。</p>
+      <div class="sign"><b>日向 さくら</b><small>四代目 蔵元</small><span class="cap">Sakura Hinata</span></div>
+    </div>
+    <ol class="vows">
+      <li><span class="n">01</span><div><span class="t">木桶で、一年寝かせる</span><p class="d">温度を上げず、蔵の気温のまま夏を越す。</p></div></li>
+      <li><span class="n">02</span><div><span class="t">火を入れず、生のまま</span><p class="d">加熱殺菌をしないので、袋の中でも熟成が続く。</p></div></li>
+      <li><span class="n">03</span><div><span class="t">量って、手渡しで売る</span><p class="d">直営店では作り置きをせず、その場で詰める。</p></div></li>
+    </ol>
+    <span class="folio">P.02</span>
+  </section>
+
+  <!-- 03 business -->
+  <section class="page biz">
+    <div class="corner"><b>02</b></div>
+    <header class="rh"><span class="cap">Hinata Brand Book 2027</span><span class="chap"><b>02</b>お店と味噌</span></header>
+    <div class="tab"><i></i><span class="tate">お店と味噌</span></div>
+    <p class="kick cap">Shops &amp; Products</p>
+    <h2 class="hl">店頭の味噌は、すべて<br><span class="nm">100</span>gから量り売りです。</h2>
+    <div class="flow">
+      <p class="lead">長野と東京の直営店<span class="nm">4</span>店では、木桶から出した味噌を<br>お客さまの目の前で量り、その場で袋に詰めます。</p>
+      <div class="cols">
+        <p>味噌は、桶から出したときがいちばん香ります。袋に詰めて棚に並べると、その香りは少しずつ抜けていきます。だから直営店には作り置きの袋を置かず、選んでいただいた味噌を木べらで取り、<span class="nm">100</span>g単位で量って詰めています。</p>
+        <p>量り売りなら、試してから決められます。店頭には<span class="nm">6</span>種類の味噌を並べ、どれも小さな匙で味見ができます。初めての方には<span class="nm">300</span>gを勧めています。二人暮らしで毎朝味噌汁をつくると、ちょうど<span class="nm">2</span>週間ほどの量です。</p>
+      </div>
+      <section class="grp">
+        <h3><span class="sq">量り売りの味噌</span><span class="cap">Miso by Weight</span></h3>
+        <div class="row">
+          <div class="item"><svg class="ill" viewBox="0 0 200 200"><use href="#i-taru" class="pf"/><use href="#i-taru" class="pl"/></svg><div><p class="name">木桶三年</p><p class="desc">三夏を越した赤味噌。<br>コクが深く塩は控えめ。</p><p class="price">460<small>円</small><i>100g</i></p></div></div>
+          <div class="item"><svg class="ill" viewBox="0 0 200 200"><use href="#i-pack" class="pf"/><use href="#i-pack" class="pl"/></svg><div><p class="name">ひなた白</p><p class="desc">糀を倍にした淡色。<br>甘く、香りが立つ。</p><p class="price">280<small>円</small><i>100g</i></p></div></div>
+          <div class="item"><svg class="ill" viewBox="0 0 200 200"><use href="#i-jar" class="pf"/><use href="#i-jar" class="pl"/></svg><div><p class="name">糀あわせ</p><p class="desc">赤と白を蔵で合わせた、<br>いちばんの定番。</p><p class="price">320<small>円</small><i>100g</i></p></div></div>
+        </div>
+      </section>
+      <section class="grp">
+        <h3><span class="sq">店で食べる、持ち帰る</span><span class="cap">Kitchen Counter</span></h3>
+        <div class="row">
+          <div class="item"><svg class="ill" viewBox="0 0 200 200"><use href="#i-bowl" class="pf"/><use href="#i-bowl" class="pl"/></svg><div><p class="name">朝の味噌汁</p><p class="desc">日替わりの具で一杯。<br>8時から11時まで。</p><p class="price">350<small>円</small></p></div></div>
+          <div class="item"><svg class="ill" viewBox="0 0 200 200"><use href="#i-onigiri" class="pf"/><use href="#i-onigiri" class="pl"/></svg><div><p class="name">焼き味噌むすび</p><p class="desc">木桶三年を塗って、<br>注文ごとに焼く。</p><p class="price">240<small>円</small></p></div></div>
+          <div class="item"><svg class="ill" viewBox="0 0 200 200"><use href="#i-cup" class="pf"/><use href="#i-cup" class="pl"/></svg><div><p class="name">糀の甘酒</p><p class="desc">米糀と水だけ。<br>砂糖は入れていない。</p><p class="price">380<small>円</small></p></div></div>
+        </div>
+      </section>
+    </div>
+    <p class="note">価格は税込、2027年10月時点（架空）。量り売りは各店の在庫により、6種類のうち4〜6種類を並べます。</p>
+    <span class="folio">P.03</span>
+  </section>
+
+  <!-- 04 story: d-flow-v -->
+  <section class="page story">
+    <div class="corner"><b>03</b></div>
+    <header class="rh"><span class="cap">Hinata Brand Book 2027</span><span class="chap"><b>03</b>蔵の仕事</span></header>
+    <div class="tab"><i></i><span class="tate">蔵の仕事</span></div>
+    <p class="kick cap">How We Make It</p>
+    <h2 class="hl">仕込みは<span class="nm">4</span>日で終わり、<br>そこから<span class="nm">10</span>か月待つ。</h2>
+    <p class="lead">手を動かすのは最初の<span class="nm">4</span>日間だけです。あとは木桶の中で、<br>大豆と糀と塩が、季節に合わせてゆっくり味噌になります。</p>
+    <div class="fig" id="d-flow-v">
+      <div class="rows">
+        <div class="when"><span><span class="nm">1</span>日目</span></div><div class="node first"><span>1</span></div><div class="ttl">大豆を浸す</div><div class="dsc">安曇野産の大豆を洗い、<br>湧き水に18時間浸す。</div><div class="who">蔵人</div>
+        <div class="when"><span><span class="nm">2</span>日目</span></div><div class="node"><span>2</span></div><div class="ttl">蒸して、つぶす</div><div class="dsc">圧をかけずに4時間蒸し、<br>熱いうちに挽いてつぶす。</div><div class="who">蔵人</div>
+        <div class="when"><span><span class="nm">2–4</span>日目</span></div><div class="node"><span>3</span></div><div class="ttl">米糀を育てる</div><div class="dsc">蒸した米に糀菌をつけ、<br>室で44時間、夜通し見守る。</div><div class="who">製麹担当</div>
+        <div class="when"><span><span class="nm">4</span>日目</span></div><div class="node"><span>4</span></div><div class="ttl">木桶に仕込む</div><div class="dsc">大豆と糀と塩を混ぜ、<br>空気を抜きながら桶に詰める。</div><div class="who">製造責任者</div>
+        <div class="when is-key"><span>その後<br><span class="nm">10</span>か月</span></div><div class="node last is-key"><span>5</span></div><div class="ttl is-key">夏を越して<br>寝かせる</div><div class="dsc">温めずに蔵の気温のまま置き、<br>7月に一度だけ天地返しをする。</div><div class="who">蔵の全員</div>
+      </div>
+    </div>
+    <p class="src">工程は「糀あわせ」の場合。木桶三年は熟成が34か月になります。</p>
+    <div class="voice">
+      <span class="mark">“</span>
+      <blockquote>天地返しの日だけは、<br>蔵じゅうが味噌の匂いになります。</blockquote>
+      <p class="who"><span class="cap">Voice from the Kura</span>製造責任者　北原 健二（入社21年目）</p>
+    </div>
+    <svg class="ill ladle" viewBox="0 0 200 200"><use href="#i-ladle" class="pf"/><use href="#i-ladle" class="pl"/></svg>
+    <p class="note">工程と時間は当蔵の標準（架空）。天候と大豆の状態により、浸す時間は14〜20時間の間で調整します。</p>
+    <span class="folio">P.04</span>
+  </section>
+
+  <!-- 05 numbers -->
+  <section class="page nums">
+    <div class="corner"><b>04</b></div>
+    <header class="rh"><span class="cap">Hinata Brand Book 2027</span><span class="chap"><b>04</b>数字で見るひなた</span></header>
+    <div class="tab"><i></i><span class="tate">数字で見るひなた</span></div>
+    <p class="kick cap">In Numbers</p>
+    <h2 class="hl">初めて買った方の<span class="nm">3</span>人に<span class="nm">2</span>人が、<br>一年以内にまた量りに来る。</h2>
+    <p class="lead">会員カードの記録では、再来店の割合は<span class="nm">5</span>年続けて伸びました。<br>味見をしてから買えることが、二度目の来店につながっています。</p>
+    <div class="kpi">
+      <p class="lab">初回購入から12か月以内の再来店率<small>2026年に初めて購入した会員<br>4,120人のうち</small></p>
+      <p class="big">68<span>%</span></p>
+    </div>
+    <div class="chart">
+      <span class="cap">Return rate by year</span>
+      <svg viewBox="0 0 504 420" id="returnChart"></svg>
+    </div>
+    <div class="trio">
+      <div><b>4<i>店</i></b><p>直営店。長野に3店、<br>2027年10月から東京に1店。</p></div>
+      <div><b>48<i>本</i></b><p>蔵の杉の木桶。いちばん古い<br>桶は1932年に組まれた。</p></div>
+      <div><b>210<i>t</i></b><p>2026年の仕込み量。<br>うち木桶仕込みは全量。</p></div>
+    </div>
+    <div class="cols">
+      <h3 class="sq">二度目の来店を増やしたこと</h3>
+      <p><span class="nm">2023</span>年から、量り売りの台に<span class="nm">6</span>種類すべての味見を置きました。味見をした方は、しなかった方より再来店の割合が高く、その差は毎年<span class="nm">15</span>ポイント前後あります。</p>
+      <p>同じ年に、会員カードに前回の味噌と量を記録するようにしました。二度目に来た方へ「前回は糀あわせを<span class="nm">300</span>gでした」と伝えられるので、買い足しの相談がしやすくなりました。</p>
+    </div>
+    <svg class="ill bag" viewBox="0 0 200 200"><use href="#i-pack" class="pf"/><use href="#i-pack" class="pl"/></svg>
+    <p class="note">出典　ひなた醸造 会員データ（2021〜2026年、各年の新規会員 n=2,680〜4,120）。再来店は初回購入日から365日以内の購入。数値はすべて架空です。</p>
+    <span class="folio">P.05</span>
+  </section>
+
+  <!-- 06 back cover: shops and contact -->
+  <section class="page back">
+    <div class="sun"></div>
+    <div class="on-tomato">
+      <svg class="ill noren" viewBox="0 0 200 200"><use href="#i-noren" class="pf"/><use href="#i-noren" class="pl"/></svg>
+      <svg class="ill steam" viewBox="0 0 200 200"><use href="#i-steam" class="pf"/><use href="#i-steam" class="pl"/></svg>
+      <svg class="ill bowl" viewBox="0 0 200 200"><use href="#i-bowl" class="pf"/><use href="#i-bowl" class="pl"/></svg>
+    </div>
+    <header class="rh"><span class="cap">Hinata Brand Book 2027</span><span class="chap"><b>05</b>お店へ</span></header>
+    <div class="tab"><i></i><span class="tate">お店へ</span></div>
+    <p class="kick cap">Visit Us</p>
+    <h2 class="hl">次のお休みは、<br>蔵のお店で味見から。</h2>
+    <p class="lead">どのお店でも、<span class="nm">6</span>種類の味噌を小さな匙で味見できます。</p>
+    <div class="shops">
+      <section>
+        <h3><span class="sq">長野県</span><span class="cap">Nagano</span></h3>
+        <ul>
+          <li><span class="n">安曇野本店・蔵<em>蔵見学あり</em></span><span class="a">安曇野市穂高　<span class="t">9:00–17:00</span>　水曜定休</span></li>
+          <li><span class="n">松本中町店</span><span class="a">松本市中央　<span class="t">10:00–18:00</span>　火曜定休</span></li>
+          <li><span class="n">長野駅前店</span><span class="a">長野市南千歳　<span class="t">10:00–19:00</span>　無休</span></li>
+        </ul>
+      </section>
+      <section>
+        <h3><span class="sq">東京都</span><span class="cap">Tokyo</span></h3>
+        <ul>
+          <li><span class="n">蔵前店<em>2027年10月開店</em></span><span class="a">台東区蔵前　<span class="t">11:00–19:00</span>　月曜定休</span></li>
+        </ul>
+      </section>
+      <section class="mail">
+        <h3><span class="sq">通信販売</span><span class="cap">Online</span></h3>
+        <ul>
+          <li><span class="n">オンラインストア</span><span class="a">hinata-jozo.example　量り売りと同じ6種類を<span class="t">300</span>gから。毎週月曜に発送</span></li>
+        </ul>
+      </section>
+    </div>
+    <div class="contact">
+      <span class="cap">Contact</span>
+      <dl>
+        <dt>蔵見学のご予約（安曇野本店）</dt>
+        <dd><span class="t">0263-00-1931</span><small>平日 9:00–17:00　見学は1回8名まで</small></dd>
+        <dt>お問い合わせ</dt>
+        <dd>info@hinata-jozo.example<small>卸・飲食店でのお取り扱いのご相談も</small></dd>
+      </dl>
+    </div>
+    <p class="note">住所は町名まで。電話番号・URL・メールアドレスは架空です。</p>
+    <span class="folio">P.06</span>
+  </section>
+
+</main>
+
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+addEventListener('resize', fit);
+</script>
+<script>
+(function returnChart() {
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.getElementById('returnChart');
+  const el = (tag, attrs, text) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; svg.appendChild(n); return n; };
+  const data = [[2021, 41], [2022, 48], [2023, 55], [2024, 60], [2025, 64], [2026, 68]];
+  const W = 504, top = 40, base = 360, bw = 56, gap = (W - data.length * bw) / (data.length - 1);
+  const y = v => base - (base - top) * v / 100;
+  [50, 100].forEach(v => {
+    el('line', { x1: v === 50 ? bw + 14 : 0, x2: W, y1: y(v), y2: y(v), stroke: 'var(--ink-sub)', 'stroke-width': 1, 'stroke-dasharray': '3 6', opacity: 0.6 });
+    el('text', { x: W, y: y(v) - 10, 'text-anchor': 'end', 'font-size': 18, fill: 'var(--ink-sub)', 'font-family': 'Fraunces' }, v + '%');
+  });
+  data.forEach(([yr, v], i) => {
+    const x = i * (bw + gap), last = i === data.length - 1;
+    el('rect', { x, y: y(v), width: bw, height: base - y(v), fill: last ? 'var(--tomato)' : i === 0 ? 'var(--tomato-55)' : 'var(--tomato-30)' });
+    if (i === 0 || last) el('text', { x: x + bw / 2, y: y(v) - 14, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 500, 'font-family': 'Fraunces', fill: last ? 'var(--tomato)' : 'var(--ink)' }, v);
+    if (i === 0 || i === 3 || last) el('text', { x: last ? x + bw : i === 0 ? x : x + bw / 2, y: base + 36, 'text-anchor': last ? 'end' : i === 0 ? 'start' : 'middle', 'font-size': 20, fill: 'var(--ink-sub)', 'font-family': 'Fraunces' }, yr);
+  });
+  el('line', { x1: 0, x2: W, y1: base, y2: base, stroke: 'var(--ink)', 'stroke-width': 3 });
+})();
+</script>
+</body>
+</html>

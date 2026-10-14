@@ -16,7 +16,8 @@
   "best_for": "行政・自治体の報告、公式な会議資料、仕様や制度の説明、アクセシビリティが要件の資料",
   "avoid_for": "エンタメ、ブランドの世界観を見せる発表、写真や感情で引き込む登壇",
   "formats": [
-    "slide-16x9"
+    "slide-16x9",
+    "doc-a4"
   ],
   "writing": "horizontal",
   "needs": [],
@@ -25,6 +26,9 @@
     "body": "Noto Sans JP",
     "latin": [
       "IBM Plex Sans"
+    ],
+    "extra": [
+      "BIZ UDPGothic"
     ]
   },
   "colors": {

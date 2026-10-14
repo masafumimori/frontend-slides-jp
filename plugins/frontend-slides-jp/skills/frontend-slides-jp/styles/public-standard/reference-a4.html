@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3次 汐見市地域公共交通計画（本編抜粋）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted in full === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS ===
+   Four colors as in the 16:9 reference: paper, ink (with one lighter step), rule gray, one blue.
+   Headings in Noto Sans JP, body text in BIZ UDPGothic (a universal-design face), figures in IBM Plex Sans. */
+:root {
+  --desk-bg: #E9E9EC;
+  --page-bg: #FFFFFF;
+  --ink: #1A1A1C;
+  --ink-2: #55555C;
+  --rule: #D6D6DB;
+  --rule-strong: #1A1A1C;
+  --blue: #0A3BD1;
+
+  --font-jp: 'Noto Sans JP', sans-serif;
+  --font-body: 'BIZ UDPGothic', 'Noto Sans JP', sans-serif;
+  --font-num: 'IBM Plex Sans', 'Noto Sans JP', sans-serif;
+
+  /* 8px spacing scale */
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 48px; --s6: 64px; --s7: 96px; --s8: 128px;
+
+  /* Page grid at 1240: 96px margins, 1048px text width, two 500px columns with a 48px gutter */
+  --margin-x: 96px;
+  --text-w: 1048px;
+
+  --t-label: 20px;
+  --t-note: 17px;
+  --t-body: 22px;
+  --t-h2: 54px;
+  --t-h1: 96px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-jp);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+.num {
+  font-family: var(--font-num);
+  font-feature-settings: "tnum", "lnum";
+  letter-spacing: -0.01em;
+}
+.page .label {
+  font-size: var(--t-label);
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+.page .note {
+  font-family: var(--font-body);
+  font-size: var(--t-note);
+  color: var(--ink-2);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+.page .src {
+  font-family: var(--font-body);
+  font-size: var(--t-note);
+  color: var(--ink-2);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-align: left;
+  margin-top: 12px;
+}
+h1, h2, h3 { font-weight: 700; }
+
+/* === PAGE FRAME: top edge, running head, folio, chapter tab, foot slot === */
+/* Top edge: 8px of blue across every page, the cover included (as on every slide). */
+.page::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 8px;
+  background: var(--blue);
+}
+/* Running head at top 64: document name left, chapter right, 1px rule 14px below. */
+.rh {
+  position: absolute;
+  left: var(--margin-x); right: var(--margin-x); top: 64px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 18px;
+  color: var(--ink-2);
+  letter-spacing: 0.03em;
+  line-height: normal;
+}
+.rh b { color: var(--ink); font-weight: 500; }
+.rh .num { letter-spacing: 0.02em; }
+/* Folio at bottom 56, right edge of the text block: current page in ink 600, total in ink-2. */
+.folio {
+  position: absolute;
+  right: var(--margin-x); bottom: 56px;
+  font-family: var(--font-num);
+  font-size: 19px;
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+  line-height: normal;
+  white-space: nowrap;
+}
+.folio b { color: var(--ink); font-weight: 600; }
+/* Foot slot: ※ notes, left of the folio, bottom-aligned with it. */
+.foot {
+  position: absolute;
+  left: var(--margin-x); right: 220px; bottom: 52px;
+}
+/* Chapter tab: the six chapters as a ladder on the outer edge. The current one has a
+   4px blue bar, a 600 numeral and its name set vertically below; never color alone. */
+.tab {
+  position: absolute;
+  right: 0; top: 240px;
+  width: 64px;
+  border-left: 1px solid var(--rule);
+  list-style: none;
+}
+.tab li {
+  height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-num);
+  font-size: 19px;
+  color: var(--ink-2);
+  line-height: normal;
+  letter-spacing: 0;
+  border-bottom: 1px solid var(--rule);
+}
+.tab li:first-child { border-top: 1px solid var(--rule); }
+.tab li.on {
+  color: var(--blue);
+  font-weight: 600;
+  box-shadow: inset 4px 0 0 var(--blue);
+}
+.tab-name {
+  position: absolute;
+  right: 0; top: 576px;
+  width: 64px;
+  display: flex; justify-content: center;
+}
+.tab-name span {
+  writing-mode: vertical-rl;
+  font-feature-settings: "vpal";
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+.tab-name .num { text-combine-upright: all; font-weight: 600; color: var(--blue); }
+
+/* Head block at top 140: blue label, a two-line H2 that states the finding, a lead. */
+.head {
+  position: absolute;
+  left: var(--margin-x); width: var(--text-w); top: 140px;
+}
+.head .label { margin-bottom: var(--s2); }
+.page .head h2 {
+  font-size: var(--t-h2);
+  line-height: 1.38;
+  letter-spacing: 0.02em;
+}
+.page .head .lead {
+  margin-top: var(--s3);
+  font-family: var(--font-body);
+  font-size: 26px;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+/* Figure and table captions: number in Plex, title in 700, a 2px ink rule on top. */
+.cap {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: 14px;
+  border-top: 2px solid var(--rule-strong);
+  line-height: normal;
+}
+.cap h3 { font-size: 24px; letter-spacing: 0.02em; line-height: normal; }
+.cap h3 .num { color: var(--blue); font-weight: 500; margin-right: 14px; letter-spacing: 0.02em; }
+.cap .unit-note { font-family: var(--font-body); font-size: 18px; color: var(--ink-2); }
+
+/* =========================================================
+   01 Cover
+   ========================================================= */
+.cover-main { position: absolute; left: var(--margin-x); width: var(--text-w); top: 140px; }
+.cover-main .label { margin-bottom: 40px; }
+.cover-main .edition { font-size: 44px; font-weight: 700; letter-spacing: 0.02em; line-height: normal; }
+.cover-main .edition .num { font-weight: 500; margin: 0 2px; }
+.page .cover-main h1 {
+  margin-top: 12px;
+  font-size: var(--t-h1);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+.cover-main .period {
+  margin-top: 36px;
+  font-size: 30px; font-weight: 500;
+  letter-spacing: 0.03em; line-height: normal;
+}
+.cover-main .period .num { font-weight: 500; letter-spacing: 0.02em; }
+.cover-main .goal {
+  margin-top: 20px;
+  font-family: var(--font-body);
+  font-size: 26px; color: var(--ink-2);
+  line-height: 1.6; letter-spacing: 0.02em;
+}
+.cover-main .goal b { color: var(--ink); font-weight: 700; }
+
+.netmap { position: absolute; left: var(--margin-x); width: var(--text-w); top: 690px; }
+.netmap .cap h3 { font-size: 22px; }
+.netmap > svg { display: block; width: 1048px; height: 540px; margin-top: 8px; }
+.netmap > svg text { font-family: var(--font-jp); font-size: 19px; fill: var(--ink); }
+.netmap > svg .sub { fill: var(--ink-2); font-size: 18px; }
+.netmap > svg .b { font-weight: 700; }
+.netmap > svg .zone-l { font-size: 18px; fill: var(--ink-2); font-weight: 500; }
+.legend {
+  display: flex; flex-wrap: wrap; gap: 12px 36px;
+  margin-top: 4px;
+  font-size: 18px; color: var(--ink-2); line-height: normal; letter-spacing: 0.02em;
+}
+.legend > span { display: inline-flex; align-items: center; gap: 10px; }
+.legend em { font-style: normal; }
+.legend svg { display: block; }
+
+.cover-spec {
+  position: absolute; left: var(--margin-x); width: var(--text-w); top: 1376px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid var(--rule-strong);
+}
+.cover-spec div { padding: 18px 0 0 24px; border-left: 1px solid var(--rule); }
+.cover-spec div:first-child { padding-left: 0; border-left: none; }
+.cover-spec dt { font-size: 19px; color: var(--ink-2); letter-spacing: 0.03em; line-height: normal; }
+.cover-spec dd { margin-top: 6px; font-size: 22px; font-weight: 700; line-height: normal; letter-spacing: 0.02em; white-space: nowrap; }
+.cover-spec dd .num { font-size: 48px; font-weight: 500; margin-right: 4px; letter-spacing: -0.01em; }
+
+.cover-org {
+  position: absolute; left: var(--margin-x); bottom: 64px;
+  display: flex; gap: var(--s4); align-items: baseline;
+  line-height: normal;
+}
+.cover-org .org { font-size: 30px; font-weight: 700; letter-spacing: 0.02em; }
+.cover-org .dept { font-size: 22px; color: var(--ink-2); letter-spacing: 0.03em; }
+.cover-meta { position: absolute; right: var(--margin-x); bottom: 64px; text-align: right; }
+.doc-no {
+  display: inline-block;
+  font-size: 18px; font-weight: 500;
+  letter-spacing: 0.03em; line-height: normal;
+  padding: 6px 14px;
+  border: 1px solid var(--ink);
+  margin-bottom: 12px;
+}
+.cover-meta .note { text-align: right; }
+
+/* =========================================================
+   02 Contents
+   ========================================================= */
+.toc-top { position: absolute; left: var(--margin-x); width: var(--text-w); top: 140px; }
+.page .toc-top h2 { margin-top: var(--s2); font-size: 72px; line-height: 1.2; letter-spacing: 0.02em; }
+.page .toc-top .lead {
+  margin-top: var(--s3);
+  font-family: var(--font-body);
+  font-size: 26px; line-height: 1.7; letter-spacing: 0.02em; text-align: left;
+}
+.toc-list {
+  position: absolute; left: var(--margin-x); width: var(--text-w); top: 480px; height: 876px;
+  list-style: none;
+  border-top: 2px solid var(--rule-strong);
+  display: flex; flex-direction: column;
+}
+.page .toc-item {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 112px 1fr 80px;
+  align-items: baseline;
+  align-content: center;
+  border-bottom: 1px solid var(--rule);
+  line-height: normal;
+  letter-spacing: normal;
+}
+.toc-item .no { font-family: var(--font-num); font-size: 30px; font-weight: 500; color: var(--blue); letter-spacing: 0.02em; }
+.toc-item .ch { font-size: 19px; font-weight: 500; color: var(--ink-2); letter-spacing: 0.04em; display: block; margin-bottom: 6px; }
+.toc-item h3 { font-size: 34px; letter-spacing: 0.02em; line-height: 1.3; }
+.toc-item .secs { margin-top: 10px; font-family: var(--font-body); font-size: 20px; color: var(--ink-2); line-height: 1.5; letter-spacing: 0.02em; }
+.toc-item .secs .num { color: var(--ink); margin-right: 6px; }
+.toc-item .secs .sep { margin: 0 12px; color: var(--rule); }
+.toc-item .pg { font-family: var(--font-num); font-size: 22px; color: var(--ink-2); text-align: right; }
+.toc-item.in .pg { color: var(--ink); font-weight: 600; }
+.toc-item .in-tag {
+  font-family: var(--font-jp); font-size: 18px; font-weight: 700; color: var(--blue);
+  margin-left: 14px; letter-spacing: 0.03em; vertical-align: 4px;
+}
+
+.frame3 {
+  position: absolute; left: var(--margin-x); width: var(--text-w); top: 1392px;
+  display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 24px;
+}
+.frame3 .k { border-top: 4px solid var(--blue); padding-top: var(--s2); }
+.frame3 .k-label { font-size: 20px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.4; }
+.frame3 .k-val { margin-top: 4px; display: flex; align-items: baseline; gap: 6px; line-height: normal; letter-spacing: normal; }
+.frame3 .k-val .num { font-size: 72px; font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; }
+.frame3 .k-val .unit { font-size: 24px; font-weight: 700; letter-spacing: 0.02em; }
+.frame3 .k-desc { margin-top: 4px; font-family: var(--font-body); font-size: 19px; color: var(--ink-2); line-height: 1.55; text-align: left; }
+
+/* =========================================================
+   03 Reading page: two columns of body text, then figure 1-1
+   ========================================================= */
+.cols {
+  position: absolute; left: var(--margin-x); width: var(--text-w); top: 480px;
+  display: grid; grid-template-columns: 500px 500px; column-gap: 48px;
+}
+.cols h3, .cols h4 { break-after: avoid; }
+.cols p { orphans: 2; widows: 2; }
+.col h3 {
+  display: flex; align-items: baseline; gap: 14px;
+  padding-top: 12px;
+  border-top: 2px solid var(--rule-strong);
+  font-size: 26px; line-height: 1.4; letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+.col h3 .num { color: var(--blue); font-weight: 500; font-size: 26px; letter-spacing: 0.02em; }
+.col h4 {
+  font-size: 22px; font-weight: 700; line-height: 1.6; letter-spacing: 0.02em;
+  margin-top: 6px;
+}
+.page .col p {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  text-indent: 1em;
+}
+.col p .num { letter-spacing: 0; }
+.col sup { font-family: var(--font-num); font-size: 15px; color: var(--blue); font-weight: 600; margin-left: 1px; vertical-align: 7px; line-height: 0; }
+
+/* Figure 1-1: plan position. Blocks are rules plus text, never boxes; the plan itself
+   is the block read first, so it carries the 4px blue rule. */
+.fig-pos { position: absolute; left: var(--margin-x); width: var(--text-w); top: 1036px; }
+.pos {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 282px 1fr 282px;
+  grid-template-rows: auto 52px auto 52px auto;
+  column-gap: 56px;
+}
+.pos .blk { border-top: 2px solid var(--rule-strong); padding-top: 10px; line-height: normal; }
+.pos .blk .k { font-size: 18px; font-weight: 700; color: var(--ink-2); letter-spacing: 0.03em; }
+.pos .blk .v { margin-top: 6px; font-size: 21px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.45; }
+.pos .blk .s { margin-top: 4px; font-family: var(--font-body); font-size: 18px; color: var(--ink-2); line-height: 1.5; }
+.pos .top { grid-column: 1 / -1; grid-row: 1; display: grid; grid-template-columns: 282px 1fr; column-gap: 56px; align-items: baseline; }
+.pos .top .v { margin-top: 0; }
+.pos .me { grid-column: 2; grid-row: 3; border-top: 4px solid var(--blue); position: relative; }
+.pos .me .k { color: var(--blue); }
+.pos .me .v { font-size: 26px; }
+.pos .law { grid-column: 1; grid-row: 3; position: relative; }
+.pos .rel { grid-column: 3; grid-row: 3; position: relative; }
+.pos .impl { grid-column: 2; grid-row: 5; }
+/* Vertical arrows between rows, with their relation as text */
+.vlink { grid-column: 2; position: relative; display: flex; align-items: center; }
+.vlink::before { content: ""; position: absolute; left: 24px; top: 6px; bottom: 6px; border-left: 2px solid var(--ink); }
+.vlink::after { content: ""; position: absolute; left: 18px; bottom: 4px; border: 7px solid transparent; border-top: 10px solid var(--ink); border-bottom: 0; }
+.vlink span { margin-left: 48px; font-size: 18px; color: var(--ink-2); font-weight: 500; line-height: normal; letter-spacing: 0.03em; }
+.vlink.r1 { grid-row: 2; }
+.vlink.r2 { grid-row: 4; }
+/* Horizontal arrows in the gutters */
+.hlink { position: absolute; top: 40px; width: 56px; border-top: 2px solid var(--ink); }
+.hlink.to-right::after { content: ""; position: absolute; right: -2px; top: -8px; border: 7px solid transparent; border-left: 10px solid var(--ink); border-right: 0; }
+.hlink.both::before { content: ""; position: absolute; left: -2px; top: -8px; border: 7px solid transparent; border-right: 10px solid var(--ink); border-left: 0; }
+.hlink.both::after { content: ""; position: absolute; right: -2px; top: -8px; border: 7px solid transparent; border-left: 10px solid var(--ink); border-right: 0; }
+.law .hlink { left: 282px; }
+.rel .hlink { left: -56px; }
+.hlink span { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); white-space: nowrap; font-size: 17px; color: var(--ink-2); line-height: normal; }
+
+/* =========================================================
+   04 Figure page: policy tree (from d-logic-tree)
+   ========================================================= */
+.fig-tree { position: absolute; left: var(--margin-x); width: var(--text-w); top: 470px; }
+.key { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-body); font-size: 18px; color: var(--ink-2); }
+.tag {
+  display: inline-block;
+  font-family: var(--font-jp); font-size: 18px; font-weight: 700; color: var(--blue);
+  border: 1.5px solid var(--blue); padding: 1px 8px; line-height: 1.3; letter-spacing: 0.04em;
+}
+#d-logic-tree { margin-top: 20px; }
+#d-logic-tree svg { width: 1048px; height: 780px; display: block; }
+#d-logic-tree text { font-family: var(--font-jp); fill: var(--ink); }
+#d-logic-tree .n { font-family: var(--font-num); font-feature-settings: "tnum" 1; }
+#d-logic-tree .sub { fill: var(--ink-2); }
+#d-logic-tree .acc { fill: var(--blue); }
+#d-logic-tree .hd { font-size: 18px; font-weight: 700; fill: var(--ink-2); letter-spacing: 0.03em; }
+#d-logic-tree .root-k { font-size: 19px; font-weight: 700; fill: var(--blue); }
+#d-logic-tree .root-l { font-size: 30px; font-weight: 700; }
+#d-logic-tree .pol-k { font-size: 19px; font-weight: 700; }
+#d-logic-tree .pol-l { font-size: 24px; font-weight: 700; }
+#d-logic-tree .lf-no { font-size: 20px; font-weight: 500; fill: var(--blue); }
+#d-logic-tree .lf-l { font-size: 21px; font-weight: 500; }
+#d-logic-tree .lf-k { font-size: 19px; fill: var(--ink-2); }
+#d-logic-tree .tg { font-size: 17px; font-weight: 700; fill: var(--blue); }
+#d-logic-tree .tg-box { fill: none; stroke: var(--blue); stroke-width: 1.5; }
+#d-logic-tree .r-strong { stroke: var(--ink); stroke-width: 2; }
+#d-logic-tree .r-blue { stroke: var(--blue); stroke-width: 4; }
+#d-logic-tree .r-thin { stroke: var(--rule); stroke-width: 1; }
+#d-logic-tree .focus { fill: var(--blue); }
+#d-logic-tree .link { fill: none; stroke: var(--ink-2); stroke-width: 1.5; }
+
+.glossary { position: absolute; left: var(--margin-x); width: var(--text-w); top: 1384px; }
+.glossary .cap h3 { font-size: 22px; }
+.glossary dl { margin-top: 12px; display: grid; grid-template-columns: 500px 500px; column-gap: 48px; row-gap: 10px; }
+.glossary dl div { display: grid; grid-template-columns: 150px 1fr; column-gap: 12px; align-items: baseline; }
+.glossary dt { font-size: 19px; font-weight: 700; line-height: 1.55; letter-spacing: 0.02em; }
+.page .glossary dd { font-family: var(--font-body); font-size: 18px; color: var(--ink-2); line-height: 1.55; letter-spacing: 0.02em; }
+
+/* =========================================================
+   05 KPI table page
+   ========================================================= */
+.kgi { position: absolute; left: var(--margin-x); width: var(--text-w); top: 470px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 24px; }
+.kgi .k { border-top: 4px solid var(--blue); padding-top: var(--s2); }
+.kgi .k-label { font-size: 20px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.4; }
+.kgi .k-label .num { color: var(--blue); font-weight: 600; margin-right: 8px; }
+.kgi .k-val { margin-top: 6px; display: flex; align-items: baseline; gap: 6px; line-height: normal; letter-spacing: normal; white-space: nowrap; }
+.kgi .k-val .from { font-size: 30px; color: var(--ink-2); }
+.kgi .k-val .arrow { font-size: 24px; color: var(--ink-2); margin: 0 4px; }
+.kgi .k-val .to { font-size: 76px; font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; }
+.kgi .k-val .unit { font-size: 24px; font-weight: 700; letter-spacing: 0.02em; }
+.kgi .k-desc { margin-top: 4px; font-family: var(--font-body); font-size: 19px; color: var(--ink-2); line-height: 1.55; text-align: left; }
+.kgi .k-desc b { color: var(--ink); font-weight: 700; }
+
+.tbl-wrap { position: absolute; left: var(--margin-x); width: var(--text-w); top: 718px; }
+table.kpi-t { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.kpi-t th {
+  font-size: 18px; font-weight: 700; color: var(--ink-2);
+  text-align: left; vertical-align: bottom;
+  padding: 0 10px 10px; line-height: 1.4; letter-spacing: 0.02em;
+  border-bottom: 2px solid var(--rule-strong);
+}
+.kpi-t th.r, .kpi-t td.r { text-align: right; }
+.kpi-t th small { display: block; font-size: 18px; font-weight: 500; }
+.kpi-t td {
+  padding: 13px 10px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: middle;
+  line-height: 1.45;
+}
+.kpi-t th:first-child, .kpi-t td:first-child { padding-left: 0; }
+.kpi-t th:last-child, .kpi-t td:last-child { padding-right: 0; }
+.kpi-t td.no { font-family: var(--font-num); font-size: 22px; font-weight: 500; width: 56px; }
+.kpi-t tr.pick td.no { color: var(--blue); font-weight: 600; }
+.kpi-t .ind { font-size: 21px; font-weight: 700; letter-spacing: 0.02em; display: block; }
+.kpi-t .how { font-family: var(--font-body); font-size: 18px; color: var(--ink-2); display: block; margin-top: 2px; letter-spacing: 0.02em; }
+.kpi-t tr.pick .ind::after { content: "主指標"; margin-left: 10px; font-size: 18px; color: var(--blue); vertical-align: 1px; }
+.kpi-t td.pol { font-size: 19px; color: var(--ink-2); white-space: nowrap; }
+.kpi-t td.yr { font-size: 19px; color: var(--ink-2); white-space: nowrap; }
+.kpi-t td.v { font-family: var(--font-num); font-size: 28px; font-weight: 500; white-space: nowrap; letter-spacing: -0.01em; }
+.kpi-t td.v.tgt { color: var(--ink); font-weight: 600; }
+.kpi-t td.v .cond { font-family: var(--font-jp); font-size: 18px; font-weight: 700; margin-left: 4px; }
+.kpi-t td.dir { font-size: 19px; font-weight: 700; white-space: nowrap; letter-spacing: 0.02em; }
+.kpi-t td.dir .ar { font-family: var(--font-num); font-weight: 600; margin-right: 6px; }
+
+/* =========================================================
+   06 Back page: promotion, schedule, roles, contact
+   ========================================================= */
+.sched { position: absolute; left: var(--margin-x); width: var(--text-w); top: 490px; }
+.tl { position: relative; margin-top: 26px; display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 24px; }
+.tl::before { content: ""; position: absolute; left: 0; right: 0; top: 40px; border-top: 2px solid var(--rule-strong); }
+.tl .m { position: relative; padding-top: 0; }
+.tl .m .when { font-size: 20px; font-weight: 700; color: var(--blue); letter-spacing: 0.02em; line-height: normal; height: 40px; }
+.tl .m .step { font-family: var(--font-num); font-size: 18px; color: var(--ink-2); font-weight: 600; letter-spacing: 0.08em; margin-top: 16px; line-height: normal; }
+.tl .m .t { margin-top: 4px; font-size: 22px; font-weight: 700; line-height: 1.4; letter-spacing: 0.02em; }
+.page .tl .m .d { margin-top: 6px; font-family: var(--font-body); font-size: 19px; color: var(--ink-2); line-height: 1.6; text-align: left; }
+.tl .m.key-step::before { content: ""; position: absolute; left: 0; right: 0; top: 39px; border-top: 4px solid var(--blue); }
+
+.roles { position: absolute; left: var(--margin-x); width: var(--text-w); top: 836px; }
+table.role-t { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.role-t th { font-size: 18px; font-weight: 700; color: var(--ink-2); text-align: left; padding: 12px 10px 10px 0; border-bottom: 1px solid var(--rule); line-height: 1.4; }
+.role-t td { padding: 14px 10px 14px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.role-t td.who { width: 360px; padding-right: 24px; font-size: 21px; font-weight: 700; line-height: 1.45; letter-spacing: 0.02em; }
+.role-t td.who small { display: block; font-size: 18px; font-weight: 500; color: var(--ink-2); margin-top: 2px; }
+.page .role-t td.what { font-family: var(--font-body); font-size: 20px; line-height: 1.6; letter-spacing: 0.02em; }
+.role-t td.cnt { width: 96px; text-align: right; font-size: 18px; color: var(--ink-2); white-space: nowrap; padding-right: 0; }
+.role-t td.cnt .num { font-size: 28px; color: var(--ink); font-weight: 500; margin-right: 4px; }
+
+.contact {
+  position: absolute; left: var(--margin-x); width: var(--text-w); top: 1352px;
+  border-top: 4px solid var(--blue); padding-top: 20px;
+  display: grid; grid-template-columns: 620px 1fr; column-gap: 40px;
+}
+.contact .label { margin-bottom: 10px; }
+.contact .dept { font-size: 30px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.35; }
+.contact dl { margin-top: 14px; display: grid; grid-template-columns: 96px 1fr; row-gap: 6px; line-height: 1.5; }
+.contact dt { font-size: 19px; color: var(--ink-2); letter-spacing: 0.03em; }
+.page .contact dd { font-size: 21px; font-weight: 500; letter-spacing: 0.02em; line-height: 1.5; }
+.contact dd .num { font-weight: 500; letter-spacing: 0.02em; }
+.contact .side { border-left: 1px solid var(--rule); padding-left: 32px; }
+.page .contact .side p { font-family: var(--font-body); font-size: 19px; color: var(--ink-2); line-height: 1.6; text-align: left; letter-spacing: 0.02em; }
+.contact .side p + p { margin-top: 10px; }
+.contact .side b { color: var(--ink); font-weight: 700; }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ 01 表紙 ============ -->
+<section class="page cover" aria-label="表紙">
+  <div class="cover-main">
+    <p class="label">令和9年3月策定　本編（抜粋）</p>
+    <p class="edition">第<span class="num">3</span>次</p>
+    <h1>汐見市<br>地域公共交通計画</h1>
+    <p class="period">令和<span class="num">9</span>年度〜令和<span class="num">13</span>年度（<span class="num">2027</span>〜<span class="num">2031</span>年度）</p>
+    <p class="goal">基本目標　<b>誰もが移動をあきらめない まち・しおみ</b></p>
+  </div>
+
+  <figure class="netmap" aria-label="将来の公共交通ネットワーク">
+    <div class="cap"><h3>将来の公共交通ネットワーク（イメージ）</h3><span class="unit-note">令和13年度の姿</span></div>
+    <svg viewBox="0 0 1048 540" role="img" aria-label="鉄道汐見線の3駅を交通結節点とし、幹線バス4路線を増便、支線バスと3地区のデマンド交通で市内全域をつなぐ">
+      <defs>
+        <pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#D6D6DB" stroke-width="3"/>
+        </pattern>
+      </defs>
+      <!-- Demand-responsive zones: hatched, dashed outline -->
+      <polygon points="40,24 330,24 330,150 210,196 40,196" fill="url(#hatch)" stroke="#55555C" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <text class="zone-l" x="58" y="56">北部山間地区</text>
+      <polygon points="820,24 1030,24 1030,196 890,196 820,140" fill="url(#hatch)" stroke="#55555C" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <text class="zone-l" x="900" y="56">東部丘陵地区</text>
+      <polygon points="700,410 1030,410 1030,520 700,520" fill="url(#hatch)" stroke="#55555C" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <text class="zone-l" x="896" y="502">南部臨海地区</text>
+
+      <!-- Feeder and community buses: 2.5px ink-2 -->
+      <g fill="none" stroke="#55555C" stroke-width="2.5" stroke-linejoin="round">
+        <polyline points="500,104 360,104 270,150"/>
+        <polyline points="500,104 700,104 820,80"/>
+        <polyline points="180,300 120,360 120,420 260,420"/>
+        <polyline points="500,300 380,420 260,420"/>
+        <polyline points="820,300 880,360 880,440"/>
+        <polyline points="960,150 960,90 1000,60"/>
+      </g>
+
+      <!-- Railway: ink band with white dashes -->
+      <line x1="0" y1="300" x2="1048" y2="300" stroke="#1A1A1C" stroke-width="10"/>
+      <line x1="0" y1="300" x2="1048" y2="300" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="22 22"/>
+
+      <!-- Trunk buses to be increased: 5px blue -->
+      <g fill="none" stroke="#0A3BD1" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+        <polyline points="500,300 500,104"/>
+        <polyline points="500,300 560,360 660,360 660,450"/>
+        <polyline points="180,300 180,196"/>
+        <polyline points="820,300 960,150"/>
+      </g>
+
+      <!-- Hubs: white squares with ink border -->
+      <g fill="#FFFFFF" stroke="#1A1A1C" stroke-width="3">
+        <rect x="167" y="287" width="26" height="26"/>
+        <rect x="487" y="287" width="26" height="26"/>
+        <rect x="807" y="287" width="26" height="26"/>
+      </g>
+      <!-- Stops and terminals: white circles -->
+      <g fill="#FFFFFF" stroke="#1A1A1C" stroke-width="2.5">
+        <circle cx="500" cy="104" r="9"/>
+        <circle cx="180" cy="196" r="8"/>
+        <circle cx="660" cy="450" r="8"/>
+        <circle cx="960" cy="150" r="8"/>
+        <circle cx="260" cy="420" r="7"/>
+      </g>
+
+      <text class="b" x="200" y="272">西汐見駅</text>
+      <text class="b" x="522" y="272">汐見駅</text>
+      <text class="b" x="798" y="272" text-anchor="end">東汐見駅</text>
+      <text x="518" y="94">市民病院</text>
+      <text x="196" y="232" class="sub">北部支所</text>
+      <text x="676" y="458">汐見港</text>
+      <text x="934" y="232" class="sub">ニュータウン</text>
+      <text x="274" y="452" class="sub">南部市民センター</text>
+    </svg>
+    <div class="legend" aria-hidden="false">
+      <span><svg width="44" height="12"><line x1="0" y1="6" x2="44" y2="6" stroke="#1A1A1C" stroke-width="10"/><line x1="0" y1="6" x2="44" y2="6" stroke="#fff" stroke-width="5" stroke-dasharray="11 11"/></svg>鉄道 汐見線</span>
+      <span><svg width="44" height="12"><line x1="0" y1="6" x2="44" y2="6" stroke="#0A3BD1" stroke-width="5"/></svg><em>幹線バス（増便する<span class="num">4</span>路線）</em></span>
+      <span><svg width="44" height="12"><line x1="0" y1="6" x2="44" y2="6" stroke="#55555C" stroke-width="2.5"/></svg>支線バス・コミュニティバス</span>
+      <span><svg width="40" height="24"><rect x="1" y="1" width="38" height="22" fill="url(#hatch)" stroke="#55555C" stroke-width="1.5" stroke-dasharray="6 4"/></svg>デマンド交通の区域</span>
+      <span><svg width="24" height="24"><rect x="3" y="3" width="18" height="18" fill="#fff" stroke="#1A1A1C" stroke-width="3"/></svg>交通結節点</span>
+    </div>
+  </figure>
+
+  <dl class="cover-spec">
+    <div><dt>計画期間</dt><dd><span class="num">5</span>年間</dd></div>
+    <div><dt>基本方針</dt><dd><span class="num">3</span>方針</dd></div>
+    <div><dt>施策</dt><dd><span class="num">10</span>施策</dd></div>
+    <div><dt>評価指標</dt><dd><span class="num">8</span>指標</dd></div>
+  </dl>
+
+  <div class="cover-org">
+    <span class="org">汐見市</span>
+    <span class="dept">都市整備部 交通政策課</span>
+  </div>
+  <div class="cover-meta">
+    <span class="doc-no">本編 抜粋</span>
+    <p class="note">※ 架空の自治体による作例。数値はすべて架空です。</p>
+  </div>
+</section>
+
+<!-- ============ 02 目次 ============ -->
+<section class="page" aria-label="目次">
+  <header class="rh"><span><b>汐見市</b>　第3次 地域公共交通計画</span><span>目次</span></header>
+  <ol class="tab" aria-label="章">
+    <li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+  </ol>
+  <div class="tab-name"><span>目次</span></div>
+
+  <div class="toc-top">
+    <p class="label">Contents</p>
+    <h2>目次</h2>
+    <p class="lead">本書は、本編（全<span class="num">60</span>ページ）のうち、背景、施策の体系、<br>評価指標、推進体制のページを抜き出したものです。</p>
+  </div>
+
+  <ol class="toc-list">
+    <li class="toc-item in"><span class="no">01</span><div><span class="ch">第1章</span><h3>計画の策定にあたって<span class="in-tag">本書に収録</span></h3><p class="secs"><span class="num">1-1</span>背景と目的<span class="sep">／</span><span class="num">1-2</span>計画の位置づけ<span class="sep">／</span><span class="num">1-3</span>区域と期間</p></div><span class="pg">2</span></li>
+    <li class="toc-item"><span class="no">02</span><div><span class="ch">第2章</span><h3>公共交通の現状と課題</h3><p class="secs"><span class="num">2-1</span>利用の動向<span class="sep">／</span><span class="num">2-2</span>市民意識調査<span class="sep">／</span><span class="num">2-3</span>課題の整理</p></div><span class="pg">8</span></li>
+    <li class="toc-item in"><span class="no">03</span><div><span class="ch">第3章</span><h3>基本目標と基本方針<span class="in-tag">本書に収録</span></h3><p class="secs"><span class="num">3-1</span>基本目標<span class="sep">／</span><span class="num">3-2</span>基本方針<span class="sep">／</span><span class="num">3-3</span>施策の体系</p></div><span class="pg">22</span></li>
+    <li class="toc-item"><span class="no">04</span><div><span class="ch">第4章</span><h3>施策と事業</h3><p class="secs"><span class="num">4-1</span>方針1の施策<span class="sep">／</span><span class="num">4-2</span>方針2の施策<span class="sep">／</span><span class="num">4-3</span>方針3の施策</p></div><span class="pg">26</span></li>
+    <li class="toc-item in"><span class="no">05</span><div><span class="ch">第5章</span><h3>評価指標と目標値<span class="in-tag">本書に収録</span></h3><p class="secs"><span class="num">5-1</span>評価指標の考え方<span class="sep">／</span><span class="num">5-2</span>目標値の一覧</p></div><span class="pg">48</span></li>
+    <li class="toc-item in"><span class="no">06</span><div><span class="ch">第6章</span><h3>計画の推進<span class="in-tag">本書に収録</span></h3><p class="secs"><span class="num">6-1</span>評価の進め方<span class="sep">／</span><span class="num">6-2</span>推進体制<span class="sep">／</span><span class="num">6-3</span>問い合わせ</p></div><span class="pg">56</span></li>
+  </ol>
+
+  <div class="frame3">
+    <div class="k"><p class="k-label">基本方針</p><p class="k-val"><span class="num">3</span><span class="unit">方針</span></p><p class="k-desc">路線網、地域の移動手段、<br>使いやすさの3つ（第3章）</p></div>
+    <div class="k"><p class="k-label">施策</p><p class="k-val"><span class="num">10</span><span class="unit">施策</span></p><p class="k-desc">うち重点施策 <b class="num">3</b>（図3-1）</p></div>
+    <div class="k"><p class="k-label">評価指標</p><p class="k-val"><span class="num">8</span><span class="unit">指標</span></p><p class="k-desc">毎年度の協議会で評価し、<br>結果を公表（第5・6章）</p></div>
+  </div>
+
+  <div class="foot"><p class="note">※ ページ番号は本編のものです。本書に収録していない章は、本編をご覧ください。</p></div>
+  <span class="folio"><b>01</b> / 60</span>
+</section>
+
+<!-- ============ 03 計画の背景（2段組） ============ -->
+<section class="page" aria-label="計画の背景">
+  <header class="rh"><span><b>汐見市</b>　第3次 地域公共交通計画</span><span><b>第1章</b>　計画の策定にあたって</span></header>
+  <ol class="tab" aria-label="章">
+    <li class="on" aria-current="true">1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+  </ol>
+  <div class="tab-name"><span>第<span class="num">1</span>章 計画の策定にあたって</span></div>
+
+  <div class="head">
+    <p class="label">第1章　計画の策定にあたって</p>
+    <h2>運転士が5年で4割減る見込みで、<br>今の路線網のままでは維持できない。</h2>
+    <p class="lead">利用者の減少に運転士不足が重なり、令和6年度には3系統を減便しました。<br>第3次計画は、路線網を「幹線と支線」に組み直すことから始めます。</p>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <h3><span class="num">1-1</span>計画の背景と目的</h3>
+      <h4>（1）人口減少と高齢化</h4>
+      <p>本市の人口は、令和7年の<span class="num">18.4</span>万人から令和17年には<span class="num">16.9</span>万人に減ると推計されています。高齢化率は<span class="num">31.2</span>%から<span class="num">35.8</span>%に上がり、運転免許を返納した人は令和6年度に<span class="num">1,126</span>人と、5年前の<span class="num">1.6</span>倍になりました。</p>
+      <h4>（2）担い手の不足</h4>
+      <p>市内でバスを運行する2社の運転士は<span class="num">186</span>人で、平均年齢は<span class="num">54.3</span>歳です。退職者の見込みから、5年後には<span class="num">110</span>人前後まで減るおそれがあります。</p>
+    </div>
+    <div class="col">
+      <h4 style="margin-top:0">（3）計画の目的</h4>
+      <p>令和6年度には、北部の<span class="num">2</span>系統と臨海部の<span class="num">1</span>系統をすでに減便しました。本計画は、地域公共交通計画<sup>※1</sup>として、市と交通事業者、市民が共に担う移動の仕組みを定めます。路線を守ることではなく、市民が通院・通学・買い物に出かけられる状態を守ることを目的とし、その達成を<span class="num">8</span>つの指標で測ります。</p>
+      <h3 style="margin-top:18px"><span class="num">1-2</span>計画の位置づけ</h3>
+      <p>本計画は、上位計画である第6次汐見市総合計画に即し、立地適正化計画などの関連計画と整合を図ります（図1-1）。</p>
+    </div>
+  </div>
+
+  <figure class="fig-pos">
+    <div class="cap"><h3><span class="num">図1-1</span>計画の位置づけ</h3></div>
+    <div class="pos">
+      <div class="blk top"><p class="k">上位計画</p><p class="v">第6次 汐見市総合計画（令和8〜17年度）<span style="font-weight:500;color:var(--ink-2);font-size:19px">　基本目標5「つながり、動けるまち」</span></p></div>
+      <div class="vlink r1"><span>即する</span></div>
+      <div class="blk law"><p class="k">国の法制度</p><p class="v">地域公共交通の活性化<br>及び再生に関する法律</p><p class="s">交通政策基本法</p><span class="hlink to-right"><span>根拠</span></span></div>
+      <div class="blk me"><p class="k">本計画</p><p class="v">第3次 汐見市<br>地域公共交通計画</p><p class="s">令和9〜13年度</p></div>
+      <div class="blk rel"><p class="k">市の関連計画</p><p class="v">立地適正化計画<br>都市計画マスタープラン</p><p class="s">地域福祉計画、環境基本計画</p><span class="hlink both"><span>整合</span></span></div>
+      <div class="vlink r2"><span>具体化</span></div>
+      <div class="blk impl"><p class="k">実施計画</p><p class="v">地域公共交通利便増進実施計画</p><p class="s">令和10年度に策定予定</p></div>
+    </div>
+    <p class="src">出典：汐見市 都市整備部 交通政策課 作成（架空のデータ）</p>
+  </figure>
+
+  <div class="foot"><p class="note">※1 地域公共交通計画：地域公共交通の活性化及び再生に関する法律に基づく、公共交通のマスタープラン。<br>※ 人口は汐見市人口ビジョン（令和7年改訂）、運転士数は事業者2社への聞き取り。数値はすべて架空。</p></div>
+  <span class="folio"><b>02</b> / 60</span>
+</section>
+
+<!-- ============ 04 施策体系（ツリー） ============ -->
+<section class="page" aria-label="施策の体系">
+  <header class="rh"><span><b>汐見市</b>　第3次 地域公共交通計画</span><span><b>第3章</b>　基本目標と基本方針</span></header>
+  <ol class="tab" aria-label="章">
+    <li>1</li><li>2</li><li class="on" aria-current="true">3</li><li>4</li><li>5</li><li>6</li>
+  </ol>
+  <div class="tab-name"><span>第<span class="num">3</span>章 基本目標と基本方針</span></div>
+
+  <div class="head">
+    <p class="label">3-3　施策の体系</p>
+    <h2>3つの方針と10の施策のうち、<br>3施策を重点として先に進める。</h2>
+    <p class="lead">重点施策は、効果が全市に及び、他の施策の前提になるものです。<br>幹線の増便、結節点の改善、デマンド交通の拡大を前半2年で進めます。</p>
+  </div>
+
+  <figure class="fig-tree">
+    <div class="cap"><h3><span class="num">図3-1</span>施策の体系（目標 → 方針 → 施策）</h3><span class="key"><span class="tag">重点</span>令和9・10年度に先行して着手</span></div>
+    <div id="d-logic-tree"><svg data-w="1048" data-h="780" role="img" aria-label="基本目標の下に3つの基本方針と10の施策。重点施策は1-1、1-3、2-1"></svg></div>
+    <p class="src">出典：汐見市地域公共交通活性化協議会 資料（令和9年2月、架空のデータ）</p>
+  </figure>
+
+  <div class="glossary">
+    <div class="cap"><h3>用語解説</h3></div>
+    <dl>
+      <div><dt>幹線・支線</dt><dd>駅や拠点を結ぶ本数の多い路線が幹線、幹線と地域を結ぶ路線が支線。</dd></div>
+      <div><dt>デマンド交通</dt><dd>予約に応じて、決まった区域の中を乗合で運行する交通。</dd></div>
+      <div><dt>交通結節点</dt><dd>鉄道とバス、バス同士などを乗り継ぐ場所。本計画では3駅。</dd></div>
+      <div><dt>モビリティ・<br>マネジメント</dt><dd>情報提供や体験乗車で、移動手段の選び方の見直しを促す取組。</dd></div>
+    </dl>
+  </div>
+
+  <div class="foot"><p class="note">※ 主な指標の番号は、表5-1（評価指標と目標値）の番号に対応する。施策ごとの事業と実施年度は第4章に示す。</p></div>
+  <span class="folio"><b>24</b> / 60</span>
+</section>
+
+<!-- ============ 05 評価指標（表） ============ -->
+<section class="page" aria-label="評価指標と目標値">
+  <header class="rh"><span><b>汐見市</b>　第3次 地域公共交通計画</span><span><b>第5章</b>　評価指標と目標値</span></header>
+  <ol class="tab" aria-label="章">
+    <li>1</li><li>2</li><li>3</li><li>4</li><li class="on" aria-current="true">5</li><li>6</li>
+  </ol>
+  <div class="tab-name"><span>第<span class="num">5</span>章 評価指標と目標値</span></div>
+
+  <div class="head">
+    <p class="label">5-2　目標値の一覧</p>
+    <h2>公共交通の利用者を、令和13年度に<br>年間1,000万人まで戻す。</h2>
+    <p class="lead">8つの指標のうち、利用者数を主指標とします。公的負担額は増やさず、<br>現状の水準以下に保つことを条件とします。</p>
+  </div>
+
+  <div class="kgi">
+    <div class="k"><p class="k-label"><span class="num">1</span>公共交通の年間利用者数</p><p class="k-val"><span class="num from">912</span><span class="arrow">→</span><span class="num to">1,000</span><span class="unit">万人</span></p><p class="k-desc">令和元年度の <b class="num">1,034</b> 万人の約 <b class="num">97</b>%</p></div>
+    <div class="k"><p class="k-label"><span class="num">3</span>結節点での乗継ぎ待ち時間</p><p class="k-val"><span class="num from">14</span><span class="arrow">→</span><span class="num to">8</span><span class="unit">分</span></p><p class="k-desc">3駅の平均。ダイヤの調整で短縮</p></div>
+    <div class="k"><p class="k-label"><span class="num">4</span>公共交通空白地域の人口</p><p class="k-val"><span class="num from">11.8</span><span class="arrow">→</span><span class="num to">3.0</span><span class="unit">千人</span></p><p class="k-desc">デマンド交通の3地区への拡大で解消</p></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="cap"><h3><span class="num">表5-1</span>評価指標と目標値</h3><span class="unit-note">単位は指標名の（ ）内</span></div>
+    <table class="kpi-t">
+      <thead>
+        <tr><th>番号</th><th>評価指標（単位）と把握方法</th><th>方針</th><th>基準年度</th><th class="r">現状値</th><th class="r">目標値<small>令和13年度</small></th><th>方向</th></tr>
+      </thead>
+      <tbody>
+        <tr class="pick"><td class="no">1</td><td><span class="ind">公共交通の年間利用者数（万人）</span><span class="how">鉄道・バス事業者の輸送実績</span></td><td class="pol">1・3</td><td class="yr">令和7年度</td><td class="v r">912</td><td class="v tgt r">1,000</td><td class="dir"><span class="ar">↑</span>増やす</td></tr>
+        <tr><td class="no">2</td><td><span class="ind">幹線バスの運行本数（本／平日）</span><span class="how">事業者の運行計画、往復の合計</span></td><td class="pol">1</td><td class="yr">令和7年度</td><td class="v r">412</td><td class="v tgt r">480</td><td class="dir"><span class="ar">↑</span>増やす</td></tr>
+        <tr><td class="no">3</td><td><span class="ind">結節点での平均乗継ぎ待ち時間（分）</span><span class="how">3駅の時刻表の分析</span></td><td class="pol">1</td><td class="yr">令和7年度</td><td class="v r">14</td><td class="v tgt r">8</td><td class="dir"><span class="ar">↓</span>減らす</td></tr>
+        <tr><td class="no">4</td><td><span class="ind">公共交通空白地域の人口（千人）</span><span class="how">駅800m・バス停300m圏外の人口</span></td><td class="pol">2</td><td class="yr">令和7年度</td><td class="v r">11.8</td><td class="v tgt r">3.0</td><td class="dir"><span class="ar">↓</span>減らす</td></tr>
+        <tr><td class="no">5</td><td><span class="ind">市内バス事業者の運転士数（人）</span><span class="how">事業者2社への聞き取り</span></td><td class="pol">2</td><td class="yr">令和7年度</td><td class="v r">186</td><td class="v tgt r">180</td><td class="dir"><span class="ar">→</span>維持</td></tr>
+        <tr><td class="no">6</td><td><span class="ind">キャッシュレスで乗れる路線の割合（%）</span><span class="how">事業者の設備台帳</span></td><td class="pol">3</td><td class="yr">令和7年度</td><td class="v r">46</td><td class="v tgt r">100</td><td class="dir"><span class="ar">↑</span>増やす</td></tr>
+        <tr><td class="no">7</td><td><span class="ind">公共交通に満足している市民の割合（%）</span><span class="how">市民意識調査（n=2,184）</span></td><td class="pol">3</td><td class="yr">令和6年度</td><td class="v r">42.6</td><td class="v tgt r">55.0</td><td class="dir"><span class="ar">↑</span>増やす</td></tr>
+        <tr><td class="no">8</td><td><span class="ind">運行に対する市の負担額（億円／年）</span><span class="how">決算額。国・県の補助を除く</span></td><td class="pol">全体</td><td class="yr">令和7年度</td><td class="v r">6.2</td><td class="v tgt r">6.2<span class="cond">以下</span></td><td class="dir"><span class="ar">→</span>維持</td></tr>
+      </tbody>
+    </table>
+    <p class="src">出典：汐見市 交通政策課 集計（令和8年3月時点、架空のデータ）。指標7は令和6年度市民意識調査（18歳以上の市民、郵送・Web、令和6年10〜11月）</p>
+  </div>
+
+  <div class="foot"><p class="note">※ 方向は色でなく記号と語で示す（↑増やす、↓減らす、→維持）。指標5は退職の見込みを踏まえ、現状に近い水準の維持を目標とする。</p></div>
+  <span class="folio"><b>48</b> / 60</span>
+</section>
+
+<!-- ============ 06 計画の推進・問い合わせ ============ -->
+<section class="page" aria-label="計画の推進と問い合わせ">
+  <header class="rh"><span><b>汐見市</b>　第3次 地域公共交通計画</span><span><b>第6章</b>　計画の推進</span></header>
+  <ol class="tab" aria-label="章">
+    <li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li class="on" aria-current="true">6</li>
+  </ol>
+  <div class="tab-name"><span>第<span class="num">6</span>章 計画の推進</span></div>
+
+  <div class="head">
+    <p class="label">6-1　評価の進め方</p>
+    <h2>協議会が毎年度に評価し、<br>結果を11月に公表して翌年度に反映する。</h2>
+    <p class="lead">評価は市と交通事業者、市民の代表が参加する協議会が行います。<br>最終年度の令和13年度には、8指標の達成状況をもとに計画を見直します。</p>
+  </div>
+
+  <div class="sched">
+    <div class="cap"><h3><span class="num">図6-1</span>毎年度の評価の流れ</h3><span class="unit-note">太線は協議会での評価</span></div>
+    <div class="tl">
+      <div class="m"><p class="when">4〜6月</p><p class="step">DO</p><p class="t">実績の集計</p><p class="d">前年度の輸送実績と<br>収支を事業者から<br>受け取る。</p></div>
+      <div class="m key-step"><p class="when">7月</p><p class="step">CHECK</p><p class="t">協議会で評価</p><p class="d">8指標を目標値と<br>比べ、施策ごとに<br>評価する。</p></div>
+      <div class="m"><p class="when">8〜10月</p><p class="step">ACT</p><p class="t">改善策の検討</p><p class="d">未達の指標の<br>改善策を事業者と<br>まとめる。</p></div>
+      <div class="m"><p class="when">11月</p><p class="step">REPORT</p><p class="t">評価結果の公表</p><p class="d">市報と窓口で<br>公表し、意見を<br>受け付ける。</p></div>
+      <div class="m"><p class="when">2〜3月</p><p class="step">PLAN</p><p class="t">次年度に反映</p><p class="d">予算と運行計画に<br>反映する。最終年度<br>は計画を見直す。</p></div>
+    </div>
+  </div>
+
+  <div class="roles">
+    <div class="cap"><h3><span class="num">表6-1</span>推進体制と役割</h3></div>
+    <table class="role-t">
+      <thead><tr><th>主体</th><th>役割</th><th style="text-align:right">構成</th></tr></thead>
+      <tbody>
+        <tr><td class="who">汐見市地域公共交通活性化協議会<small>会長：副市長</small></td><td class="what">計画の進行管理と評価。路線とダイヤの変更を協議する。</td><td class="cnt"><span class="num">24</span>人</td></tr>
+        <tr><td class="who">交通事業者<small>鉄道1社、バス2社、タクシー4社</small></td><td class="what">運行と実績データの提供。運転士の確保に市と取り組む。</td><td class="cnt"><span class="num">7</span>社</td></tr>
+        <tr><td class="who">汐見市<small>交通政策課ほか関係5課</small></td><td class="what">協議会の事務局。施策の予算化、福祉・教育部門との調整。</td><td class="cnt"><span class="num">6</span>課</td></tr>
+        <tr><td class="who">市民・地域<small>自治会、地区の運営協議会</small></td><td class="what">デマンド交通の地区運営、利用の呼びかけ、意見の提出。</td><td class="cnt"><span class="num">3</span>地区</td></tr>
+      </tbody>
+    </table>
+    <p class="src">出典：汐見市地域公共交通活性化協議会 設置要綱（令和9年4月改正予定、架空）</p>
+  </div>
+
+  <div class="contact">
+    <div>
+      <p class="label">問い合わせ</p>
+      <p class="dept">汐見市 都市整備部 交通政策課</p>
+      <dl>
+        <dt>所在地</dt><dd>〒<span class="num">000-0000</span>　汐見市本町1丁目1番1号　本庁舎3階</dd>
+        <dt>電話</dt><dd><span class="num">0000-00-0000</span>（直通）</dd>
+        <dt>FAX</dt><dd><span class="num">0000-00-0001</span></dd>
+        <dt>メール</dt><dd><span class="num">kotsu@city.shiomi.example</span></dd>
+      </dl>
+    </div>
+    <div class="side">
+      <p><b>本編・概要版の閲覧</b><br>交通政策課の窓口、各市民センター、市立図書館で閲覧できます。</p>
+      <p><b>ユニバーサルデザインへの配慮</b><br>読みやすい書体を使い、色だけに頼らず記号と語で区別しています。</p>
+      <p>令和9年3月発行（架空の自治体の作例）</p>
+    </div>
+  </div>
+
+  <span class="folio"><b>56</b> / 60</span>
+</section>
+
+</main>
+
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+addEventListener('resize', fit);
+</script>
+<script>(() => {
+// BEGIN d-logic-tree (adapted: policy tree, goal → policies → measures)
+// From the d-logic-tree pattern: leaves sit on equal rows, each parent centres on its
+// children, links are elbows from the parent's right edge. Public Standard draws nodes as
+// rules plus text, not boxes: 4px blue for the goal (read first), 2px ink for a policy,
+// 1px rules between measures. The bar column becomes the indicator column.
+// Size from data-w/data-h, because clientWidth under the page zoom is not the layout size.
+function drawPolicyTree(svg, d) {
+  const W = +svg.dataset.w || 1048, H = +svg.dataset.h || 780;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const E = (t, a, txt) => { const e = document.createElementNS('http://www.w3.org/2000/svg', t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+  const lines = (x, y, rows, cls, lh) => { const t = E('text', { x, y, class: cls }); rows.forEach((s, i) => { const ts = document.createElementNS('http://www.w3.org/2000/svg', 'tspan'); ts.setAttribute('x', x); ts.setAttribute('dy', i ? lh : 0); ts.textContent = s; t.appendChild(ts); }); return t; };
+  // Columns: goal, policy, measure, indicator
+  const cols = [{ x: 0, w: 196 }, { x: 244, w: 236 }, { x: 528, w: 400 }, { x: 928, w: 120 }];
+  const T = 52, groupGap = 18;
+  const leaves = [];
+  d.root.children.forEach((p, gi) => p.children.forEach(l => { l.group = gi; leaves.push(l); }));
+  const rowH = (H - T - groupGap * (d.root.children.length - 1)) / leaves.length;
+  leaves.forEach((l, i) => { l.top = T + i * rowH + l.group * groupGap; l.cy = l.top + rowH / 2; });
+  d.root.children.forEach(p => { p.cy = (p.children[0].cy + p.children[p.children.length - 1].cy) / 2; });
+  d.root.cy = (d.root.children[0].cy + d.root.children[d.root.children.length - 1].cy) / 2;
+
+  // Header row under a 2px ink rule, as the style's tables
+  E('line', { x1: 0, x2: W, y1: 1, y2: 1, class: 'r-strong' });
+  d.headers.forEach((h, i) => E('text', { x: cols[i].x, y: 32, class: 'hd' }, h));
+  E('line', { x1: 0, x2: W, y1: 46, y2: 46, class: 'r-thin' });
+
+  // Goal: 4px blue rule, blue key, three lines at 30px
+  const r = d.root, rH = 190, rTop = r.cy - rH / 2;
+  E('line', { x1: cols[0].x, x2: cols[0].x + cols[0].w, y1: rTop, y2: rTop, class: 'r-blue' });
+  E('text', { x: 0, y: rTop + 34, class: 'root-k' }, '基本目標');
+  lines(0, rTop + 82, r.label, 'root-l', 42);
+
+  d.root.children.forEach((p, pi) => {
+    const c = cols[1], pH = 128, pTop = p.cy - pH / 2;
+    // link goal → policy
+    const gx = cols[0].x + cols[0].w, mx = gx + (c.x - gx) / 2;
+    E('path', { d: `M${gx + 12} ${r.cy}H${mx}V${p.cy}H${c.x - 14}`, class: 'link' });
+    E('line', { x1: c.x, x2: c.x + c.w, y1: pTop, y2: pTop, class: 'r-strong' });
+    const k = E('text', { x: c.x, y: pTop + 32, class: 'pol-k' }, '方針');
+    E('text', { x: c.x + 42, y: pTop + 32, class: 'n pol-k acc' }, String(pi + 1));
+    lines(c.x, pTop + 72, p.label, 'pol-l', 34);
+
+    // Measures: rows with 1px rules; the first row of a group opens with 2px ink
+    const lc = cols[2];
+    p.children.forEach((l, li) => {
+      const px = c.x + c.w, lmx = px + (lc.x - px) / 2;
+      E('path', { d: `M${px + 4} ${p.cy}H${lmx}V${l.cy}H${lc.x - 6}`, class: 'link' });
+      E('line', { x1: lc.x, x2: W, y1: l.top, y2: l.top, class: li === 0 ? 'r-strong' : 'r-thin' });
+      if (li === p.children.length - 1) E('line', { x1: lc.x, x2: W, y1: l.top + rowH, y2: l.top + rowH, class: 'r-thin' });
+      if (l.pick) E('rect', { x: lc.x, y: l.top + 8, width: 4, height: rowH - 16, class: 'focus' });
+      E('text', { x: lc.x + 18, y: l.cy + 7, class: 'n lf-no' }, l.no);
+      const t = E('text', { x: lc.x + 70, y: l.cy + 7, class: 'lf-l' }, l.label);
+      if (l.pick) {
+        const tx = lc.x + 70 + t.getComputedTextLength() + 14;
+        E('rect', { x: tx, y: l.cy - 14, width: 50, height: 28, class: 'tg-box' });
+        E('text', { x: tx + 25, y: l.cy + 6, 'text-anchor': 'middle', class: 'tg' }, '重点');
+      }
+      E('text', { x: cols[3].x + 16, y: l.cy + 7, class: 'lf-k' }, '指標 ' + l.kpi);
+    });
+  });
+}
+const svg = document.querySelector('#d-logic-tree svg');
+const data = {
+  headers: ['基本目標', '基本方針', '施策', '主な指標'],
+  root: { label: ['誰もが移動を', 'あきらめない', 'まち・しおみ'], children: [
+    { label: ['幹線と支線で', '路線網を組み直す'], children: [
+      { no: '1-1', label: '駅と拠点を結ぶ幹線の増便', kpi: '1・2', pick: true },
+      { no: '1-2', label: '支線とコミュニティバスの再編', kpi: '2' },
+      { no: '1-3', label: '交通結節点3駅の乗継ぎ改善', kpi: '3', pick: true } ] },
+    { label: ['地域に合った', '移動手段を確保する'], children: [
+      { no: '2-1', label: 'デマンド交通の3地区への拡大', kpi: '4', pick: true },
+      { no: '2-2', label: '運転士の確保と育成の支援', kpi: '5' },
+      { no: '2-3', label: '通院・福祉輸送との連携', kpi: '4' } ] },
+    { label: ['使いやすく、', 'わかりやすくする'], children: [
+      { no: '3-1', label: '運賃の上限制度と乗継割引', kpi: '1' },
+      { no: '3-2', label: 'キャッシュレス決済の全路線導入', kpi: '6' },
+      { no: '3-3', label: '案内と時刻表の統一・多言語化', kpi: '7' },
+      { no: '3-4', label: 'モビリティ・マネジメント', kpi: '1・7' } ] } ] }
+};
+const draw = () => { svg.replaceChildren(); drawPolicyTree(svg, data); };
+draw(); document.fonts.ready.then(draw);
+// END d-logic-tree
+})();
+</script>
+</body>
+</html>

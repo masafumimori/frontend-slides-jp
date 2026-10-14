@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>経費精算システムの刷新について（提案）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=BIZ+UDPMincho:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS === */
+:root {
+    --ink: #1C1E1D;
+    --sub: #575C59;
+    --line: #B9BEBA;
+    --tint: #F1F3F0;
+    --green: #2E5E45;
+    --paper: #FFFFFF;
+
+    --rule: color-mix(in srgb, var(--line) 60%, var(--paper));
+    --green-tint: color-mix(in srgb, var(--green) 10%, var(--paper));
+    --ink-30: color-mix(in srgb, var(--ink) 30%, var(--paper));
+
+    --jp-head: "Noto Sans JP", sans-serif;
+    --jp-body: "BIZ UDPMincho", serif;
+    --num: "IBM Plex Sans", sans-serif;
+
+    --desk-bg: #DCDDD8;
+    --page-bg: var(--paper);
+}
+
+body { color: var(--ink); font-family: var(--jp-body); }
+.page { font-family: var(--jp-body); color: var(--ink); }
+.page * { box-sizing: border-box; margin: 0; padding: 0; }
+.n { font-family: var(--num); font-feature-settings: "tnum" 1, "lnum" 1; }
+
+/* === PAGE FRAME ===
+   A ruled form: header rule at y 108, footer rule at y 1646, and the index
+   spine at x 192 joining them. Running head above the header rule, folio
+   below the footer rule, one stepped chapter tab on the right edge. */
+.hr-top { position: absolute; left: 96px; right: 96px; top: 108px; border-top: 1.5px solid var(--ink); }
+.hr-bot { position: absolute; left: 96px; right: 96px; top: 1646px; border-top: 1px solid var(--ink); }
+.spine { position: absolute; left: 192px; top: 108px; height: 1538px; border-left: 1px solid var(--line); }
+
+.rh { position: absolute; left: 96px; right: 96px; top: 58px; height: 34px; display: flex; justify-content: space-between; align-items: center; font-family: var(--jp-head); font-size: 18px; color: var(--sub); }
+.rh .doc { display: flex; align-items: baseline; gap: 18px; }
+.rh .doc .n { font-size: 17px; letter-spacing: 0.02em; }
+.rh .chap { display: flex; align-items: center; gap: 16px; color: var(--ink); font-weight: 700; }
+.mark { font-family: var(--jp-head); font-size: 16px; font-weight: 700; color: var(--ink); border: 1.5px solid var(--ink); padding: 2px 10px 3px; letter-spacing: 0.08em; line-height: 1.3; }
+
+.pf { position: absolute; left: 96px; right: 96px; top: 1668px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--jp-head); font-size: 17px; color: var(--sub); }
+.folio { font-family: var(--num); font-size: 20px; font-weight: 600; color: var(--ink); letter-spacing: 0.04em; }
+.folio small { font-size: 18px; font-weight: 400; color: var(--sub); }
+
+/* Chapter tab: one tab, stepped down the right edge by chapter like a binder index */
+.tab { position: absolute; right: 0; width: 40px; height: 200px; background: var(--ink); color: var(--paper); writing-mode: vertical-rl; font-feature-settings: "vpal"; font-family: var(--jp-head); font-size: 17px; font-weight: 700; letter-spacing: 0.06em; display: flex; align-items: center; padding-top: 18px; gap: 8px; }
+.tab .n { text-combine-upright: all; font-weight: 600; }
+.tab.t1 { top: 200px; } .tab.t2 { top: 416px; } .tab.t3 { top: 632px; } .tab.t4 { top: 848px; } .tab.t5 { top: 1064px; }
+
+/* === SIGNATURE: the margin index ===
+   Everything numbered hangs left of the spine: chapter numbers, 表/図 numbers,
+   要旨 and 注. The text column starts at 216; .ix sits at 96–176, right-aligned. */
+.col { position: absolute; left: 216px; right: 96px; }
+.ix { position: absolute; left: -120px; width: 80px; text-align: right; font-family: var(--num); color: var(--ink); }
+.ix-ch { font-size: 44px; font-weight: 600; line-height: 1; top: 2px; }
+.ix-sm { font-family: var(--jp-head); font-size: 17px; font-weight: 700; color: var(--sub); top: 4px; letter-spacing: 0.04em; }
+.ix-sm .n { font-size: 18px; }
+
+/* Body flow: everything between the header rule and the 注 slot stacks in one column.
+   156 is the chapter label; the flow ends at 1626 (no 注) or above the 注 slot. */
+.flow { top: 156px; bottom: 128px; display: flex; flex-direction: column; }
+.flow.has-foot { bottom: 150px; }
+.flow > * + * { margin-top: 44px; }
+.flow > .ph + * { margin-top: 52px; }
+.flow > .tight { margin-top: 28px; }
+.sec, .cap, .now, .yoshi, .refs { position: relative; }
+
+/* Page head: chapter label, conclusion headline, lead */
+.kick { font-family: var(--jp-head); font-size: 20px; font-weight: 700; color: var(--sub); letter-spacing: 0.04em; display: flex; gap: 14px; align-items: baseline; }
+.kick .n { font-size: 20px; color: var(--ink); }
+.h1 { font-family: var(--jp-head); font-weight: 700; font-size: 52px; line-height: 1.42; color: var(--ink); margin-top: 18px; }
+.lead { font-size: 26px; line-height: 1.75; margin-top: 22px; letter-spacing: 0.02em; text-align: justify; }
+
+/* Numbered headings: 1. in the margin, 1.1 inline, (1) inline */
+.h2 { position: relative; font-family: var(--jp-head); font-size: 30px; font-weight: 700; line-height: 1.4; padding-bottom: 12px; border-bottom: 1.5px solid var(--ink); margin-bottom: 22px; }
+.h3 { font-family: var(--jp-head); font-size: 23px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; display: flex; gap: 12px; align-items: baseline; }
+.h3 .n { font-size: 21px; font-weight: 600; color: var(--sub); }
+.body { font-size: 22px; line-height: 1.8; letter-spacing: 0.02em; }
+.body p + p { margin-top: 0.6em; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; }
+.cols > p + p { margin-top: 0; }
+.cols > div > .h3:not(:first-child) { margin-top: 26px; }
+.ol { list-style: none; }
+.ol li { padding-left: 2.2em; text-indent: -2.2em; }
+.ol li + li { margin-top: 0.4em; }
+.ol li b { font-family: var(--jp-head); font-weight: 700; }
+
+/* Captions for 表 and 図: number hangs in the margin, title in the column */
+.cap { position: relative; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--jp-head); font-size: 21px; font-weight: 700; margin-bottom: 12px; }
+.cap small { font-size: 17px; font-weight: 400; color: var(--sub); }
+.src { font-size: 17px; line-height: 1.6; color: var(--sub); margin-top: 10px; letter-spacing: 0; }
+
+/* 注 at the foot: short separator rule, label in the margin */
+.foot { bottom: 128px; top: auto; font-size: 17px; line-height: 1.65; color: var(--sub); }
+.foot::before { content: ""; display: block; width: 240px; border-top: 1px solid var(--ink-30); margin-bottom: 10px; }
+.foot .ix-sm { top: 15px; }
+.foot p { letter-spacing: 0; text-align: left; line-height: 1.65; }
+
+/* Ruled tables */
+.tbl { width: 100%; border-collapse: collapse; font-size: 19px; line-height: 1.55; }
+.tbl th, .tbl td { padding: 8px 14px; word-break: normal; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; letter-spacing: 0.01em; line-height: 1.55; }
+.tbl thead th { font-family: var(--jp-head); font-size: 18px; font-weight: 700; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); background: var(--tint); }
+.tbl tbody th { font-family: var(--jp-head); font-size: 18px; font-weight: 500; color: var(--sub); }
+.tbl tbody tr:last-child > * { border-bottom: 1.5px solid var(--ink); }
+.tbl .r { text-align: right; }
+.tbl .n { font-size: 20px; }
+
+/* === COVER + 要旨 === */
+.cv-meta-top { position: absolute; left: 216px; right: 96px; top: 58px; height: 34px; display: flex; justify-content: space-between; align-items: center; font-family: var(--jp-head); font-size: 18px; color: var(--sub); }
+.cv-meta-top .l { display: flex; align-items: center; gap: 16px; }
+.cv-meta-top .mark { font-size: 20px; padding: 3px 14px 4px; }
+.cv-meta-top .n { font-size: 20px; color: var(--ink); font-weight: 500; }
+.cover .flow { top: 150px; }
+.cover .flow > * + * { margin-top: 40px; }
+.cv-to { display: flex; justify-content: space-between; align-items: flex-start; }
+.cv-to .to { font-family: var(--jp-head); font-size: 28px; font-weight: 700; line-height: 1.5; padding-top: 6px; }
+.cv-to .cc { font-size: 19px; color: var(--sub); margin-top: 8px; line-height: 1.6; text-align: left; }
+.stamps { display: grid; grid-template-columns: repeat(3, 100px); border: 1px solid var(--ink); }
+.stamps > div { border-left: 1px solid var(--ink); }
+.stamps > div:first-child { border-left: 0; }
+.stamps b { display: block; font-family: var(--jp-head); font-size: 16px; font-weight: 500; text-align: center; padding: 4px 0 5px; border-bottom: 1px solid var(--ink); letter-spacing: 0.3em; text-indent: 0.3em; }
+.stamps .box { display: grid; place-items: center; height: 96px; }
+.seal { width: 68px; height: 68px; border: 2px solid var(--sub); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--jp-head); font-size: 14px; line-height: 1.2; color: var(--sub); }
+.seal .d { font-family: var(--num); font-size: 12px; border-top: 1px solid var(--sub); border-bottom: 1px solid var(--sub); padding: 0 5px; margin: 2px 0; }
+.stamps-cap { font-family: var(--jp-head); font-size: 15px; color: var(--sub); margin-top: 6px; text-align: right; line-height: 1.4; }
+
+.cv-title .type { display: flex; gap: 12px; align-items: center; font-family: var(--jp-head); font-size: 20px; font-weight: 700; }
+.cv-title .type b { color: var(--paper); background: var(--ink); padding: 3px 12px 4px; font-weight: 700; letter-spacing: 0.1em; }
+.cv-title .type span { color: var(--sub); }
+.cv-title h1 { font-family: var(--jp-head); font-size: 64px; font-weight: 700; line-height: 1.36; margin-top: 20px; }
+.cv-title .sub { font-size: 26px; line-height: 1.7; margin-top: 16px; text-align: left; }
+
+.cv-dl { display: grid; grid-template-columns: 132px 1fr 132px 1fr; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+.cv-dl dt, .cv-dl dd { padding: 8px 14px; border-bottom: 1px solid var(--line); font-size: 19px; line-height: 1.5; }
+.cv-dl dt { background: var(--tint); font-family: var(--jp-head); font-size: 16px; font-weight: 500; color: var(--sub); padding-top: 10px; }
+.cv-dl dd { letter-spacing: 0.01em; }
+.cv-dl > :nth-last-child(-n+4) { border-bottom: 0; }
+
+.yoshi { border-top: 3px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+.yoshi > .ix-sm { font-size: 24px; color: var(--ink); top: 14px; }
+.yoshi dl { display: grid; grid-template-columns: 128px 1fr; }
+.yoshi dt, .yoshi dd { padding: 11px 0; border-bottom: 1px solid var(--line); }
+.yoshi dl > :nth-last-child(-n+2) { border-bottom: 0; }
+.yoshi dt { font-family: var(--jp-head); font-size: 19px; font-weight: 700; color: var(--sub); padding-top: 14px; padding-left: 16px; }
+.yoshi dd { font-size: 22px; line-height: 1.7; letter-spacing: 0.02em; padding-right: 16px; text-align: left; }
+.yoshi .ans { background: var(--green-tint); }
+.yoshi dt.ans { color: var(--green); border-left: 5px solid var(--green); padding-left: 11px; }
+.yoshi dd.ans { font-family: var(--jp-head); font-size: 24px; font-weight: 700; line-height: 1.6; padding-top: 12px; padding-bottom: 12px; }
+
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); }
+.kpis > div { padding: 0 24px; border-left: 1px solid var(--line); }
+.kpis > div:first-child { padding-left: 0; border-left: 0; }
+.kpis .lab { font-family: var(--jp-head); font-size: 18px; font-weight: 700; color: var(--sub); }
+.kpis .v { font-family: var(--num); font-size: 66px; font-weight: 600; line-height: 1.1; margin-top: 4px; letter-spacing: -0.01em; }
+.kpis .v small { font-family: var(--jp-head); font-size: 22px; font-weight: 700; margin-left: 4px; letter-spacing: 0; }
+.kpis .hit .v { color: var(--green); }
+.kpis .from { font-family: var(--jp-head); font-size: 17px; color: var(--sub); margin-top: 4px; text-align: left; line-height: 1.5; letter-spacing: 0; }
+
+/* === PAGE 2: reading === */
+.now { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); margin-bottom: 24px; }
+.now > div { padding: 12px 18px; border-left: 1px solid var(--line); }
+.now > div:first-of-type { border-left: 0; padding-left: 0; }
+.now .lab { font-family: var(--jp-head); font-size: 17px; font-weight: 500; color: var(--sub); text-align: left; }
+.now .v { font-family: var(--num); font-size: 44px; font-weight: 600; line-height: 1.15; margin-top: 2px; text-align: left; }
+.now .v small { font-family: var(--jp-head); font-size: 18px; font-weight: 700; margin-left: 3px; }
+.now .hit .v { color: var(--green); }
+
+/* === PAGE 3: comparison table === */
+.cmp .tbl col.lab { width: 172px; }
+.cmp .tbl thead th { vertical-align: bottom; font-size: 19px; }
+.cmp .tbl thead th small { display: block; font-size: 16px; font-weight: 400; color: var(--sub); margin-top: 2px; }
+.cmp .tbl .rec { background: var(--green-tint); box-shadow: inset 2px 0 0 var(--green), inset -2px 0 0 var(--green); }
+.cmp .tbl thead th.rec { background: var(--green); color: var(--paper); }
+.cmp .tbl thead th.rec small { color: var(--paper); }
+.cmp .tbl tbody tr:last-child td.rec { box-shadow: inset 2px 0 0 var(--green), inset -2px 0 0 var(--green), inset 0 -2px 0 var(--green); }
+.ev { font-family: var(--jp-head); font-weight: 700; font-size: 19px; }
+.ev i { font-style: normal; display: inline-block; width: 1.3em; }
+
+/* === PAGE 4: figure (d-gantt fitted) === */
+.pol .ol { font-size: 22px; line-height: 1.75; }
+.fig-box { height: 540px; }
+#d-gantt { --d-ink: var(--ink); --d-paper: var(--paper); --d-sub: var(--sub); --d-rule: var(--line); --d-tint: var(--tint); --d-mid: var(--ink-30); --d-accent: var(--green); --font-jp: var(--jp-head); --font-latin: var(--num); }
+/* BEGIN d-gantt (restyled: square bars, flat gate label, a quiet second gate in ink) */
+#d-gantt .fig-box > svg { display: block; width: 100%; height: 100%; }
+#d-gantt svg text { font-family: var(--font-jp); }
+#d-gantt .yr { font: 600 18px var(--font-latin); fill: var(--d-sub); }
+#d-gantt .mon { font-size: 19px; fill: var(--d-ink); }
+#d-gantt .grid { stroke: var(--d-rule); stroke-width: 1; }
+#d-gantt .row { stroke: var(--d-rule); stroke-width: 1; }
+#d-gantt .pname { font-size: 22px; font-weight: 700; fill: var(--d-ink); }
+#d-gantt .owner { font-size: 18px; fill: var(--d-sub); }
+#d-gantt .bar { fill: var(--d-mid); rx: 0; }
+#d-gantt .ms { fill: var(--d-ink); stroke: var(--d-paper); stroke-width: 3; }
+#d-gantt .mslabel { font-size: 18px; font-weight: 500; fill: var(--d-ink); }
+#d-gantt .gate { stroke: var(--d-accent); stroke-width: 2.5; stroke-dasharray: 8 6; }
+#d-gantt .gatepill { fill: var(--d-accent); rx: 0; }
+#d-gantt .gatetext { font-size: 19px; font-weight: 700; fill: var(--d-paper); }
+#d-gantt .gate.quiet { stroke: var(--d-ink); stroke-width: 1.5; }
+#d-gantt .gatepill.quiet { fill: var(--d-paper); stroke: var(--d-ink); stroke-width: 1.5; }
+#d-gantt .gatetext.quiet { fill: var(--d-ink); }
+/* END d-gantt */
+
+/* === PAGE 5: risk table === */
+.risk .tbl .no { font-family: var(--num); font-weight: 600; font-size: 20px; }
+.risk .tbl td.hd { word-break: auto-phrase; font-family: var(--jp-head); font-weight: 700; font-size: 19px; }
+.lv { font-family: var(--jp-head); font-size: 18px; font-weight: 700; white-space: nowrap; }
+.lv i { font-style: normal; letter-spacing: 1px; margin-right: 6px; font-size: 14px; vertical-align: 1px; }
+.risk .tbl tr.top > * { background: var(--green-tint); }
+.risk .tbl tr.top > :first-child { box-shadow: inset 5px 0 0 var(--green); }
+.risk .tbl tr.top .no { color: var(--green); }
+
+/* === PAGE 6: requests, actions, references === */
+.req-list { border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+.req-list > div { display: grid; grid-template-columns: 56px 228px 1fr; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.req-list > div:last-child { border-bottom: 0; }
+.req-list .no { font-family: var(--num); font-size: 30px; font-weight: 600; color: var(--green); line-height: 1; }
+.req-list b { font-family: var(--jp-head); font-size: 23px; font-weight: 700; }
+.req-list p { font-size: 22px; line-height: 1.7; }
+.refs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; border-top: 1.5px solid var(--ink); padding-top: 18px; }
+.refs .ol { font-size: 20px; line-height: 1.65; }
+.refs .ol li { padding-left: 3.6em; text-indent: -3.6em; }
+.refs .ol li + li { margin-top: 4px; }
+.refs .ol .k { font-family: var(--jp-head); font-weight: 700; display: inline-block; width: 3.6em; text-indent: 0; }
+.contact { font-size: 20px; line-height: 1.75; text-align: left; }
+.contact b { font-family: var(--jp-head); }
+.ijo { margin-top: auto !important; text-align: right; font-size: 22px; }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ 1. COVER + 要旨 ============ -->
+<section class="page cover">
+    <div class="spine"></div>
+    <div class="hr-top"></div>
+    <div class="cv-meta-top">
+        <span class="l"><span class="mark">社外秘</span>取扱注意・社内関係者限り</span>
+        <span>文書番号 <span class="n">KS-ADM-2026-031</span>　第<span class="n">1.2</span>版</span>
+    </div>
+
+    <div class="col flow has-foot">
+        <div class="cv-to">
+            <div>
+                <p class="to">経営会議 御中</p>
+                <p class="cc">写し：情報システム部長、監査室長</p>
+            </div>
+            <div>
+                <div class="stamps">
+                    <div><b>担当</b><span class="box"><span class="seal">経理<span class="d">10.14</span>村井</span></span></div>
+                    <div><b>課長</b><span class="box"></span></div>
+                    <div><b>部長</b><span class="box"></span></div>
+                </div>
+                <p class="stamps-cap">承認欄</p>
+            </div>
+        </div>
+
+        <div class="cv-title">
+            <p class="type"><b>提案書</b><span>稟議 第<span class="n">2026-118</span>号 添付資料</span></p>
+            <h1>経費精算システムの<br>刷新について（提案）</h1>
+            <p class="sub">紙の申請書と表計算による精算を2027年6月末で廃止し、<br>クラウド型の経費精算サービスへ全社で移行する。</p>
+        </div>
+
+        <dl class="cv-dl">
+            <dt>文書番号</dt><dd><span class="n">KS-ADM-2026-031</span></dd>
+            <dt>版</dt><dd>第<span class="n">1.2</span>版（<span class="n">2026.10.14</span> 改訂）</dd>
+            <dt>作成日</dt><dd><span class="n">2026</span>年<span class="n">9</span>月<span class="n">24</span>日</dd>
+            <dt>機密区分</dt><dd>社外秘（社内関係者限り）</dd>
+            <dt>作成部署</dt><dd>管理本部 経理部</dd>
+            <dt>作成者</dt><dd>経理部 課長 早瀬 智史</dd>
+            <dt>宛先</dt><dd>経営会議</dd>
+            <dt>関連文書</dt><dd>稟議書 第<span class="n">2026-118</span>号</dd>
+        </dl>
+
+        <div class="yoshi">
+            <span class="ix ix-sm">要旨</span>
+            <dl>
+                <dt class="ans">結論</dt><dd class="ans">3案を比較した結果、クラウド型経費精算サービス<br>（B案）を採用し、2027年4月から全社に展開する。</dd>
+                <dt>効果</dt><dd>1件の処理時間を16分から7分に短縮し、年3,300時間を削減（試算）。</dd>
+                <dt>費用</dt><dd>初期費用640万円、利用料 年396万円（5年総額2,620万円）。</dd>
+                <dt>依頼事項</dt><dd>本提案の承認、および2026年度下期予算からの初期費用の支出。</dd>
+                <dt>期限</dt><dd>11月11日の経営会議で決裁（見積の有効期限は11月30日）。</dd>
+            </dl>
+        </div>
+
+        <div class="kpis">
+            <div class="hit"><p class="lab">精算1件の処理時間</p><p class="v">7<small>分</small></p><p class="from">現状16分。申請・承認・経理の合計</p></div>
+            <div><p class="lab">削減できる時間</p><p class="v">3,300<small>時間/年</small></p><p class="from">月1,850件 × 9分 × 12か月（試算）</p></div>
+            <div><p class="lab">5年間の総費用</p><p class="v">2,620<small>万円</small></p><p class="from">初期640万円 ＋ 年396万円 × 5年</p></div>
+        </div>
+    </div>
+
+    <div class="col foot">
+        <span class="ix ix-sm">注</span>
+        <p>本書の社名・人名・部署名・金額・件数はすべて架空のデータです。<br>試算の前提は「3 検討内容」と別紙2に記す。</p>
+    </div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>株式会社ミナモ精工 管理本部 経理部（架空）</span><span class="folio">1 <small>/ 6</small></span></footer>
+</section>
+
+<!-- ============ 2. 背景と現状: reading page ============ -->
+<section class="page">
+    <div class="spine"></div>
+    <header class="rh"><span class="doc">経費精算システムの刷新について（提案）<span class="n">KS-ADM-2026-031 第1.2版</span></span><span class="chap">1・2 背景と現状<span class="mark">社外秘</span></span></header>
+    <div class="hr-top"></div>
+    <div class="tab t1"><span class="n">1</span>背景と現状</div>
+
+    <div class="col flow has-foot">
+        <div class="ph">
+            <p class="kick"><span class="n">1</span>背景 ／ <span class="n">2</span>現状と課題</p>
+            <h2 class="h1">精算1件に16分かかり、<br>差し戻しは月210件に達している</h2>
+            <p class="lead">現行の精算は、紙の申請書と2014年に作った表計算の台帳で回っている。件数はこの5年で1.4倍になったが、手順は当時のままで、法令対応と差し戻しの処理が経理部の月初を圧迫している。</p>
+        </div>
+
+        <div class="sec">
+            <h3 class="h2"><span class="ix ix-ch">1</span>背景</h3>
+            <div class="cols body">
+                <div>
+                    <h4 class="h3"><span class="n">1.1</span>現行の運用</h4>
+                    <p>当社の経費精算は、申請者が紙の申請書に領収書を貼り、上長の押印を経て経理部へ回付する方式である。経理部は内容を表計算の精算台帳に入力し、月末に会計システムへ取り込んでいる。</p>
+                    <p>台帳のマクロは2014年に当時の担当者が作成したもので、作成者は既に退職しており、改修できる者がいない。</p>
+                </div>
+                <div>
+                    <h4 class="h3"><span class="n">1.2</span>刷新を検討する理由</h4>
+                    <p>電子帳簿保存法により、電子で受け取った領収書は電子のまま保存する必要がある。現在は印刷して紙で保管しており、2024年の税務調査で改善を指摘された（注1）。</p>
+                    <p>あわせて、インボイスの登録番号の確認を経理部が1件ずつ目視で行っており、処理時間の増加につながっている。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sec">
+            <h3 class="h2"><span class="ix ix-ch">2</span>現状と課題</h3>
+            <div class="now">
+                <span class="ix ix-sm" style="top: 14px;">表<span class="n">1</span></span>
+                <div><p class="lab">月間の精算件数</p><p class="v">1,850<small>件</small></p></div>
+                <div><p class="lab">1件の処理時間</p><p class="v">16<small>分</small></p></div>
+                <div class="hit"><p class="lab">月間の差し戻し</p><p class="v">210<small>件</small></p></div>
+                <div><p class="lab">締めまでの日数</p><p class="v">5<small>営業日</small></p></div>
+            </div>
+            <div class="cols body">
+                <div>
+                    <h4 class="h3"><span class="n">2.1</span>差し戻しが月初に集中する</h4>
+                    <p>差し戻しは全件の11%にあたる。理由の6割は勘定科目の誤りと領収書の不足で、申請時に入力を確かめる仕組みがあれば防げるものである。</p>
+                </div>
+                <div>
+                    <h4 class="h3"><span class="n">2.2</span>営業所の申請が遅れる</h4>
+                    <p>14の営業所は申請書を本社へ郵送しており、到着まで平均3日かかる。月末に出張した分は翌月の締めに間に合わず、未払計上の手間が増えている。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col foot">
+        <span class="ix ix-sm">注</span>
+        <p>注1 2024年6月の税務調査における口頭の指摘。是正の期限は示されていない。<br>表1 経理部の精算台帳（2026年4月〜9月の月平均）より作成。処理時間は申請・承認・経理の作業時間の合計で、20件の計測による（架空のデータ）。</p>
+    </div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>株式会社ミナモ精工 管理本部 経理部（架空）</span><span class="folio">2 <small>/ 6</small></span></footer>
+</section>
+
+<!-- ============ 3. 検討内容: comparison table ============ -->
+<section class="page">
+    <div class="spine"></div>
+    <header class="rh"><span class="doc">経費精算システムの刷新について（提案）<span class="n">KS-ADM-2026-031 第1.2版</span></span><span class="chap">3 検討内容<span class="mark">社外秘</span></span></header>
+    <div class="hr-top"></div>
+    <div class="tab t2"><span class="n">3</span>検討内容</div>
+
+    <div class="col flow has-foot">
+        <div class="ph">
+            <p class="kick"><span class="n">3</span>検討内容</p>
+            <h2 class="h1">費用はA案の3倍を超えるが、処理時間を<br>半分以下にできるのはB案だけである</h2>
+            <p class="lead">現行運用の改善、クラウド型、会計パッケージの追加機能の3案を比較した。</p>
+        </div>
+
+        <div class="sec cmp">
+            <h3 class="h2"><span class="ix ix-ch">3</span>選択肢の比較</h3>
+            <p class="cap"><span class="ix ix-sm" style="top: 2px;">表<span class="n">2</span></span>3案の比較<small>金額は税抜、5年総額は初期費用＋利用料5年分</small></p>
+            <table class="tbl">
+                <colgroup><col class="lab"><col><col><col></colgroup>
+                <thead>
+                    <tr><th>項目</th><th>A案<small>現行運用の改善</small></th><th class="rec">B案（推奨）<small>クラウド型経費精算</small></th><th>C案<small>会計パッケージの追加機能</small></th></tr>
+                </thead>
+                <tbody>
+                    <tr><th>概要</th><td>申請書を電子様式にし、台帳を外部に改修委託</td><td class="rec">スマートフォンで申請・承認し、仕訳を自動連携</td><td>現行の会計パッケージに経費機能を追加</td></tr>
+                    <tr><th>初期費用</th><td class="r n">180万円</td><td class="r n rec">640万円</td><td class="r n">1,450万円</td></tr>
+                    <tr><th>利用料・保守（年）</th><td class="r n">120万円</td><td class="r n rec">396万円</td><td class="r n">260万円</td></tr>
+                    <tr><th>5年総額</th><td class="r n">780万円</td><td class="r n rec">2,620万円</td><td class="r n">2,750万円</td></tr>
+                    <tr><th>1件の処理時間</th><td class="r n">16分 → 13分</td><td class="r n rec">16分 → 7分</td><td class="r n">16分 → 9分</td></tr>
+                    <tr><th>導入期間</th><td class="r n">4か月</td><td class="r n rec">7か月</td><td class="r n">12か月</td></tr>
+                    <tr><th>電子帳簿保存法</th><td><span class="ev"><i>△</i></span>検索要件は手作業</td><td class="rec"><span class="ev"><i>○</i></span>標準機能で対応</td><td><span class="ev"><i>○</i></span>標準機能で対応</td></tr>
+                    <tr><th>インボイス確認</th><td><span class="ev"><i>×</i></span>目視のまま</td><td class="rec"><span class="ev"><i>○</i></span>登録番号を自動照合</td><td><span class="ev"><i>△</i></span>2027年度対応予定</td></tr>
+                    <tr><th>営業所からの申請</th><td><span class="ev"><i>△</i></span>メール添付で提出</td><td class="rec"><span class="ev"><i>○</i></span>スマートフォンで即日</td><td><span class="ev"><i>△</i></span>社内PCからのみ</td></tr>
+                    <tr><th>総合評価</th><td><span class="ev">見送り</span><br>法令対応の手作業が残る</td><td class="rec"><span class="ev">採用</span><br>効果と期間を両立</td><td><span class="ev">見送り</span><br>導入に12か月かかる</td></tr>
+                </tbody>
+            </table>
+            <p class="src">出典：各社の見積書（2026年9月取得、有効期限11月30日）と経理部の試算。社名は伏せ、数値は架空のデータ。</p>
+        </div>
+
+        <div class="cols body">
+            <div>
+                <h4 class="h3"><span class="n">3.1</span>費用の差をどう見るか</h4>
+                <p>B案の5年総額はA案より1,840万円多いが、削減できる時間は年2,200時間多い。人件費に換算すると2年目で差が埋まる。</p>
+            </div>
+            <div>
+                <h4 class="h3"><span class="n">3.2</span>C案を見送る理由</h4>
+                <p>C案は会計との一体性に優れるが、導入に12か月かかり、2027年度の決算期中に切り替えることになるため見送った。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col foot">
+        <span class="ix ix-sm">注</span>
+        <p>○ 対応済み　△ 一部対応・手作業が残る　× 未対応。処理時間は実データ20件の平均、人件費は1時間4,000円で換算。</p>
+    </div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>株式会社ミナモ精工 管理本部 経理部（架空）</span><span class="folio">3 <small>/ 6</small></span></footer>
+</section>
+
+<!-- ============ 4. 提案・スケジュール: figure page ============ -->
+<section class="page">
+    <div class="spine"></div>
+    <header class="rh"><span class="doc">経費精算システムの刷新について（提案）<span class="n">KS-ADM-2026-031 第1.2版</span></span><span class="chap">4 提案と日程<span class="mark">社外秘</span></span></header>
+    <div class="hr-top"></div>
+    <div class="tab t3"><span class="n">4</span>提案と日程</div>
+
+    <div class="col flow has-foot">
+        <div class="ph">
+            <p class="kick"><span class="n">4</span>提案・対応方針</p>
+            <h2 class="h1">11月11日に決裁できれば、<br>紙の精算を2027年6月末で廃止できる</h2>
+            <p class="lead">B案を、管理本部と2営業所での試行を経て全社に広げる。4月中旬の判定で試行の結果を確かめてから、営業所への展開を始める。</p>
+        </div>
+
+        <div class="sec pol">
+            <h3 class="h2"><span class="ix ix-ch">4</span>対応方針とスケジュール</h3>
+            <ol class="ol body">
+                <li><b>(1)</b> 申請・承認・仕訳連携の3機能から始め、追加機能は2028年度に判断する。</li>
+                <li><b>(2)</b> 勘定科目は選択式にし、領収書の画像がない申請は送信できなくする。</li>
+                <li><b>(3)</b> 旧運用は全社展開後も2か月並行させ、6月の締めをもって廃止する。</li>
+            </ol>
+        </div>
+
+        <div class="fig tight" id="d-gantt">
+            <p class="cap"><span class="ix ix-sm" style="top: 2px;">図<span class="n">1</span></span>導入スケジュール<small>◆ マイルストーン　破線 判断の時点</small></p>
+            <div class="fig-box"><svg aria-label="導入スケジュールのガントチャート"></svg></div>
+        </div>
+
+        <div class="cols body tight">
+            <p>決裁が12月にずれると、契約と設定が年末年始をまたぎ、試行は4月以降になる。全社展開は人事異動と重なり、秋に延びる。</p>
+            <p>4月中旬の判定では、試行の差し戻し率が5%以下であることを全社展開の条件とする。満たさない場合は試行を1か月延ばす。</p>
+        </div>
+    </div>
+
+    <div class="col foot">
+        <span class="ix ix-sm">注</span>
+        <p>図1 B案事業者の導入計画案（2026年9月）を経理部で調整。2026年10月〜2027年9月。日程は架空のデータ。</p>
+    </div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>株式会社ミナモ精工 管理本部 経理部（架空）</span><span class="folio">4 <small>/ 6</small></span></footer>
+</section>
+
+<!-- ============ 5. リスクと対策: table page ============ -->
+<section class="page">
+    <div class="spine"></div>
+    <header class="rh"><span class="doc">経費精算システムの刷新について（提案）<span class="n">KS-ADM-2026-031 第1.2版</span></span><span class="chap">5 リスクと対策<span class="mark">社外秘</span></span></header>
+    <div class="hr-top"></div>
+    <div class="tab t4"><span class="n">5</span>リスクと対策</div>
+
+    <div class="col flow has-foot">
+        <div class="ph">
+            <p class="kick"><span class="n">5</span>リスクと対策</p>
+            <h2 class="h1">最大のリスクは営業所での定着であり、<br>試行の段階で研修と窓口を整える</h2>
+            <p class="lead">想定されるリスクを5件挙げ、影響と発生の可能性を3段階で評価した。システムの障害より、使われずに紙と二重で運用されるほうが影響は大きい。</p>
+        </div>
+
+        <div class="sec risk">
+            <h3 class="h2"><span class="ix ix-ch">5</span>リスクの評価と対策</h3>
+            <p class="cap"><span class="ix ix-sm" style="top: 2px;">表<span class="n">3</span></span>リスクと対策の一覧<small>■■■ 大　■■□ 中　■□□ 小</small></p>
+            <table class="tbl">
+                <colgroup><col style="width: 56px"><col style="width: 214px"><col style="width: 96px"><col style="width: 96px"><col><col style="width: 166px"></colgroup>
+                <thead><tr><th>No.</th><th>リスク</th><th>影響</th><th>可能性</th><th>対策</th><th>担当・時期</th></tr></thead>
+                <tbody>
+                    <tr class="top"><td class="no">1</td><td class="hd">営業所で使われず、紙の申請が残る</td><td><span class="lv"><i>■■■</i>大</span></td><td><span class="lv"><i>■■□</i>中</span></td><td>試行に2営業所を含め、操作研修を全営業所で2回開く。問い合わせ窓口を経理部に置き、紙の受付は6月末で止める。</td><td>経理部<br>2〜6月</td></tr>
+                    <tr><td class="no">2</td><td class="hd">会計システムとの連携で仕訳がずれる</td><td><span class="lv"><i>■■■</i>大</span></td><td><span class="lv"><i>■□□</i>小</span></td><td>2月に過去3か月分のデータで並行仕訳を行い、差異がないことを確かめる。</td><td>情報システム部<br>2月</td></tr>
+                    <tr><td class="no">3</td><td class="hd">承認者が承認を溜める</td><td><span class="lv"><i>■■□</i>中</span></td><td><span class="lv"><i>■■□</i>中</span></td><td>3日以上止まった申請を本人と上位者に自動で通知し、承認の代理も設定できるようにする。</td><td>経理部<br>3月</td></tr>
+                    <tr><td class="no">4</td><td class="hd">勘定科目の選択肢が実務に合わない</td><td><span class="lv"><i>■■□</i>中</span></td><td><span class="lv"><i>■■□</i>中</span></td><td>試行中の差し戻し理由を毎週集計し、選択肢を見直す。</td><td>経理部<br>3〜4月</td></tr>
+                    <tr><td class="no">5</td><td class="hd">サービス事業者の値上げ</td><td><span class="lv"><i>■□□</i>小</span></td><td><span class="lv"><i>■■□</i>中</span></td><td>3年間の料金固定を契約条件とし、4年目以降の上限を覚書に定める。</td><td>経理部・法務<br>11月</td></tr>
+                </tbody>
+            </table>
+            <p class="src">出典：経理部と情報システム部の検討会（2026年9月、2回）。評価は架空のデータ。</p>
+        </div>
+
+        <div class="cols body">
+            <div>
+                <h4 class="h3"><span class="n">5.1</span>中止の判断基準</h4>
+                <p>試行の延長後も差し戻し率が5%を超える場合、または連携の差異が解消しない場合は、全社展開を止めて経営会議に報告する。</p>
+            </div>
+            <div>
+                <h4 class="h3"><span class="n">5.2</span>情報の取り扱い</h4>
+                <p>領収書の画像は国内のデータセンターに保存される。情報システム部が9月に事業者の管理体制を確認し、問題はなかった。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col foot">
+        <span class="ix ix-sm">注</span>
+        <p>影響は業務と費用への影響、可能性は導入後1年以内に起きる見込みを3段階で評価した。</p>
+    </div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>株式会社ミナモ精工 管理本部 経理部（架空）</span><span class="folio">5 <small>/ 6</small></span></footer>
+</section>
+
+<!-- ============ 6. 依頼事項・次のアクション / 参考資料 ============ -->
+<section class="page">
+    <div class="spine"></div>
+    <header class="rh"><span class="doc">経費精算システムの刷新について（提案）<span class="n">KS-ADM-2026-031 第1.2版</span></span><span class="chap">6 依頼事項<span class="mark">社外秘</span></span></header>
+    <div class="hr-top"></div>
+    <div class="tab t5"><span class="n">6</span>依頼事項</div>
+
+    <div class="col flow">
+        <div class="ph">
+            <p class="kick"><span class="n">6</span>依頼事項・次のアクション</p>
+            <h2 class="h1">11月11日の経営会議で、<br>次の3点を決裁いただきたい</h2>
+            <p class="lead">決裁後は11月中に契約を結び、12月から設定に入る。見積は11月30日まで有効で、決裁が遅れると再見積が必要になる。</p>
+        </div>
+
+        <div class="sec">
+            <h3 class="h2"><span class="ix ix-ch">6</span>依頼事項</h3>
+            <div class="req-list">
+                <div><span class="no">1</span><b>B案の採用</b><p>クラウド型経費精算サービス（B案）の導入と、2027年6月末での紙の申請書・精算台帳の廃止。</p></div>
+                <div><span class="no">2</span><b>予算の支出</b><p>2026年度下期予算から初期費用640万円を支出し、2027年度以降は利用料 年396万円を計上する。</p></div>
+                <div><span class="no">3</span><b>推進責任者の指名</b><p>管理本部長を推進責任者に指名し、各営業所長には試行と研修への協力を指示していただく。</p></div>
+            </div>
+        </div>
+
+        <div class="sec">
+            <p class="cap"><span class="ix ix-sm" style="top: 2px;">表<span class="n">4</span></span>決裁後の次のアクション</p>
+            <table class="tbl">
+                <colgroup><col style="width: 150px"><col><col style="width: 250px"></colgroup>
+                <thead><tr><th>期日</th><th>内容</th><th>担当</th></tr></thead>
+                <tbody>
+                    <tr><td class="n">11月20日</td><td>契約の締結と、料金固定の覚書の取り交わし</td><td>経理部・法務</td></tr>
+                    <tr><td class="n">12月4日</td><td>キックオフ。勘定科目と承認経路の確定</td><td>経理部・情報システム部</td></tr>
+                    <tr><td class="n">1月29日</td><td>試行営業所（2拠点）への説明会</td><td>経理部</td></tr>
+                    <tr><td class="n">2月26日</td><td>会計システムとの並行仕訳の結果報告</td><td>情報システム部</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="refs">
+            <span class="ix ix-sm" style="top: 22px;">参考</span>
+            <div>
+                <h4 class="h3">参考資料</h4>
+                <ol class="ol">
+                    <li><span class="k">別紙1</span>各社の見積書（3社）</li>
+                    <li><span class="k">別紙2</span>削減時間の試算の前提</li>
+                    <li><span class="k">別紙3</span>処理時間の計測記録（20件）</li>
+                    <li><span class="k">別紙4</span>事業者の情報管理に関する確認書</li>
+                </ol>
+            </div>
+            <div>
+                <h4 class="h3">問い合わせ先</h4>
+                <p class="contact"><b>管理本部 経理部</b><br>課長 早瀬 智史（内線 4120）<br>主任 村井 遥（内線 4126）</p>
+            </div>
+        </div>
+
+        <p class="ijo">以上</p>
+    </div>
+
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>株式会社ミナモ精工 管理本部 経理部（架空）</span><span class="folio">6 <small>/ 6</small></span></footer>
+</section>
+
+</main>
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+
+/* === d-gantt from references/diagrams.html, fitted to the page === */
+(() => {
+  function drawGantt(svg, d) {
+    const NS = 'http://www.w3.org/2000/svg';
+    const el = (t, a, p = svg) => { const n = document.createElementNS(NS, t); for (const k in a) k === 'text' ? (n.textContent = a[k]) : n.setAttribute(k, a[k]); p.appendChild(n); return n; };
+    const warn = msg => document.fonts.status === 'loaded' && console.warn(msg);
+    const W = svg.clientWidth || 928, H = svg.clientHeight || 560;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const headH = 72, footH = 72, n = d.phases.length, minRowH = 76;
+    const names = d.phases.map(p => [el('text', { x: 0, class: 'pname', text: p.name }), el('text', { x: 0, class: 'owner', text: p.owner })]);
+    const labelW = Math.max(Math.max(...names.flat().map(t => t.getComputedTextLength())) + 40, W * 0.19);
+    const rowH = (H - headH - footH) / n, bodyH = rowH * n;
+    if (rowH < minRowH) warn(`d-gantt: ${n} phases need ${headH + footH + n * minRowH}px of height, the box has ${H}px`);
+    const cw = (W - labelW) / d.months, x = m => labelW + m * cw;
+    const mons = [];
+    for (let m = 0; m < d.months; m++) {
+      const k = d.start.m - 1 + m, mon = (k % 12) + 1, yr = d.start.y + Math.floor(k / 12);
+      if (m === 0 || mon === 1) el('text', { x: x(m) + 10, y: 24, class: 'yr', text: yr });
+      mons.push(el('text', { x: x(m) + cw / 2, y: 58, class: 'mon', 'text-anchor': 'middle', text: mon + '月' }));
+    }
+    const every = Math.ceil((Math.max(...mons.map(t => t.getComputedTextLength())) + 12) / cw);
+    mons.forEach((t, m) => { if (m % every) t.remove(); });
+    for (let m = 0; m <= d.months; m++) el('line', { x1: x(m), x2: x(m), y1: headH, y2: headH + bodyH, class: 'grid' });
+    d.phases.forEach((p, i) => {
+      const top = headH + i * rowH, mid = top + rowH / 2;
+      el('line', { x1: 0, x2: W, y1: top, y2: top, class: 'row' });
+      names[i][0].setAttribute('y', mid - 4);
+      names[i][1].setAttribute('y', mid + 26);
+      el('rect', { x: x(p.s), y: mid + 4, width: x(p.e) - x(p.s), height: 28, class: 'bar' });
+    });
+    el('line', { x1: 0, x2: W, y1: headH + bodyH, y2: headH + bodyH, class: 'row' });
+    d.milestones.forEach(ms => {
+      const cx = x(ms.at), mid = headH + ms.row * rowH + rowH / 2, cy = mid + 18, r = 13;
+      el('path', { d: `M${cx} ${cy - r}L${cx + r} ${cy}L${cx} ${cy + r}L${cx - r} ${cy}Z`, class: 'ms' });
+      const anchor = cx > W - 90 ? 'end' : cx < labelW + 90 ? 'start' : 'middle';
+      el('text', { x: cx, y: mid - 10, class: 'mslabel', 'text-anchor': anchor, text: ms.label });
+    });
+    d.gates.forEach(g => {
+      const gx = x(g.at);
+      const q = g.quiet ? ' quiet' : '';
+      el('line', { x1: gx, x2: gx, y1: headH - 6, y2: headH + bodyH + 18, class: 'gate' + q });
+      const pill = el('rect', { y: headH + bodyH + 18, height: 44, class: 'gatepill' + q });
+      const t = el('text', { y: headH + bodyH + 47, class: 'gatetext' + q, 'text-anchor': 'middle', text: g.label });
+      const w = t.getComputedTextLength() + 40, px = Math.min(Math.max(gx - w / 2, 0), W - w);
+      pill.setAttribute('x', px); pill.setAttribute('width', w); t.setAttribute('x', px + w / 2);
+    });
+  }
+  const data = {
+    start: { y: 2026, m: 10 }, months: 12,
+    phases: [
+      { name: '契約・要件定義', owner: '経理部・情報システム部', s: 1.35, e: 3 },
+      { name: '設定・会計連携', owner: '情報システム部・事業者', s: 2.1, e: 5 },
+      { name: '試行', owner: '管理本部・2営業所', s: 5, e: 6.5 },
+      { name: '全社展開・研修', owner: '経理部・各営業所', s: 6.5, e: 8.5 },
+      { name: '旧運用の並行・廃止', owner: '経理部', s: 6.5, e: 9 }
+    ],
+    milestones: [
+      { label: '契約締結', at: 2.1, row: 0 },
+      { label: '並行仕訳の確認', at: 5, row: 1 },
+      { label: '紙の受付終了', at: 9, row: 4 }
+    ],
+    gates: [{ label: '決裁 11/11', at: 1.35 }, { label: '全社展開の判定 4月中旬', at: 6.5, quiet: true }]
+  };
+  const svg = document.querySelector('#d-gantt svg');
+  const draw = () => { svg.replaceChildren(); drawGantt(svg, data); };
+  draw(); document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>

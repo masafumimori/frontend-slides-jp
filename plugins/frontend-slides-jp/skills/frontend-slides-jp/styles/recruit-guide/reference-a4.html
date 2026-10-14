@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ソラマド製作所 採用案内 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Bricolage+Grotesque:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS === */
+:root {
+    --sun: #FFC629;
+    --ink: #1D2125;
+    --mute: #5D636B;
+    --paper: #FFFFFF;
+
+    --rule: color-mix(in srgb, var(--ink) 16%, var(--paper));
+    --ink-70: color-mix(in srgb, var(--ink) 70%, var(--paper));
+    --ink-30: color-mix(in srgb, var(--ink) 30%, var(--paper));
+
+    --jp-head: "Noto Sans JP", sans-serif;
+    --jp-body: "Zen Kaku Gothic New", sans-serif;
+    --num: "Bricolage Grotesque", sans-serif;
+
+    --desk-bg: #E7E4DC;
+    --page-bg: var(--paper);
+}
+
+body { color: var(--ink); font-family: var(--jp-body); }
+.page { font-family: var(--jp-body); color: var(--ink); }
+.page * { box-sizing: border-box; margin: 0; padding: 0; }
+.en { font-family: var(--num); }
+
+/* === SIGNATURE: the name tab ===
+   A flat sun-yellow tab that is always attached to an edge: the bottom edge of a photo,
+   the outer edge of the page, or the top rule of a number. On a photo it carries the
+   person's name, role and 入社年; on the page edge it carries the chapter.
+   Square corners, no shadow, ink text only. */
+.tag { position: absolute; background: var(--sun); color: var(--ink); padding: 18px 26px 20px; display: flex; flex-direction: column; gap: 6px; }
+.tag .role { font-family: var(--jp-head); font-weight: 700; font-size: 18px; line-height: 1.3; }
+.tag .name { font-family: var(--jp-head); font-weight: 900; font-size: 34px; line-height: 1.2; letter-spacing: 0.04em; }
+.tag .year { font-family: var(--jp-head); font-weight: 700; font-size: 18px; line-height: 1.2; display: flex; align-items: baseline; gap: 4px; }
+.tag .year .en { font-size: 24px; font-weight: 700; }
+.tag-row { flex-direction: row; align-items: baseline; gap: 18px; }
+.cap { font-size: 17px; line-height: 1.6; color: var(--mute); }
+
+/* === PAGE FRAME ===
+   Running head at top 64; folio at bottom 56 on the right; chapter tab on the right page edge,
+   one step lower per chapter like a thumb index. */
+.rh { position: absolute; top: 64px; left: 96px; right: 96px; display: flex; justify-content: space-between; align-items: baseline; font-size: 19px; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
+.rh .l { display: flex; align-items: baseline; gap: 16px; }
+.rh .r { display: flex; align-items: baseline; gap: 10px; }
+.rh .r .en { font-size: 20px; font-weight: 700; }
+.logo { font-family: var(--num); font-weight: 800; font-size: 22px; letter-spacing: 0.06em; display: inline-flex; align-items: center; gap: 8px; }
+.logo i { width: 18px; height: 18px; background: var(--sun); display: inline-block; }
+.folio { position: absolute; bottom: 56px; right: 96px; font-family: var(--num); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; display: flex; align-items: center; gap: 12px; }
+.folio::before { content: ""; width: 28px; height: 3px; background: var(--ink); }
+.folio-l { position: absolute; bottom: 56px; left: 96px; font-size: 17px; color: var(--mute); }
+.chtab { position: absolute; right: 0; width: 60px; height: 220px; background: var(--sun); writing-mode: vertical-rl; font-feature-settings: "vpal"; display: flex; align-items: center; justify-content: flex-start; padding-top: 20px; gap: 12px; font-family: var(--jp-head); font-weight: 700; font-size: 19px; letter-spacing: 0.08em; }
+.chtab .en { text-combine-upright: all; font-family: var(--num); font-weight: 800; font-size: 20px; }
+.ch1 { top: 200px; } .ch2 { top: 430px; } .ch3 { top: 660px; } .ch4 { top: 890px; } .ch5 { top: 1120px; }
+
+/* === PAGE HEAD === */
+.ph { position: absolute; left: 96px; right: 96px; top: 150px; }
+.kicker { font-family: var(--num); font-weight: 700; font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; display: flex; align-items: center; gap: 14px; }
+.kicker::before { content: ""; width: 14px; height: 14px; background: var(--sun); }
+.h1 { font-family: var(--jp-head); font-weight: 900; font-size: 62px; line-height: 1.36; margin-top: 22px; letter-spacing: 0.01em; }
+.mk { text-decoration-line: underline; text-decoration-color: var(--sun); text-decoration-thickness: 0.34em; text-underline-offset: -0.2em; text-decoration-skip-ink: none; }
+.lead { font-size: 27px; line-height: 1.75; margin-top: 24px; letter-spacing: 0.02em; font-weight: 500; }
+
+.body { font-size: 22px; line-height: 1.8; letter-spacing: 0.02em; }
+.body p + p { margin-top: 0.9em; }
+.cols { display: grid; grid-template-columns: 500px 500px; column-gap: 48px; }
+.foot { position: absolute; left: 96px; right: 96px; bottom: 120px; font-size: 17px; line-height: 1.7; color: var(--mute); border-top: 1px solid var(--rule); padding-top: 12px; }
+.photo { position: absolute; overflow: visible; }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* === COVER === */
+.cv-photo { position: absolute; left: 0; top: 0; width: 1240px; height: 1120px; }
+.cv-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 66% 40%; display: block; }
+.cv-top { position: absolute; left: 96px; right: 96px; top: 72px; display: flex; justify-content: space-between; align-items: center; }
+.cv-top .logo { font-size: 30px; background: var(--paper); padding: 10px 18px; }
+.cv-top .logo i { width: 24px; height: 24px; }
+.cv-tag { left: 96px; top: 1120px; transform: translateY(-100%); }
+.cv-copy { position: absolute; left: 96px; right: 96px; top: 1200px; font-family: var(--jp-head); font-weight: 900; font-size: 92px; line-height: 1.28; letter-spacing: 0.01em; }
+.cv-meta { position: absolute; left: 96px; right: 96px; bottom: 80px; display: grid; grid-template-columns: 1fr auto; align-items: end; border-top: 2px solid var(--ink); padding-top: 22px; }
+.cv-meta .t { font-family: var(--jp-head); font-weight: 700; font-size: 28px; line-height: 1.5; }
+.cv-meta .t .en { font-size: 30px; font-weight: 800; }
+.cv-meta .s { font-size: 17px; color: var(--mute); line-height: 1.7; text-align: right; }
+.cv-cap { position: absolute; right: 96px; top: 1132px; }
+
+/* === MESSAGE === */
+.msg-photo { left: 96px; top: 540px; width: 1048px; height: 440px; }
+.msg-photo img { object-position: 50% 40%; }
+.msg-cap { position: absolute; left: 96px; top: 992px; }
+.msg-body { position: absolute; left: 96px; top: 1060px; }
+.sign { position: absolute; left: 0; top: 1532px; }
+.sign.tag { padding-left: 96px; }
+
+/* === NUMBERS === */
+.stats { position: absolute; left: 96px; right: 96px; top: 548px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; row-gap: 40px; }
+.stat { position: relative; border-top: 3px solid var(--ink); padding-top: 22px; height: 268px; }
+.stat .lab { font-family: var(--jp-head); font-weight: 700; font-size: 22px; line-height: 1.4; }
+.stat .big { font-family: var(--num); font-weight: 700; font-size: 124px; line-height: 1; margin-top: 18px; letter-spacing: -0.02em; display: flex; align-items: baseline; }
+.stat .big small { font-family: var(--jp-head); font-size: 36px; font-weight: 700; margin-left: 6px; letter-spacing: 0; }
+.stat .note { font-size: 18px; line-height: 1.6; color: var(--mute); margin-top: 16px; }
+.stat .hang { top: -3px; right: 0; padding: 8px 14px 10px; font-family: var(--jp-head); font-weight: 700; font-size: 17px; }
+.mix { position: absolute; left: 96px; right: 96px; top: 1172px; }
+.mix h3 { font-family: var(--jp-head); font-weight: 700; font-size: 24px; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.mix h3 span { font-size: 17px; font-weight: 500; color: var(--mute); font-family: var(--jp-body); }
+.bar { display: flex; height: 56px; }
+.bar > div { flex: var(--w) 1 0; min-width: 0; display: flex; align-items: center; padding: 0 16px; font-family: var(--jp-head); font-weight: 700; font-size: 19px; white-space: nowrap; border-right: 3px solid var(--paper); }
+.bar > div:last-child { border-right: 0; }
+.bar > div .en { font-size: 22px; margin-left: 8px; }
+.b1 { background: var(--ink); color: var(--paper); }
+.b2 { background: var(--ink-70); color: var(--paper); }
+.b3 { background: var(--ink-30); color: var(--ink); }
+.b4 { background: var(--rule); color: var(--ink); }
+.jobs { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 24px; margin-top: 16px; }
+.jobs p { word-break: auto-phrase; font-size: 17px; line-height: 1.6; color: var(--mute); text-align: left; }
+.jobs p b { display: block; font-family: var(--jp-head); color: var(--ink); font-size: 19px; }
+.mix + .mix { top: 1400px; }
+
+/* === INTERVIEW === */
+.iv { position: absolute; top: 556px; width: 500px; }
+.iv.a { left: 96px; } .iv.b { left: 644px; }
+.iv .photo { position: relative; width: 500px; height: 340px; }
+.iv .photo .tag { left: 0; bottom: 0; transform: translateY(50%); padding: 14px 22px 16px; }
+.iv .photo .tag .name { font-size: 30px; }
+.iv .q1 { font-family: var(--jp-head); font-weight: 900; font-size: 32px; line-height: 1.5; margin-top: 90px; }
+.iv dl { margin-top: 26px; }
+.iv dt { font-family: var(--jp-head); font-weight: 700; font-size: 21px; line-height: 1.5; display: flex; gap: 10px; border-top: 1px solid var(--rule); padding-top: 16px; }
+.iv dt .en { font-weight: 800; font-size: 22px; flex: none; }
+.iv dd { word-break: normal; font-size: 22px; line-height: 1.8; letter-spacing: 0.02em; margin: 8px 0 22px; text-align: justify; }
+.iv .cap { margin-top: 10px; text-align: right; }
+
+/* === DAY: d-flow-v fitted === */
+.day-photo { left: 96px; top: 540px; width: 1048px; height: 340px; }
+.day-photo img { object-position: 50% 62%; }
+.day-photo .tag { right: 0; bottom: 0; transform: translateY(50%); padding: 14px 22px 16px; }
+.day-photo .tag .name { font-size: 30px; }
+.day-cap { position: absolute; left: 96px; top: 892px; }
+.day { position: absolute; left: 96px; right: 96px; top: 976px; height: 570px; }
+#d-flow-v { --d-ink: var(--ink); --d-paper: var(--paper); --d-accent: var(--sun); --d-sub: var(--mute); --d-mid: var(--ink-30); --d-rule: var(--rule); --font-jp: var(--jp-head); --font-latin: var(--num); }
+#d-flow-v .rows { display: grid; grid-template-columns: 116px 60px 230px 1fr 210px; grid-auto-rows: 1fr; height: 100%; }
+#d-flow-v .rows > * { display: flex; align-items: center; border-bottom: 1px solid var(--d-rule); }
+#d-flow-v .rows > .node { border-bottom: 0; position: relative; justify-content: center; }
+#d-flow-v .node::before { content: ""; position: absolute; left: 50%; margin-left: -1.5px; width: 3px; top: 0; bottom: 0; background: var(--d-mid); }
+#d-flow-v .node.first::before { top: 50%; }
+#d-flow-v .node.last::before { bottom: 50%; }
+#d-flow-v .node span { position: relative; width: 22px; height: 22px; background: var(--d-paper); border: 3px solid var(--d-ink); }
+#d-flow-v .node.is-key span { width: 34px; height: 34px; background: var(--d-accent); border-color: var(--d-ink); }
+#d-flow-v .when { font: 700 30px/1 var(--font-latin); letter-spacing: -0.01em; color: var(--d-ink); }
+#d-flow-v .ttl { font: 700 24px/1.4 var(--font-jp); padding-left: 18px; }
+#d-flow-v .ttl.is-key span { text-decoration-line: underline; text-decoration-color: var(--d-accent); text-decoration-thickness: 0.4em; text-underline-offset: -0.24em; text-decoration-skip-ink: none; }
+#d-flow-v .dsc { font-size: 19px; line-height: 1.6; padding-right: 24px; }
+#d-flow-v .who { font-size: 18px; color: var(--d-sub); line-height: 1.4; }
+#d-flow-v .who::before { content: "一緒に"; flex: none; font-size: 15px; border: 1.5px solid var(--d-rule); padding: 1px 6px; margin-right: 10px; color: var(--d-sub); }
+
+/* === RECRUIT + ENTRY === */
+.req { position: absolute; left: 96px; right: 96px; top: 500px; display: grid; grid-template-columns: 200px 1fr; border-top: 3px solid var(--ink); }
+.req dt, .req dd { padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 20px; line-height: 1.65; }
+.req dt { font-family: var(--jp-head); font-weight: 700; font-size: 20px; }
+.req dd .en { font-size: 22px; font-weight: 600; }
+.entry { position: absolute; left: 0; top: 1206px; width: 1144px; height: 360px; padding: 44px 56px 0 96px; display: block; }
+.entry .lab { font-family: var(--num); font-weight: 800; font-size: 22px; letter-spacing: 0.16em; }
+.entry h3 { font-family: var(--jp-head); font-weight: 900; font-size: 44px; line-height: 1.35; margin-top: 8px; }
+.entry .url { font-family: var(--num); font-weight: 700; font-size: 58px; line-height: 1; margin-top: 26px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 20px; }
+.entry .url::after { content: ""; width: 0; height: 0; border-top: 18px solid transparent; border-bottom: 18px solid transparent; border-left: 26px solid var(--ink); }
+.steps { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; column-gap: 14px; margin-top: 30px; font-family: var(--jp-head); font-weight: 700; font-size: 20px; align-items: center; }
+.steps span { display: flex; align-items: center; gap: 14px; }
+.steps span + span::before { content: ""; width: 26px; height: 2px; background: var(--ink); }
+.steps .en { font-weight: 800; }
+.contact { position: absolute; left: 96px; right: 96px; top: 1594px; font-size: 17px; line-height: 1.7; color: var(--mute); }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ 1. COVER ============ -->
+<section class="page cover">
+    <figure class="cv-photo"><img src="assets/factory.jpg" alt="工場の作業台で、ノギスを使って金属部品の寸法を測る社員"></figure>
+    <div class="cv-top">
+        <span class="logo"><i></i>SORAMADO</span>
+    </div>
+    <div class="tag cv-tag">
+        <span class="role">品質保証部　検査グループ</span>
+        <span class="name">佐野 瑞希</span>
+        <span class="year"><span class="en">2021</span>年 新卒入社</span>
+    </div>
+    <p class="cap cv-cap">写真：生成画像・架空の人物</p>
+    <h1 class="cv-copy">手を動かす人が、<br>会社を動かしている。</h1>
+    <div class="cv-meta">
+        <p class="t">株式会社ソラマド製作所<br>採用案内 <span class="en">2027</span>　新卒・キャリア採用</p>
+        <p class="s">社名・人物・数値はすべて架空です（架空のデータ）。<br>2026年10月発行</p>
+    </div>
+</section>
+
+<!-- ============ 2. MESSAGE ============ -->
+<section class="page">
+    <header class="rh"><span class="l"><span class="logo"><i></i>SORAMADO</span>採用案内 2027</span><span class="r"><span class="en">01</span>メッセージ</span></header>
+    <div class="chtab ch1"><span class="en">01</span>メッセージ</div>
+
+    <div class="ph">
+        <p class="kicker">Message</p>
+        <h2 class="h1">「その部品の先に、<br>町の<span class="mk">灯り</span>がある」と言える仕事を。</h2>
+        <p class="lead">太陽光発電所の架台と接続箱をつくって58年。図面を描く人、削る人、山の上で点検する人が、同じ一枚の図面を囲んで話す会社です。</p>
+    </div>
+
+    <figure class="photo msg-photo"><img src="assets/meeting.jpg" alt="本社の打ち合わせスペースで談笑する3人の社員"></figure>
+    <p class="cap msg-cap">毎週金曜の設計レビュー。入社1年目も、30年目も同じテーブルにつく。写真：生成画像・架空の人物</p>
+
+    <div class="msg-body cols body">
+        <div>
+            <p>私たちの製品は、発電所が動いている間は誰にも見られません。架台が錆びず、接続箱が雨を通さず、20年後も同じ場所に立っていること。それがこの仕事の成果です。地味だと言われることもありますが、私はこれほど確かな手応えのある仕事を知りません。</p>
+            <p>入社して最初の1年は、3つの職種を2週間ずつ経験します。削った部品が組み上がり、山の上で発電を始めるまでを自分の目で見ると、図面に引く一本の線の重さが変わります。</p>
+            </div>
+        <div>
+            <p>ソラマドには、職種の壁がほとんどありません。設計者は月に一度は工場に立ち、現場の点検にも同行します。製造の若手が出した改善案が、翌月の図面に反映されることも珍しくありません。誰の意見かより、何が現場で確かめられたかで決める。それが58年続いてきた理由だと思います。</p>
+            <p>入社時に専門知識は求めません。求めるのは、自分の手で確かめたいと思う気持ちです。工場見学で、ぜひその空気を確かめに来てください。</p>
+        </div>
+    </div>
+
+    <div class="tag tag-row sign">
+        <span class="role">取締役 人事部長</span>
+        <span class="name">森下 健</span>
+        <span class="year"><span class="en">1999</span>年 新卒入社</span>
+    </div>
+    <span class="folio">02</span>
+</section>
+
+<!-- ============ 3. NUMBERS ============ -->
+<section class="page">
+    <header class="rh"><span class="l"><span class="logo"><i></i>SORAMADO</span>採用案内 2027</span><span class="r"><span class="en">02</span>数字で見るソラマド</span></header>
+    <div class="chtab ch2"><span class="en">02</span>数字で見る</div>
+
+    <div class="ph">
+        <p class="kicker">By the numbers</p>
+        <h2 class="h1">育休を取った<span class="mk">14人</span>は、<br>全員が職場に戻ってきた。</h2>
+        <p class="lead">長く働けるかどうかは、制度の数より、使った人が戻ってくるかで分かります。社員312名の働き方を、6つの数字で示します。</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat"><p class="lab">平均年齢</p><p class="big">36.4<small>歳</small></p><p class="note">20代の社員が全体の31%。</p></div>
+        <div class="stat"><p class="lab">平均勤続年数</p><p class="big">12.1<small>年</small></p><p class="note">中途入社者だけでも平均8.6年。</p></div>
+        <div class="stat"><p class="lab">新卒3年後の定着率</p><p class="big">91<small>%</small></p><p class="note">新卒44名のうち40名が在籍。</p></div>
+        <div class="stat"><p class="lab">有給休暇の取得率</p><p class="big">78.2<small>%</small></p><p class="note">年間の平均取得日数は14.6日。</p></div>
+        <div class="stat"><p class="lab">月平均の残業時間</p><p class="big">11.6<small>時間</small></p><p class="note">繁忙期の3月でも平均21.0時間。</p></div>
+        <div class="stat"><span class="tag hang">14人中14人</span><p class="lab">育休からの復職率</p><p class="big">100<small>%</small></p><p class="note">取得者14名のうち男性は9名。</p></div>
+    </div>
+
+    <div class="mix">
+        <h3>職種別の人数<span>社員 312名</span></h3>
+        <div class="bar">
+            <div class="b1" style="--w:128">製造技術<span class="en">128</span></div>
+            <div class="b2" style="--w:72">フィールド<span class="en">72</span></div>
+            <div class="b3" style="--w:64">設計<span class="en">64</span></div>
+            <div class="b4" style="--w:48">管理<span class="en">48</span></div>
+        </div>
+        <div class="jobs">
+            <p><b>製造技術</b>切削・溶接・検査。工場で部品を形にする。</p>
+            <p><b>フィールド</b>発電所の施工管理と点検を担う。</p>
+            <p><b>設計</b>架台と接続箱の構造・製品設計。</p>
+            <p><b>管理</b>営業事務・調達・経理・人事。</p>
+        </div>
+    </div>
+    <div class="mix">
+        <h3>男女比<span>全社 312名</span></h3>
+        <div class="bar">
+            <div class="b1" style="--w:64">男性<span class="en">64%</span></div>
+            <div class="b3" style="--w:36">女性<span class="en">36%</span></div>
+        </div>
+    </div>
+
+    <p class="foot">2026年4月1日時点（架空のデータ）。定着率は2021〜2023年度の新卒入社者、復職率は2021〜2025年度の育休取得者に占める復職・在籍者の割合。</p>
+    <span class="folio">03</span>
+</section>
+
+<!-- ============ 4. INTERVIEW ============ -->
+<section class="page">
+    <header class="rh"><span class="l"><span class="logo"><i></i>SORAMADO</span>採用案内 2027</span><span class="r"><span class="en">03</span>社員インタビュー</span></header>
+    <div class="chtab ch3"><span class="en">03</span>ひと</div>
+
+    <div class="ph">
+        <p class="kicker">People</p>
+        <h2 class="h1">図面と工場を<span class="mk">行き来</span>する人が、<br>次の製品をつくる。</h2>
+        <p class="lead">検査の現場から図面を変えた入社6年目と、異業種から転職した設計者。職種の違う2人に、この会社で働く手応えを聞きました。</p>
+    </div>
+
+    <div class="iv a">
+        <figure class="photo"><img src="assets/factory.jpg" alt="ノギスで部品を測る佐野さん" style="object-position: 78% 45%;">
+            <div class="tag"><span class="role">品質保証部　検査グループ</span><span class="name">佐野 瑞希</span><span class="year"><span class="en">2021</span>年 新卒入社</span></div>
+        </figure>
+        <p class="q1">測った数字が、<br>翌月の図面に載った。</p>
+        <dl>
+            <dt><span class="en">Q.</span>いちばん手応えのあった仕事は？</dt>
+            <dd>接続箱の扉の歪みを毎日記録して、設計に持ち込んだことです。2か月分のデータを見た設計者が板厚を変え、不良は月12件から2件に。</dd>
+            <dt><span class="en">Q.</span>入社前の自分に伝えたいことは？</dt>
+            <dd>文系出身でも、測ることから始めれば大丈夫。先輩は答えではなく、測り方を教えてくれます。</dd>
+        </dl>
+    </div>
+
+    <div class="iv b">
+        <figure class="photo"><img src="assets/studio.jpg" alt="設計室で図面と試作模型を並べる岸本さん" style="object-position: 62% 30%;">
+            <div class="tag"><span class="role">設計部　製品設計グループ</span><span class="name">岸本 航</span><span class="year"><span class="en">2017</span>年 キャリア入社</span></div>
+        </figure>
+        <p class="q1">家具の設計から、<br>20年もつ箱の設計へ。</p>
+        <dl>
+            <dt><span class="en">Q.</span>転職して驚いたことは？</dt>
+            <dd>試作を工場に頼むと、翌朝には現物と意見が返ってくることです。前職では外注で3週間かかりました。図面の上だけで悩む時間が減りました。</dd>
+            <dt><span class="en">Q.</span>どんな人と働きたいですか？</dt>
+            <dd>現場で「なぜこうなっているのか」を面白がれる人。その問いが、次の改良の出発点になります。</dd>
+        </dl>
+    </div>
+
+    <p class="foot">写真はすべて生成画像・架空の人物です。所属・入社年・数値は架空のデータ。</p>
+    <span class="folio">04</span>
+</section>
+
+<!-- ============ 5. ONE DAY ============ -->
+<section class="page">
+    <header class="rh"><span class="l"><span class="logo"><i></i>SORAMADO</span>採用案内 2027</span><span class="r"><span class="en">04</span>1日の流れ</span></header>
+    <div class="chtab ch4"><span class="en">04</span>1日の流れ</div>
+
+    <div class="ph">
+        <p class="kicker">A day in the field</p>
+        <h2 class="h1">山の上の発電所で、<br><span class="mk">異常の芽</span>を先に見つける。</h2>
+        <p class="lead">フィールドエンジニアの1日は、点検の結果を報告書にして帰社するまで。入社3年目の今井さんは、先輩と2人で週に3か所の発電所を回ります。</p>
+    </div>
+
+    <figure class="photo day-photo"><img src="assets/field.jpg" alt="山の斜面の太陽光発電所で、先輩と接続箱を点検する今井さん">
+        <div class="tag"><span class="role">施工・保守部　フィールドエンジニア</span><span class="name">今井 さくら</span><span class="year"><span class="en">2023</span>年 新卒入社</span></div>
+    </figure>
+    <p class="cap day-cap">写真：生成画像・架空の人物</p>
+
+    <div class="day" id="d-flow-v">
+        <div class="rows">
+            <div class="when">7:50</div><div class="node first"><span></span></div><div class="ttl">朝礼と車両点検</div><div class="dsc">その日の現場と天気を確認し、<br>工具と計測器を積み込む。</div><div class="who">保守チーム 6名</div>
+            <div class="when">9:10</div><div class="node"><span></span></div><div class="ttl">発電所へ移動</div><div class="dsc">社用車で約1時間。前回の点検記録を<br>助手席で読み返す。</div><div class="who">先輩 原田さん</div>
+            <div class="when">10:20</div><div class="node is-key"><span></span></div><div class="ttl is-key"><span>接続箱の点検</span></div><div class="dsc">端子の温度と絶縁を測る。数値の小さな<br>ずれから、故障の前ぶれを見つける。</div><div class="who">先輩 原田さん</div>
+            <div class="when">12:30</div><div class="node"><span></span></div><div class="ttl">昼食</div><div class="dsc">地元の食堂か、晴れた日は<br>発電所の見晴らしのいい場所で。</div><div class="who">先輩 原田さん</div>
+            <div class="when">13:30</div><div class="node"><span></span></div><div class="ttl">架台の増し締め</div><div class="dsc">錆とボルトの緩みを1列ずつ確かめ、<br>写真に番号を付けて記録する。</div><div class="who">先輩 原田さん</div>
+            <div class="when">16:40</div><div class="node last"><span></span></div><div class="ttl">帰社して報告書</div><div class="dsc">気になった箇所を設計部に共有して、<br>17:40に退社。</div><div class="who">設計部 担当者</div>
+        </div>
+    </div>
+
+    <p class="foot">今井さんの2026年9月のある1日（架空のデータ）。点検日以外は、社内で施工計画と報告書の作成を行う。</p>
+    <span class="folio">05</span>
+</section>
+
+<!-- ============ 6. REQUIREMENTS + ENTRY ============ -->
+<section class="page">
+    <header class="rh"><span class="l"><span class="logo"><i></i>SORAMADO</span>採用案内 2027</span><span class="r"><span class="en">05</span>募集要項・エントリー</span></header>
+    <div class="chtab ch5"><span class="en">05</span>募集要項</div>
+
+    <div class="ph">
+        <p class="kicker">Recruitment</p>
+        <h2 class="h1">エントリーは、<br><span class="mk">工場見学</span>の予約から。</h2>
+        <p class="lead">工場見学は年4回。職種ごとの仕事を、半日かけて見て、触れられます。</p>
+    </div>
+
+    <dl class="req">
+        <dt>募集職種</dt><dd>製造技術、フィールドエンジニア、製品設計、管理部門（営業事務・調達）</dd>
+        <dt>対象</dt><dd>2027年3月までに大学・高専・専門学校を卒業見込みの方、および社会人経験3年以上の方</dd>
+        <dt>勤務地</dt><dd>本社・第一工場（長野県上田市）、松本営業所。フィールドエンジニアは長野・山梨の発電所へ日帰りで出張</dd>
+        <dt>初任給</dt><dd>大卒 月給 <span class="en">235,000</span> 円、高専卒 月給 <span class="en">221,000</span> 円（2026年4月実績）</dd>
+        <dt>賞与・昇給</dt><dd>賞与 年2回（前年度実績 <span class="en">4.6</span> か月分）、昇給 年1回</dd>
+        <dt>勤務時間</dt><dd>8:30〜17:30（休憩60分）、フィールドは現場により前後</dd>
+        <dt>休日休暇</dt><dd>年間休日 <span class="en">123</span> 日（土日・祝日・夏季・年末年始）、有給休暇、育児・介護休業</dd>
+        <dt>制度</dt><dd>資格取得支援（電気工事士など全額補助）、社宅（月 <span class="en">15,000</span> 円）、職種間ローテーション研修（入社1年目に3職種を各2週間）</dd>
+        <dt>選考</dt><dd>工場見学 → エントリーシート → 面接 2回 → 内定（約1か月）</dd>
+    </dl>
+
+    <div class="tag entry">
+        <p class="lab">ENTRY</p>
+        <h3>まず、工場で手を動かす人に<br>会いに来てください。</h3>
+        <p class="url">soramado.example/recruit</p>
+    </div>
+
+    <p class="contact">株式会社ソラマド製作所（架空）人事部 採用担当　電話 0268-00-0000（平日 9:00〜17:00）　recruit@soramado.example<br>本書の社名・人物・数値はすべて架空のデータです。</p>
+    <span class="folio">06</span>
+</section>
+
+</main>
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+</script>
+</body>
+</html>

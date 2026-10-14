@@ -1,6 +1,6 @@
 ---
 name: frontend-slides-jp
-description: Create Japanese-first HTML presentations and A4 portrait documents, from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks and reports or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, create slides for a talk or pitch, or make a document to read such as an integrated report, company brochure (会社案内) or whitepaper. Helps non-designers pick a look by seeing it.
+description: Create Japanese-first HTML presentations and A4 portrait documents, from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks and reports or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, create slides for a talk or pitch, or make a document to read such as an integrated report, company brochure (会社案内), government plan, internal report, recruiting brochure, infographic booklet or whitepaper. Helps non-designers pick a look by seeing it.
 ---
 
 # Frontend Slides JP
@@ -118,7 +118,7 @@ When enhancing existing presentations, fixed-stage fitting is the biggest risk:
 **Ask ALL questions together** so the user fills everything out at once. If the current environment provides a native structured-question UI, use it; otherwise ask in one concise message with clearly numbered choices:
 
 **Question 0 — Format** (header: "Format"):
-Slides to present, or a document to read? Options: 16:9 slides (`slide-16x9`) / A4 portrait document — report, brochure, whitepaper (`doc-a4`)
+Slides to present, or a document to read? Options: 16:9 slides (`slide-16x9`) / A4 portrait document — report, brochure, plan, internal report, recruiting guide, whitepaper (`doc-a4`)
 
 Infer it when the request already says (「統合報告書」「会社案内の冊子」「ホワイトペーパー」 mean `doc-a4`). The format decides the stage, the style shortlist and the page types. For `doc-a4`, read Questions 2 and 4 as pages and density of text per page.
 

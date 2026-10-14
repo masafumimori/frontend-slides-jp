@@ -16,7 +16,8 @@
   "best_for": "老舗の長期構想、周年記念、社史、文化財団・自治体の理念やビジョンの説明",
   "avoid_for": "数字や表が主役の決算・IR、英語や型番が多い技術資料、スピード重視のピッチ",
   "formats": [
-    "slide-16x9"
+    "slide-16x9",
+    "doc-a4"
   ],
   "writing": "vertical",
   "needs": [],

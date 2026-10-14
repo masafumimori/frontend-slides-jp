@@ -1,0 +1,43 @@
+{
+  "slug": "recruit-guide",
+  "name": "Recruit Guide",
+  "name_ja": "採用案内",
+  "tagline": "Documentary photos of people at work, each carrying a flat sun-yellow name tab with role and year joined; the same tab marks the chapter on the page edge.",
+  "summary_ja": "白地に働く人の写真と太い黒ゴシック。写真の縁に黄色の名札タブ（所属・名前・入社年）を貼り、同じタブを章の爪見出しと数字の補足、エントリー欄にも使う。",
+  "group": "editorial",
+  "mood": [
+    "bright",
+    "human",
+    "confident"
+  ],
+  "formality": "medium",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "新卒・中途の採用案内、会社案内の採用版、社員インタビュー集、インターンの募集パンフレット",
+  "avoid_for": "写真が用意できない資料、調査レポート、IR・統合報告書、投影するプレゼン",
+  "formats": [
+    "doc-a4"
+  ],
+  "writing": "horizontal",
+  "needs": [
+    "photos"
+  ],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "Zen Kaku Gothic New",
+    "latin": [
+      "Bricolage Grotesque"
+    ]
+  },
+  "colors": {
+    "sun": "#FFC629",
+    "ink": "#1D2125",
+    "mute": "#5D636B",
+    "paper": "#FFFFFF"
+  },
+  "refs": [
+    "大成建設 統合報告書2025（現場で働く人の写真、右端の縦の章タブ）",
+    "イオンモール サステナビリティレポート（色付きの小さなタグ、対談形式）",
+    "ファーストリテイリング 統合報告書2025（人材ページ）"
+  ]
+}

@@ -141,3 +141,37 @@ Margins are 128px left and right. Headline at `top: 148px`. Content starts aroun
 - [ ] Content touching the folio (less than 64px gap) or the chrome row running under the corner tab.
 - [ ] Line breaks in Japanese headlines that split a word; break after 、 or at a phrase boundary with `<br>`.
 - [ ] Everything centered. The layout is asymmetric: text left, circle and motifs on the opposite edge.
+
+## 7. Document pages
+
+`reference-a4.html` is a 6-page brand book for a fictional miso brewery: cover, statement, business page with a product grid, a story page on `d-flow-v`, a numbers page, and a back cover with shops and contact. Sizes are px at the 1240×1754 page. The tokens are the same as in section 2, except `--m-x: 96px`, and the document sets `--desk-bg: #1b1512` and `--page-bg: var(--cream)` for `page-base.css`. Fonts use the query in section 2, because the catalog's Fraunces query has no `opsz` or `SOFT` axis.
+
+### 7.1 Page frame
+- **Running head** (`.rh`): `top: 64px; left: 96px; right: 200px`. The left side is a `.cap` with the document name in ink-sub. The right side is the chapter, a Fraunces tomato number plus a 20px 500 name. It ends at `right: 200px` on every page, including pages that have no corner circle, so it sits in the same place on each page.
+- **Corner tab** (the chapter tab's number): the 4.1 corner circle, scaled to 300px at `right: -150px; top: -150px`. It holds the chapter number in Fraunces italic 60px cream at `left: 34px; top: 170px`. It appears on content pages only. A page that carries a big circle (statement, back cover) drops it, because a page never shows two circles.
+- **Chapter name strip** (`.tab`): on every page except the cover, `right: 36px; top: 214px; width: 28px`. It is a 4×44px tomato bar above the chapter name, set vertically (`.tate`) at 20px 500 with 0.12em tracking. Fix its width, or the column drifts sideways with the length of the name.
+- **Folio**: `P.0n` at `right: 96px; bottom: 56px`, Fraunces opsz 9, 18px, 0.2em, ink-sub. It is ink on the back cover, where it sits on the tomato circle.
+- **Note slot** (`.note`): `left: 96px; bottom: 102px; right: 260px`, 17px, line-height 1.6, ink-sub. Sources and n, with 「架空」 when the data is invented. Content ends by about y 1580, so it clears the slot.
+
+### 7.2 Reading type
+Kicker `.cap` at `top: 140px`, 20px, 0.3em tracking, tomato, about a third of the headline size. Headline `.hl` at `top: 184px`, 60px (66px on statement and back cover), 700, line-height 1.4, two or three lines broken by hand, with `.nm` figures. Lead at 26px/1.8 in ink-sub, two lines across 1048px. Body is set in two columns of 500px with a 48px gutter, 23px/1.8, justified. Figures in running text use `.nm` at weight 400 and 1.06em, never the headline's 600/1.12em. ■ headings are 22–26px 700 with an 18px tomato square. They sit on a 3px ink rule and carry a Latin `.cap` at the right in ink-sub.
+
+### 7.3 Circles and motifs by page type
+One circle per page, as in 4.1. Positions are fixed by page type:
+- **Cover**: tomato, 1200px, `right: -360px; bottom: -340px`. It holds a three-motif cluster in `.on-tomato`: a 560px barrel, beans and a negi that may bleed off the right edge. The masthead is Fraunces italic 236px at `left: 82px; top: 180px`, with its second half upright and tomato. The catch is 80px 700 at `top: 470px`, in three lines. The stamp sits top right. The meta block sits bottom left at `bottom: 96px` and says the content is fictional.
+- **Statement**: squash, 1000px, `left: -500px; top: 820px`, with three ingredient motifs in `.on-squash` stacked down it. The headline is top left. Body (one column, 584px, about 25 字 per line), signature and a three-row promise list sit at `left: 560px`. The promise list uses 48px Fraunces numbers, and only the first is italic tomato.
+- **Content pages** (business, story, numbers): the corner tab only, plus at most one free motif of 150–300px, placed where the text leaves room (the ladle beside the quote, the bag beside the lead).
+- **Back cover**: tomato in the cover position, 1100px, `right: -330px; bottom: -300px`, with a shop curtain, a bowl and steam. The catch says what to do next. Shops are listed by region in two 500px columns (■ region heading, 26px name, a tomato 17px tag such as 蔵見学あり, and a 19px address and hours line). Contact sits bottom left, clear of the circle.
+
+### 7.4 Product grid (business page)
+Three items per row, columns of 1fr with a 40px gap. Each item is a 124px two-plate motif, then a 24px 700 name, two 18px ink-sub lines, and a Fraunces 30px price with a 18px 円 and a 17px ink-sub unit. Give each item its own motif from the same kitchen family. Never use a placeholder box. No item is tomato unless the headline names it.
+
+### 7.5 Figure pages
+The figure takes the full 1048px at `top: 520px`, 560–760px tall, and opens with a 3px ink rule. Its source line follows at 17px. Restyle `diagrams.html` patterns to section 4.6: ink connectors 4px, cream nodes with a 4px ink ring and Fraunces numbers, 2px ink-rule row lines, and tomato only on the one key row. The reference fits `d-flow-v` with columns `138px 64px 248px 1fr 168px`. Under the figure, a story page adds a person: a Fraunces italic tomato “ at 140px, a 32px 700 quote, and a `.cap` plus name. A numbers page uses the 4.6 bar chart at 504×420 beside a 260px tomato number, then a row of three 64px secondary numbers on a 3px ink rule.
+
+### 7.6 Document slop signs
+- [ ] A corner circle on a page that already has the cover or contents circle.
+- [ ] The chapter strip or running head shifting between pages (measure the boxes).
+- [ ] Body figures set in `.nm` 600, which reads as bold emphasis in running text.
+- [ ] Product cells with text squeezed beside the motif (under about 14 字 per line). Stack the motif above the text instead.
+- [ ] A gridline label crossing a value label. Start the line after the first bar.

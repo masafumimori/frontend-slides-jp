@@ -12,7 +12,7 @@ One folder per style: `styles/<slug>/`. A brand imported from a company design s
 
 After adding or editing a style:
 
-1. `node scripts/shoot.mjs styles/<slug>/reference.html --out styles/<slug>/thumbs --width 640 --jpg` writes the four thumbnails. For `doc-a4`, shoot `reference-a4.html` into `thumbs-a4` the same way (`--width 400`).
+1. `node scripts/shoot.mjs styles/<slug>/reference.html --out styles/<slug>/thumbs --width 640 --jpg --first 4` writes the four thumbnails. For `doc-a4`, shoot `reference-a4.html` into `thumbs-a4` the same way (`--width 400 --first 4`).
 2. `node scripts/check-styles.mjs` validates every folder and rewrites `selection-index.json`.
 3. `node scripts/build-gallery.mjs` rewrites `gallery.html`.
 
@@ -44,6 +44,7 @@ After adding or editing a style:
 - `formats`: the keys of [formats.json](../formats.json) this style ships a reference for. Each one needs its reference file and thumbnails folder.
 - `formality`, `density`: `low` | `medium` | `high`. `scheme`: `light` | `dark`. `writing`: `horizontal` | `vertical`. `group` (the gallery section): `business` | `tech` | `stage` | `editorial`.
 - `needs`: inputs the style cannot do without, such as `"photos"`.
+- `fonts.extra` (optional): families one format needs, such as a UD body face for A4. Every reference loads `heading`, `body` and `latin`; an `extra` family needs to load in at least one.
 - Every family in `fonts` must exist in `fonts/catalog.json`. The heading family must have `role: "any"`, or `"vertical-heading"` when `writing` is `vertical`.
 - `colors`: the tokens `reference.html` declares on `:root`, at most 6.
 

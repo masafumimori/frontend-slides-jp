@@ -13,7 +13,7 @@ The rules come from eight Japanese portrait documents studied for this skill (`d
 
 ## Page frame
 
-Every page except the cover carries these, in the same place on every page. The positions below are defaults; where the style's `design.md` section 7 gives its own, the style wins:
+Every page except the cover carries these, in the same place on every page. The positions and the left/right order below are defaults; where the style's `design.md` section 7 gives its own, the style wins:
 
 - **Running head** at top 64, inset 96 left and right: the organization or document name on the left, chapter number and name on the right, 18–20px.
 - **Folio** (page number) at bottom 56, outer edge, 18–20px Latin numerals.
@@ -23,11 +23,12 @@ Every page except the cover carries these, in the same place on every page. The 
 ## Reading rules
 
 - Body text 22–24px, line-height 1.8, which prints at about 10.5–11.5pt. Notes and sources 17–18px.
-- Two columns of 500px with a 48px gutter, which holds about 22 字 per line at 22px and 20 字 at 24px. One wide column only for statements, messages and short pages.
+- Two columns of 500px with a 48px gutter, which holds about 22 字 per line at 22px and 20 字 at 24px. A style whose `design.md` section 7 sets its own columns keeps 18–26 字 per line. One wide column only for statements, messages and short pages.
 - Headlines 52–72px; the Latin kicker above them is about a third of the headline size.
 - A lead of 2–3 lines sits under the headline, in the body family at 26–28px.
 - Figures take the full text width (1048px) and 560–760px of height, followed by their source line.
 - Notes, sources and n-counts have their own slot at the foot of the page, above the folio.
+- Set prose in `<p>`: `page-base.css` justifies only `p` and turns off `auto-phrase` there. Prose in `dd`, `li` or `td` needs `word-break: normal` from the style, or justified lines open wide gaps.
 - When text would overflow, move it to the next page or cut it. Never shrink the body size to fit.
 
 ## Page types

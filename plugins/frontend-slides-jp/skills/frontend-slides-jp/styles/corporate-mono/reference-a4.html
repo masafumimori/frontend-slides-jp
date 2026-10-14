@@ -454,10 +454,10 @@ body {
 </section>
 
 <!-- 04 figure -->
-<section class="page" id="d-cycle">
+<section class="page">
   <header class="rh"><span class="doc"><b>朱野鋳造</b>統合報告書 2026</span><span class="crumb"><span class="en">02</span><span>価値創造</span><span>価値創造のしくみ</span></span></header>
   <aside class="tab"><span class="no en">02</span><span class="nm">価値創造</span></aside>
-  <div class="frame">
+  <div class="frame" id="d-cycle">
     <div class="kicker">Value creation</div>
     <h2 class="headline">掘り出した古い管が、<br>次の百年の管になる。</h2>
     <p class="lead">原料の82%は、更新工事で掘り出された鋳鉄管と、取引先から<br>引き取った鉄くずです。鉄は溶かし直しても性質が落ちにくく、<br>回収から出荷までを自社の5工場で完結させています。</p>
@@ -571,7 +571,7 @@ addEventListener('resize', fit);
 </script>
 <script>(() => {
 // BEGIN d-cycle
-// Fitted: the box size comes from data-w/data-h, because clientWidth under the page zoom is not the layout size.
+// Fitted: data-w/data-h pin the drawing size to the figure box.
 function drawCycle(svg, data) {
   const NS = 'http://www.w3.org/2000/svg';
   const W = +svg.dataset.w || svg.clientWidth || 1680, H = +svg.dataset.h || svg.clientHeight || 620;

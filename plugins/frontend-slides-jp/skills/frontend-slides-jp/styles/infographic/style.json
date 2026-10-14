@@ -1,0 +1,31 @@
+{
+  "slug": "infographic",
+  "name": "Infographic",
+  "name_ja": "インフォグラフィック",
+  "tagline": "ISOTYPE on a warm white page: quantities shown as rows of one repeated pictogram with a stated unit, drawn from a 17-symbol kit on a 48-unit grid, plus flat scene illustrations built from the same shapes.",
+  "summary_ja": "絵が数字を運ぶ図解冊子。量は1つの記号を並べた数で示し（1つ＝1,000世帯）、端数は記号を切って表す。48ユニットの格子で描いた17個のピクトグラムと、同じ形で組んだ町の断面図。色は墨と朱と藍だけ、グラデーションも影も使わない。",
+  "group": "editorial",
+  "mood": ["friendly", "civic", "evidence-led"],
+  "formality": "medium",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "図解の会社案内、サステナビリティの要約、自治体の広報・暮らしのガイド、「数字で見る」冊子",
+  "avoid_for": "写真で見せるブランドブック、高密度の財務データ、投影するプレゼン",
+  "formats": ["doc-a4"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "BIZ UDPGothic",
+    "latin": ["Jost"]
+  },
+  "colors": {
+    "ink": "#1F2A30",
+    "key": "#D64933",
+    "key-text": "#B8381F",
+    "sea": "#2F6A8C",
+    "mute": "#5A6268",
+    "paper": "#F8F6F1"
+  },
+  "refs": ["Otto Neurath / Gerd Arntz ISOTYPE", "JIS Z 8210 案内用図記号", "イオンモール サステナビリティレポート"]
+}

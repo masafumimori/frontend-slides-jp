@@ -274,6 +274,108 @@
       }
     },
     {
+      "slug": "infographic",
+      "name": "Infographic",
+      "name_ja": "インフォグラフィック",
+      "tagline": "ISOTYPE on a warm white page: quantities shown as rows of one repeated pictogram with a stated unit, drawn from a 17-symbol kit on a 48-unit grid, plus flat scene illustrations built from the same shapes.",
+      "summary_ja": "絵が数字を運ぶ図解冊子。量は1つの記号を並べた数で示し（1つ＝1,000世帯）、端数は記号を切って表す。48ユニットの格子で描いた17個のピクトグラムと、同じ形で組んだ町の断面図。色は墨と朱と藍だけ、グラデーションも影も使わない。",
+      "group": "editorial",
+      "mood": [
+        "friendly",
+        "civic",
+        "evidence-led"
+      ],
+      "formality": "medium",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "図解の会社案内、サステナビリティの要約、自治体の広報・暮らしのガイド、「数字で見る」冊子",
+      "avoid_for": "写真で見せるブランドブック、高密度の財務データ、投影するプレゼン",
+      "formats": [
+        "doc-a4"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "BIZ UDPGothic",
+        "latin": [
+          "Jost"
+        ]
+      },
+      "palette": [
+        "#1F2A30",
+        "#D64933",
+        "#B8381F",
+        "#2F6A8C",
+        "#5A6268",
+        "#F8F6F1"
+      ],
+      "preview_md": "styles/infographic/preview.md",
+      "design_md": "styles/infographic/design.md",
+      "references": {
+        "doc-a4": {
+          "html": "styles/infographic/reference-a4.html",
+          "thumbs": [
+            "styles/infographic/thumbs-a4/01.jpg",
+            "styles/infographic/thumbs-a4/02.jpg",
+            "styles/infographic/thumbs-a4/03.jpg",
+            "styles/infographic/thumbs-a4/04.jpg"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "office-report",
+      "name": "Office Report",
+      "name_ja": "社内報告書",
+      "tagline": "A ruled working document: a margin index where every number hangs (chapters, tables, figures, 要旨, 注), a document meta block and approval boxes on page 1, and one quiet green for the answer.",
+      "summary_ja": "白地に墨と深緑1色。左の余白に章番号・表番号・図番号・要旨・注を吊るす「余白の索引」を全ページに通し、1ページ目に文書番号・版・機密区分の表、承認欄、結論先出しの要旨を置く。Word で書く社内報告・提案書の型。",
+      "group": "business",
+      "mood": [
+        "serious",
+        "calm",
+        "dense"
+      ],
+      "formality": "high",
+      "density": "high",
+      "scheme": "light",
+      "best_for": "社内報告書、提案書、稟議の添付資料、調査報告、経営会議資料",
+      "avoid_for": "社外向けのブランド冊子、採用案内、投影するプレゼン、写真で魅せる資料",
+      "formats": [
+        "doc-a4"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "BIZ UDPMincho",
+        "latin": [
+          "IBM Plex Sans"
+        ]
+      },
+      "palette": [
+        "#1C1E1D",
+        "#575C59",
+        "#B9BEBA",
+        "#F1F3F0",
+        "#2E5E45",
+        "#FFFFFF"
+      ],
+      "preview_md": "styles/office-report/preview.md",
+      "design_md": "styles/office-report/design.md",
+      "references": {
+        "doc-a4": {
+          "html": "styles/office-report/reference-a4.html",
+          "thumbs": [
+            "styles/office-report/thumbs-a4/01.jpg",
+            "styles/office-report/thumbs-a4/02.jpg",
+            "styles/office-report/thumbs-a4/03.jpg",
+            "styles/office-report/thumbs-a4/04.jpg"
+          ]
+        }
+      }
+    },
+    {
       "slug": "photo-editorial",
       "name": "Photo Editorial",
       "name_ja": "写真主導エディトリアル",
@@ -288,10 +390,11 @@
       "formality": "high",
       "density": "medium",
       "scheme": "light",
-      "best_for": "統合報告書、ブランドブック、企業の思想を語る資料、採用ピッチの現場紹介",
+      "best_for": "統合報告書（スライド・A4冊子）、ブランドブック、企業の思想を語る資料、採用ピッチの現場紹介",
       "avoid_for": "写真素材が用意できない案件、SaaS の機能説明、図表中心の社内報告",
       "formats": [
-        "slide-16x9"
+        "slide-16x9",
+        "doc-a4"
       ],
       "writing": "horizontal",
       "needs": [
@@ -322,6 +425,15 @@
             "styles/photo-editorial/thumbs/03.jpg",
             "styles/photo-editorial/thumbs/04.jpg"
           ]
+        },
+        "doc-a4": {
+          "html": "styles/photo-editorial/reference-a4.html",
+          "thumbs": [
+            "styles/photo-editorial/thumbs-a4/01.jpg",
+            "styles/photo-editorial/thumbs-a4/02.jpg",
+            "styles/photo-editorial/thumbs-a4/03.jpg",
+            "styles/photo-editorial/thumbs-a4/04.jpg"
+          ]
         }
       }
     },
@@ -343,7 +455,8 @@
       "best_for": "行政・自治体の報告、公式な会議資料、仕様や制度の説明、アクセシビリティが要件の資料",
       "avoid_for": "エンタメ、ブランドの世界観を見せる発表、写真や感情で引き込む登壇",
       "formats": [
-        "slide-16x9"
+        "slide-16x9",
+        "doc-a4"
       ],
       "writing": "horizontal",
       "needs": [],
@@ -352,6 +465,9 @@
         "body": "Noto Sans JP",
         "latin": [
           "IBM Plex Sans"
+        ],
+        "extra": [
+          "BIZ UDPGothic"
         ]
       },
       "palette": [
@@ -371,6 +487,66 @@
             "styles/public-standard/thumbs/02.jpg",
             "styles/public-standard/thumbs/03.jpg",
             "styles/public-standard/thumbs/04.jpg"
+          ]
+        },
+        "doc-a4": {
+          "html": "styles/public-standard/reference-a4.html",
+          "thumbs": [
+            "styles/public-standard/thumbs-a4/01.jpg",
+            "styles/public-standard/thumbs-a4/02.jpg",
+            "styles/public-standard/thumbs-a4/03.jpg",
+            "styles/public-standard/thumbs-a4/04.jpg"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "recruit-guide",
+      "name": "Recruit Guide",
+      "name_ja": "採用案内",
+      "tagline": "Documentary photos of people at work, each carrying a flat sun-yellow name tab with role and year joined; the same tab marks the chapter on the page edge.",
+      "summary_ja": "白地に働く人の写真と太い黒ゴシック。写真の縁に黄色の名札タブ（所属・名前・入社年）を貼り、同じタブを章の爪見出しと数字の補足、エントリー欄にも使う。",
+      "group": "editorial",
+      "mood": [
+        "bright",
+        "human",
+        "confident"
+      ],
+      "formality": "medium",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "新卒・中途の採用案内、会社案内の採用版、社員インタビュー集、インターンの募集パンフレット",
+      "avoid_for": "写真が用意できない資料、調査レポート、IR・統合報告書、投影するプレゼン",
+      "formats": [
+        "doc-a4"
+      ],
+      "writing": "horizontal",
+      "needs": [
+        "photos"
+      ],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Zen Kaku Gothic New",
+        "latin": [
+          "Bricolage Grotesque"
+        ]
+      },
+      "palette": [
+        "#FFC629",
+        "#1D2125",
+        "#5D636B",
+        "#FFFFFF"
+      ],
+      "preview_md": "styles/recruit-guide/preview.md",
+      "design_md": "styles/recruit-guide/design.md",
+      "references": {
+        "doc-a4": {
+          "html": "styles/recruit-guide/reference-a4.html",
+          "thumbs": [
+            "styles/recruit-guide/thumbs-a4/01.jpg",
+            "styles/recruit-guide/thumbs-a4/02.jpg",
+            "styles/recruit-guide/thumbs-a4/03.jpg",
+            "styles/recruit-guide/thumbs-a4/04.jpg"
           ]
         }
       }
@@ -491,7 +667,8 @@
       "best_for": "老舗の長期構想、周年記念、社史、文化財団・自治体の理念やビジョンの説明",
       "avoid_for": "数字や表が主役の決算・IR、英語や型番が多い技術資料、スピード重視のピッチ",
       "formats": [
-        "slide-16x9"
+        "slide-16x9",
+        "doc-a4"
       ],
       "writing": "vertical",
       "needs": [],
@@ -521,6 +698,15 @@
             "styles/tategumi-editorial/thumbs/03.jpg",
             "styles/tategumi-editorial/thumbs/04.jpg"
           ]
+        },
+        "doc-a4": {
+          "html": "styles/tategumi-editorial/reference-a4.html",
+          "thumbs": [
+            "styles/tategumi-editorial/thumbs-a4/01.jpg",
+            "styles/tategumi-editorial/thumbs-a4/02.jpg",
+            "styles/tategumi-editorial/thumbs-a4/03.jpg",
+            "styles/tategumi-editorial/thumbs-a4/04.jpg"
+          ]
         }
       }
     },
@@ -542,7 +728,8 @@
       "best_for": "BtoC のブランドブック、食品・生活雑貨の商品紹介、採用ピッチのカルチャー章、イベント告知",
       "avoid_for": "決算説明、行政・公共の資料、表や数字が密に並ぶ資料",
       "formats": [
-        "slide-16x9"
+        "slide-16x9",
+        "doc-a4"
       ],
       "writing": "horizontal",
       "needs": [],
@@ -569,6 +756,15 @@
             "styles/warm-editorial/thumbs/02.jpg",
             "styles/warm-editorial/thumbs/03.jpg",
             "styles/warm-editorial/thumbs/04.jpg"
+          ]
+        },
+        "doc-a4": {
+          "html": "styles/warm-editorial/reference-a4.html",
+          "thumbs": [
+            "styles/warm-editorial/thumbs-a4/01.jpg",
+            "styles/warm-editorial/thumbs-a4/02.jpg",
+            "styles/warm-editorial/thumbs-a4/03.jpg",
+            "styles/warm-editorial/thumbs-a4/04.jpg"
           ]
         }
       }

@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "frontend-slides-jp",
-      "description": "Japanese-first HTML presentations and A4 documents: 12 styles drawn from Japanese reference decks and reports, 50 diagram patterns, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
+      "description": "Japanese-first HTML presentations and A4 documents: 15 styles drawn from Japanese reference decks and reports, 50 diagram patterns, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
       "source": "./plugins/frontend-slides-jp",
       "category": "productivity",
       "tags": [
