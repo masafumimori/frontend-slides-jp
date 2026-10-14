@@ -10,6 +10,8 @@
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { lookup } from 'node:dns/promises';
+import { isIP } from 'node:net';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const args = process.argv.slice(2);
@@ -134,18 +136,23 @@ for (const [i, url] of urls.entries()) {
     };
   });
 
+  // Logo files are fetched from this machine, so only from public hosts, without redirects,
+  // and only as images. SVG from the site is untrusted markup: it is cleaned before saving.
   for (const [k, l] of facts.logos.entries()) {
-    if (l.kind !== 'img' || !l.src) continue;
-    const res = await page.request.get(l.src).catch(() => null);
+    if (l.kind !== 'img' || !l.src || !(await publicHost(l.src))) continue;
+    const res = await page.request.get(l.src, { maxRedirects: 0, timeout: 15000 }).catch(() => null);
     if (!res?.ok()) continue;
-    const ext = (res.headers()['content-type'] ?? '').match(/svg|png|jpe?g|webp|gif/)?.[0].replace('jpeg', 'jpg') ?? 'img';
+    const ext = (res.headers()['content-type'] ?? '').match(/image\/(svg|png|jpe?g|webp|gif)/)?.[1].replace('jpeg', 'jpg');
+    const body = await res.body();
+    if (!ext || body.length > 2_000_000) continue;
     l.file = `site-${n}-logo-${k + 1}.${ext}`;
-    writeFileSync(join(out, l.file), await res.body());
+    writeFileSync(join(out, l.file), ext === 'svg' ? cleanSvg(body.toString('utf8')) : body);
   }
   facts.logos.forEach((l, k) => {
     if (l.kind !== 'svg') return;
     const file = `site-${n}-logo-${k + 1}.svg`;
-    writeFileSync(join(out, file), l.markup.includes('xmlns') ? l.markup : l.markup.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"'));
+    const svg = l.markup.includes('xmlns') ? l.markup : l.markup.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    writeFileSync(join(out, file), cleanSvg(svg));
     l.file = file;
     delete l.markup;
   });
@@ -161,3 +168,30 @@ const result = {
 };
 writeFileSync(join(out, 'site-facts.json'), JSON.stringify(result, null, 2));
 console.log(JSON.stringify({ out, sites: sites.map(s => ({ url: s.url, title: s.title, accent: s.colors.accent.slice(0, 3), h1: s.type.h1?.family, logos: s.logos.length })) }));
+
+// True when every address the host resolves to is public (not loopback, private or link-local).
+async function publicHost(url) {
+  let host;
+  try {
+    const u = new URL(url);
+    if (!/^https?:$/.test(u.protocol)) return false;
+    host = u.hostname.replace(/^\[|\]$/g, '');
+  } catch { return false; }
+  const addrs = isIP(host) ? [{ address: host }] : await lookup(host, { all: true }).catch(() => []);
+  if (!addrs.length) return false;
+  return addrs.every(({ address: a }) => !(
+    /^(0\.|10\.|127\.|169\.254\.|192\.168\.)/.test(a) || /^172\.(1[6-9]|2\d|3[01])\./.test(a)
+    || /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(a)
+    || /^(::1?$|f[cd]|fe[89ab]|::ffff:(0|10|127|169\.254|192\.168)\.)/i.test(a)));
+}
+
+// Strip what can run or reach out from an SVG: scripts, embedded documents, event handlers,
+// and references that are not fragments or inline images.
+function cleanSvg(svg) {
+  return svg
+    .replace(/<(script|foreignObject|iframe|object|embed|style)\b[\s\S]*?<\/\1\s*>/gi, '')
+    .replace(/<(script|foreignObject|iframe|object|embed|style)\b[^>]*\/?>/gi, '')
+    .replace(/\s+on[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/\s+(xlink:)?href\s*=\s*("(?!#|data:image\/(png|jpe?g|gif|webp);)[^"]*"|'(?!#|data:image\/(png|jpe?g|gif|webp);)[^']*')/gi, '')
+    .replace(/url\(\s*['"]?(?!#)[^)]*\)/gi, 'none');
+}
