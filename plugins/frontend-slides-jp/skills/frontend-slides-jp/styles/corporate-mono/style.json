@@ -13,10 +13,11 @@
   "formality": "high",
   "density": "medium",
   "scheme": "light",
-  "best_for": "会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料",
+  "best_for": "会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料、統合報告書、会社案内",
   "avoid_for": "エンタメ、子ども向け、写真で魅せるブランド発表",
   "formats": [
-    "slide-16x9"
+    "slide-16x9",
+    "doc-a4"
   ],
   "writing": "horizontal",
   "needs": [],

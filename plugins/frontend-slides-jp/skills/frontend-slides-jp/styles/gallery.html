@@ -37,28 +37,31 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:1
 dt{color:var(--sub)}dd{margin:0}
 .chips{display:flex;gap:5px;align-items:center}.chips span{width:16px;height:16px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px var(--rule)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:auto 0 0}.tags span{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--rule);color:var(--sub)}
+.a4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px;background:var(--rule)}.a4 img{display:block;width:100%;aspect-ratio:1240/1754;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,.18)}.a4:hover img{opacity:.88}
 .empty{color:var(--sub);margin-top:40px}
 @media (max-width:440px){.grid{grid-template-columns:1fr}}
 </style></head><body><div class="wrap">
 <div class="top">
   <div><p class="eyebrow">FRONTEND-SLIDES-JP · STYLES</p><h1>スタイル一覧</h1>
-  <p class="lede">11種のスタイルを用途ごとに並べています。表紙を押すと4枚の見本が開き、矢印キーで送れます。使いたいスタイルは名前か右の英字名でスキルに伝えてください。</p></div>
+  <p class="lede">12種のスタイルを用途ごとに並べています。表紙を押すと4枚の見本が開き、矢印キーで送れます。縦長の4枚はA4冊子の見本で、押すと冊子が開きます。使いたいスタイルは名前か右の英字名でスキルに伝えてください。</p></div>
   <div class="filters" role="group" aria-label="絞り込み">
     <button data-f="all" aria-pressed="true">すべて</button>
     <button data-f="light" aria-pressed="false">明るい地</button>
     <button data-f="dark" aria-pressed="false">暗い地</button>
     <button data-f="formal" aria-pressed="false">フォーマル</button>
     <button data-f="nophoto" aria-pressed="false">写真なしで作れる</button>
+    <button data-f="a4" aria-pressed="false">A4冊子に対応</button>
   </div>
 </div>
-<nav class="toc"><a href="#color-index">章色インデックス</a><a href="#corporate-mono">コーポレート単色</a><a href="#public-standard">公共・標準</a><a href="#gate-gradient">グラデーション扉</a><a href="#geometric-blue">青白と幾何モチーフ</a><a href="#dark-keynote">ダーク・キーノート</a><a href="#swiss-grid">スイス・タイポグリッド</a><a href="#talk-one-message">1枚1メッセージの登壇</a><a href="#photo-editorial">写真主導エディトリアル</a><a href="#tategumi-editorial">縦組みエディトリアル</a><a href="#warm-editorial">ブランド温色</a></nav>
+<nav class="toc"><a href="#color-index">章色インデックス</a><a href="#corporate-mono">コーポレート単色</a><a href="#public-standard">公共・標準</a><a href="#whitepaper">ホワイトペーパー実務型</a><a href="#gate-gradient">グラデーション扉</a><a href="#geometric-blue">青白と幾何モチーフ</a><a href="#dark-keynote">ダーク・キーノート</a><a href="#swiss-grid">スイス・タイポグリッド</a><a href="#talk-one-message">1枚1メッセージの登壇</a><a href="#photo-editorial">写真主導エディトリアル</a><a href="#tategumi-editorial">縦組みエディトリアル</a><a href="#warm-editorial">ブランド温色</a></nav>
 
 <section class="group" data-group="business">
-  <header><h2>ビジネス</h2><p>会社紹介・経営計画・公式報告</p><span class="n">3</span></header>
+  <header><h2>ビジネス</h2><p>会社紹介・経営計画・公式報告</p><span class="n">4</span></header>
   <div class="grid">
-  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="color-index">
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" data-a4="true" id="color-index">
     <a class="cover" href="color-index/reference.html" target="_blank" rel="noopener"><img src="color-index/thumbs/01.jpg" alt="章色インデックスの表紙" loading="lazy"></a>
     <div class="strip"><a href="color-index/reference.html#2" target="_blank" rel="noopener"><img src="color-index/thumbs/02.jpg" alt="" loading="lazy"></a><a href="color-index/reference.html#3" target="_blank" rel="noopener"><img src="color-index/thumbs/03.jpg" alt="" loading="lazy"></a><a href="color-index/reference.html#4" target="_blank" rel="noopener"><img src="color-index/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <a class="a4" href="color-index/reference-a4.html" target="_blank" rel="noopener"><img src="color-index/thumbs-a4/01.jpg" alt="" loading="lazy"><img src="color-index/thumbs-a4/02.jpg" alt="" loading="lazy"><img src="color-index/thumbs-a4/03.jpg" alt="" loading="lazy"><img src="color-index/thumbs-a4/04.jpg" alt="" loading="lazy"></a>
     <div class="body">
       <h3>章色インデックス<code>color-index</code></h3>
       <p class="summary">紺を骨格に事業ごとに1色。天罫・■見出し・グラフ・右端の爪見出しが章の色に切り替わる。</p>
@@ -67,26 +70,28 @@ dt{color:var(--sub)}dd{margin:0}
         <dt>書体</dt><dd>Noto Sans JP / Barlow / Barlow Semi Condensed</dd>
         <dt>色</dt><dd class="chips"><span style="--c:#1E3348" title="#1E3348"></span><span style="--c:#1D232A" title="#1D232A"></span><span style="--c:#F5F4F0" title="#F5F4F0"></span></dd>
       </dl>
-      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 多め</span></p>
+      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 多め</span><span>A4冊子に対応</span></p>
     </div>
   </article>
-  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="corporate-mono">
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" data-a4="true" id="corporate-mono">
     <a class="cover" href="corporate-mono/reference.html" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/01.jpg" alt="コーポレート単色の表紙" loading="lazy"></a>
     <div class="strip"><a href="corporate-mono/reference.html#2" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/02.jpg" alt="" loading="lazy"></a><a href="corporate-mono/reference.html#3" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/03.jpg" alt="" loading="lazy"></a><a href="corporate-mono/reference.html#4" target="_blank" rel="noopener"><img src="corporate-mono/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    <a class="a4" href="corporate-mono/reference-a4.html" target="_blank" rel="noopener"><img src="corporate-mono/thumbs-a4/01.jpg" alt="" loading="lazy"><img src="corporate-mono/thumbs-a4/02.jpg" alt="" loading="lazy"><img src="corporate-mono/thumbs-a4/03.jpg" alt="" loading="lazy"><img src="corporate-mono/thumbs-a4/04.jpg" alt="" loading="lazy"></a>
     <div class="body">
       <h3>コーポレート単色<code>corporate-mono</code></h3>
       <p class="summary">白地に弁柄1色。全面の扉、左の縦帯の章ナビ、グラフの濃淡の3役にだけ色を使う。</p>
       <dl>
-        <dt>向く場面</dt><dd>会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料</dd>
+        <dt>向く場面</dt><dd>会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料、統合報告書、会社案内</dd>
         <dt>書体</dt><dd>IBM Plex Sans JP / Hanken Grotesk</dd>
         <dt>色</dt><dd class="chips"><span style="--c:#9C3A21" title="#9C3A21"></span><span style="--c:#1E1A17" title="#1E1A17"></span><span style="--c:#FFFFFF" title="#FFFFFF"></span><span style="--c:#6B635D" title="#6B635D"></span><span style="--c:#E8D2C8" title="#E8D2C8"></span><span style="--c:#C98A73" title="#C98A73"></span></dd>
       </dl>
-      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 中くらい</span></p>
+      <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 中くらい</span><span>A4冊子に対応</span></p>
     </div>
   </article>
-  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="public-standard">
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" data-a4="false" id="public-standard">
     <a class="cover" href="public-standard/reference.html" target="_blank" rel="noopener"><img src="public-standard/thumbs/01.jpg" alt="公共・標準の表紙" loading="lazy"></a>
     <div class="strip"><a href="public-standard/reference.html#2" target="_blank" rel="noopener"><img src="public-standard/thumbs/02.jpg" alt="" loading="lazy"></a><a href="public-standard/reference.html#3" target="_blank" rel="noopener"><img src="public-standard/thumbs/03.jpg" alt="" loading="lazy"></a><a href="public-standard/reference.html#4" target="_blank" rel="noopener"><img src="public-standard/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>公共・標準<code>public-standard</code></h3>
       <p class="summary">装飾ゼロ。12カラム、8pxの余白スケール、3段の罫線、精密な和欧組版だけで品位を出す。</p>
@@ -97,14 +102,29 @@ dt{color:var(--sub)}dd{margin:0}
       </dl>
       <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 多め</span></p>
     </div>
+  </article>
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" data-a4="true" id="whitepaper">
+    
+    <a class="a4" href="whitepaper/reference-a4.html" target="_blank" rel="noopener"><img src="whitepaper/thumbs-a4/01.jpg" alt="" loading="lazy"><img src="whitepaper/thumbs-a4/02.jpg" alt="" loading="lazy"><img src="whitepaper/thumbs-a4/03.jpg" alt="" loading="lazy"><img src="whitepaper/thumbs-a4/04.jpg" alt="" loading="lazy"></a>
+    <div class="body">
+      <h3>ホワイトペーパー実務型<code>whitepaper</code></h3>
+      <p class="summary">上下の固定帯（カテゴリーと章 / ロゴ・CTA・ノンブル）に紺と緑の2色。すべての数字に設問番号・n 数・調査期間の札を付け、事例は課題→効果の帯、失敗例は ✕ で示す。</p>
+      <dl>
+        <dt>向く場面</dt><dd>BtoB のホワイトペーパー、調査レポート、導入ガイド、リード獲得資料</dd>
+        <dt>書体</dt><dd>IBM Plex Sans JP / BIZ UDPGothic / Barlow Semi Condensed / IBM Plex Mono</dd>
+        <dt>色</dt><dd class="chips"><span style="--c:#13294B" title="#13294B"></span><span style="--c:#00806B" title="#00806B"></span><span style="--c:#1B2430" title="#1B2430"></span><span style="--c:#5B6676" title="#5B6676"></span><span style="--c:#EDF0F4" title="#EDF0F4"></span><span style="--c:#FFFFFF" title="#FFFFFF"></span></dd>
+      </dl>
+      <p class="tags"><span>明るい地</span><span>格式 標準</span><span>文字量 多め</span><span>A4冊子に対応</span></p>
+    </div>
   </article></div>
 </section>
 <section class="group" data-group="tech">
   <header><h2>テック</h2><p>テック企業・研究開発・技術説明</p><span class="n">2</span></header>
   <div class="grid">
-  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="gate-gradient">
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" data-a4="false" id="gate-gradient">
     <a class="cover" href="gate-gradient/reference.html" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/01.jpg" alt="グラデーション扉の表紙" loading="lazy"></a>
     <div class="strip"><a href="gate-gradient/reference.html#2" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/02.jpg" alt="" loading="lazy"></a><a href="gate-gradient/reference.html#3" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/03.jpg" alt="" loading="lazy"></a><a href="gate-gradient/reference.html#4" target="_blank" rel="noopener"><img src="gate-gradient/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>グラデーション扉<code>gate-gradient</code></h3>
       <p class="summary">扉だけが深い松葉色の空と朱の水平線。本文は白地に墨と朱の1色。</p>
@@ -116,9 +136,10 @@ dt{color:var(--sub)}dd{margin:0}
       <p class="tags"><span>明るい地</span><span>格式 標準</span><span>文字量 中くらい</span></p>
     </div>
   </article>
-  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="geometric-blue">
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" data-a4="false" id="geometric-blue">
     <a class="cover" href="geometric-blue/reference.html" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/01.jpg" alt="青白と幾何モチーフの表紙" loading="lazy"></a>
     <div class="strip"><a href="geometric-blue/reference.html#2" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/02.jpg" alt="" loading="lazy"></a><a href="geometric-blue/reference.html#3" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/03.jpg" alt="" loading="lazy"></a><a href="geometric-blue/reference.html#4" target="_blank" rel="noopener"><img src="geometric-blue/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>青白と幾何モチーフ<code>geometric-blue</code></h3>
       <p class="summary">モチーフは飾りではなくデータ。表紙の格子は見出しをモデルに読ませた注意の重みを描く。</p>
@@ -134,9 +155,10 @@ dt{color:var(--sub)}dd{margin:0}
 <section class="group" data-group="stage">
   <header><h2>登壇・発表</h2><p>カンファレンス・製品発表・イベント</p><span class="n">3</span></header>
   <div class="grid">
-  <article class="style" data-scheme="dark" data-formality="medium" data-photos="false" id="dark-keynote">
+  <article class="style" data-scheme="dark" data-formality="medium" data-photos="false" data-a4="false" id="dark-keynote">
     <a class="cover" href="dark-keynote/reference.html" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/01.jpg" alt="ダーク・キーノートの表紙" loading="lazy"></a>
     <div class="strip"><a href="dark-keynote/reference.html#2" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/02.jpg" alt="" loading="lazy"></a><a href="dark-keynote/reference.html#3" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/03.jpg" alt="" loading="lazy"></a><a href="dark-keynote/reference.html#4" target="_blank" rel="noopener"><img src="dark-keynote/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>ダーク・キーノート<code>dark-keynote</code></h3>
       <p class="summary">黒に近い面に製品を1つ。細い巨大な数字で仕様を見せる製品発表の型。</p>
@@ -148,9 +170,10 @@ dt{color:var(--sub)}dd{margin:0}
       <p class="tags"><span>暗い地</span><span>格式 標準</span><span>文字量 少なめ</span></p>
     </div>
   </article>
-  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="swiss-grid">
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" data-a4="false" id="swiss-grid">
     <a class="cover" href="swiss-grid/reference.html" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/01.jpg" alt="スイス・タイポグリッドの表紙" loading="lazy"></a>
     <div class="strip"><a href="swiss-grid/reference.html#2" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/02.jpg" alt="" loading="lazy"></a><a href="swiss-grid/reference.html#3" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/03.jpg" alt="" loading="lazy"></a><a href="swiss-grid/reference.html#4" target="_blank" rel="noopener"><img src="swiss-grid/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>スイス・タイポグリッド<code>swiss-grid</code></h3>
       <p class="summary">12列×6段のグリッドを見せ、全要素をその線に揃える。黒・白・信号赤のポスター。</p>
@@ -162,9 +185,10 @@ dt{color:var(--sub)}dd{margin:0}
       <p class="tags"><span>明るい地</span><span>格式 標準</span><span>文字量 中くらい</span></p>
     </div>
   </article>
-  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" id="talk-one-message">
+  <article class="style" data-scheme="light" data-formality="medium" data-photos="false" data-a4="false" id="talk-one-message">
     <a class="cover" href="talk-one-message/reference.html" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/01.jpg" alt="1枚1メッセージの登壇の表紙" loading="lazy"></a>
     <div class="strip"><a href="talk-one-message/reference.html#2" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/02.jpg" alt="" loading="lazy"></a><a href="talk-one-message/reference.html#3" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/03.jpg" alt="" loading="lazy"></a><a href="talk-one-message/reference.html#4" target="_blank" rel="noopener"><img src="talk-one-message/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>1枚1メッセージの登壇<code>talk-one-message</code></h3>
       <p class="summary">明るい地に極太の結論を1枚に1つ。時間はすべて「1マス＝1分」で描く。</p>
@@ -180,9 +204,10 @@ dt{color:var(--sub)}dd{margin:0}
 <section class="group" data-group="editorial">
   <header><h2>ブランド・編集</h2><p>ブランドブック・思想・周年</p><span class="n">3</span></header>
   <div class="grid">
-  <article class="style" data-scheme="light" data-formality="high" data-photos="true" id="photo-editorial">
+  <article class="style" data-scheme="light" data-formality="high" data-photos="true" data-a4="false" id="photo-editorial">
     <a class="cover" href="photo-editorial/reference.html" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/01.jpg" alt="写真主導エディトリアルの表紙" loading="lazy"></a>
     <div class="strip"><a href="photo-editorial/reference.html#2" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/02.jpg" alt="" loading="lazy"></a><a href="photo-editorial/reference.html#3" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/03.jpg" alt="" loading="lazy"></a><a href="photo-editorial/reference.html#4" target="_blank" rel="noopener"><img src="photo-editorial/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>写真主導エディトリアル<code>photo-editorial</code></h3>
       <p class="summary">写真が色を運び、紙面は白・黒・赤の3色。欧文の大文字が名乗り、明朝が語る。</p>
@@ -194,9 +219,10 @@ dt{color:var(--sub)}dd{margin:0}
       <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 中くらい</span><span>写真が必要</span></p>
     </div>
   </article>
-  <article class="style" data-scheme="light" data-formality="high" data-photos="false" id="tategumi-editorial">
+  <article class="style" data-scheme="light" data-formality="high" data-photos="false" data-a4="false" id="tategumi-editorial">
     <a class="cover" href="tategumi-editorial/reference.html" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/01.jpg" alt="縦組みエディトリアルの表紙" loading="lazy"></a>
     <div class="strip"><a href="tategumi-editorial/reference.html#2" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/02.jpg" alt="" loading="lazy"></a><a href="tategumi-editorial/reference.html#3" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/03.jpg" alt="" loading="lazy"></a><a href="tategumi-editorial/reference.html#4" target="_blank" rel="noopener"><img src="tategumi-editorial/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>縦組みエディトリアル<code>tategumi-editorial</code></h3>
       <p class="summary">見出しと地の文は縦組みで右から左へ。データだけを横組みの島として左に置く。</p>
@@ -208,9 +234,10 @@ dt{color:var(--sub)}dd{margin:0}
       <p class="tags"><span>明るい地</span><span>格式 フォーマル</span><span>文字量 中くらい</span><span>縦組み</span></p>
     </div>
   </article>
-  <article class="style" data-scheme="light" data-formality="low" data-photos="false" id="warm-editorial">
+  <article class="style" data-scheme="light" data-formality="low" data-photos="false" data-a4="false" id="warm-editorial">
     <a class="cover" href="warm-editorial/reference.html" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/01.jpg" alt="ブランド温色の表紙" loading="lazy"></a>
     <div class="strip"><a href="warm-editorial/reference.html#2" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/02.jpg" alt="" loading="lazy"></a><a href="warm-editorial/reference.html#3" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/03.jpg" alt="" loading="lazy"></a><a href="warm-editorial/reference.html#4" target="_blank" rel="noopener"><img src="warm-editorial/thumbs/04.jpg" alt="" loading="lazy"></a></div>
+    
     <div class="body">
       <h3>ブランド温色<code>warm-editorial</code></h3>
       <p class="summary">クリーム地に端へ寄せた円を1つ。イラストは塗りと線を2回描き、版ずれの手触りで揃える。</p>
@@ -226,7 +253,7 @@ dt{color:var(--sub)}dd{margin:0}
 <p class="empty" hidden>条件に合うスタイルはありません。</p>
 </div>
 <script>
-const tests={all:()=>true,light:e=>e.dataset.scheme==='light',dark:e=>e.dataset.scheme==='dark',formal:e=>e.dataset.formality==='high',nophoto:e=>e.dataset.photos==='false'};
+const tests={all:()=>true,light:e=>e.dataset.scheme==='light',dark:e=>e.dataset.scheme==='dark',formal:e=>e.dataset.formality==='high',nophoto:e=>e.dataset.photos==='false',a4:e=>e.dataset.a4==='true'};
 document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
   let shown=0;

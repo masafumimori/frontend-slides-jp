@@ -1,6 +1,6 @@
 ---
 name: frontend-slides-jp
-description: Create Japanese-first, animation-rich HTML presentations from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers pick a look by seeing it.
+description: Create Japanese-first HTML presentations and A4 portrait documents, from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks and reports or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, create slides for a talk or pitch, or make a document to read such as an integrated report, company brochure (会社案内) or whitepaper. Helps non-designers pick a look by seeing it.
 ---
 
 # Frontend Slides JP
@@ -13,7 +13,7 @@ Create zero-dependency, animation-rich HTML presentations that run entirely in t
 2. **Show, Don't Tell** — Generate visual previews, not abstract choices. People discover what they want by seeing it.
 3. **Distinctive Design** — No generic "AI slop." Every presentation must feel custom-crafted.
 4. **Progressive Disclosure** — Read `styles/selection-index.json` first, then only the shortlisted styles' `preview.md`, then the chosen style's `design.md` and `reference.html`.
-5. **Fixed 16:9 Stage (NON-NEGOTIABLE)** — Every deck uses a 1920×1080 slide canvas scaled as a whole to the viewport. Slides must stay 16:9 on every screen, including phones. Do not reflow slide content to fit the device.
+5. **Fixed Stage (NON-NEGOTIABLE)** — Every output has a fixed canvas from [formats.json](formats.json), scaled as a whole: a 16:9 deck uses 1920×1080 slides, an A4 document (`doc-a4`) uses 1240×1754 pages stacked for scrolling. Do not reflow content to fit the device.
 
 ## Design Aesthetics
 
@@ -62,7 +62,7 @@ These come from the Japanese reference decks the styles were built from. Every s
 
 ## Fixed Stage Rules
 
-These invariants apply to EVERY slide in EVERY presentation:
+These invariants apply to EVERY slide in EVERY presentation. An A4 document follows the same idea with its own base file: see the end of this section.
 
 - Every deck has a viewport wrapper that fills the browser window.
 - Every slide is authored inside a fixed 1920×1080 stage.
@@ -75,6 +75,8 @@ These invariants apply to EVERY slide in EVERY presentation:
 - Never negate CSS functions directly (`-clamp()`, `-min()`, `-max()` are silently ignored) — use `calc(-1 * clamp(...))` instead
 
 **When generating, read `viewport-base.css` and include its full contents in every presentation.**
+
+For a `doc-a4` document, paste [page-base.css](page-base.css) instead. Every page is a `<section class="page">` of exactly 1240×1754 inside `.doc-stage`; pages are stacked and the column is zoomed to the window width. Never reflow or shrink a page's content; split the page. The structure is in [html-template.md](html-template.md) under "A4 Document Structure".
 
 ### Content Density Modes
 
@@ -114,6 +116,11 @@ When enhancing existing presentations, fixed-stage fitting is the biggest risk:
 ## Phase 1: Content Discovery (New Presentations)
 
 **Ask ALL questions together** so the user fills everything out at once. If the current environment provides a native structured-question UI, use it; otherwise ask in one concise message with clearly numbered choices:
+
+**Question 0 — Format** (header: "Format"):
+Slides to present, or a document to read? Options: 16:9 slides (`slide-16x9`) / A4 portrait document — report, brochure, whitepaper (`doc-a4`)
+
+Infer it when the request already says (「統合報告書」「会社案内の冊子」「ホワイトペーパー」 mean `doc-a4`). The format decides the stage, the style shortlist and the page types. For `doc-a4`, read Questions 2 and 4 as pages and density of text per page.
 
 **Question 1 — Purpose** (header: "Purpose"):
 What is this presentation for? Options: Pitch deck / Teaching-Tutorial / Conference talk / Internal presentation
@@ -174,6 +181,7 @@ If the user wants to browse every style before choosing, open [styles/gallery.ht
 
 **Preview mix rules:**
 
+- Shortlist only styles whose `formats` include the format from Phase 1. For `doc-a4`, each preview is the document's cover page, built at 1240×1754 with `page-base.css`, and the shortlist may hold fewer than 3 styles; fill the rest with custom wildcards.
 - Generate 3 previews: one restrained style (`formality: high`), one expressive style, and one wildcard. With a brand, the brand takes the restrained slot.
 - Match purpose and mood against `mood`, `formality`, `density`, `scheme`, `best_for` and `avoid_for`. Treat `best_for` as a soft signal.
 - Respect `needs`: offer a style that needs `photos` only when the user has photos or accepts generated ones.
@@ -227,7 +235,7 @@ If the user's stated needs are mixed, choose the closer of the two modes instead
 
 Never let high density become visual clutter. If a high-density slide starts to overflow, split it or redesign it into a clearer structure.
 
-If the user selected a listed style or a brand, read that one style's `design.md` and `reference.html` before generating. Do not read other styles.
+If the user selected a listed style or a brand, read that one style's `design.md` and the reference for the chosen format (`reference.html` for slides, `reference-a4.html` for `doc-a4`, as `references` in the index lists) before generating. Do not read other styles. For `doc-a4`, also read [references/document-pages.md](references/document-pages.md): the page types, the page frame and the reading rules.
 
 - Preserve its tokens, fonts, type scale, signature devices and slide grammar.
 - Copy CSS from `reference.html`; write new copy for the user's content. Never reuse its fictional company, numbers or slogans.
@@ -236,7 +244,7 @@ If the user selected a listed style or a brand, read that one style's `design.md
 - `reference.html` omits inline editing; add it from [html-template.md](html-template.md), including the early return for `e.target.isContentEditable` in the style's keyboard handler.
 - When the user gave only a topic, mark invented names, numbers and sources as fictional: one line in the cover meta and a short note in each data slide's source line (for example 「数値は架空」).
 - The density choice changes how much goes on each slide and how many slides there are, never the style's type scale.
-- Before delivery, screenshot every slide with `node scripts/shoot.mjs <deck.html> --out <dir>` and once with `--phone`, then walk the style's slop-signs checklist and the Design Rules against them. Look for overlap by eye: `scrollHeight` and bounding-box checks miss panels that cover each other.
+- Before delivery, screenshot every slide (or every page of a `doc-a4` document) with `node scripts/shoot.mjs <file.html> --out <dir>` and once with `--phone`, then walk the style's slop-signs checklist and the Design Rules against them. Look for overlap by eye: `scrollHeight` and bounding-box checks miss panels that cover each other.
 
 If the user selected a self-generated custom wildcard, treat that preview's CSS and layout as the design recipe:
 
@@ -353,6 +361,7 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
    - A headless browser opens the presentation at 1920×1080 (standard widescreen)
    - It screenshots each slide one by one
    - All screenshots are combined into a single PDF
+   - A `doc-a4` document is printed directly instead: one vector A4 page per `.page`, with selectable text
    - The script needs Playwright (a browser automation tool) — it will install automatically if missing
 
 3. **If Playwright installation fails:**
@@ -367,7 +376,7 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 **⚠ PDF export gotchas:**
 
 - **First run is slow.** The script installs Playwright and downloads a Chromium browser (~150MB) into a temp directory. This happens once per run. Warn the user it may take 30-60 seconds the first time — subsequent exports within the same session are faster.
-- **Slides must use `class="slide"`.** The export script finds slides by querying `.slide` elements. If the presentation uses a different class name, the script will report "0 slides found" and fail. All presentations generated by this skill use `.slide`, so this only matters for externally-created HTML.
+- **Slides must use `class="slide"`, pages `class="page"`.** The export script finds slides by querying `.slide` elements, and treats a file with `.page` and no `.slide` as an A4 document. If the presentation uses a different class name, the script will report "0 slides found" and fail. All presentations generated by this skill use `.slide`, so this only matters for externally-created HTML.
 - **Local images must be loadable via HTTP.** The script starts a local server and loads the HTML through it (so Google Fonts and relative image paths work). If images use absolute filesystem paths (e.g., `src="/Users/name/photo.png"`) instead of relative paths (e.g., `src="photo.png"`), they won't load. Generated presentations always use relative paths, but converted or user-provided decks might not — check and fix if needed.
 - **Local images appear in the PDF** as long as they are in the same directory as (or relative to) the HTML file. The export script serves the HTML's parent directory over HTTP, so relative paths like `src="photo.png"` resolve correctly — including filenames with spaces. If images still don't appear, check: (1) the image files actually exist at the referenced path, (2) the paths are relative, not absolute filesystem paths like `/Users/name/photo.png`.
 - **Large presentations produce large PDFs.** Each slide is captured as a full 1920×1080 PNG screenshot. An 18-slide deck can produce a ~20MB PDF. If the PDF exceeds 10MB, ask the user: _"The PDF is [size]. Would you like me to compress it? It'll look slightly less sharp but the file will be much smaller."_ If yes, re-run the export with the `--compact` flag:
@@ -392,6 +401,8 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 | [references/diagrams.md](references/diagrams.md), [diagrams.html](references/diagrams.html) | 50 diagram and chart patterns: which to pick per relationship, and working code; run `node scripts/check-diagrams.mjs` after edits | Phase 3, for every diagram or chart slide |
 | [scripts/shoot.mjs](scripts/shoot.mjs) | Screenshot every slide, at 1920×1080 or `--phone` | Phase 3 verification |
 | [viewport-base.css](viewport-base.css)             | Mandatory fixed-stage CSS — copy into every presentation             | Phase 3 (generation)      |
+| [page-base.css](page-base.css), [references/document-pages.md](references/document-pages.md) | Mandatory CSS and page rules for `doc-a4` documents | Phase 3, for an A4 document |
+| [formats.json](formats.json) | Stage size, base file and reference file per format | Phase 1–3, when the format matters |
 | [html-template.md](html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      |
 | [animation-patterns.md](animation-patterns.md)     | CSS/JS animation snippets and effect-to-feeling guide                | Phase 3 (generation)      |
 | [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction                             | Phase 4 (conversion)      |

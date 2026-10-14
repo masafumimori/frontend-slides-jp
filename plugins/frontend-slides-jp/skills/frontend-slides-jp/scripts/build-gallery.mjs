@@ -29,11 +29,17 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 const card = s => {
   const fonts = [s.fonts.heading, s.fonts.body, ...(s.fonts.latin ?? [])].filter((f, i, a) => f && a.indexOf(f) === i);
   const tags = [LABEL.scheme[s.scheme], `格式 ${LABEL.formality[s.formality]}`, `文字量 ${LABEL.density[s.density]}`,
-    s.writing === 'vertical' ? '縦組み' : null, s.needs.includes('photos') ? '写真が必要' : null].filter(Boolean);
+    s.writing === 'vertical' ? '縦組み' : null, s.needs.includes('photos') ? '写真が必要' : null,
+    s.formats.includes('doc-a4') ? 'A4冊子に対応' : null].filter(Boolean);
+  const slides = s.formats.includes('slide-16x9');
+  const a4 = s.formats.includes('doc-a4')
+    ? `<a class="a4" href="${s.slug}/reference-a4.html" target="_blank" rel="noopener">${['01', '02', '03', '04'].map(n => `<img src="${s.slug}/thumbs-a4/${n}.jpg" alt="" loading="lazy">`).join('')}</a>`
+    : '';
   return `
-  <article class="style" data-scheme="${s.scheme}" data-formality="${s.formality}" data-photos="${s.needs.includes('photos')}" id="${s.slug}">
-    <a class="cover" href="${s.slug}/reference.html" target="_blank" rel="noopener"><img src="${s.slug}/thumbs/01.jpg" alt="${esc(s.name_ja)}の表紙" loading="lazy"></a>
-    <div class="strip">${['02', '03', '04'].map(n => `<a href="${s.slug}/reference.html#${Number(n)}" target="_blank" rel="noopener"><img src="${s.slug}/thumbs/${n}.jpg" alt="" loading="lazy"></a>`).join('')}</div>
+  <article class="style" data-scheme="${s.scheme}" data-formality="${s.formality}" data-photos="${s.needs.includes('photos')}" data-a4="${s.formats.includes('doc-a4')}" id="${s.slug}">
+    ${slides ? `<a class="cover" href="${s.slug}/reference.html" target="_blank" rel="noopener"><img src="${s.slug}/thumbs/01.jpg" alt="${esc(s.name_ja)}の表紙" loading="lazy"></a>
+    <div class="strip">${['02', '03', '04'].map(n => `<a href="${s.slug}/reference.html#${Number(n)}" target="_blank" rel="noopener"><img src="${s.slug}/thumbs/${n}.jpg" alt="" loading="lazy"></a>`).join('')}</div>` : ''}
+    ${a4}
     <div class="body">
       <h3>${esc(s.name_ja)}<code>${s.slug}</code></h3>
       <p class="summary">${esc(s.summary_ja)}</p>
@@ -95,18 +101,20 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:1
 dt{color:var(--sub)}dd{margin:0}
 .chips{display:flex;gap:5px;align-items:center}.chips span{width:16px;height:16px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px var(--rule)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:auto 0 0}.tags span{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--rule);color:var(--sub)}
+.a4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px;background:var(--rule)}.a4 img{display:block;width:100%;aspect-ratio:1240/1754;object-fit:cover;box-shadow:0 1px 3px rgba(0,0,0,.18)}.a4:hover img{opacity:.88}
 .empty{color:var(--sub);margin-top:40px}
 @media (max-width:440px){.grid{grid-template-columns:1fr}}
 </style></head><body><div class="wrap">
 <div class="top">
   <div><p class="eyebrow">FRONTEND-SLIDES-JP · STYLES</p><h1>スタイル一覧</h1>
-  <p class="lede">${styles.length}種のスタイルを用途ごとに並べています。表紙を押すと4枚の見本が開き、矢印キーで送れます。使いたいスタイルは名前か右の英字名でスキルに伝えてください。</p></div>
+  <p class="lede">${styles.length}種のスタイルを用途ごとに並べています。表紙を押すと4枚の見本が開き、矢印キーで送れます。縦長の4枚はA4冊子の見本で、押すと冊子が開きます。使いたいスタイルは名前か右の英字名でスキルに伝えてください。</p></div>
   <div class="filters" role="group" aria-label="絞り込み">
     <button data-f="all" aria-pressed="true">すべて</button>
     <button data-f="light" aria-pressed="false">明るい地</button>
     <button data-f="dark" aria-pressed="false">暗い地</button>
     <button data-f="formal" aria-pressed="false">フォーマル</button>
     <button data-f="nophoto" aria-pressed="false">写真なしで作れる</button>
+    <button data-f="a4" aria-pressed="false">A4冊子に対応</button>
   </div>
 </div>
 <nav class="toc">${GROUPS.flatMap(([key]) => styles.filter(s => s.group === key).sort((a, b) => a.slug.localeCompare(b.slug))).map(s => `<a href="#${s.slug}">${esc(s.name_ja)}</a>`).join('')}</nav>
@@ -114,7 +122,7 @@ ${sections}
 <p class="empty" hidden>条件に合うスタイルはありません。</p>
 </div>
 <script>
-const tests={all:()=>true,light:e=>e.dataset.scheme==='light',dark:e=>e.dataset.scheme==='dark',formal:e=>e.dataset.formality==='high',nophoto:e=>e.dataset.photos==='false'};
+const tests={all:()=>true,light:e=>e.dataset.scheme==='light',dark:e=>e.dataset.scheme==='dark',formal:e=>e.dataset.formality==='high',nophoto:e=>e.dataset.photos==='false',a4:e=>e.dataset.a4==='true'};
 document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
   let shown=0;

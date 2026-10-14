@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>イズミラ 会社案内 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&family=Barlow:wght@100;200;300;400;500;600;700;800;900&family=Barlow+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===========================================
+   COLOR INDEX: tokens (A4 document)
+   Same skeleton and chapter hues as the 16:9 reference.
+   --c is the chapter fill; --c-text is the chapter color for text under 24px.
+   =========================================== */
+:root {
+  --desk-bg: #D9D7D0;
+  --page-bg: #FFFFFF;
+  --paper: #F5F4F0;
+  --line: #DEDCD5;
+  --line-strong: #B9B6AD;
+  --mute: #6E7177;
+  --ink: #1D232A;
+  --base: #1E3348;          /* brand navy: skeleton, front and back matter */
+  --ch1: #2B7680;           /* 01 機能材料 teal, 5.24:1 on white */
+  --ch2: #B0563A;           /* 02 モビリティ terracotta, 4.95:1 */
+  --ch3: #997622;           /* 03 エネルギー ochre, 4.23:1: fills and text 24px+ only */
+  --ch3-text: #8A6A1E;      /* ochre for text under 24px, 5.05:1 on white, 4.59:1 on paper */
+  --ch4: #5C7646;           /* 04 生活資材 moss, 5.08:1 */
+  --jp: "Noto Sans JP", sans-serif;
+  --lat: "Barlow", "Noto Sans JP", sans-serif;
+  --num: "Barlow Semi Condensed", "Barlow", sans-serif;
+  --m: 96px;                /* left and right margin */
+}
+.page { --c: var(--base); --c-text: var(--c); }
+.page[data-ch="1"] { --c: var(--ch1); }
+.page[data-ch="2"] { --c: var(--ch2); }
+.page[data-ch="3"] { --c: var(--ch3); --c-text: var(--ch3-text); }
+.page[data-ch="4"] { --c: var(--ch4); }
+.page { --c-tint: color-mix(in srgb, var(--c) 14%, #fff); --c-mid: color-mix(in srgb, var(--c) 45%, #fff); }
+
+.page { font-family: var(--jp); color: var(--ink); -webkit-font-smoothing: antialiased; }
+.lat { font-family: var(--lat); font-feature-settings: normal; }
+.num { font-family: var(--num); font-feature-settings: "tnum"; letter-spacing: 0; }
+
+/* ---------- Page frame: top rule, running head, thumb tabs, foot ---------- */
+.rule { position: absolute; left: 0; top: 0; width: 1240px; height: 10px; background: var(--c); }
+.rh { position: absolute; top: 64px; left: var(--m); right: var(--m); display: flex; align-items: baseline; font-size: 18px; letter-spacing: 0.02em; color: var(--mute); }
+.rh .doc { display: flex; align-items: baseline; gap: 14px; font-weight: 500; }
+.rh .doc b { font-family: var(--lat); font-weight: 700; font-size: 18px; letter-spacing: 0.2em; color: var(--base); }
+.rh .chap { margin-left: auto; display: flex; align-items: baseline; gap: 10px; color: var(--c-text); font-weight: 700; font-size: 20px; }
+.rh .chap .no { font-family: var(--lat); font-weight: 600; font-size: 20px; letter-spacing: 0.04em; }
+.rh .chap .role { color: var(--mute); font-weight: 500; font-size: 18px; padding-left: 16px; margin-left: 6px; border-left: 1px solid var(--line-strong); }
+.tabs { position: absolute; right: 0; top: 240px; width: 64px; }
+.tab { position: absolute; right: 0; height: 176px; width: 28px; background: var(--paper); border-left: 1px solid var(--line); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; padding-top: 14px; gap: 12px; }
+.tab .tno { font-family: var(--lat); font-weight: 600; font-size: 16px; color: var(--line-strong); letter-spacing: 0.02em; }
+.tab .tname { display: none; writing-mode: vertical-rl; font-feature-settings: "vpal"; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; color: #fff; }
+.tab.on { width: 60px; background: var(--tc); border-left: 0; }
+.tab.on .tno { color: #fff; font-size: 20px; }
+.tab.on .tname { display: block; }
+.foot { position: absolute; left: var(--m); right: var(--m); bottom: 56px; display: flex; align-items: flex-end; gap: 48px; font-size: 17px; line-height: 1.7; letter-spacing: 0.02em; color: var(--mute); }
+.foot .note { max-width: 880px; }
+.foot .folio { margin-left: auto; font-family: var(--lat); font-weight: 600; font-size: 20px; letter-spacing: 0.04em; color: var(--ink); white-space: nowrap; line-height: 1; }
+.foot .folio span { color: var(--mute); font-weight: 500; font-size: 18px; }
+
+/* ---------- Shared type ---------- */
+.kicker { font-family: var(--lat); font-weight: 600; font-size: 20px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-text); margin: 0; }
+.h1 { font-weight: 700; font-size: 60px; line-height: 1.4; letter-spacing: 0.01em; margin: 22px 0 0; color: var(--ink); }
+.h1 em { font-style: normal; color: var(--c); }
+.lead { font-size: 26px; font-weight: 400; line-height: 1.75; letter-spacing: 0.02em; margin: 28px 0 0; }
+.sq { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 24px; letter-spacing: 0.02em; color: var(--ink); margin: 0; }
+.sq::before { content: ""; width: 18px; height: 18px; background: var(--c); flex: none; }
+.sq small { font-size: 18px; font-weight: 500; color: var(--mute); margin-left: 4px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; font-size: 22px; line-height: 1.8; letter-spacing: 0.02em; }
+.cols p { margin: 0; text-indent: 1em; word-break: normal; text-align: justify; }
+.cols p + p { margin-top: 0; }
+.src { font-size: 17px; line-height: 1.7; color: var(--mute); letter-spacing: 0.02em; margin: 14px 0 0; }
+.content { position: absolute; left: var(--m); right: var(--m); top: 140px; }
+
+/* ---------- 1. Cover ---------- */
+.cover .mark { position: absolute; left: var(--m); top: 96px; display: flex; align-items: center; gap: 18px; }
+.cover .glyph { width: 40px; height: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.cover .glyph i { background: var(--base); }
+.cover .glyph i:nth-child(4) { background: transparent; border: 4px solid var(--base); }
+.cover .wm { font-family: var(--lat); font-weight: 700; font-size: 28px; letter-spacing: 0.22em; color: var(--base); }
+.cover .jpname { font-size: 18px; font-weight: 500; color: var(--mute); letter-spacing: 0.04em; padding-left: 18px; border-left: 1px solid var(--line-strong); }
+.cover .title { position: absolute; left: var(--m); top: 300px; }
+.cover .title .kicker { color: var(--mute); }
+.cover .title h1 { margin: 40px 0 0; font-weight: 900; font-size: 100px; line-height: 1.24; letter-spacing: 0.01em; color: var(--base); }
+.cover .title .lead { margin-top: 48px; font-size: 30px; font-weight: 700; line-height: 1.65; }
+.cover .mix { position: absolute; left: 0; right: 0; top: 1030px; }
+.cover .mix .sq { margin-left: var(--m); }
+.cover .strips { margin-top: 28px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.cover .strip { height: 104px; background: var(--sc); color: #fff; display: flex; align-items: center; padding: 0 var(--m) 0 28px; box-sizing: border-box; gap: 16px; }
+.cover .strip .sno { font-family: var(--lat); font-weight: 600; font-size: 24px; letter-spacing: 0.04em; }
+.cover .strip .snm { font-size: 26px; font-weight: 700; letter-spacing: 0.02em; }
+.cover .strip .sv { margin-left: auto; display: flex; align-items: baseline; font-family: var(--num); font-weight: 600; line-height: 1; }
+.cover .strip .sv .n { font-size: 60px; }
+.cover .strip .sv .u { font-size: 24px; margin-left: 2px; }
+.cover .scale { display: flex; justify-content: space-between; margin: 12px var(--m) 0 auto; font-family: var(--lat); font-size: 16px; color: var(--mute); }
+.cover .meta { position: absolute; left: var(--m); right: var(--m); bottom: 72px; display: flex; gap: 40px; font-size: 18px; color: var(--mute); letter-spacing: 0.03em; border-top: 1px solid var(--line); padding-top: 22px; }
+.cover .meta b { color: var(--ink); font-weight: 500; }
+.cover .meta .fic { margin-left: auto; }
+
+/* ---------- 2. Contents = color legend ---------- */
+.toc .h2 { font-size: 72px; font-weight: 700; color: var(--base); margin: 20px 0 0; line-height: 1.2; letter-spacing: 0.02em; }
+.toc .intro { display: grid; grid-template-columns: 1fr 360px; column-gap: 48px; align-items: end; margin-top: 36px; }
+.toc .intro p { margin: 0; font-size: 23px; line-height: 1.8; letter-spacing: 0.02em; }
+.toc .total { border-top: 2px solid var(--base); padding-top: 18px; }
+.toc .total .lab { font-size: 18px; color: var(--mute); font-weight: 500; }
+.toc .total .v { display: flex; align-items: baseline; gap: 8px; color: var(--base); margin-top: 6px; }
+.toc .total .v .n { font-family: var(--num); font-weight: 600; font-size: 88px; line-height: 1; }
+.toc .total .v .u { font-size: 28px; font-weight: 700; }
+.toc .compwrap { margin-top: 64px; }
+.toc .comp { display: flex; gap: 3px; height: 28px; margin-top: 20px; }
+.toc .comp i { display: block; }
+.toc .comp-scale { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--lat); font-size: 16px; color: var(--mute); font-weight: 500; }
+.toc .colhead, .toc .row { display: grid; grid-template-columns: 12px 52px 1fr 190px 150px 56px; column-gap: 24px; }
+.toc .colhead { margin-top: 48px; padding-bottom: 12px; font-size: 16px; color: var(--mute); font-weight: 500; letter-spacing: 0.02em; }
+.toc .colhead span:nth-child(5), .toc .colhead span:nth-child(6) { text-align: right; }
+.toc .rows { border-top: 1px solid var(--ink); }
+.toc .row { align-items: center; height: 132px; border-bottom: 1px solid var(--line); }
+.toc .row .chip { width: 12px; height: 84px; background: var(--rc); }
+.toc .row .no { font-family: var(--lat); font-weight: 600; font-size: 28px; color: var(--rt); letter-spacing: 0.02em; }
+.toc .row .nm { font-size: 30px; font-weight: 700; letter-spacing: 0.01em; }
+.toc .row .nm small { display: block; font-size: 18px; font-weight: 400; color: var(--mute); margin-top: 6px; letter-spacing: 0.02em; line-height: 1.55; }
+.toc .row .rl { font-size: 19px; font-weight: 700; color: var(--rt); letter-spacing: 0.02em; line-height: 1.4; }
+.toc .row .rl small { display: block; font-size: 16px; font-weight: 400; color: var(--mute); margin-top: 4px; line-height: 1.5; }
+.toc .row .sales { text-align: right; }
+.toc .row .sales .n { font-family: var(--num); font-weight: 600; font-size: 38px; }
+.toc .row .sales .u { font-size: 17px; font-weight: 500; margin-left: 3px; }
+.toc .row .sales small { display: block; font-family: var(--lat); font-size: 16px; color: var(--mute); font-weight: 500; }
+.toc .row .pg { font-family: var(--lat); font-size: 19px; font-weight: 600; color: var(--ink); text-align: right; }
+.toc .row.fm .nm { font-size: 26px; }
+
+/* ---------- 3. Message ---------- */
+.msg .h1 { font-size: 64px; }
+.msg .points { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; margin-top: 52px; border-top: 2px solid var(--base); }
+.msg .pt { padding-top: 20px; }
+.msg .pt .pn { font-family: var(--lat); font-weight: 600; font-size: 20px; letter-spacing: 0.06em; color: var(--base); }
+.msg .pt .pv { display: flex; align-items: baseline; gap: 4px; margin-top: 8px; color: var(--base); }
+.msg .pt .pv .n { font-family: var(--num); font-weight: 600; font-size: 64px; line-height: 1; }
+.msg .pt .pv .u { font-size: 22px; font-weight: 700; }
+.msg .pt .pt-t { font-size: 19px; line-height: 1.6; margin-top: 10px; letter-spacing: 0.02em; }
+.msg .cols { margin-top: 56px; }
+.msg .sign { margin-top: 56px; }
+.msg .sign::before { content: ""; display: block; width: 64px; height: 4px; background: var(--base); margin-bottom: 20px; }
+.msg .sign .r { font-size: 18px; color: var(--mute); letter-spacing: 0.02em; }
+.msg .sign .n { font-size: 32px; font-weight: 700; letter-spacing: 0.12em; margin-top: 4px; }
+
+/* ---------- 4. Figure page: d-flow-v fitted to color-index ---------- */
+.fig .figwrap { margin-top: 52px; }
+/* BEGIN d-flow-v (restyled: flat squares, 1px rules, key row on --c-tint) */
+#d-flow-v { --d-ink: var(--ink); --d-sub: var(--mute); --d-rule: var(--line); --d-mid: var(--line-strong); --d-accent: var(--c); --d-paper: #fff; --font-jp: var(--jp); --font-latin: var(--lat); }
+#d-flow-v .rows { display: grid; grid-template-columns: 124px 52px 236px 1fr 164px; grid-auto-rows: 124px; margin-top: 20px; border-top: 1px solid var(--ink); }
+#d-flow-v .rows > * { display: flex; align-items: center; border-bottom: 1px solid var(--d-rule); }
+#d-flow-v .rows > .node { border-bottom: 0; position: relative; justify-content: center; }
+#d-flow-v .node::before { content: ""; position: absolute; left: 50%; margin-left: -1px; width: 2px; top: 0; bottom: 0; background: var(--d-mid); }
+#d-flow-v .node.first::before { top: 50%; }
+#d-flow-v .node.last::before { bottom: 50%; }
+#d-flow-v .node span { position: relative; width: 40px; height: 40px; box-sizing: border-box; background: var(--d-paper); border: 2px solid var(--d-ink); font: 600 20px/36px var(--font-latin); text-align: center; }
+#d-flow-v .node.is-key span { background: var(--d-accent); border-color: var(--d-accent); color: #fff; }
+#d-flow-v .rows > .is-key { background: var(--c-tint); }
+#d-flow-v .when { font: 600 22px/1.3 var(--num); color: var(--d-sub); padding-left: 0; }
+#d-flow-v .when u { text-decoration: none; font-family: var(--jp); font-size: 18px; font-weight: 500; margin-left: 2px; }
+#d-flow-v .when.is-key { color: var(--c-text); box-shadow: inset 6px 0 0 var(--c); padding-left: 20px; }
+#d-flow-v .ttl { font-size: 24px; font-weight: 700; padding-left: 20px; letter-spacing: 0.01em; }
+#d-flow-v .ttl.is-key { color: var(--c-text); }
+#d-flow-v .dsc { font-size: 20px; line-height: 1.6; padding-right: 24px; letter-spacing: 0.02em; }
+#d-flow-v .who { font-size: 18px; color: var(--d-sub); letter-spacing: 0.02em; }
+#d-flow-v .who::before { content: "担当"; font-size: 16px; border: 1px solid var(--line-strong); padding: 1px 8px; margin-right: 10px; color: var(--d-sub); }
+/* END d-flow-v */
+.fig .cols { margin-top: 48px; }
+
+/* ---------- 5. Highlights + table ---------- */
+.tbl .hl3 { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 44px; border-top: 1px solid var(--ink); }
+.tbl .hl { padding: 22px 0 0 28px; border-left: 1px solid var(--line); }
+.tbl .hl:first-child { padding-left: 0; border-left: 0; }
+.tbl .hl .lab { font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }
+.tbl .hl .lab small { display: block; font-size: 17px; font-weight: 400; color: var(--mute); margin-top: 2px; }
+.tbl .hl .v { display: flex; align-items: baseline; color: var(--c); margin-top: 14px; }
+.tbl .hl .v .n { font-family: var(--num); font-weight: 600; font-size: 100px; line-height: 0.9; letter-spacing: -0.01em; }
+.tbl .hl .v .u { font-size: 32px; font-weight: 700; margin-left: 6px; }
+.tbl .tablewrap { margin-top: 52px; }
+.tbl table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.tbl th { font-size: 16px; font-weight: 500; color: var(--mute); text-align: left; padding: 0 16px 12px 0; border-bottom: 1px solid var(--ink); letter-spacing: 0.02em; }
+.tbl th.r, .tbl td.r { text-align: right; }
+.tbl td { font-size: 20px; line-height: 1.55; padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); vertical-align: middle; letter-spacing: 0.02em; }
+.tbl td.seg { font-weight: 700; font-size: 22px; padding-left: 20px; width: 120px; }
+.tbl th:first-child { padding-left: 20px; }
+.tbl td.cu { color: var(--mute); font-size: 18px; }
+.tbl td .n { font-family: var(--num); font-weight: 600; font-size: 34px; }
+.tbl td .u { font-size: 17px; font-weight: 500; margin-left: 3px; }
+.tbl td.bar { width: 210px; padding-right: 0; }
+.tbl td.bar div { display: flex; align-items: center; gap: 12px; }
+.tbl td.bar i { display: block; height: 18px; background: var(--c-mid); }
+.tbl td.bar b { font-family: var(--num); font-weight: 600; font-size: 22px; }
+.tbl tr.key td { background: var(--c-tint); }
+.tbl tr.key td.seg { box-shadow: inset 6px 0 0 var(--c); color: var(--c-text); }
+.tbl tr.key td.bar i { background: var(--c); }
+.tbl tr.key td.bar b { color: var(--c-text); }
+.tbl tr.total td { border-bottom: 1px solid var(--ink); font-weight: 700; }
+.tbl .cols { margin-top: 40px; }
+
+/* ---------- 6. Company data ---------- */
+.data .prof { display: grid; grid-template-columns: 200px 1fr; margin: 48px 0 0; border-top: 1px solid var(--ink); }
+.data .prof dt, .data .prof dd { font-size: 20px; line-height: 1.6; padding: 15px 0; border-bottom: 1px solid var(--line); margin: 0; letter-spacing: 0.02em; }
+.data .prof dt { color: var(--mute); font-weight: 500; }
+.data .bases { margin-top: 56px; }
+.data .grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; row-gap: 28px; margin-top: 20px; }
+.data .biz { border-top: 4px solid var(--bc); padding-top: 14px; }
+.data .biz .bh { display: flex; align-items: baseline; gap: 10px; font-weight: 700; font-size: 22px; }
+.data .biz .bh .bno { font-family: var(--lat); font-weight: 600; font-size: 20px; color: var(--bt); }
+.data .biz .bh .cnt { margin-left: auto; font-family: var(--num); font-weight: 600; font-size: 30px; color: var(--ink); }
+.data .biz .bh .cnt u { text-decoration: none; font-family: var(--jp); font-size: 16px; font-weight: 500; margin-left: 2px; }
+.data .biz ul { list-style: none; margin: 8px 0 0; padding: 0; font-size: 19px; line-height: 1.75; letter-spacing: 0.02em; }
+.data .biz li::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--bc); margin-right: 10px; vertical-align: 2px; }
+.data .contact { position: absolute; left: var(--m); right: var(--m); bottom: 136px; display: grid; grid-template-columns: 1fr auto; align-items: end; border-top: 2px solid var(--base); padding-top: 22px; }
+.data .contact .ct { font-size: 19px; line-height: 1.7; color: var(--ink); letter-spacing: 0.02em; }
+.data .contact .ct b { display: block; font-size: 22px; }
+.data .contact .url { font-family: var(--lat); font-weight: 600; font-size: 26px; color: var(--base); letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- 1. Cover: the thumb index becomes the cover visual -->
+<section class="page cover">
+  <div class="rule"></div>
+  <div class="mark">
+    <div class="glyph"><i></i><i></i><i></i><i></i></div>
+    <div class="wm">IZUMIRA</div>
+    <div class="jpname">株式会社イズミラ</div>
+  </div>
+  <div class="title">
+    <p class="kicker">Company Profile 2027</p>
+    <h1>見えない場所で、<br>長く働く素材を<br>つくっています。</h1>
+    <p class="lead">半導体、電気自動車、電力網、食品の包装。<br>4つの事業が、完成品の内側を支えています。</p>
+  </div>
+  <div class="mix">
+    <p class="sq">事業別の売上構成比<small>2026年3月期　連結 4,820億円</small></p>
+    <div class="strips" id="coverStrips"></div>
+  </div>
+  <div class="meta"><span><b>会社案内 2027</b></span><span>2027年4月発行</span><span>広報部</span><span class="fic">社名・数値はすべて架空のサンプルです</span></div>
+</section>
+
+<!-- 2. Contents = the color legend -->
+<section class="page toc" data-tabs="all" data-ch="0" data-folio="02">
+  <div class="content">
+    <p class="kicker">Contents</p>
+    <h2 class="h2">目次</h2>
+    <div class="intro">
+      <p>イズミラの売上は、性格の異なる4つの事業で<br>できています。本誌では事業ごとに色を分け、<br>右端の見出しで、いま読んでいる章を示します。</p>
+      <div class="total"><div class="lab">連結売上高（2026年3月期）</div><div class="v"><span class="n">4,820</span><span class="u">億円</span></div></div>
+    </div>
+    <div class="compwrap">
+      <p class="sq">事業別の売上構成比</p>
+      <div class="comp" id="comp"></div>
+      <div class="comp-scale"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div>
+    </div>
+    <div class="colhead"><span></span><span></span><span>章</span><span>事業の役割</span><span>売上高</span><span>頁</span></div>
+    <div class="rows" id="rows"></div>
+  </div>
+  <div class="foot"><span class="note">※ 売上高は外部顧客への売上。構成比は小数点以下を四捨五入。数値は架空のサンプル。</span></div>
+</section>
+
+<!-- 3. Message: two columns of body text -->
+<section class="page msg" data-ch="0" data-folio="03">
+  <div class="content">
+    <p class="kicker">Message from the President</p>
+    <h2 class="h1">「見えない部品ほど、<br>長く社会に残る。」</h2>
+    <p class="lead">イズミラの製品は、完成品の名前で呼ばれることがほとんど<br>ありません。それでも、外から見えない場所に入る素材ほど<br>長く使われ、替えがきかないと考えてきました。</p>
+    <div class="points">
+      <div class="pt"><div class="pn">01</div><div class="pv"><span class="n">4</span><span class="u">つの役割</span></div><div class="pt-t">事業ごとに役割を分け、<br>役割に合った物差しで評価する</div></div>
+      <div class="pt"><div class="pn">02</div><div class="pv"><span class="n">420</span><span class="u">億円</span></div><div class="pt-t">半導体材料の新工場に、<br>3年間で投じる</div></div>
+      <div class="pt"><div class="pn">03</div><div class="pv"><span class="n">10</span><span class="u">%</span></div><div class="pt-t">2029年度に目指す<br>ROIC（投下資本利益率）</div></div>
+    </div>
+    <div class="cols">
+      <div>
+        <p>半導体の製造装置に入る高純度樹脂、電気自動車の電池を冷やすプレート、変電所の変圧器、そして食品を包むフィルム。どれも最終製品に組み込まれてしまえば、外からは見えなくなります。</p>
+        <p>けれども、見えない場所に入る部品ほど長く使われます。変圧器は据え付けてから30年近く動き続けますし、半導体の材料は一度採用されると、その製造ラインが止まるまで同じものを納め続けます。当社は1958年に樹脂の成形から始まり、この「長く使われる」性質を、4つの事業に広げてきました。</p>
+        <p>長く使われるということは、長く責任を負うということでもあります。納めた材料や機器が使われ続ける間、品質を保ち、部品を供給し、更新の時期を顧客と一緒に考える。この積み重ねが、当社の信用をつくってきました。</p>
+      </div>
+      <div>
+        <p>2027年度からの中期経営計画では、4つの事業に別々の役割を与えます。機能材料は成長投資の中心として新工場を建て、モビリティはEV向け部品で全社の利益を支えます。エネルギーは保守と遠隔監視の契約を増やして収益を安定させ、生活資材は植物由来のフィルムへの切り替えを進めます。</p>
+        <p>事業ごとに、求められる速さも投資の回収期間も違います。だからこそ一律の目標をやめ、役割に合った物差しで評価する仕組みに改めました。</p>
+        <p>本誌では事業ごとに色を分けています。右端の見出しの色をたどれば、各事業がいまどこにいて、次に何をするのかが分かるように編集しました。見えない場所で働く素材の話を、ご一読ください。</p>
+      </div>
+    </div>
+    <div class="sign"><div class="r">代表取締役社長</div><div class="n">高梨 修一</div></div>
+  </div>
+  <div class="foot"><span class="note">※ ROIC＝税引後営業利益÷（有利子負債＋自己資本）。数値は架空のサンプル。</span></div>
+</section>
+
+<!-- 4. Chapter 01: figure page (d-flow-v) -->
+<section class="page fig" data-ch="1" data-folio="05">
+  <div class="content">
+    <p class="kicker">Business 01 · Functional Materials</p>
+    <h2 class="h1">新しい材料の採用までを、<br><em>11か月</em>に縮めた。</h2>
+    <p class="lead">半導体メーカーが新しい材料を採用するまでには、評価と認定に<br>平均18か月かかります。当社は顧客の工場の近くに評価ラボを置き、<br>試作から認定までを顧客と同じ装置で進めています。</p>
+    <div class="figwrap" id="d-flow-v">
+      <p class="sq">新材料が量産ラインに採用されるまでの5段階</p>
+      <div class="rows">
+        <div class="when">0<u>か月</u></div><div class="node first"><span>1</span></div><div class="ttl">共同評価の開始</div><div class="dsc">顧客の要求仕様を受け取り、<br>評価ラボで試料を分析する。</div><div class="who">技術営業</div>
+        <div class="when">2<u>か月</u></div><div class="node"><span>2</span></div><div class="ttl">試作と条件出し</div><div class="dsc">顧客と同じ型式の装置で、<br>塗布と硬化の条件を決める。</div><div class="who">開発センター</div>
+        <div class="when">5<u>か月</u></div><div class="node"><span>3</span></div><div class="ttl">少量の試験納入</div><div class="dsc">顧客ラインで100枚単位の<br>試験を行い、欠陥を数える。</div><div class="who">品質保証</div>
+        <div class="when is-key">11<u>か月</u></div><div class="node is-key"><span>4</span></div><div class="ttl is-key">顧客認定の取得</div><div class="dsc is-key">不純物と欠陥率の基準を満たし、<br>量産材料として登録される。</div><div class="who is-key">品質保証</div>
+        <div class="when">12<u>か月〜</u></div><div class="node last"><span>5</span></div><div class="ttl">量産と継続改良</div><div class="dsc">熊本工場から月ごとに納め、<br>ロットごとに分析表を出す。</div><div class="who">熊本工場</div>
+      </div>
+      <p class="src">※ 2022〜2026年3月期に認定を得た新材料14件の平均。業界平均の18か月は当社調べ。数値は架空のサンプル。</p>
+    </div>
+    <div class="cols">
+      <p>機能材料事業は、半導体と電子部品の製造に使う高純度樹脂と特殊フィルムをつくっています。売上高は1,350億円で、全社の28%を占めます。新しい材料は採用までに時間がかかる一方、一度採用されれば製造ラインが続く限り同じ材料を納め続けられます。</p>
+      <p>そこで当社は、認定までの期間そのものを短くすることに投資してきました。台湾と韓国の評価ラボは顧客の工場から車で30分以内にあり、試料を当日中に分析できます。2029年度までに熊本工場の隣に新工場を建て、生産能力を1.6倍にします。</p>
+    </div>
+  </div>
+  <div class="foot"><span class="note">※ 売上高は2026年3月期、外部顧客への売上。</span></div>
+</section>
+
+<!-- 5. Chapter 03: highlights + table -->
+<section class="page tbl" data-ch="3" data-folio="11">
+  <div class="content">
+    <p class="kicker">Business 03 · Energy</p>
+    <h2 class="h1">据え付けた3,200台を、<br><em>24時間</em>見守っている。</h2>
+    <p class="lead">受変電設備は、据え付けてから30年近く動き続けます。エネルギー<br>事業は機器を納めるだけでなく、保守と遠隔監視の契約で稼働を<br>支え、セグメント営業利益の44%をこの契約から得ています。</p>
+    <div class="hl3">
+      <div class="hl"><div class="lab">遠隔監視中の設備<small>2026年3月末</small></div><div class="v"><span class="n">3,200</span><span class="u">台</span></div></div>
+      <div class="hl"><div class="lab">監視対象の稼働率<small>2025年度の年間平均</small></div><div class="v"><span class="n">99.97</span><span class="u">%</span></div></div>
+      <div class="hl"><div class="lab">保守の利益の比率<small>セグメント営業利益に占める</small></div><div class="v"><span class="n">44</span><span class="u">%</span></div></div>
+    </div>
+    <div class="tablewrap">
+      <p class="sq">工程別の売上高<small>2026年3月期</small></p>
+      <table>
+        <thead><tr><th>工程</th><th>主な製品・サービス</th><th>主な顧客</th><th class="r">売上高</th><th>構成比</th></tr></thead>
+        <tbody id="segRows"></tbody>
+      </table>
+      <p class="src">※ 構成比は小数点以下を四捨五入しているため、合計が100%にならない。数値は架空のサンプル。</p>
+    </div>
+    <div class="cols">
+      <p>監視センターは横浜にあり、全国の工場やデータセンターに据え付けた変圧器の温度と絶縁の状態を、24時間見ています。異常の兆しを見つけると、近くのサービス拠点から技術者が向かい、故障の前に部品を替えます。</p>
+      <p>機器の売上は受注ごとに上下しますが、監視契約は据え付け後15年続きます。2029年度までに契約を7,500台に増やし、保守の利益の比率を60%に引き上げる計画です。</p>
+    </div>
+  </div>
+  <div class="foot"><span class="note">※ 稼働率は、監視対象設備の計画停止を除く稼働時間の比率。</span></div>
+</section>
+
+<!-- 6. Company data -->
+<section class="page data" data-ch="5" data-folio="15">
+  <div class="content">
+    <p class="kicker">Company Data</p>
+    <h2 class="h1">4つの事業と国内外22拠点で、<br>5,912人が働いています。</h2>
+    <dl class="prof">
+      <dt>商号</dt><dd>株式会社イズミラ（IZUMIRA Corporation）</dd>
+      <dt>設立</dt><dd>1958年6月</dd>
+      <dt>本社</dt><dd>東京都港区</dd>
+      <dt>代表者</dt><dd>代表取締役社長　高梨 修一</dd>
+      <dt>資本金</dt><dd>286億円</dd>
+      <dt>売上高</dt><dd>4,820億円（連結、2026年3月期）</dd>
+      <dt>従業員数</dt><dd>5,912名（連結、2026年3月末）</dd>
+      <dt>事業</dt><dd>機能材料、モビリティ、エネルギー、生活資材</dd>
+    </dl>
+    <div class="bases">
+      <p class="sq">事業別の主な拠点<small>本社を含め22拠点</small></p>
+      <div class="grid" id="bases"></div>
+    </div>
+  </div>
+  <div class="contact">
+    <div class="ct"><b>お問い合わせ</b>株式会社イズミラ　広報部　受付 平日9:00〜17:30</div>
+    <div class="url">www.izumira.example</div>
+  </div>
+  <div class="foot"><span class="note">※ 2026年3月末時点。社名・拠点・数値はすべて架空のサンプルです。</span></div>
+</section>
+
+</main>
+
+<script>
+/* The color system as data: tabs, running heads, cover strips, contents rows and table rows read from here. */
+const CHAPTERS = [
+  { no: '00', name: 'はじめに',   color: 'var(--base)', text: 'var(--base)', page: 3,  role: '', desc: '社長メッセージ、イズミラの成り立ち' },
+  { no: '01', name: '機能材料',   color: 'var(--ch1)', text: 'var(--ch1)', page: 4,  sales: 1350, role: '成長投資',   roleNote: '半導体材料に新工場',   desc: '半導体・電子部品向けの高純度樹脂、特殊フィルム',
+    bases: { count: 4, list: ['熊本工場', '大分工場', '新竹評価ラボ（台湾）', '平沢評価ラボ（韓国）'] } },
+  { no: '02', name: 'モビリティ', color: 'var(--ch2)', text: 'var(--ch2)', page: 7,  sales: 1640, role: '収益の柱',   roleNote: 'EV向けで利益を支える', desc: 'EV向け熱マネジメント部品、エンジン冷却部品',
+    bases: { count: 6, list: ['浜松工場', '愛知技術センター', '蘇州工場（中国）', 'ラヨーン工場（タイ）ほか2拠点'] } },
+  { no: '03', name: 'エネルギー', color: 'var(--ch3)', text: 'var(--ch3-text)', page: 10, sales: 1110, role: 'ストック化', roleNote: '保守契約で安定させる', desc: '受変電設備、変圧器、遠隔監視サービス',
+    bases: { count: 7, list: ['茨城工場', '横浜 遠隔監視センター', 'サービス拠点 5か所（札幌、仙台、名古屋、大阪、福岡）'] } },
+  { no: '04', name: '生活資材',   color: 'var(--ch4)', text: 'var(--ch4)', page: 12, sales: 720,  role: '転換',       roleNote: '植物由来フィルムへ',   desc: '食品包装フィルム、農業用シート',
+    bases: { count: 4, list: ['千葉工場', '新潟工場', '包装開発センター（千葉）', 'ホーチミン工場（ベトナム）'] } },
+  { no: '05', name: '会社情報',   color: 'var(--base)', text: 'var(--base)', page: 14, role: '', desc: '会社概要、拠点、沿革、財務データ' },
+];
+const BIZ = CHAPTERS.filter(c => c.sales);
+const TOTAL = BIZ.reduce((s, c) => s + c.sales, 0);
+const pct = v => Math.round(v / TOTAL * 100);
+
+/* Page frame on every page but the cover: top rule, running head, tabs, folio. */
+document.querySelectorAll('.page[data-folio]').forEach(page => {
+  const ch = CHAPTERS[Number(page.dataset.ch)];
+  const all = page.dataset.tabs === 'all';
+  const role = ch.role ? `<span class="role">${ch.role}</span>` : '';
+  page.insertAdjacentHTML('afterbegin',
+    `<div class="rule"></div>
+     <header class="rh"><span class="doc"><b>IZUMIRA</b>会社案内 2027</span><span class="chap"><span class="no">${ch.no}</span>${ch.name}${ch.sales ? '事業' : ''}${role}</span></header>
+     <nav class="tabs">${CHAPTERS.map((c, i) => `<div class="tab${all || c === ch ? ' on' : ''}" style="top:${i * 184}px;--tc:${c.color}"><span class="tno">${c.no}</span><span class="tname">${c.name}</span></div>`).join('')}</nav>`);
+  page.querySelector('.foot').insertAdjacentHTML('beforeend', `<span class="folio">${page.dataset.folio}<span> / 16</span></span>`);
+});
+
+/* Cover: one strip per business, width proportional to sales, anchored to the right edge like a thumb index. */
+const maxSales = Math.max(...BIZ.map(c => c.sales));
+document.getElementById('coverStrips').innerHTML = BIZ.map(c =>
+  `<div class="strip" style="--sc:${c.color};width:${Math.round(c.sales / maxSales * 1000)}px"><span class="sno">${c.no}</span><span class="snm">${c.name}</span><span class="sv"><span class="n">${pct(c.sales)}</span><span class="u">%</span></span></div>`).join('');
+
+/* Contents: composition bar and one legend row per chapter. */
+document.getElementById('comp').innerHTML = BIZ.map(c =>
+  `<i style="width:${(c.sales / TOTAL * 100).toFixed(2)}%;background:${c.color}"></i>`).join('');
+document.getElementById('rows').innerHTML = CHAPTERS.map(c => `
+  <div class="row${c.sales ? '' : ' fm'}" style="--rc:${c.color};--rt:${c.text}">
+    <span class="chip"></span>
+    <span class="no">${c.no}</span>
+    <span class="nm">${c.name}${c.sales ? '事業' : ''}<small>${c.desc}</small></span>
+    <span class="rl">${c.role}${c.roleNote ? `<small>${c.roleNote}</small>` : ''}</span>
+    <span class="sales">${c.sales ? `<span class="n">${c.sales.toLocaleString()}</span><span class="u">億円</span><small>${pct(c.sales)}%</small>` : ''}</span>
+    <span class="pg">${String(c.page).padStart(2, '0')}</span>
+  </div>`).join('');
+
+/* Chapter 03 table: rows and share bars from one array; the total is computed. */
+const SEG = [
+  { seg: '設計', what: '受変電設備の仕様設計、系統解析', cust: '工場、データセンター', sales: 40 },
+  { seg: '製造', what: '変圧器、配電盤、開閉装置', cust: '電力会社、工場', sales: 700 },
+  { seg: '据付', what: '現地工事、試験、引き渡し', cust: '建設会社、工場', sales: 150 },
+  { seg: '保守', what: '定期点検、遠隔監視、部品交換', cust: '監視契約の需要家 1,180社', sales: 220, key: true },
+];
+const segTotal = SEG.reduce((s, r) => s + r.sales, 0);
+const segMax = Math.max(...SEG.map(r => r.sales));
+document.getElementById('segRows').innerHTML = SEG.map(r => `
+  <tr${r.key ? ' class="key"' : ''}><td class="seg">${r.seg}</td><td>${r.what}</td><td class="cu">${r.cust}</td>
+  <td class="r"><span class="n">${r.sales.toLocaleString()}</span><span class="u">億円</span></td>
+  <td class="bar"><div><i style="width:${Math.round(r.sales / segMax * 130)}px"></i><b>${Math.round(r.sales / segTotal * 100)}%</b></div></td></tr>`).join('') +
+  `<tr class="total"><td class="seg">合計</td><td></td><td></td><td class="r"><span class="n">${segTotal.toLocaleString()}</span><span class="u">億円</span></td><td></td></tr>`;
+
+/* Company data: bases per business, colored like their chapters; the 22 includes the head office. */
+document.getElementById('bases').innerHTML = BIZ.map(c => `
+  <div class="biz" style="--bc:${c.color};--bt:${c.text}">
+    <div class="bh"><span class="bno">${c.no}</span>${c.name}事業<span class="cnt">${c.bases.count}<u>拠点</u></span></div>
+    <ul>${c.bases.list.map(b => `<li>${b}</li>`).join('')}</ul>
+  </div>`).join('');
+
+/* FIT: scale the 1240px column to the window width; print resets it. */
+const stage = document.getElementById('docStage');
+const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+</script>
+</body>
+</html>

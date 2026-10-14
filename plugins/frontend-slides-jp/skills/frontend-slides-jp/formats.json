@@ -3,6 +3,20 @@
     "label": "16:9 presentation",
     "stage": { "width": 1920, "height": 1080 },
     "navigation": "deck",
-    "print": "1920px 1080px"
+    "print": "1920px 1080px",
+    "base": "viewport-base.css",
+    "reference": "reference.html",
+    "thumbs": "thumbs",
+    "unit": "slide"
+  },
+  "doc-a4": {
+    "label": "A4 portrait document",
+    "stage": { "width": 1240, "height": 1754 },
+    "navigation": "scroll",
+    "print": "A4",
+    "base": "page-base.css",
+    "reference": "reference-a4.html",
+    "thumbs": "thumbs-a4",
+    "unit": "page"
   }
 }
