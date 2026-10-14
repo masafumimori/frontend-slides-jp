@@ -84,28 +84,26 @@ body {
     z-index: 1;
 }
 
-/* 4b. Japanese typesetting.
-   palt/vpal only tighten fonts that ship those features; fonts/catalog.json
-   records which ones do. Headings use a family with palt: true. */
-.slide {
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
     line-break: strict;
     word-break: auto-phrase;
-    overflow-wrap: anywhere;
     font-feature-settings: "palt";
     font-kerning: normal;
 }
 
-.slide :is(h1, h2, h3) {
+:where(.slide) :where(h1, h2, h3) {
     letter-spacing: 0;
     line-height: 1.35;
 }
 
-.slide :is(p, li, td, dd) {
+:where(.slide) :where(p, li, td, dd) {
     letter-spacing: 0.02em;
     line-height: 1.7;
 }
 
-.slide .tate {
+:where(.slide) :where(.tate) {
     writing-mode: vertical-rl;
     font-feature-settings: "vpal";
 }
