@@ -14,7 +14,7 @@ Reference architecture for generating slide presentations. Every presentation fo
 
     <!-- Fonts: one Google Fonts link built from the css queries in fonts/catalog.json -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Inter+Tight:wght@500;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Schibsted+Grotesk:wght@500;800&display=swap">
 
     <style>
         /* ===========================================
@@ -33,7 +33,7 @@ Reference architecture for generating slide presentations. Every presentation fo
             /* Typography — authored at 1920×1080 stage size */
             --font-display: 'Noto Sans JP', sans-serif;
             --font-body: 'Noto Sans JP', sans-serif;
-            --font-latin: 'Inter Tight', 'Noto Sans JP', sans-serif;
+            --font-latin: 'Schibsted Grotesk', 'Noto Sans JP', sans-serif;
             --title-size: 112px;
             --subtitle-size: 34px;
             --body-size: 28px;

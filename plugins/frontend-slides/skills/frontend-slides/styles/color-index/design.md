@@ -71,7 +71,7 @@ Sizes are px at the 1920×1080 stage. The base CSS sets `palt` on `.slide`; `.la
 
 Ratios to keep: a figure is roughly 3 to 4 times its unit (236/64, 68/24, 40/17). The h1 is a full sentence that states the conclusion, at most two lines, with one phrase in `<em>` colored `--c`.
 
-The base CSS sets `h1, h2, h3` to tracking 0 and line-height 1.35. That rule outranks a bare class, so the deck writes `.slide .h1` to keep 0.01em / 1.32. Any new heading class must carry the `.slide` prefix or a slide-specific parent for the same reason.
+The base CSS defaults `h1, h2, h3` to tracking 0 and line-height 1.35; the base block is wrapped in `:where()` and has zero specificity, so any deck rule wins over it. The deck's `.h1` keeps 0.01em / 1.32 (the `.slide` prefix in `reference.html` is harmless and not required).
 
 ## 4. Signature devices
 

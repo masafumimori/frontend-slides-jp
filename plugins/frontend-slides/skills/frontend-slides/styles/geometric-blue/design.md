@@ -38,7 +38,7 @@ Derived colors are always `color-mix` of `--blue` or `--ink` with `--white`, nev
 
 Classes: `.en` sets `font-family: var(--en); font-stretch: 112%; font-feature-settings: normal`. `.mono` sets the mono family with `font-feature-settings: normal`. Japanese text keeps the base `palt`.
 
-Base CSS note. `viewport-base.css` gives `.slide :is(h1,h2,h3)` tracking 0 and line-height 1.35, and `.slide :is(p,li,td,dd)` tracking .02em and line-height 1.7. This style overrides both on purpose: every heading sets its own tracking (.02em) and line-height, and every single-line `p` label sets `line-height: 1.5` (or `normal` for Archivo labels) so absolute positions stay where they were drawn. A selector that is a single class (`.crumb`, `.lead-head`) loses to the base's `.slide p`, so write it as `.slide .crumb`.
+Base CSS note. `viewport-base.css` gives `.slide :is(h1,h2,h3)` tracking 0 and line-height 1.35, and `.slide :is(p,li,td,dd)` tracking .02em and line-height 1.7. This style overrides both on purpose: every heading sets its own tracking (.02em) and line-height, and every single-line `p` label sets `line-height: 1.5` (or `normal` for Archivo labels) so absolute positions stay where they were drawn. Since the base block is wrapped in `:where()` and has zero specificity, so any deck rule wins over it, a single class such as `.crumb` is enough; the `.slide` prefixes in `reference.html` are harmless.
 
 ## 3. Type scale
 

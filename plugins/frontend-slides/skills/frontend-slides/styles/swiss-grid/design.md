@@ -83,7 +83,7 @@ Span widths: n columns = 146n − 24 (1→122, 2→268, 3→414, 4→560, 5→70
 | Unit | Noto Sans JP | 900 | about ⅓ of its number: 56 with 168 (KPI), 48 with 168 (counts), 34 with 96, 26 with 72 | — | 0 | `.unit` |
 
 Rules:
-- The type-scale classes are written `.slide .h-xl` etc. so they outrank the base block's `.slide :is(h1,h2,h3)` and `.slide :is(p,…)`. Keep that prefix on any new class that sets line-height or tracking on a heading or paragraph.
+- The type-scale classes set their own line-height and tracking; the base block is wrapped in `:where()` and has zero specificity, so any deck rule wins over it. The `.slide` prefixes in `reference.html` are harmless and not required.
 - Japanese is always Noto Sans JP; Latin words, numbers and labels are always Schibsted Grotesk. Do not set a Japanese headline in the Latin family to "make it Swiss".
 - Weights in use: 900 for headings and numbers, 700 for labels and chart values, 500 for text. Do not use 400 or below at slide sizes.
 - Headlines break by hand with `<br>` at phrase boundaries (2 lines). Keep each line within its column span; at 84px with .01em tracking a 10-column span (1436) holds 16 characters.
@@ -139,6 +139,6 @@ Check every slide before delivery:
 - [ ] Latin text set in Noto Sans JP, or Japanese set in Schibsted Grotesk.
 - [ ] A headline that names a topic ("日程について") instead of stating the conclusion ("週末は昼に開き、平日は夜に集める。").
 - [ ] Bars or squares not proportional to the data, or chart numbers typed by hand instead of generated from the data array.
-- [ ] A heading class without the `.slide` prefix, so the base `line-height: 1.35` / `letter-spacing: 0` silently overrides it and the 272px title grows taller than rows 1–4.
+- [ ] A heading that falls back to the base `line-height: 1.35` because its class sets none, so the 272px title grows taller than rows 1–4.
 - [ ] Body text below 17px, or more than 5 lines of body in one block.
 - [ ] Hand-placed line breaks that now wrap a second time: check each `<br>` line fits its column span at the final size.

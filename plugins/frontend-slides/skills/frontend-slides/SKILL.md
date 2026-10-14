@@ -37,24 +37,26 @@ Interpret creatively and make unexpected choices that feel genuinely designed fo
 
 ### Japanese Typography
 
+These defaults apply to custom designs and to anything a style's `design.md` leaves open. Where a style's `design.md` sets a value (tracking, gate treatment, sizes), the style wins.
+
 - Pick Japanese families from [fonts/catalog.json](fonts/catalog.json). Headings use a family whose `role` is `any`; a `vertical-heading` family may set vertical headings only; `body-only` families never set headings, because palt does not tighten them and kana sit full-width.
 - Heading tracking is 0 with palt. Body tracking is 0.02em at most. Wide tracking (≥ 0.1em) belongs to Latin caps captions only.
 - Break headlines by hand with `<br>` at 文節 boundaries. No line may start with 、。」) or end with 「(, and no line may hold a single character.
 - Vertical runs use the `.tate` class from `viewport-base.css`. Two-digit numbers in vertical text use `text-combine-upright: all`.
-- Mixed Japanese and Latin: numbers and Latin words take the paired Latin family; units (億円, 件, %) sit at about a third of the number's size.
+- Mixed Japanese and Latin: numbers and Latin words take the paired Latin family.
 
 ### Design Rules
 
-These come from the Japanese reference decks the styles were built from. They apply to every style.
+These come from the Japanese reference decks the styles were built from. Every style already satisfies them; a style's `design.md` may refine them.
 
 - Colors: neutrals plus at most 4 hues per slide. Charts use shades of one hue, with the accent only on the value the headline is about.
 - Emphasis: at most 3 methods per deck (for example color, weight, size).
 - Every content slide's headline states its conclusion as a sentence, never a topic label.
 - Left-align body text. Bullets stay one level deep.
-- Three items sit side by side; four or more become a list, grid or table.
-- A KPI number is 3-4× the size of its unit.
+- At most three items sit in one row; four or more become a list, a 2×2 grid or a table.
+- In a KPI callout the number is 3-4× the size of its unit. In tables, units stay at caption size or larger.
 - Charts are 2D, keep their size and position across slides, and carry a source line.
-- Section gates use a full-bleed color or image; content slides use the light (or, in dark styles, dark) ground.
+- Section gates look different from content slides (full-bleed color or image unless the style defines another gate). Decks under about 10 slides may skip gates.
 
 ## Fixed Stage Rules
 
@@ -224,7 +226,9 @@ If the user selected a listed style or a brand, read that one style's `design.md
 - Preserve its tokens, fonts, type scale, signature devices and slide grammar.
 - Copy CSS from `reference.html`; write new copy for the user's content. Never reuse its fictional company, numbers or slogans.
 - Build missing slide types from the `design.md` slide-grammar section.
-- Before delivery, walk the style's slop-signs checklist and the Design Rules against rendered screenshots. `scrollHeight` checks alone are not enough because grid panels can visually cover each other.
+- `reference.html` omits inline editing; add it from [html-template.md](html-template.md).
+- Mark invented numbers, names and sources as fictional when the user gave you only a topic.
+- Before delivery, screenshot every slide at 1920×1080 and once at a phone viewport, then walk the style's slop-signs checklist and the Design Rules against them. Look for overlap by eye: `scrollHeight` and bounding-box checks miss panels that cover each other.
 
 If the user selected a self-generated custom wildcard, treat that preview's CSS and layout as the design recipe:
 

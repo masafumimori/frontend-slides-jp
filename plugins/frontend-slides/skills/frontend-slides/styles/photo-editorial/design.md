@@ -32,7 +32,7 @@ Color roles. Red marks one thing per slide: the cover year, a headline keyword, 
 
 ## 3. Type scale
 
-The base CSS sets headings to line-height 1.35 and tracking 0, and `p`/`li`/`td`/`dd` to 1.7 and 0.02em. `.caps` is declared as `.slide .caps` so its 0.86 line-height wins over the base heading rule; the contents `li` resets to line-height 1.45 and tracking 0. Keep both when copying.
+The base CSS sets headings to line-height 1.35 and tracking 0, and `p`/`li`/`td`/`dd` to 1.7 and 0.02em. Because the base block is wrapped in `:where()` and has zero specificity, so any deck rule wins over it, `.caps` keeps its 0.86 line-height and the contents `li` its line-height 1.45 and tracking 0. Keep both values when copying.
 
 | Role | Family | Weight | Size | Line-height | Tracking | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
