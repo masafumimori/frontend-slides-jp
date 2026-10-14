@@ -2,7 +2,7 @@
 // colors by role, CSS custom properties, the type of each text role, corner radii,
 // logo candidates (saved as files, from what the page loaded) and two screenshots.
 // It reads the site; it never decides the brand.
-//   node scripts/extract-site.mjs <url> [<url> …] --out <dir>
+//   node scripts/extract-site.mjs <url> [<url> …] --out <dir> [--allow-private]
 // Writes <dir>/site-facts.json, <dir>/site-<n>.png (first screen) and
 // <dir>/site-<n>-full.png (whole page, up to 8000px). Give 1–3 URLs of one site:
 // the home page, plus a company or product page.
@@ -10,7 +10,9 @@
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { lookup } from 'node:dns/promises';
+import { lookup } from 'node:dns';
+import http from 'node:http';
+import https from 'node:https';
 import { BlockList, isIP } from 'node:net';
 
 // True for a public unicast address. IPv6 is allowed only in global unicast (2000::/3) outside
@@ -30,28 +32,81 @@ function publicAddress(a) {
   if (kind === 6) return GLOBAL_V6.check(a, 'ipv6') && !BLOCKED_V6.check(a, 'ipv6');
   return false;
 }
-const hostCache = new Map();
-async function hostIsPublic(host) {
-  if (isIP(host)) return publicAddress(host);
-  if (/(^|\.)(localhost|local|internal|lan|home\.arpa)$/i.test(host)) return false;
-  if (!hostCache.has(host)) {
-    hostCache.set(host, lookup(host, { all: true, verbatim: true })
-      .then(list => list.length > 0 && list.every(({ address }) => publicAddress(address)))
-      .catch(() => false));
+// Every request of the page is made here, not by the browser: the name is resolved once, every
+// address is checked, and the connection goes to the checked address. A name that answers
+// differently on a second lookup (DNS rebinding) never gets that second lookup.
+function checkedLookup(hostname, options, cb) {
+  lookup(hostname, { all: true, verbatim: true }, (err, list) => {
+    if (err) return cb(err);
+    if (!list.length || !list.every(({ address }) => publicAddress(address))) {
+      return cb(Object.assign(new Error(`${hostname} is not a public address`), { code: 'EBLOCKED' }));
+    }
+    return options.all ? cb(null, list) : cb(null, list[0].address, list[0].family);
+  });
+}
+const MAX_BODY = 25_000_000;
+// One request, then its redirects, each hop through checkedLookup. Chromium follows a redirect
+// from a fulfilled response without routing it again, so redirects never reach the browser.
+function send(url, { method = 'GET', headers = {}, body = null, allowPrivate = false } = {}, hops = 0) {
+  return new Promise((resolve, reject) => {
+    const u = new URL(url);
+    if (!/^https?:$/.test(u.protocol)) return reject(new Error(`blocked scheme ${u.protocol}`));
+    const host = u.hostname.replace(/^\[|\]$/g, '');
+    if (!allowPrivate && isIP(host) && !publicAddress(host)) return reject(new Error(`${host} is not a public address`));
+    const h = { ...headers, host: u.host, 'accept-encoding': 'identity' };
+    const r = (u.protocol === 'https:' ? https : http).request(u, {
+      method, headers: h, timeout: 20000, ...(allowPrivate ? {} : { lookup: checkedLookup }),
+    }, res => {
+      const location = res.headers.location;
+      if ([301, 302, 303, 307, 308].includes(res.statusCode) && location) {
+        res.resume();
+        if (hops >= 5) return reject(new Error('too many redirects'));
+        const keep = [307, 308].includes(res.statusCode);
+        return send(new URL(location, u).href, { method: keep ? method : 'GET', headers, body: keep ? body : null, allowPrivate }, hops + 1).then(resolve, reject);
+      }
+      const chunks = [];
+      let size = 0;
+      res.on('data', c => { size += c.length; if (size > MAX_BODY) res.destroy(new Error('response too large')); else chunks.push(c); });
+      res.on('error', reject);
+      res.on('end', () => resolve({ url: u.href, status: res.statusCode, headers: res.headers, body: Buffer.concat(chunks) }));
+    });
+    r.on('timeout', () => r.destroy(new Error('timeout')));
+    r.on('error', reject);
+    if (body) r.write(body);
+    r.end();
+  });
+}
+async function fetchFor(route, allowPrivate) {
+  const req = route.request();
+  if (/^(data|blob):/.test(req.url())) return route.continue();
+  try {
+    const headers = Object.fromEntries(Object.entries(await req.allHeaders()).filter(([k]) => !k.startsWith(':') && k !== 'host'));
+    const res = await send(req.url(), { method: req.method(), headers, body: req.postDataBuffer(), allowPrivate });
+    const h = {};
+    for (const [k, v] of Object.entries(res.headers)) {
+      if (!/^(content-encoding|content-length|transfer-encoding|connection|location)$/i.test(k)) h[k] = Array.isArray(v) ? v.join('\n') : String(v);
+    }
+    await route.fulfill({ status: res.status, headers: h, body: res.body });
+  } catch {
+    await route.abort('blockedbyclient').catch(() => {});
   }
-  return hostCache.get(host);
 }
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const args = process.argv.slice(2);
 const out = args.includes('--out') ? args[args.indexOf('--out') + 1] : null;
 const urls = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--out');
-if (!out || !urls.length) throw new Error('usage: extract-site.mjs <url> [<url> …] --out <dir>');
+// --allow-private lets the page reach private addresses: only for the user's own staging site.
+const allowPrivate = args.includes('--allow-private');
+if (!out || !urls.length) throw new Error('usage: extract-site.mjs <url> [<url> …] --out <dir> [--allow-private]');
 for (const u of urls) if (!/^https?:\/\//.test(u)) throw new Error(`not an http(s) URL: ${u}`);
 mkdirSync(out, { recursive: true });
 
 const browser = await chromium.launch();
-const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'ja-JP', reducedMotion: 'reduce' });
+const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'ja-JP', reducedMotion: 'reduce', serviceWorkers: 'block' });
+// Requests the route cannot see: service workers are blocked above, WebSockets are closed here.
+await context.routeWebSocket(/.*/, ws => ws.close());
+await context.route('**/*', route => fetchFor(route, allowPrivate));
 // The sanitizer runs in its own blank page, where no script from the site can reach its builtins.
 const sanitizer = await (await browser.newContext()).newPage();
 await sanitizer.goto('about:blank');
@@ -59,20 +114,13 @@ const sites = [];
 
 for (const [i, url] of urls.entries()) {
   const page = await context.newPage();
-  // Logo files come from what the page itself loaded; this script sends no request of its own.
+  // Logo files come from what the page loaded, through fetchFor; no request is made for them.
   const images = new Map();
   page.on('response', r => { if (r.request().resourceType() === 'image' && r.ok()) images.set(r.url(), r); });
-  // The page may ask the browser for this machine or its network. Only the host the user named
-  // may be private (their own staging site); every other request must go to a public address.
-  const userHost = new URL(url).hostname;
-  await page.route('**/*', async route => {
-    const target = route.request().url();
-    if (/^(data|blob|about):/.test(target)) return route.continue();
-    const host = new URL(target).hostname.replace(/^\[|\]$/g, '');
-    if (host === userHost || (await hostIsPublic(host))) return route.continue();
-    return route.abort('blockedbyclient');
-  });
-  await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.waitForLoadState('load'));
+  // Resolve the page's own redirects first, so the browser opens the final URL and relative
+  // links resolve against it.
+  const target = await send(url, { allowPrivate }).catch(e => { throw new Error(`cannot open ${url}: ${e.message}${allowPrivate ? '' : ' (use --allow-private for your own staging site)'}`); });
+  await page.goto(target.url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.waitForLoadState('load'));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(800);
   const n = i + 1;
@@ -186,10 +234,7 @@ for (const [i, url] of urls.entries()) {
     let ext = 'svg', data;
     if (l.kind === 'img') {
       const res = l.src && images.get(l.src);
-      // Save only bytes that came from a public address: the address of the connection itself,
-      // so a name that resolves differently later cannot point it at this machine or its network.
-      const addr = res && (await res.serverAddr().catch(() => null));
-      if (!res || !addr || !publicAddress(addr.ipAddress)) continue;
+      if (!res) continue;
       ext = (res.headers()['content-type'] ?? '').match(/image\/(svg|png|jpe?g|webp|gif)/)?.[1].replace('jpeg', 'jpg');
       const body = await res.body().catch(() => null);
       if (!ext || !body || body.length > 2_000_000) continue;
