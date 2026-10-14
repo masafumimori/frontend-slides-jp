@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>イズミラ 中期経営計画</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Barlow:wght@500;600;700&family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.slide) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+:where(.slide) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+:where(.slide) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===========================================
+   COLOR INDEX: tokens
+   Skeleton = neutrals + base navy.
+   Each chapter owns one accent; a slide shows only its own.
+   =========================================== */
+:root {
+  --stage-bg: #0E151C;
+  --slide-bg: #FFFFFF;
+  --paper: #F5F4F0;
+  --line: #DEDCD5;
+  --line-strong: #B9B6AD;
+  --mute: #6E7177;
+  --ink: #1D232A;
+  --base: #1E3348;          /* brand navy: skeleton */
+  --ch1: #2B7680;           /* 01 機能材料 teal */
+  --ch2: #B0563A;           /* 02 モビリティ terracotta */
+  --ch3: #997622;           /* 03 エネルギー ochre */
+  --ch4: #5C7646;           /* 04 ライフサイエンス moss */
+  --jp: "Noto Sans JP", sans-serif;
+  --lat: "Barlow", "Noto Sans JP", sans-serif;
+  --num: "Barlow Semi Condensed", "Barlow", sans-serif;
+  --edge: 120px;            /* left margin */
+  --safe-r: 168px;          /* open tab 88px + 80px gutter: nothing but tabs goes right of this */
+}
+.slide[data-ch="1"] { --c: var(--ch1); }
+.slide[data-ch="2"] { --c: var(--ch2); }
+.slide[data-ch="3"] { --c: var(--ch3); }
+.slide[data-ch="4"] { --c: var(--ch4); }
+.slide { --c-tint: color-mix(in srgb, var(--c, var(--base)) 16%, #fff); --c-mid: color-mix(in srgb, var(--c, var(--base)) 45%, #fff); }
+
+.slide {
+  font-family: var(--jp);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+.lat { font-family: var(--lat); font-feature-settings: normal; }
+.num { font-family: var(--num); font-feature-settings: "tnum"; letter-spacing: 0; }
+
+/* ---------- Chrome: top rule, header, footer ---------- */
+.rule { position: absolute; left: 0; top: 0; width: 1920px; height: 10px; background: var(--c, var(--base)); }
+.head { position: absolute; left: var(--edge); right: var(--safe-r); top: 52px; display: flex; align-items: baseline; gap: 24px; font-size: 20px; }
+.head .chap { color: var(--c); font-weight: 700; letter-spacing: 0.02em; display: flex; align-items: baseline; gap: 12px; }
+.head .chap .no { font-family: var(--lat); font-weight: 600; font-size: 22px; letter-spacing: 0.04em; }
+.head .role { color: var(--mute); font-weight: 500; padding-left: 24px; border-left: 1px solid var(--line-strong); }
+.head .doc { margin-left: auto; color: var(--mute); font-weight: 500; letter-spacing: 0.02em; }
+.foot { position: absolute; left: var(--edge); right: var(--safe-r); bottom: 48px; display: flex; align-items: flex-end; font-size: 17px; color: var(--mute); line-height: 1.7; letter-spacing: 0.02em; }
+.foot .page { margin-left: auto; font-family: var(--lat); font-size: 20px; font-weight: 600; color: var(--ink); letter-spacing: 0.04em; white-space: nowrap; padding-left: 48px; }
+.foot .page span { color: var(--mute); font-weight: 500; }
+
+/* ---------- Thumb index (爪見出し) on the right edge ---------- */
+.tabs { position: absolute; right: 0; top: 128px; width: 96px; }
+.tab { position: absolute; right: 0; height: 200px; width: 40px; background: var(--paper); border-left: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; padding-top: 16px; box-sizing: border-box; gap: 14px; }
+.tab .tno { font-family: var(--lat); font-weight: 600; font-size: 17px; color: var(--line-strong); letter-spacing: 0.02em; }
+.tab .tname { writing-mode: vertical-rl; font-feature-settings: "vpal"; font-size: 17px; font-weight: 700; letter-spacing: 0.02em; color: #fff; display: none; }
+.tab.on { width: 88px; background: var(--tc); border-left: 0; }
+.tab.on .tno { color: #fff; font-size: 22px; }
+.tab.on .tname { display: block; }
+
+/* ---------- Shared type ---------- */
+.eyebrow { font-family: var(--lat); font-weight: 600; font-size: 18px; letter-spacing: 0.16em; color: var(--mute); text-transform: uppercase; }
+.slide .h1 { font-weight: 700; font-size: 70px; line-height: 1.32; letter-spacing: 0.01em; margin: 0; color: var(--ink); }
+.slide .h1 em { font-style: normal; color: var(--c); }
+.sq { font-weight: 700; font-size: 24px; letter-spacing: 0.02em; display: flex; align-items: center; gap: 12px; color: var(--ink); }
+.sq::before { content: ""; width: 18px; height: 18px; background: var(--c); flex: none; }
+.body { font-size: 24px; line-height: 1.75; letter-spacing: 0.02em; color: var(--ink); }
+
+/* ---------- Slide 1: cover ---------- */
+.s1 { --c: var(--base); }
+.s1 .mark { position: absolute; left: 120px; top: 96px; display: flex; align-items: center; gap: 20px; }
+.s1 .mark .glyph { width: 44px; height: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.s1 .mark .glyph i { background: var(--base); }
+.s1 .mark .glyph i:nth-child(4) { background: transparent; border: 4px solid var(--base); }
+.s1 .mark .wm { font-family: var(--lat); font-weight: 700; font-size: 30px; letter-spacing: 0.22em; color: var(--base); }
+.s1 .mark .jpname { font-size: 18px; color: var(--mute); font-weight: 500; letter-spacing: 0.04em; padding-left: 20px; border-left: 1px solid var(--line-strong); }
+.s1 .title { position: absolute; left: 120px; top: 300px; }
+.s1 .title .eyebrow { margin-bottom: 36px; }
+.s1 .title h1 { margin: 0; font-weight: 900; font-size: 124px; line-height: 1.12; letter-spacing: 0.01em; color: var(--base); }
+.s1 .title h1 .yr { display: block; font-family: var(--lat); font-weight: 600; font-size: 116px; letter-spacing: 0.01em; margin-top: 8px; font-feature-settings: "tnum"; }
+.s1 .lead { position: absolute; left: 120px; top: 692px; font-size: 38px; font-weight: 700; line-height: 1.55; letter-spacing: 0.01em; color: var(--ink); }
+.s1 .meta { position: absolute; left: 120px; bottom: 72px; display: flex; gap: 48px; font-size: 19px; color: var(--mute); letter-spacing: 0.03em; }
+.s1 .meta b { color: var(--ink); font-weight: 500; }
+.s1 .mixfig { position: absolute; left: 1000px; right: var(--safe-r); top: 640px; }
+.s1 .mixfig .sq small { font-size: 18px; font-weight: 500; color: var(--mute); margin-left: 8px; }
+.s1 .blocks { display: flex; gap: 3px; height: 168px; margin-top: 22px; }
+.s1 .blocks i { display: flex; flex-direction: column; justify-content: space-between; padding: 16px 14px 14px; box-sizing: border-box; background: var(--bc); color: #fff; font-style: normal; min-width: 0; }
+.s1 .blocks .bno { font-family: var(--lat); font-weight: 600; font-size: 20px; letter-spacing: 0.04em; }
+.s1 .blocks .bv { display: flex; align-items: baseline; font-family: var(--num); font-weight: 600; line-height: 0.9; }
+.s1 .blocks .bv .n { font-size: 56px; }
+.s1 .blocks .bv .u { font-size: 22px; margin-left: 2px; }
+
+/* ---------- Slide 2: contents = color legend ---------- */
+.s2 { --c: var(--base); }
+.s2 .left { position: absolute; left: 120px; top: 168px; width: 460px; }
+.s2 .left h2 { font-size: 88px; font-weight: 700; letter-spacing: 0.02em; margin: 24px 0 40px; color: var(--base); line-height: 1; }
+.s2 .left p { font-size: 23px; line-height: 1.8; margin: 0; letter-spacing: 0.02em; }
+.s2 .left .total { margin-top: 64px; padding-top: 28px; border-top: 2px solid var(--base); }
+.s2 .left .total .lab { font-size: 19px; color: var(--mute); font-weight: 500; letter-spacing: 0.02em; }
+.s2 .left .total .v { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; color: var(--base); }
+.s2 .left .total .v .n { font-family: var(--num); font-weight: 600; font-size: 104px; line-height: 1; }
+.s2 .left .total .v .u { font-size: 30px; font-weight: 700; }
+.s2 .right { position: absolute; left: 680px; right: var(--safe-r); top: 168px; }
+.s2 .comp { display: flex; height: 28px; gap: 3px; }
+.s2 .comp i { display: block; }
+.s2 .comp-scale { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--lat); font-size: 16px; color: var(--mute); font-weight: 500; }
+.s2 .rows { margin-top: 48px; border-top: 1px solid var(--ink); }
+.s2 .row { display: grid; grid-template-columns: 14px 56px 1fr 236px 150px 72px; align-items: center; column-gap: 24px; height: 148px; border-bottom: 1px solid var(--line); }
+.s2 .row .chip { width: 14px; height: 96px; background: var(--rc); }
+.s2 .row .no { font-family: var(--lat); font-weight: 600; font-size: 30px; color: var(--rc); letter-spacing: 0.02em; }
+.s2 .row .nm { font-size: 34px; font-weight: 700; letter-spacing: 0.01em; }
+.s2 .row .nm small { display: block; font-size: 19px; font-weight: 400; color: var(--mute); margin-top: 8px; letter-spacing: 0.02em; }
+.s2 .row .rl { font-size: 19px; font-weight: 700; color: var(--rc); letter-spacing: 0.02em; }
+.s2 .row .rl small { display: block; font-weight: 400; color: var(--mute); font-size: 16px; margin-top: 4px; }
+.s2 .row .sales { text-align: right; }
+.s2 .row .sales .n { font-family: var(--num); font-weight: 600; font-size: 40px; }
+.s2 .row .sales .u { white-space: nowrap; font-size: 18px; font-weight: 500; margin-left: 4px; }
+.s2 .row .sales small { display: block; font-family: var(--lat); font-size: 16px; color: var(--mute); font-weight: 500; }
+.s2 .row .pg { font-family: var(--lat); font-size: 19px; color: var(--mute); font-weight: 500; text-align: right; }
+.s2 .colhead { display: grid; grid-template-columns: 14px 56px 1fr 236px 150px 72px; column-gap: 24px; font-size: 16px; color: var(--mute); margin-top: 40px; padding-bottom: 12px; font-weight: 500; letter-spacing: 0.02em; }
+.s2 .colhead span:nth-child(5), .s2 .colhead span:nth-child(6) { text-align: right; }
+
+/* ---------- Slide 3: conclusion + chart ---------- */
+.s3 .hl { position: absolute; left: 120px; top: 152px; }
+.s3 .kpi { position: absolute; left: 120px; top: 456px; width: 520px; }
+.s3 .kpi .lab { font-size: 22px; font-weight: 700; letter-spacing: 0.02em; }
+.s3 .kpi .lab small { font-weight: 400; color: var(--mute); font-size: 18px; margin-left: 12px; }
+.s3 .kpi .big { display: flex; align-items: baseline; color: var(--c); margin-top: 12px; }
+.s3 .kpi .big .n { font-family: var(--num); font-weight: 600; font-size: 236px; line-height: 0.86; letter-spacing: -0.01em; }
+.s3 .kpi .big .u { font-size: 64px; font-weight: 700; margin-left: 12px; }
+.s3 .kpi .subs { display: grid; grid-template-columns: 1fr 1fr; margin-top: 52px; border-top: 1px solid var(--ink); }
+.s3 .kpi .sub { padding-top: 22px; }
+.s3 .kpi .sub + .sub { padding-left: 32px; border-left: 1px solid var(--line); }
+.s3 .kpi .sub .v { display: flex; align-items: baseline; gap: 4px; }
+.s3 .kpi .sub .v .n { font-family: var(--num); font-weight: 600; font-size: 68px; line-height: 1; }
+.s3 .kpi .sub .v .u { font-size: 24px; font-weight: 700; }
+.s3 .kpi .sub .v .d { font-family: var(--lat); font-size: 20px; font-weight: 600; color: var(--c); margin-left: 12px; }
+.s3 .kpi .sub .t { font-size: 18px; color: var(--mute); margin-top: 10px; letter-spacing: 0.02em; }
+.s3 .chart { position: absolute; left: 760px; top: 456px; width: 992px; }
+.s3 .chart .top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid var(--line-strong); }
+.s3 .chart .key { display: flex; gap: 28px; font-size: 18px; color: var(--ink); font-weight: 500; }
+.s3 .chart .key span { display: flex; align-items: center; gap: 8px; }
+.s3 .chart .key i { width: 16px; height: 16px; display: block; }
+.s3 svg text { font-family: var(--lat); font-size: 20px; fill: var(--mute); font-weight: 500; }
+.s3 svg text.jp { font-family: var(--jp); font-feature-settings: "palt"; }
+
+/* ---------- Slide 4: diagram ---------- */
+.s4 .hl { position: absolute; left: 120px; top: 152px; }
+.s4 .hl p { margin: 28px 0 0; font-size: 24px; color: var(--ink); line-height: 1.7; letter-spacing: 0.02em; }
+.s4 .flow { position: absolute; left: 120px; top: 412px; width: 1632px; }
+.s4 .brk { display: grid; grid-template-columns: 3fr 1fr; column-gap: 40px; margin-bottom: 18px; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; }
+.s4 .brk div { padding-bottom: 12px; border-bottom: 2px solid var(--line-strong); color: var(--mute); position: relative; }
+.s4 .brk div.stock { border-bottom-color: var(--c); color: var(--c); }
+.s4 .brk div small { font-weight: 400; margin-left: 12px; }
+.s4 .stages { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 40px; }
+.s4 .st { position: relative; background: var(--paper); padding: 28px 30px 26px; box-sizing: border-box; }
+.s4 .st + .st::before { content: ""; position: absolute; left: -32px; top: 50%; width: 24px; height: 24px; border-top: 2px solid var(--line-strong); border-right: 2px solid var(--line-strong); transform: translateY(-50%) rotate(45deg) scale(0.62); transform-origin: center; }
+.s4 .st.key { background: var(--c-tint); box-shadow: inset 0 6px 0 var(--c); }
+.s4 .st.key + .st::before, .s4 .st:last-child::before { border-color: var(--c); }
+.s4 .st .sn { font-family: var(--lat); font-weight: 600; font-size: 18px; color: var(--mute); letter-spacing: 0.06em; }
+.s4 .st.key .sn { color: var(--c); }
+.s4 .st h3 { margin: 6px 0 0; font-size: 32px; font-weight: 700; letter-spacing: 0.01em; }
+.s4 .st .what { font-size: 18px; color: var(--mute); margin-top: 8px; line-height: 1.6; letter-spacing: 0.02em; height: 58px; }
+.s4 .st .m { display: flex; justify-content: space-between; align-items: baseline; margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+.s4 .st.key .m { border-top-color: var(--c-mid); }
+.s4 .st .m div { font-size: 16px; color: var(--mute); letter-spacing: 0.02em; }
+.s4 .st .m b { display: block; font-family: var(--num); font-weight: 600; font-size: 40px; color: var(--ink); line-height: 1.1; margin-top: 2px; }
+.s4 .st .m b u { text-decoration: none; font-family: var(--jp); font-size: 17px; font-weight: 500; margin-left: 2px; }
+.s4 .st.key .m b { color: var(--c); }
+.s4 .mix { position: absolute; left: 120px; top: 806px; width: 1632px; display: grid; grid-template-columns: 300px 1fr; row-gap: 14px; align-items: center; }
+.s4 .mix .lab { font-size: 19px; font-weight: 500; letter-spacing: 0.02em; }
+.s4 .mix .lab b { font-family: var(--lat); font-weight: 600; }
+.s4 .mix .bar { display: flex; height: 44px; gap: 3px; }
+.s4 .mix .bar i { display: flex; align-items: center; padding-left: 16px; font-style: normal; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; }
+.s4 .mix .bar i.eq { background: var(--line); color: var(--ink); }
+.s4 .mix .bar i.sv { background: var(--c); color: #fff; }
+.s4 .mix .bar i.sv.plan { background: var(--c-mid); color: var(--ink); }
+.s4 .mix .bar i .num { font-size: 24px; margin-left: 10px; }
+.s4 .mix .ttl { grid-column: 1 / -1; margin-bottom: 6px; }
+
+/* ---------- Motion: one staggered reveal per slide ---------- */
+.rv { opacity: 0; transform: translateY(14px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
+.slide.active .rv { opacity: 1; transform: none; }
+.slide.active .rv:nth-of-type(2) { transition-delay: .08s; }
+.slide.active .d1 { transition-delay: .1s; }
+.slide.active .d2 { transition-delay: .2s; }
+.slide.active .d3 { transition-delay: .3s; }
+.slide.active .d4 { transition-delay: .4s; }
+@media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 1. Cover -->
+<section class="slide s1" data-tabs="all">
+  <div class="rule"></div>
+  <div class="mark rv">
+    <div class="glyph"><i></i><i></i><i></i><i></i></div>
+    <div class="wm">IZUMIRA</div>
+    <div class="jpname">株式会社イズミラ</div>
+  </div>
+  <div class="title rv d1">
+    <div class="eyebrow">Medium-Term Management Plan</div>
+    <h1>中期経営計画<span class="yr">2027–2029</span></h1>
+  </div>
+  <p class="lead rv d2">4つの事業に別々の役割を与え、<br>ROIC 10%の会社に変わる。</p>
+  <div class="mixfig rv d2">
+    <div class="sq">事業別の売上構成比<small>2026年3月期　連結 4,820億円</small></div>
+    <div class="blocks" id="coverMix"></div>
+  </div>
+  <div class="meta rv d3"><span><b>2026年11月12日</b></span><span>機関投資家・アナリスト向け説明会</span><span>代表取締役社長　高梨 修一</span></div>
+  <div class="tabs"></div>
+</section>
+
+<!-- 2. Contents / color legend -->
+<section class="slide s2" data-tabs="all">
+  <div class="rule"></div>
+  <div class="left rv">
+    <div class="eyebrow">Contents</div>
+    <h2>目次</h2>
+    <p>当社の売上は、性格の異なる<br>4つの事業で構成しています。<br>本資料では事業ごとに色を分け、<br>右端の見出しで現在の章を示します。</p>
+    <div class="total">
+      <div class="lab">連結売上高（2026年3月期）</div>
+      <div class="v"><span class="n">4,820</span><span class="u">億円</span></div>
+    </div>
+  </div>
+  <div class="right rv d1">
+    <div class="sq" style="--c: var(--base)">事業別の売上構成比</div>
+    <div class="comp" id="comp" style="margin-top:22px"></div>
+    <div class="comp-scale"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div>
+    <div class="colhead"><span></span><span></span><span>事業セグメント</span><span>計画上の役割</span><span>売上高</span><span>掲載頁</span></div>
+    <div class="rows" id="rows" style="margin-top:0"></div>
+  </div>
+  <div class="foot"><span>※ 売上高は外部顧客への売上。構成比は小数点以下を四捨五入。</span><span class="page">02<span> / 32</span></span></div>
+  <div class="tabs"></div>
+</section>
+
+<!-- 3. Chapter 02: conclusion + numbers -->
+<section class="slide s3" data-ch="2">
+  <div class="rule"></div>
+  <div class="head"><span class="chap"><span class="no">02</span>モビリティ事業</span><span class="role">収益の柱</span><span class="doc">中期経営計画 2027–2029</span></div>
+  <div class="hl rv">
+    <h2 class="h1">EV向け部品の売上が、<br>4年で<em>4倍</em>の486億円になった。</h2>
+  </div>
+  <div class="kpi rv d1">
+    <div class="lab">EV向け売上高<small>2026年3月期</small></div>
+    <div class="big"><span class="n">486</span><span class="u">億円</span></div>
+    <div class="subs">
+      <div class="sub"><div class="v"><span class="n">9.8</span><span class="u">%</span><span class="d">+3.1pt</span></div><div class="t">セグメント営業利益率</div></div>
+      <div class="sub"><div class="v"><span class="n">30</span><span class="u">%</span></div><div class="t">売上に占めるEV比率</div></div>
+    </div>
+  </div>
+  <div class="chart rv d2">
+    <div class="top">
+      <div class="sq">セグメント売上高の推移</div>
+      <div class="key"><span><i style="background:var(--c)"></i>EV向け</span><span><i style="background:var(--c-tint)"></i>エンジン車向け</span><span><i style="border:2px dashed var(--c);box-sizing:border-box"></i>計画</span></div>
+    </div>
+    <svg id="bars" width="992" height="388" viewBox="0 0 992 388"></svg>
+  </div>
+  <div class="foot"><span>※ 各年3月期。単位は億円。EV向けは、BEV・PHEV向けの熱マネジメント部品（ヒートポンプ用バルブ、電池冷却プレート）の合計。</span><span class="page">11<span> / 32</span></span></div>
+  <div class="tabs"></div>
+</section>
+
+<!-- 4. Chapter 03: diagram -->
+<section class="slide s4" data-ch="3">
+  <div class="rule"></div>
+  <div class="head"><span class="chap"><span class="no">03</span>エネルギー事業</span><span class="role">ストック化</span><span class="doc">中期経営計画 2027–2029</span></div>
+  <div class="hl rv">
+    <h2 class="h1">納めた後の15年で稼ぐ。<br>保守の利益を全体の<em>6割</em>へ。</h2>
+  </div>
+  <div class="flow rv d1">
+    <div class="brk"><div>機器の売り切り<small>受注ごとに一度きり</small></div><div class="stock">ストック収益<small>据付後15年の契約</small></div></div>
+    <div class="stages">
+      <div class="st"><div class="sn">STEP 1</div><h3>設計</h3><div class="what">受変電設備の仕様を、<br>需要家ごとに決める</div><div class="m"><div>売上高<b>40<u>億円</u></b></div><div>利益率<b>6.0<u>%</u></b></div></div></div>
+      <div class="st"><div class="sn">STEP 2</div><h3>製造</h3><div class="what">変圧器と配電盤を、<br>国内2工場でつくる</div><div class="m"><div>売上高<b>700<u>億円</u></b></div><div>利益率<b>4.5<u>%</u></b></div></div></div>
+      <div class="st"><div class="sn">STEP 3</div><h3>据付</h3><div class="what">現地工事と試験を行い、<br>引き渡す</div><div class="m"><div>売上高<b>150<u>億円</u></b></div><div>利益率<b>5.0<u>%</u></b></div></div></div>
+      <div class="st key"><div class="sn">STEP 4</div><h3>保守・遠隔監視</h3><div class="what">3,200台を24時間監視し、<br>故障の前に部品を替える</div><div class="m"><div>売上高<b>220<u>億円</u></b></div><div>利益率<b>15.0<u>%</u></b></div></div></div>
+    </div>
+  </div>
+  <div class="mix rv d2">
+    <div class="sq ttl">セグメント営業利益の構成</div>
+    <div class="lab"><b>2026</b>年3月期　実績</div>
+    <div class="bar"><i class="eq" style="width:56%">機器（設計・製造・据付）<span class="num">56%</span></i><i class="sv" style="width:44%">保守<span class="num">44%</span></i></div>
+    <div class="lab"><b>2029</b>年3月期　計画</div>
+    <div class="bar"><i class="eq" style="width:40%">機器<span class="num">40%</span></i><i class="sv plan" style="width:60%">保守（監視契約 7,500台）<span class="num">60%</span></i></div>
+  </div>
+  <div class="foot"><span>※ セグメント営業利益 74億円（2026年3月期）を工程別に配賦。</span><span class="page">16<span> / 32</span></span></div>
+  <div class="tabs"></div>
+</section>
+
+</main>
+</div>
+
+<script>
+/* The color system as data: every tab, chip and accent reads from here. */
+const CHAPTERS = [
+  { no: '01', name: '機能材料',       color: 'var(--ch1)', role: '成長投資',   roleNote: '半導体材料に設備投資を集中', desc: '半導体・電子部品向けの高純度樹脂、特殊フィルム', sales: 1350, page: 4 },
+  { no: '02', name: 'モビリティ',     color: 'var(--ch2)', role: '収益の柱',   roleNote: 'EV向けで全社利益を支える',   desc: 'EV向け熱マネジメント部品、エンジン冷却部品',     sales: 1640, page: 10 },
+  { no: '03', name: 'エネルギー',     color: 'var(--ch3)', role: 'ストック化', roleNote: '保守契約で利益を安定させる', desc: '受変電設備、変圧器、遠隔監視サービス',           sales: 1110, page: 15 },
+  { no: '04', name: 'ライフサイエンス', color: 'var(--ch4)', role: '育成',       roleNote: '医療機器の認証品を増やす',   desc: '医療用チューブ、透析関連の成形品',               sales: 720,  page: 21 },
+];
+const TOTAL = CHAPTERS.reduce((s, c) => s + c.sales, 0);
+
+/* Thumb index on every slide: all chapters lit on cover/contents, only the current one elsewhere. */
+document.querySelectorAll('.slide').forEach(slide => {
+  const host = slide.querySelector('.tabs');
+  if (!host) return;
+  const all = slide.dataset.tabs === 'all';
+  const cur = Number(slide.dataset.ch);
+  host.innerHTML = CHAPTERS.map((c, i) => {
+    const on = all || cur === i + 1;
+    return `<div class="tab${on ? ' on' : ''}" style="top:${i * 208}px;--tc:${c.color}"><span class="tno">${c.no}</span><span class="tname">${c.name}</span></div>`;
+  }).join('');
+});
+
+/* Cover: the same mix as one block per chapter, widths = share of sales. */
+document.getElementById('coverMix').innerHTML = CHAPTERS.map(c =>
+  `<i style="flex:${c.sales} 1 0;--bc:${c.color}"><span class="bno">${c.no}</span><span class="bv"><span class="n">${Math.round(c.sales / TOTAL * 100)}</span><span class="u">%</span></span></i>`).join('');
+
+/* Contents: composition bar + legend rows. */
+document.getElementById('comp').innerHTML = CHAPTERS.map(c =>
+  `<i style="width:${(c.sales / TOTAL * 100).toFixed(2)}%;background:${c.color}"></i>`).join('');
+document.getElementById('rows').innerHTML = CHAPTERS.map(c => `
+  <div class="row" style="--rc:${c.color}">
+    <span class="chip"></span>
+    <span class="no">${c.no}</span>
+    <span class="nm">${c.name}事業<small>${c.desc}</small></span>
+    <span class="rl">${c.role}<small>${c.roleNote}</small></span>
+    <span class="sales"><span class="n">${c.sales.toLocaleString()}</span><span class="u">億円</span><small>${Math.round(c.sales / TOTAL * 100)}%</small></span>
+    <span class="pg">p.${c.page}</span>
+  </div>`).join('');
+
+/* Chapter 02 chart: stacked bars drawn from the same numbers as the copy. */
+(function drawBars() {
+  const svg = document.getElementById('bars');
+  const NS = 'http://www.w3.org/2000/svg';
+  const data = [
+    { y: '2022', ev: 120, ice: 1260 },
+    { y: '2023', ev: 185, ice: 1265 },
+    { y: '2024', ev: 268, ice: 1252 },
+    { y: '2025', ev: 372, ice: 1218 },
+    { y: '2026', ev: 486, ice: 1154 },
+    { y: '2029', ev: 900, ice: 1050, plan: true },
+  ];
+  const W = 992, H = 388, base = 330, top = 40, max = 2000;
+  const h = v => v * (base - top) / max;
+  const shift = 18, bw = 92, gap = (W - 40 - bw * data.length) / (data.length - 1);
+  const el = (tag, a, t) => { const n = document.createElementNS(NS, tag); for (const k in a) n.setAttribute(k, a[k]); if (t != null) n.textContent = t; svg.appendChild(n); return n; };
+  const css = getComputedStyle(svg.closest('.slide'));
+  const C = css.getPropertyValue('--ch2').trim();
+  const T = 'color-mix(in srgb, ' + C + ' 16%, #fff)';
+  data.forEach((d, i) => {
+    const x = 20 + i * (bw + gap) + (d.plan ? shift : 0);
+    const he = h(d.ev), hi = h(d.ice), total = d.ev + d.ice;
+    if (d.plan) {
+      el('rect', { x, y: base - he - hi, width: bw, height: hi, fill: '#fff', stroke: C, 'stroke-width': 2, 'stroke-dasharray': '6 5' });
+      el('rect', { x, y: base - he, width: bw, height: he, fill: T, stroke: C, 'stroke-width': 2, 'stroke-dasharray': '6 5' });
+    } else {
+      el('rect', { x, y: base - he - hi, width: bw, height: hi, style: 'fill:' + T });
+      el('rect', { x, y: base - he, width: bw, height: he, fill: C });
+    }
+    el('text', { x: x + bw / 2, y: base - he - hi - 14, 'text-anchor': 'middle', style: 'fill:#1D232A;font-weight:600' }, total.toLocaleString());
+    const last = i === 4;
+    const inside = he >= 44;
+    el('text', { x: x + bw / 2, y: inside ? base - he + 30 : base - he - 12, 'text-anchor': 'middle', style: 'fill:' + (d.plan || !inside ? C : '#fff') + ';font-weight:600;font-size:' + (last ? 24 : 20) + 'px' }, d.ev);
+    el('text', { x: x + bw / 2, y: base + 34, 'text-anchor': 'middle', style: last ? 'fill:#1D232A;font-weight:600' : '' }, d.y + (d.plan ? ' 計画' : ''));
+  });
+  el('line', { x1: 0, x2: W, y1: base, y2: base, stroke: '#1D232A', 'stroke-width': 1.5 });
+  const sx = 20 + 5 * (bw + gap) + shift - (gap + shift) / 2;
+  el('line', { x1: sx, x2: sx, y1: top - 10, y2: base, stroke: '#B9B6AD', 'stroke-width': 1, 'stroke-dasharray': '3 5' });
+})();
+
+/* Deck controller: fixed stage scaling + keyboard, wheel, touch navigation. */
+class SlidePresentation {
+  constructor() {
+    this.slides = [...document.querySelectorAll('.slide')];
+    this.stage = document.getElementById('deckStage');
+    this.current = 0;
+    this.lock = false;
+    const scale = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    scale();
+    addEventListener('resize', scale);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); this.go(this.current + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.current - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    addEventListener('wheel', e => {
+      if (this.lock || Math.abs(e.deltaY) < 20) return;
+      this.lock = true; setTimeout(() => (this.lock = false), 700);
+      this.go(this.current + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: true });
+    let sx = 0;
+    addEventListener('touchstart', e => (sx = e.touches[0].clientX), { passive: true });
+    addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) this.go(this.current + (dx < 0 ? 1 : -1));
+    });
+    this.go(0);
+  }
+  go(i) {
+    this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+    this.slides.forEach((s, j) => {
+      s.classList.toggle('active', j === this.current);
+      s.classList.toggle('visible', j === this.current);
+    });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

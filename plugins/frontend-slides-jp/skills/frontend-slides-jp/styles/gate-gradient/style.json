@@ -1,0 +1,41 @@
+{
+  "slug": "gate-gradient",
+  "name": "Gate Gradient",
+  "name_ja": "グラデーション扉",
+  "tagline": "Only the cover and chapter gates carry a deep pine sky with a vermilion horizon; every content slide is white with ink and one vermilion accent.",
+  "summary_ja": "扉だけが深い松葉色の空と朱の水平線。本文は白地に墨と朱の1色。",
+  "group": "tech",
+  "mood": [
+    "tech",
+    "confident",
+    "clean"
+  ],
+  "formality": "medium",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "テック企業の会社紹介、採用ピッチ、カンファレンスのスポンサー資料",
+  "avoid_for": "伝統・和の世界観、子ども向け、写真主体の資料",
+  "formats": [
+    "slide-16x9"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "Noto Sans JP",
+    "latin": [
+      "Bricolage Grotesque"
+    ]
+  },
+  "colors": {
+    "ink": "#141816",
+    "ink-2": "#565C59",
+    "line": "#DADDDB",
+    "paper": "#FFFFFF",
+    "shu": "#DE4A16",
+    "pine": "#04302B"
+  },
+  "refs": [
+    "LayerX Company Deck"
+  ]
+}

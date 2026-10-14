@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIの18分を、3分にした話</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700;900&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F0F2F5;
+  --ink: #0D2A4A;
+  --ink-sub: #5E6E82;
+  --accent: #E2621B;
+  --stage-bg: #F0F2F5;
+  --slide-bg: #F0F2F5;
+  --ghost: rgba(13,42,74,.34);
+
+  --font: "Inter Tight", "Noto Sans JP", sans-serif;
+
+  --pad-x: 160px;
+  --pad-top: 128px;
+  --pad-bottom: 96px;
+
+  --size-cover: 200px;
+  --size-statement: 150px;
+  --size-head: 120px;
+  --size-body: 44px;
+  --size-meta: 26px;
+
+  /* the minute cell: 1 cell = 1 minute, on every slide */
+  --cell-gap: 8px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.slide) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+:where(.slide) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+:where(.slide) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.slide { padding: var(--pad-top) var(--pad-x) var(--pad-bottom); }
+
+.meta {
+  font-size: var(--size-meta);
+  font-weight: 700;
+  color: var(--ink-sub);
+  letter-spacing: 0.02em;
+}
+.accent { color: var(--accent); }
+/* palt is for display type only; running text keeps full-width punctuation */
+.body, .meta, .label, .from { font-feature-settings: normal; }
+.num { font-family: "Inter Tight", sans-serif; letter-spacing: -0.01em; }
+
+.slide .headline {
+  font-weight: 900;
+  font-size: var(--size-head);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.slide .body {
+  font-size: var(--size-body);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- minute cells (signature device) ---------- */
+.cells { position: relative; display: flex; gap: var(--cell-gap); }
+.cell {
+  flex: none;
+  height: 100%;
+  border-radius: 2px;
+}
+.cell.ghost { box-shadow: inset 0 0 0 2px var(--ghost); }
+
+/* ---------- talk clock (folio) ---------- */
+.folio {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.clock { display: flex; align-items: center; gap: 20px; }
+.clock .cells { height: 18px; --cell-gap: 4px; }
+.clock .cell { width: 14px; background: rgba(13,42,74,.40); }
+.clock .cell.ghost { background: none; box-shadow: inset 0 0 0 2px rgba(13,42,74,.22); }
+.clock .cell.now { background: var(--accent); }
+.clock .t { min-width: 3.2em; }
+.clock .t.now { color: var(--accent); text-align: right; }
+
+/* ---------- reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.slide.visible .reveal { opacity: 1; transform: none; }
+.slide.visible .d2 { transition-delay: .12s; }
+.slide.visible .d3 { transition-delay: .24s; }
+.slide.visible .d4 { transition-delay: .36s; }
+.fill { transform-origin: left center; }
+.slide .cells .cell.f { opacity: 0; transition: opacity .35s var(--ease); }
+.slide.visible .cells .cell.f { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .slide .cells .cell.f { opacity: 1; transition: none; }
+}
+
+/* ---------- 1 cover ---------- */
+.slide .cover-title {
+  position: absolute;
+  left: var(--pad-x);
+  top: 196px;
+  font-weight: 900;
+  font-size: var(--size-cover);
+  line-height: 1.14;
+  letter-spacing: 0;
+}
+.cover-title .num { font-size: 1.04em; }
+.cover-meter { position: absolute; left: var(--pad-x); right: var(--pad-x); top: 712px; }
+.cover-meter .cells { height: 76px; }
+.cover-meter .scale { position: relative; height: 34px; margin-top: 14px; }
+.cover-meter .scale span { position: absolute; top: 0; }
+.cover-who {
+  position: absolute;
+  left: var(--pad-x);
+  bottom: 96px;
+  display: flex; align-items: baseline; gap: 36px;
+}
+.cover-who .name { font-size: 48px; font-weight: 900; letter-spacing: 0.02em; }
+.cover-who .org { font-size: 30px; font-weight: 500; color: var(--ink-sub); letter-spacing: 0.02em; }
+.cover-meta { position: absolute; left: var(--pad-x); right: var(--pad-x); top: var(--pad-top); display: flex; justify-content: space-between; }
+
+/* ---------- 2 statement ---------- */
+.gate-label { display: flex; align-items: baseline; gap: 28px; }
+.gate-label .no { font-size: 40px; font-weight: 900; color: var(--accent); }
+.gate-label .meta { font-size: 32px; }
+.slide .statement {
+  margin-top: 80px;
+  font-weight: 900;
+  font-size: var(--size-statement);
+  line-height: 1.24;
+  letter-spacing: 0;
+}
+.gate-body { margin-top: 56px; color: var(--ink); }
+.gate-body .num { font-weight: 700; }
+
+/* ---------- 3 kpi + chart ---------- */
+.kpi-row {
+  position: absolute;
+  left: var(--pad-x); right: var(--pad-x);
+  top: 470px; bottom: 150px;
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  column-gap: 120px;
+}
+.kpi { align-self: end; }
+.kpi .label { font-size: 32px; font-weight: 700; color: var(--ink-sub); letter-spacing: 0.02em; }
+.kpi .value { display: flex; align-items: baseline; gap: 12px; margin-top: 8px; }
+.kpi .value .n { font-family: "Inter Tight", sans-serif; font-weight: 900; font-size: 260px; line-height: .9; letter-spacing: -0.03em; color: var(--accent); }
+.kpi .value .u { font-size: 76px; font-weight: 900; color: var(--accent); }
+.kpi .from { margin-top: 28px; font-size: 40px; font-weight: 700; letter-spacing: 0.02em; }
+.kpi .from .num { font-weight: 700; }
+
+.chart { position: relative; height: 100%; }
+.chart .cap { position: absolute; left: 0; top: 0; }
+.plot { position: absolute; left: 64px; right: 0; top: 112px; bottom: 52px; }
+.grid-line { position: absolute; left: 0; right: 0; height: 0; border-top: 2px solid rgba(13,42,74,.12); }
+.grid-line span { position: absolute; left: -64px; top: -16px; width: 48px; text-align: right; font-size: 24px; font-weight: 500; color: var(--ink-sub); font-family: "Inter Tight", sans-serif; }
+.grid-line.base { border-top-color: var(--ink); }
+.bars { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 18px; padding: 0 6px; }
+.bar { flex: 1; position: relative; }
+.bar .stack { position: absolute; inset: 0; }
+.bar b {
+  position: absolute; left: 50%; transform: translateX(-50%); top: -46px;
+  font-size: 30px; font-weight: 900; color: var(--accent); white-space: nowrap; font-family: "Inter Tight", sans-serif;
+}
+.marks { position: absolute; inset: 0; pointer-events: none; }
+.mark { position: absolute; top: -8px; bottom: 0; border-left: 2px dashed rgba(13,42,74,.45); }
+.mark span { position: absolute; left: 12px; top: -6px; font-size: 24px; font-weight: 700; white-space: nowrap; letter-spacing: 0.02em; color: var(--ink); }
+.xlab { position: absolute; left: 64px; right: 0; bottom: 0; height: 40px; }
+.xlab span { position: absolute; font-size: 24px; font-weight: 700; color: var(--ink-sub); letter-spacing: 0.02em; }
+
+/* ---------- 4 diagram ---------- */
+.lanes { position: absolute; left: var(--pad-x); right: var(--pad-x); top: 500px; height: 420px; }
+.lane { position: absolute; left: 0; right: 0; }
+.lane .who { position: absolute; left: 0; width: 230px; }
+.lane .who .t { font-size: 40px; font-weight: 900; letter-spacing: 0.01em; line-height: 1.1; }
+.lane .who .m { margin-top: 6px; font-size: 30px; font-weight: 700; color: var(--ink-sub); }
+.lane .row { position: absolute; left: 260px; right: 0; }
+.lane .row .cells { height: 64px; }
+.lane .row .lbl { position: relative; height: 34px; margin-bottom: 14px; }
+.lane .row .lbl > span { position: absolute; top: 0; white-space: nowrap; }
+.lane .row .lbl .num { color: var(--ink); margin-left: .3em; }
+.lane .row .lbl i { font-style: normal; display: inline-block; width: 1.4em; }
+.legend { position: absolute; right: 0; top: 0; }
+.gap-brace {
+  position: absolute; top: 0; height: 20px;
+  border: 3px solid var(--accent); border-top: none;
+}
+.slide .saved {
+  position: absolute; top: 40px;
+  font-size: 80px; font-weight: 900; color: var(--accent); letter-spacing: 0; line-height: 1;
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+  <!-- 1 cover -->
+  <section class="slide active visible" data-at="0">
+    <div class="cover-meta reveal"><p class="meta">TSUMIKI Conf 2026　Track B</p><p class="meta num">14:20–14:45</p></div>
+    <h1 class="cover-title reveal d2">CIの<span class="num">18</span>分を、<br><span class="accent"><span class="num">3</span>分</span>にした話。</h1>
+    <div class="cover-meter reveal d3">
+      <div class="cells" data-cells='{"total":18,"fill":[[0,3,"var(--accent)"]]}'></div>
+      <div class="scale meta" id="coverScale"></div>
+    </div>
+    <div class="cover-who reveal d4">
+      <p class="name">佐伯 遥</p>
+      <p class="org">株式会社ノキシタ　プラットフォームチーム</p>
+    </div>
+  </section>
+
+  <!-- 2 statement -->
+  <section class="slide" data-at="3">
+    <div class="gate-label reveal"><span class="no num">01</span><span class="meta">なぜ速くしたのか</span></div>
+    <h2 class="statement reveal d2">遅いCIは、<br>レビューの<span class="accent">会話</span>を<br>止めてしまう。</h2>
+    <p class="body gate-body reveal d3">1日<span class="num">42</span>回のプッシュ × <span class="num">18</span>分。毎日<span class="num">12.6</span>時間を、チームで待っていた。</p>
+  </section>
+
+  <!-- 3 conclusion + number -->
+  <section class="slide" data-at="11">
+    <h2 class="headline reveal">CIの待ち時間は、<br>約<span class="num">6</span>分の<span class="num">1</span>になった。</h2>
+    <div class="kpi-row">
+      <div class="kpi reveal d2">
+        <p class="label">CI所要時間の中央値（9月第4週）</p>
+        <p class="value"><span class="n">3.1</span><span class="u">分</span></p>
+        <p class="from">7月第1週は <span class="num">18.4</span>分</p>
+      </div>
+      <div class="chart reveal d3">
+        <p class="cap meta">週ごとの中央値（1マス＝1分）</p>
+        <div class="plot" id="plot">
+          <div class="grid-line" style="bottom:100%"><span>20</span></div>
+          <div class="grid-line" style="bottom:75%"><span>15</span></div>
+          <div class="grid-line" style="bottom:50%"><span>10</span></div>
+          <div class="grid-line" style="bottom:25%"><span>5</span></div>
+          <div class="grid-line base" style="bottom:0"><span>0</span></div>
+          <div class="bars" id="bars"></div>
+          <div class="marks" id="marks"></div>
+        </div>
+        <div class="xlab" id="xlab"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 diagram -->
+  <section class="slide" data-at="17">
+    <h2 class="headline reveal">速くしたのではなく、<br>やり直しをやめた。</h2>
+    <div class="lanes reveal d2" id="lanes">
+      <p class="legend meta" style="top:-56px">1マス＝1分</p>
+      <div class="lane" style="top:0">
+        <div class="who" style="top:48px"><p class="t">改善前</p><p class="m num">18.4分</p></div>
+        <div class="row" id="rowBefore">
+          <div class="lbl meta"></div>
+          <div class="cells"></div>
+        </div>
+      </div>
+      <div class="lane" style="top:200px">
+        <div class="who" style="top:48px"><p class="t">改善後</p><p class="m num">3.1分</p></div>
+        <div class="row" id="rowAfter">
+          <div class="lbl meta"><span style="left:0">依存<span class="num">0.3</span><i></i>ビルド<span class="num">1.2</span><i></i>テスト<span class="num">1.4</span><span style="margin-left:.2em">（4並列）</span><i></i>デプロイ<span class="num">0.2</span></span></div>
+          <div class="cells"></div>
+          <div style="position:relative" id="gapMark"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+/* ---------- data ---------- */
+const TALK = { start: [14, 20], minutes: 25 };
+const weekly = [18.4, 18.9, 17.6, 18.2, 11.2, 10.4, 6.8, 5.9, 4.1, 3.6, 3.2, 3.1];
+const changes = [
+  { at: 4, label: 'リモートキャッシュ' },
+  { at: 6, label: 'テスト4分割' },
+  { at: 8, label: '依存の事前ビルド' },
+];
+const months = [{ at: 0, label: '7月' }, { at: 4, label: '8月' }, { at: 8, label: '9月' }];
+const BEFORE_TOTAL = 18.4;
+const before = [
+  { name: '依存の取得', min: 4.2, color: '#0D2A4A' },
+  { name: 'ビルド', min: 6.1, color: '#2F4A68' },
+  { name: 'テスト', min: 7.3, color: '#546B86' },
+  { name: 'デプロイ', min: 0.8, color: '#8091A6' },
+];
+const AFTER_TOTAL = 3.1;
+
+/* ---------- minute cells: 1 cell = 1 minute ---------- */
+// fill: [[fromMin, toMin, color], ...]; cells beyond the fill are outlined (time not spent)
+function renderCells(el, total, fill) {
+  const n = Math.ceil(total - 1e-9);
+  const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+  const unit = (el.clientWidth - gap * (n - 1)) / total;
+  el.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const w = Math.min(1, total - i);
+    const c = document.createElement('div');
+    c.className = 'cell';
+    c.style.width = unit * w + 'px';
+    const stops = [];
+    let covered = 0;
+    fill.forEach(([a, b, color]) => {
+      const lo = Math.max(a, i), hi = Math.min(b, i + w);
+      if (hi <= lo) return;
+      stops.push(`${color} ${(lo - i) / w * 100}% ${(hi - i) / w * 100}%`);
+      covered += hi - lo;
+    });
+    if (covered < w - 1e-9) {
+      c.classList.add('ghost');
+      stops.push(`transparent 0 0`);
+    }
+    if (covered > 0) {
+      c.classList.add('f');
+      c.style.transitionDelay = (0.3 + i * 0.03) + 's';
+      c.style.background = stops.length === 1 ? stops[0].split(' ')[0] : `linear-gradient(90deg, ${stops.join(', ')})`;
+    }
+    el.appendChild(c);
+  }
+  return { unit, gap, x: m => m * unit + Math.floor(m - 1e-9 < 0 ? 0 : m - 1e-9) * gap };
+}
+
+function xOf(m, unit, gap) { const k = Math.ceil(m - 1e-9) - 1; return m * unit + Math.max(0, k) * gap; }
+
+function renderCover() {
+  const el = document.querySelector('.cover-meter .cells');
+  const { unit, gap } = renderCells(el, 18, [[0, 3, 'var(--accent)']]);
+  const sc = document.getElementById('coverScale');
+  sc.innerHTML = `<span class="num accent" style="left:${xOf(3, unit, gap) - 66}px">3分</span>` +
+    `<span class="num" style="right:0">18分</span>`;
+}
+
+function renderChart() {
+  const plot = document.getElementById('plot');
+  const pitch = plot.clientHeight / 20;
+  const bars = document.getElementById('bars');
+  const n = weekly.length;
+  weekly.forEach((v, i) => {
+    const b = document.createElement('div');
+    b.className = 'bar';
+    const color = i === n - 1 ? 'var(--accent)' : i >= 4 ? 'rgba(13,42,74,.62)' : 'rgba(13,42,74,.2)';
+    b.style.height = (v / 20 * 100) + '%';
+    b.innerHTML = `<div class="stack" style="background:repeating-linear-gradient(to top, ${color} 0 ${pitch - 3}px, transparent ${pitch - 3}px ${pitch}px)"></div>` +
+      (i === n - 1 ? `<b>${v.toFixed(1)}</b>` : '');
+    bars.appendChild(b);
+  });
+  const step = 100 / n;
+  const marks = document.getElementById('marks');
+  changes.forEach(c => {
+    const m = document.createElement('div');
+    m.className = 'mark';
+    m.style.left = `calc(${c.at * step}% + 2px)`;
+    m.style.top = `${(1 - weekly[c.at - 1] / 20) * 100 - 9}%`;
+    m.innerHTML = `<span>${c.label}</span>`;
+    marks.appendChild(m);
+  });
+  const xlab = document.getElementById('xlab');
+  months.forEach(mo => {
+    const s = document.createElement('span');
+    s.style.left = `calc(${mo.at * step}% + 6px)`;
+    s.textContent = mo.label;
+    xlab.appendChild(s);
+  });
+}
+
+function renderLanes() {
+  let t = 0;
+  const fillBefore = before.map(s => { const r = [t, t + s.min, s.color, s]; t += s.min; return r; });
+  const rb = document.getElementById('rowBefore');
+  const { unit, gap } = renderCells(rb.querySelector('.cells'), BEFORE_TOTAL, fillBefore);
+  rb.querySelector('.lbl').innerHTML = fillBefore.map(([a, b, , s], k) =>
+    k === fillBefore.length - 1
+      ? `<span style="right:0">${s.name}<span class="num">${s.min}</span></span>`
+      : `<span style="left:${xOf(a, unit, gap)}px">${s.name}<span class="num">${s.min}</span></span>`).join('');
+
+  const ra = document.getElementById('rowAfter');
+  renderCells(ra.querySelector('.cells'), BEFORE_TOTAL, [[0, AFTER_TOTAL, 'var(--accent)']]);
+  const x0 = xOf(AFTER_TOTAL, unit, gap) + 4;
+  const x1 = ra.clientWidth;
+  document.getElementById('gapMark').innerHTML =
+    `<div class="gap-brace" style="left:${x0}px;width:${x1 - x0}px;top:16px"></div>` +
+    `<p class="saved" style="left:${x0}px;top:60px"><span class="num">15.3</span>分、浮いた。</p>`;
+}
+
+/* ---------- talk clock: where we are in the 25-minute slot ---------- */
+function renderClocks() {
+  const pad = n => String(n).padStart(2, '0');
+  const at = m => { const t = TALK.start[0] * 60 + TALK.start[1] + m; return `${Math.floor(t / 60)}:${pad(t % 60)}`; };
+  document.querySelectorAll('.slide').forEach((s, i) => {
+    if (i === 0) return;
+    const m = +s.dataset.at;
+    const f = document.createElement('div');
+    f.className = 'folio meta';
+    let cells = '';
+    for (let k = 0; k < TALK.minutes; k++) cells += `<div class="cell${k < m ? '' : k === m ? ' now' : ' ghost'}"></div>`;
+    f.innerHTML = `<span>CIの18分を、3分にした話</span>` +
+      `<span class="clock"><span class="t num now">${at(m)}</span><span class="cells">${cells}</span><span class="t num">${at(TALK.minutes)}</span></span>`;
+    s.appendChild(f);
+  });
+}
+
+/* ---------- controller ---------- */
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.stage = document.getElementById('deckStage');
+    this.current = 0;
+    this.scale();
+    window.addEventListener('resize', () => this.scale());
+    document.addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); this.go(this.current + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); this.go(this.current - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    let sx = null;
+    document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) this.go(this.current + (dx < 0 ? 1 : -1));
+      sx = null;
+    });
+    let lock = false;
+    document.addEventListener('wheel', e => {
+      if (lock || Math.abs(e.deltaY) < 30) return;
+      lock = true; setTimeout(() => lock = false, 700);
+      this.go(this.current + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: true });
+    this.go(0);
+  }
+  scale() {
+    const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+    const x = (innerWidth - 1920 * f) / 2, y = (innerHeight - 1080 * f) / 2;
+    this.stage.style.transform = `translate(${x}px, ${y}px) scale(${f})`;
+  }
+  go(i) {
+    this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+    this.slides.forEach((s, j) => {
+      s.classList.toggle('active', j === this.current);
+      s.classList.toggle('visible', j === this.current);
+    });
+  }
+}
+
+renderClocks();
+new SlidePresentation();
+renderCover();
+renderChart();
+renderLanes();
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "slug": "corporate-mono",
+  "name": "Corporate Mono",
+  "name_ja": "コーポレート単色",
+  "tagline": "White ground and one corporate color used only on full-bleed gates, the left chapter band and chart shades.",
+  "summary_ja": "白地に弁柄1色。全面の扉、左の縦帯の章ナビ、グラフの濃淡の3役にだけ色を使う。",
+  "group": "business",
+  "mood": [
+    "trustworthy",
+    "calm",
+    "structured"
+  ],
+  "formality": "high",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料",
+  "avoid_for": "エンタメ、子ども向け、写真で魅せるブランド発表",
+  "formats": [
+    "slide-16x9"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "IBM Plex Sans JP",
+    "body": "IBM Plex Sans JP",
+    "latin": [
+      "Hanken Grotesk"
+    ]
+  },
+  "colors": {
+    "brand": "#9C3A21",
+    "ink": "#1E1A17",
+    "paper": "#FFFFFF",
+    "ink-2": "#6B635D",
+    "chart-1": "#E8D2C8",
+    "chart-2": "#C98A73"
+  },
+  "refs": [
+    "SmartHR 会社紹介資料",
+    "Nishika 採用ピッチ資料",
+    "中外製薬 会社紹介資料"
+  ]
+}

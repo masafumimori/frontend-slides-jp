@@ -1,0 +1,41 @@
+{
+  "slug": "geometric-blue",
+  "name": "Geometric Blue",
+  "name_ja": "青白と幾何モチーフ",
+  "tagline": "Royal blue and white only, with a square-cell motif that is data: the cover grid is the attention matrix of the headline itself.",
+  "summary_ja": "モチーフは飾りではなくデータ。表紙の格子は見出しをモデルに読ませた注意の重みを描く。",
+  "group": "tech",
+  "mood": [
+    "technical",
+    "precise",
+    "confident"
+  ],
+  "formality": "medium",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "研究開発の紹介、エンジニア採用ピッチ、技術説明、法人向けの技術提案",
+  "avoid_for": "情緒的なブランド発表、子ども向け、写真が主役の資料",
+  "formats": [
+    "slide-16x9"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "IBM Plex Sans JP",
+    "body": "IBM Plex Sans JP",
+    "latin": [
+      "Archivo",
+      "IBM Plex Mono"
+    ]
+  },
+  "colors": {
+    "blue": "#1534D6",
+    "ink": "#0A1A5E",
+    "tint": "#E9EDFD",
+    "white": "#FFFFFF"
+  },
+  "refs": [
+    "ELYZA 採用ピッチ",
+    "セプテーニ 表紙のモザイク"
+  ]
+}

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ヨミカキ研究所 採用資料</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #1534D6;
+  --ink: #0A1A5E;
+  --tint: #E9EDFD;
+  --white: #FFFFFF;
+  --line: color-mix(in srgb, var(--blue) 22%, var(--white));
+  --stage-bg: #0A1A5E;
+  --slide-bg: var(--white);
+
+  --jp: 'IBM Plex Sans JP', sans-serif;
+  --en: 'Archivo', 'IBM Plex Sans JP', sans-serif;
+  --mono: 'IBM Plex Mono', 'IBM Plex Sans JP', monospace;
+
+  --m: 120px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.slide) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+:where(.slide) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+:where(.slide) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+.slide {
+  font-family: var(--jp);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+.en { font-family: var(--en); font-stretch: 112%; font-feature-settings: normal; }
+.mono { font-family: var(--mono); font-feature-settings: normal; }
+
+/* motion: one staggered reveal per slide */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 90ms + 120ms); }
+.slide.visible .reveal { opacity: 1; transform: none; }
+.cell { opacity: 0; transition: opacity .35s ease-out; transition-delay: calc(var(--r) * 70ms + var(--c) * 12ms + 300ms); }
+.slide.visible .cell { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .cell { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* shared chrome on content slides */
+.slide .crumb { position: absolute; left: var(--m); top: 64px; display: flex; align-items: center; gap: 16px; font-size: 22px; font-weight: 500; line-height: 1.5; letter-spacing: .03em; color: var(--blue); }
+.slide .crumb::before { content: ""; width: 6px; height: 26px; background: var(--blue); }
+.mark { position: absolute; right: var(--m); top: 60px; display: flex; align-items: center; gap: 14px; }
+.mark svg { width: 30px; height: 30px; }
+.mark span { font-family: var(--en); font-stretch: 125%; font-weight: 800; font-size: 22px; letter-spacing: .14em; color: var(--blue); }
+.foot { position: absolute; left: var(--m); right: var(--m); bottom: 52px; display: flex; justify-content: space-between; font-size: 18px; letter-spacing: .03em; color: color-mix(in srgb, var(--ink) 60%, var(--white)); }
+.foot .en { font-stretch: 100%; font-weight: 500; letter-spacing: .08em; }
+
+.slide .lead-head { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-weight: 700; font-size: 64px; line-height: 1.4; letter-spacing: .02em; color: var(--ink); }
+.lead-head em { font-style: normal; color: var(--blue); }
+
+/* ---------- 01 cover ---------- */
+.s-cover .eyebrow { position: absolute; left: var(--m); top: 120px; font-size: 26px; font-weight: 700; line-height: normal; letter-spacing: .22em; color: var(--blue); }
+.s-cover .eyebrow b { display: inline-block; width: 14px; height: 14px; background: var(--blue); margin-right: 18px; vertical-align: 2px; }
+.s-cover h1 { position: absolute; left: var(--m); top: 300px; font-size: 100px; line-height: 1.32; font-weight: 700; letter-spacing: .02em; color: var(--ink); }
+.s-cover h1 .hl { color: var(--blue); }
+.s-cover .org { position: absolute; left: var(--m); bottom: 120px; }
+.s-cover .org .name { font-size: 34px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; }
+.s-cover .org .sub { margin-top: 14px; font-size: 24px; line-height: 1.5; letter-spacing: .03em; color: color-mix(in srgb, var(--ink) 70%, var(--white)); }
+.s-cover .matrix { position: absolute; left: 1086px; top: 84px; }
+.s-cover .cap { position: absolute; left: 1086px; bottom: 112px; width: 620px; font-size: 17px; line-height: 1.7; letter-spacing: .02em; color: color-mix(in srgb, var(--ink) 62%, var(--white)); text-align: left; }
+.s-cover .cap .legend { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; }
+.s-cover .cap .legend i { width: 18px; height: 18px; display: block; background: var(--blue); }
+
+/* ---------- 02 section gate ---------- */
+.s-gate { --slide-bg: var(--blue); background: var(--blue); color: var(--white); }
+.s-gate .num { position: absolute; left: 104px; top: 150px; font-family: var(--en); font-stretch: 125%; font-weight: 800; font-size: 420px; line-height: 1; letter-spacing: -.01em; color: var(--white); }
+.s-gate .chap { position: absolute; left: var(--m); top: 104px; font-family: var(--en); font-stretch: 112%; font-weight: 600; font-size: 24px; line-height: normal; letter-spacing: .3em; }
+.s-gate h2 { position: absolute; left: var(--m); top: 600px; font-size: 120px; font-weight: 700; letter-spacing: .02em; line-height: 1.2; }
+.s-gate .sub { position: absolute; left: var(--m); top: 772px; font-size: 34px; font-weight: 500; line-height: 1.5; letter-spacing: .03em; color: color-mix(in srgb, var(--white) 78%, var(--blue)); }
+.s-gate .toc { position: absolute; left: 1180px; right: var(--m); top: 530px; list-style: none; border-top: 2px solid color-mix(in srgb, var(--white) 35%, var(--blue)); }
+.s-gate .toc li { display: grid; grid-template-columns: 40px 64px 1fr auto; align-items: center; height: 92px; border-bottom: 2px solid color-mix(in srgb, var(--white) 35%, var(--blue)); font-size: 30px; font-weight: 500; letter-spacing: .03em; color: color-mix(in srgb, var(--white) 62%, var(--blue)); }
+.s-gate .toc li i { width: 16px; height: 16px; border: 2px solid currentColor; display: block; }
+.s-gate .toc li .n { font-family: var(--en); font-stretch: 112%; font-weight: 600; font-size: 24px; letter-spacing: .08em; }
+.s-gate .toc li .p { font-family: var(--en); font-weight: 500; font-size: 22px; letter-spacing: .08em; }
+.s-gate .toc li.now { color: var(--white); font-weight: 700; }
+.s-gate .toc li.now i { background: var(--white); }
+.s-gate .foot { color: color-mix(in srgb, var(--white) 70%, var(--blue)); }
+
+/* ---------- 03 conclusion + numbers ---------- */
+.s-kpi .lead { position: absolute; left: 0; right: 0; top: 352px; text-align: center; font-size: 26px; line-height: 1.5; letter-spacing: .03em; color: color-mix(in srgb, var(--ink) 72%, var(--white)); }
+.chart { position: absolute; left: var(--m); top: 452px; width: 1040px; }
+.chart .ttl { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+.chart .ttl b { font-size: 26px; font-weight: 700; letter-spacing: .02em; }
+.chart .ttl span { font-size: 18px; letter-spacing: .03em; color: color-mix(in srgb, var(--ink) 60%, var(--white)); }
+.chart svg { display: block; margin-top: 10px; overflow: visible; }
+.chart svg text { font-family: var(--jp); font-feature-settings: "palt"; }
+.kpis { position: absolute; left: 1260px; right: var(--m); top: 452px; height: 469px; display: grid; grid-template-rows: 1fr 1fr; gap: 16px; }
+.kpi { border: 2px solid var(--blue); display: flex; flex-direction: column; }
+.kpi .meter { margin: 10px 22px 0; height: 14px; background: color-mix(in srgb, var(--blue) 26%, var(--white)); }
+.kpi .meter i { display: block; height: 100%; background: var(--blue); }
+.kpi h3 { background: var(--blue); color: var(--white); font-size: 22px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; padding: 8px 22px; }
+.kpi .v { display: flex; align-items: baseline; gap: 10px; padding: 8px 22px 0; color: var(--blue); }
+.kpi .v .big { font-family: var(--en); font-stretch: 100%; font-weight: 700; font-size: 96px; line-height: 1; letter-spacing: -.01em; }
+.kpi .v .u { font-size: 30px; font-weight: 700; letter-spacing: .02em; }
+.kpi p { margin-top: auto; padding: 6px 22px 10px; font-size: 19px; line-height: 1.5; letter-spacing: .03em; color: color-mix(in srgb, var(--ink) 70%, var(--white)); }
+
+/* ---------- 04 layered model ---------- */
+.stack { position: absolute; left: var(--m); top: 400px; width: 1150px; }
+.stack .hdr { display: grid; grid-template-columns: 96px 300px 1fr 120px 110px; padding: 0 0 12px; font-size: 17px; letter-spacing: .03em; color: color-mix(in srgb, var(--ink) 58%, var(--white)); }
+.stack .hdr span:nth-last-child(-n+2) { text-align: right; }
+.layer { display: grid; grid-template-columns: 96px 300px 1fr 120px 110px; align-items: center; height: 118px; margin-top: 10px; padding-right: 28px; }
+.layer .n { font-family: var(--en); font-stretch: 125%; font-weight: 800; font-size: 34px; letter-spacing: .04em; padding-left: 28px; }
+.layer .nm { font-size: 32px; font-weight: 700; letter-spacing: .02em; }
+.layer .d { font-size: 20px; line-height: 1.6; letter-spacing: .02em; }
+.layer .t, .layer .o { text-align: right; font-size: 20px; letter-spacing: .02em; }
+.layer .t b, .layer .o b { font-family: var(--en); font-stretch: 100%; font-weight: 700; font-size: 40px; margin-right: 4px; }
+.layer.l4 { background: var(--tint); color: var(--ink); }
+.layer.l3 { background: color-mix(in srgb, var(--blue) 22%, var(--white)); color: var(--ink); }
+.layer.l2 { background: color-mix(in srgb, var(--blue) 62%, var(--white)); color: var(--white); }
+.layer.l1 { background: var(--blue); color: var(--white); }
+.layer.l4 .n, .layer.l3 .n, .layer.l4 .o b, .layer.l3 .o b { color: var(--blue); }
+.flow { position: absolute; left: 1300px; top: 444px; width: 28px; height: 502px; }
+.side { position: absolute; left: 1330px; right: var(--m); top: 442px; display: grid; gap: 24px; }
+.card { border: 2px solid var(--blue); background: var(--white); }
+.card h3 { background: var(--blue); color: var(--white); font-size: 22px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; padding: 10px 22px; }
+.card ul { list-style: none; padding: 4px 22px 6px; }
+.card li { display: grid; grid-template-columns: 22px 1fr; padding: 10px 0; font-size: 21px; line-height: 1.55; letter-spacing: .02em; border-bottom: 1px solid var(--line); }
+.card li:last-child { border-bottom: 0; }
+.card li::before { content: ""; width: 10px; height: 10px; background: var(--blue); margin-top: 11px; }
+.card .total { display: flex; align-items: baseline; gap: 10px; padding: 10px 22px 10px; color: var(--blue); }
+.card .total .big { font-family: var(--en); font-stretch: 100%; font-weight: 700; font-size: 76px; line-height: 1; }
+.card .total .u { font-size: 30px; font-weight: 700; }
+.card .total small { margin-left: auto; font-size: 19px; color: color-mix(in srgb, var(--ink) 70%, var(--white)); letter-spacing: .03em; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 01 cover -->
+<section class="slide s-cover active">
+  <p class="eyebrow en reveal" style="--i:0"><b></b>RECRUIT PITCH 2027</p>
+  <h1 class="reveal" style="--i:1">日本語を<br>根っこから<br><span class="hl">読み書き</span>できる<br>モデルをつくる。</h1>
+  <div class="org reveal" style="--i:2">
+    <p class="name">株式会社ヨミカキ研究所</p>
+    <p class="sub">研究職・エンジニア職 採用資料</p>
+  </div>
+  <svg class="matrix" id="attn" width="720" height="740" aria-label="タイトル文のトークン間の注意の重み"></svg>
+  <div class="cap mono reveal" style="--i:3">
+    <div class="legend"><i style="opacity:.14"></i><i style="opacity:.34"></i><i style="opacity:.6"></i><i></i><span style="margin-left:10px">注意の重み 弱 → 強</span></div>
+    左の見出し11トークンを自社モデル Fumi-3 に読ませた時の注意の重み。行が読んでいる語、列が参照先。右上の点は、まだ読んでいない未来の語。
+  </div>
+</section>
+
+<!-- 02 section gate -->
+<section class="slide s-gate">
+  <p class="chap reveal" style="--i:0">CHAPTER</p>
+  <p class="num reveal" style="--i:0">02</p>
+  <h2 class="reveal" style="--i:1">研究と技術</h2>
+  <p class="sub reveal" style="--i:2">小さく強いモデルを、どう作っているか</p>
+  <ol class="toc">
+    <li class="reveal" style="--i:2"><i></i><span class="n">01</span><span>私たちについて</span><span class="p">P.03</span></li>
+    <li class="now reveal" style="--i:3"><i></i><span class="n">02</span><span>研究と技術</span><span class="p">P.11</span></li>
+    <li class="reveal" style="--i:4"><i></i><span class="n">03</span><span>働く環境</span><span class="p">P.24</span></li>
+    <li class="reveal" style="--i:5"><i></i><span class="n">04</span><span>募集ポジション</span><span class="p">P.33</span></li>
+  </ol>
+  <div class="foot"><span>株式会社ヨミカキ研究所 採用資料</span><span class="en">10 / 48</span></div>
+</section>
+
+<!-- 03 conclusion + numbers -->
+<section class="slide s-kpi">
+  <p class="crumb">02 研究と技術</p>
+  <div class="mark"><svg viewBox="0 0 3 3" class="logo"></svg><span>YOMIKAKI</span></div>
+  <h2 class="lead-head reveal" style="--i:0">14Bのモデルで、<br>日本語読解の<em>首位</em>に立った。</h2>
+  <p class="lead reveal" style="--i:1">パラメータ数は比較対象の5分の1。日本語に絞った学習データの設計が効いている。</p>
+  <div class="chart reveal" style="--i:2">
+    <div class="ttl"><b>JRC-500 総合スコア</b><span>日本語の読解・要約・作文 500問　満点100　2026年9月 自社計測</span></div>
+    <svg id="bars" width="1040" height="400"></svg>
+  </div>
+  <div class="kpis">
+    <div class="kpi reveal" style="--i:3"><h3>推論コスト（70B級モデル比）</h3><div class="v"><span class="big">1/6</span><span class="u">に削減</span></div><div class="meter"><i style="width:16.7%"></i></div><p>同等精度で、100万トークンあたりの費用</p></div>
+    <div class="kpi reveal" style="--i:4"><h3>学習データの日本語比率</h3><div class="v"><span class="big">61</span><span class="u">%</span></div><div class="meter"><i style="width:61%"></i></div><p>総量2.1兆トークンのうち、自社で精製した日本語の割合</p></div>
+  </div>
+  <div class="foot"><span>株式会社ヨミカキ研究所 採用資料</span><span class="en">13 / 48</span></div>
+</section>
+
+<!-- 04 layered model -->
+<section class="slide s-layer">
+  <p class="crumb">02 研究と技術</p>
+  <div class="mark"><svg viewBox="0 0 3 3" class="logo"></svg><span>YOMIKAKI</span></div>
+  <h2 class="lead-head reveal" style="--i:0">データから製品まで、<br>4つの層を<em>ひとつのチーム</em>で持つ。</h2>
+  <div class="stack">
+    <div class="hdr reveal" style="--i:1"><span>層</span><span>担当</span><span>主な仕事</span><span>人数</span><span>募集</span></div>
+    <div class="layer l4 reveal" style="--i:1"><span class="n">04</span><span class="nm">製品・API</span><span class="d">法人向けAPI、契約書読解の「ヨミカキ文書」</span><span class="t"><b>14</b>名</span><span class="o"><b>3</b>件</span></div>
+    <div class="layer l3 reveal" style="--i:2"><span class="n">03</span><span class="nm">評価・安全性</span><span class="d">JRC-500の設計、有害出力の検査、人手評価</span><span class="t"><b>9</b>名</span><span class="o"><b>2</b>件</span></div>
+    <div class="layer l2 reveal" style="--i:3"><span class="n">02</span><span class="nm">モデル学習</span><span class="d">事前学習、指示調整、蒸留による小型化</span><span class="t"><b>18</b>名</span><span class="o"><b>4</b>件</span></div>
+    <div class="layer l1 reveal" style="--i:4"><span class="n">01</span><span class="nm">データ・計算基盤</span><span class="d">日本語コーパスの精製、GPU 512基のクラスタ運用</span><span class="t"><b>11</b>名</span><span class="o"><b>3</b>件</span></div>
+  </div>
+  <div class="side">
+    <div class="card reveal" style="--i:5"><h3>層をまたぐ働き方</h3><ul>
+      <li><span>毎週月曜、4層の担当が<br>同じ評価結果を見る</span></li>
+      <li><span>学習の失敗は、<br>データ層への課題票になる</span></li>
+      <li><span>入社半年で、2つ以上の層に<br>関わる人が7割</span></li>
+    </ul></div>
+    <div class="card reveal" style="--i:6"><h3>いま募集しているポジション</h3><div class="total"><span class="big">12</span><span class="u">件</span><small>うち研究職 5件</small></div></div>
+  </div>
+  <div class="foot"><span>株式会社ヨミカキ研究所 採用資料</span><span class="en">14 / 48</span></div>
+</section>
+
+</main>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const BLUE = '#1534D6', INK = '#0A1A5E';
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+
+// Mark: the causal mask of a 3-token sentence (lower triangle).
+document.querySelectorAll('svg.logo').forEach(s => {
+  for (let r = 0; r < 3; r++) for (let c = 0; c <= r; c++) el('rect', { x: c + .08, y: r + .08, width: .84, height: .84, fill: BLUE }, s);
+});
+
+// Cover: causal attention over the headline's own tokens.
+(() => {
+  const tok = ['日本語', 'を', '根っこ', 'から', '読み', '書き', 'できる', 'モデル', 'を', 'つくる', '。'];
+  const link = { '4,0': 1.6, '5,4': 1.8, '5,0': .9, '6,4': 1.1, '6,5': 1.2, '7,0': 1.4, '7,6': .8, '9,7': 1.9, '9,8': .7, '10,9': 1.0, '10,7': .6, '3,2': 1.2, '2,0': .8 };
+  const hash = (i, j) => { let h = (i * 73856093) ^ (j * 19349663) ^ 0x5bd1e995; h = Math.imul(h ^ (h >>> 13), 0x5bd1e995); return ((h ^ (h >>> 15)) >>> 0) / 4294967295; };
+  const n = tok.length, cell = 52, gap = 6, step = cell + gap, ox = 0, oy = 100;
+  const svg = document.getElementById('attn');
+  for (let i = 0; i < n; i++) {
+    const raw = [];
+    for (let j = 0; j <= i; j++) raw.push(Math.exp((j === 0 ? 1.1 : 0) + (link[i + ',' + j] || 0) + 1.2 * Math.exp(-(i - j) / 1.4) + .5 * hash(i, j)));
+    const sum = raw.reduce((a, b) => a + b, 0);
+    for (let j = 0; j < n; j++) {
+      const x = ox + j * step, y = oy + i * step;
+      if (j > i) { el('rect', { x: x + cell / 2 - 3, y: y + cell / 2 - 3, width: 6, height: 6, fill: BLUE, opacity: .28 }, svg); continue; }
+      const w = raw[j] / sum, lv = w > .3 ? 1 : w > .18 ? .6 : w > .1 ? .34 : .14;
+      const r = el('rect', { x, y, width: cell, height: cell, fill: BLUE, 'fill-opacity': lv, class: 'cell' }, svg);
+      r.style.setProperty('--r', i); r.style.setProperty('--c', j);
+    }
+    const t = el('text', { x: ox + n * step + 10, y: oy + i * step + cell / 2 + 7, 'font-size': 20, fill: INK, 'font-family': 'IBM Plex Sans JP', 'font-weight': 500 }, svg);
+    t.textContent = tok[i];
+  }
+  for (let j = 0; j < n; j++) {
+    const t = el('text', { x: ox + j * step + cell / 2, y: oy - 14, 'font-size': 20, fill: INK, 'font-family': 'IBM Plex Sans JP', 'font-weight': 500, 'writing-mode': 'vertical-rl', 'text-anchor': 'end' }, svg);
+    t.textContent = tok[j];
+  }
+})();
+
+// Benchmark bars: one hue, ours solid, others tinted.
+(() => {
+  const data = [
+    { m: 'Fumi-3', s: '14B　自社', v: 82.4, us: true },
+    { m: '商用モデル C', s: '非公開', v: 80.2 },
+    { m: '公開モデル A', s: '70B', v: 79.1 },
+    { m: '公開モデル B', s: '72B', v: 77.6 },
+    { m: 'Fumi-2', s: '13B　前世代', v: 68.3 },
+  ];
+  const svg = document.getElementById('bars');
+  const lx = 260, w = 680, rowH = 74, bh = 40, top = 24;
+  [0, 25, 50, 75, 100].forEach(g => {
+    const x = lx + w * g / 100;
+    el('line', { x1: x, x2: x, y1: 8, y2: top + rowH * data.length - 20, stroke: '#C9D2F6', 'stroke-width': 1 }, svg);
+    const t = el('text', { x, y: top + rowH * data.length + 6, 'font-size': 17, fill: '#6B76A3', 'text-anchor': 'middle', 'font-family': 'Archivo' }, svg); t.textContent = g;
+  });
+  data.forEach((d, i) => {
+    const y = top + i * rowH;
+    const a = el('text', { x: 0, y: y + 20, 'font-size': 24, 'font-weight': 700, fill: d.us ? BLUE : INK }, svg); a.textContent = d.m;
+    const b = el('text', { x: 0, y: y + 46, 'font-size': 17, fill: '#6B76A3' }, svg); b.textContent = d.s;
+    el('rect', { x: lx, y: y + 2, width: w * d.v / 100, height: bh, fill: BLUE, opacity: d.us ? 1 : .26 }, svg);
+    const v = el('text', { x: lx + w * d.v / 100 + 14, y: y + 33, 'font-size': d.us ? 34 : 26, 'font-weight': 700, fill: d.us ? BLUE : INK, 'font-family': 'Archivo' }, svg); v.textContent = d.v.toFixed(1);
+  });
+})();
+
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.i = 0;
+    this.stage = document.getElementById('deckStage');
+    const scale = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    scale(); addEventListener('resize', scale);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); this.show(this.i + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.show(this.i - 1); }
+      if (e.key === 'Home') this.show(0);
+      if (e.key === 'End') this.show(this.slides.length - 1);
+    });
+    let lock = 0;
+    addEventListener('wheel', e => { const now = Date.now(); if (now - lock < 700 || Math.abs(e.deltaY) < 20) return; lock = now; this.show(this.i + (e.deltaY > 0 ? 1 : -1)); }, { passive: true });
+    let sx = 0;
+    addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) this.show(this.i + (dx < 0 ? 1 : -1)); });
+    requestAnimationFrame(() => this.show(0));
+  }
+  show(n) {
+    this.i = Math.max(0, Math.min(n, this.slides.length - 1));
+    this.slides.forEach((s, j) => { s.classList.toggle('active', j === this.i); s.classList.toggle('visible', j === this.i); });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>榊屋醸造 長期構想 二〇二六―二一二六</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap">
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.slide) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+:where(.slide) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+:where(.slide) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+:root {
+  --paper: #F2EEE5;
+  --sumi: #1D1C1A;
+  --ai: #24466B;
+  --sumi-60: rgba(29, 28, 26, .62);
+  --sumi-35: rgba(29, 28, 26, .35);
+  --rule: rgba(29, 28, 26, .22);
+  --ai-30: #BCC6D1;
+  --ai-55: #8297AE;
+  --stage-bg: #121110;
+  --slide-bg: var(--paper);
+  --mincho: "Noto Serif JP", serif;
+  --latin: "EB Garamond", "Noto Serif JP", serif;
+  --ease: cubic-bezier(.2, .7, .1, 1);
+}
+
+.slide {
+  color: var(--sumi);
+  font-family: var(--mincho);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Vertical runs use the base .tate (vertical-rl + vpal). palt does nothing in
+   vertical-rl (0%); vpal tightens Noto Serif JP by 18.1%. .v places a run absolutely. */
+.v { position: absolute; margin: 0; }
+.tate > * { margin: 0; }
+.tcy { text-combine-upright: all; font-feature-settings: normal; }
+.lat { font-family: var(--latin); font-variant-numeric: lining-nums; font-feature-settings: "lnum"; }
+
+/* 柱とノンブル: 左端の縦の柱。本の左頁と同じ位置 */
+.hashira {
+  position: absolute; left: 64px; top: 120px;
+  font-size: 19px; letter-spacing: .12em; color: var(--sumi-60);
+}
+.hashira b { font-weight: 500; color: var(--sumi); }
+.nombre {
+  position: absolute; left: 64px; bottom: 96px; width: 26px; text-align: center;
+  font-family: var(--latin); font-size: 22px; color: var(--sumi-60);
+}
+.nombre::before { content: ""; display: block; width: 1px; height: 48px; background: var(--rule); margin: 0 auto 14px; }
+
+.cap {
+  font-family: var(--latin); font-size: 17px; letter-spacing: .22em; text-transform: uppercase; color: var(--sumi-60);
+}
+
+/* 動き: 縦の行を右から順に、上から下へ静かに置く */
+@keyframes fall { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+@keyframes wipe { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.rv { opacity: 0; }
+.slide.active .rv { animation: fall .9s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 110ms + 120ms); }
+@media (prefers-reduced-motion: reduce) {
+  .slide.active .rv { animation: none; opacity: 1; }
+}
+
+/* ---------- 1 表紙 ---------- */
+.s1 .title {
+  right: 150px; top: 132px;
+  font-size: 124px; font-weight: 600; line-height: 1.42; letter-spacing: .02em;
+}
+.s1 .title .ai { color: var(--ai); }
+.s1 .rule-v { position: absolute; right: 712px; top: 146px; width: 1px; height: 560px; background: var(--rule); }
+.s1 .lead {
+  right: 764px; top: 140px; height: 560px;
+  font-size: 27px; line-height: 2.05; letter-spacing: .04em;
+}
+.s1 .span {
+  position: absolute; left: 150px; top: 148px;
+  font-family: var(--latin); font-weight: 400; font-size: 168px; line-height: .9; letter-spacing: -.01em;
+  font-feature-settings: "lnum";
+}
+.s1 .span .to { display: block; width: 92px; height: 1px; background: var(--sumi); margin: 42px 0 38px 6px; }
+.s1 .span .fut { color: var(--ai); }
+.s1 .span small { display: block; font-size: 22px; letter-spacing: .2em; color: var(--sumi-60); margin-top: 18px; text-transform: uppercase; }
+.s1 .maker { position: absolute; left: 150px; bottom: 104px; display: flex; align-items: flex-end; gap: 26px; }
+.s1 .mark {
+  width: 64px; height: 64px; border: 1.5px solid var(--ai); color: var(--ai);
+  display: grid; place-items: center; font-size: 36px; font-weight: 600; line-height: 1;
+}
+.s1 .maker .nm { font-size: 30px; font-weight: 600; letter-spacing: .04em; line-height: 1.3; }
+.s1 .maker .nm span { display: block; font-size: 18px; font-weight: 400; color: var(--sumi-60); letter-spacing: .03em; margin-top: 6px; }
+.s1 .date { position: absolute; right: 150px; bottom: 104px; font-size: 20px; color: var(--sumi-60); letter-spacing: .04em; }
+
+/* ---------- 2 目次 ---------- */
+.s2 .head { right: 150px; top: 132px; font-size: 84px; font-weight: 600; line-height: 1; letter-spacing: .02em; }
+.s2 .head-cap { position: absolute; right: 168px; bottom: 120px; writing-mode: vertical-rl; }
+.s2 .intro {
+  right: 300px; top: 136px; height: 600px;
+  font-size: 25px; line-height: 2; letter-spacing: .03em; color: var(--sumi-60);
+}
+.s2 .toc { position: absolute; right: 450px; top: 120px; height: 840px; display: flex; flex-direction: row-reverse; }
+.s2 .item { position: relative; min-width: 236px; padding-left: 30px; height: 840px; border-right: 1px solid var(--rule); }
+.s2 .item:last-child { border-left: 1px solid var(--rule); }
+.s2 .item .tate { position: relative; height: 700px; padding: 14px 34px 0 0; }
+.s2 .num { font-size: 32px; font-weight: 500; color: var(--ai); line-height: 1; margin-left: 26px !important; }
+.s2 .ttl { font-size: 54px; font-weight: 600; line-height: 1.3; letter-spacing: .02em; margin-left: 22px !important; }
+.s2 .sub { font-size: 22px; line-height: 1.9; letter-spacing: .03em; color: var(--sumi-60); }
+.s2 .pg { position: absolute; right: 30px; bottom: 6px; font-family: var(--latin); font-size: 26px; color: var(--sumi-60); }
+
+/* ---------- 3 結論＋数字 ---------- */
+.s3 .head { right: 150px; top: 132px; font-size: 92px; font-weight: 600; line-height: 1.45; letter-spacing: .02em; }
+.s3 .head em { font-style: normal; color: var(--ai); }
+.s3 .lead { right: 620px; top: 136px; height: 520px; font-size: 25px; line-height: 2; letter-spacing: .03em; }
+.s3 .rule-v { position: absolute; right: 810px; top: 132px; width: 1px; height: 820px; background: var(--rule); }
+.s3 .data { position: absolute; left: 150px; top: 120px; width: 900px; }
+.s3 .kpis { display: flex; align-items: flex-end; gap: 0; border-bottom: 1px solid var(--sumi); padding-bottom: 30px; }
+.s3 .kpi { padding-right: 56px; }
+.s3 .kpi + .kpi { padding-left: 48px; border-left: 1px solid var(--rule); }
+.s3 .kpi .lbl { font-size: 20px; color: var(--sumi-60); letter-spacing: .03em; margin-bottom: 10px; }
+.s3 .kpi .n { font-family: var(--latin); font-feature-settings: "lnum"; font-weight: 500; line-height: .82; white-space: nowrap; }
+.s3 .kpi .n small { font-family: var(--mincho); font-weight: 600; margin-left: 6px; }
+.s3 .kpi.big .n { font-size: 210px; color: var(--ai); letter-spacing: -.02em; }
+.s3 .kpi.big .n small { font-size: 60px; }
+.s3 .kpi.sm .n { font-size: 84px; }
+.s3 .kpi.sm .n small { font-size: 26px; }
+.s3 .chart-h { display: flex; justify-content: space-between; align-items: baseline; margin: 44px 0 6px; font-size: 21px; }
+.s3 .chart-h span { color: var(--sumi-60); font-size: 18px; }
+.s3 svg { display: block; overflow: visible; }
+.s3 .note { position: absolute; left: 150px; bottom: 96px; width: 900px; font-size: 17px; line-height: 1.7; color: var(--sumi-60); }
+
+/* ---------- 4 図解: 縦組みの対照表 ---------- */
+.s4 .head { right: 150px; top: 132px; font-size: 80px; font-weight: 600; line-height: 1.5; letter-spacing: .02em; }
+.s4 .head em { font-style: normal; color: var(--ai); }
+.s4 .mx { position: absolute; right: 580px; top: 120px; display: flex; flex-direction: row-reverse; }
+.s4 .rowlbl { position: relative; width: 90px; }
+.s4 .rowlbl .v { font-size: 24px; font-weight: 600; letter-spacing: .08em; right: 30px; }
+.s4 .rowlbl .keep { top: 170px; }
+.s4 .rowlbl .chg { top: 526px; color: var(--ai); }
+.s4 .rowline { position: absolute; right: 0; left: 0; top: 496px; height: 1px; background: var(--sumi); }
+.s4 .col { position: relative; width: 262px; height: 840px; border-right: 1px solid var(--rule); }
+.s4 .col:last-child { border-left: 1px solid var(--rule); }
+.s4 .col .k { position: absolute; right: 28px; top: 8px; font-size: 64px; font-weight: 600; line-height: 1; }
+.s4 .band { position: absolute; left: 0; right: 0; height: 330px; padding: 32px 28px 0 0; }
+.s4 .band.keep { top: 140px; }
+.s4 .band.chg { top: 496px; border-top: 1px solid var(--sumi); }
+.s4 .band .m { font-size: 31px; font-weight: 600; line-height: 1.55; letter-spacing: .02em; margin-left: 20px !important; }
+.s4 .band .s { font-size: 20px; line-height: 1.85; letter-spacing: .03em; color: var(--sumi-60); }
+.s4 .band.chg .m { color: var(--ai); }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 1 表紙 -->
+<section class="slide s1">
+  <h1 class="tate v title rv" style="--i:0">次の百年も、<br>この蔵で<br><span class="ai">仕込む。</span></h1>
+  <div class="rule-v rv" style="--i:2"></div>
+  <p class="tate v lead rv" style="--i:3">文政九年に創業した榊屋醸造は、<br>今年で二百年目を迎えました。<br>これから百年の、蔵と人と味の構想です。</p>
+  <div class="span rv" style="--i:4">1826<span class="to"></span><span class="fut">2126</span><small>Long-term vision</small></div>
+  <div class="maker rv" style="--i:5">
+    <div class="mark">榊</div>
+    <div class="nm">株式会社 榊屋醸造<span>創業二百年 社員総会・取引先説明会</span></div>
+  </div>
+  <div class="date rv" style="--i:5">二〇二六年十月十四日</div>
+</section>
+
+<!-- 2 目次 -->
+<section class="slide s2">
+  <div class="tate hashira">榊屋醸造　<b>長期構想</b></div>
+  <div class="nombre">02</div>
+  <h2 class="tate v head rv" style="--i:0">目次</h2>
+  <div class="cap head-cap">Contents</div>
+  <p class="tate v intro rv" style="--i:1">二百年の蔵を振り返り、<br>いまの数字を確かめてから、<br>次の百年の決めごとに進みます。</p>
+  <div class="toc">
+    <div class="item rv" style="--i:2">
+      <div class="tate"><div class="num">一</div><h3 class="ttl">二百年の蔵</h3><p class="sub">土蔵二棟と杉桶<span class="tcy">48</span>本が、<br>どう受け継がれてきたか</p></div>
+      <div class="pg">04</div>
+    </div>
+    <div class="item rv" style="--i:3">
+      <div class="tate"><div class="num">二</div><h3 class="ttl">いまの数字</h3><p class="sub">国内は横ばい、海外が伸びた。<br>この十年の出荷の内訳</p></div>
+      <div class="pg">12</div>
+    </div>
+    <div class="item rv" style="--i:4">
+      <div class="tate"><div class="num">三</div><h3 class="ttl">変えないもの、<br>変えるもの</h3><p class="sub">味の芯と、そのまわり。<br>四つの領域で線を引く</p></div>
+      <div class="pg">20</div>
+    </div>
+    <div class="item rv" style="--i:5">
+      <div class="tate"><div class="num">四</div><h3 class="ttl">百年の計画</h3><p class="sub">最初の十年でやること、<br>その先に残すこと</p></div>
+      <div class="pg">28</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 結論＋数字 -->
+<section class="slide s3">
+  <div class="tate hashira">榊屋醸造　長期構想　<b>二　いまの数字</b></div>
+  <div class="nombre">12</div>
+  <h2 class="tate v head rv" style="--i:0">海外出荷は、<br>十年で<br><em>四倍</em>になった。</h2>
+  <p class="tate v lead rv" style="--i:1">国内の出荷が横ばいを続けるあいだ、<br>海外の家庭向けの醤油が、<br>蔵全体の伸びを支えた。</p>
+  <div class="rule-v"></div>
+  <div class="data">
+    <div class="kpis rv" style="--i:2">
+      <div class="kpi big"><div class="lbl">海外出荷量　二〇一六年度比</div><div class="n">4.1<small>倍</small></div></div>
+      <div class="kpi sm"><div class="lbl">海外の比率</div><div class="n">25<small>%</small></div></div>
+      <div class="kpi sm"><div class="lbl">取引国・地域</div><div class="n">31<small>か国</small></div></div>
+    </div>
+    <div class="chart-h rv" style="--i:3">海外出荷量の推移<span>単位 キロリットル　年度</span></div>
+    <svg id="chart" class="rv" style="--i:4" width="900" height="400" viewBox="0 0 900 400"></svg>
+  </div>
+  <p class="note rv" style="--i:5">出典　榊屋醸造 出荷実績（二〇一六〜二〇二五年度）。海外は代理店経由と直販の合計、比率は二〇二五年度の出荷量ベース。</p>
+</section>
+
+<!-- 4 図解 -->
+<section class="slide s4">
+  <div class="tate hashira">榊屋醸造　長期構想　<b>三　変えないもの、変えるもの</b></div>
+  <div class="nombre">20</div>
+  <h2 class="tate v head rv" style="--i:0">味の芯は残し、<br><em>そのまわりを</em><br>変える。</h2>
+  <div class="mx">
+    <div class="rowlbl rv" style="--i:1">
+      <div class="tate v keep">変えないもの</div>
+      <div class="tate v chg">変えるもの</div>
+      <div class="rowline"></div>
+    </div>
+    <div class="col rv" style="--i:2">
+      <div class="tate k">蔵</div>
+      <div class="band keep tate">
+        <p class="m">文政の土蔵二棟で、<br>仕込みを続ける</p>
+        <p class="s">味をつくる菌は蔵の梁と壁に棲む。<br>建て替えず、補修で残す。</p>
+      </div>
+      <div class="band chg tate">
+        <p class="m">三号蔵を建て、<br>見学と体験に開く</p>
+        <p class="s">二〇二九年に竣工。<br>年<span class="tcy">12</span>万人の来訪を見込む。</p>
+      </div>
+    </div>
+    <div class="col rv" style="--i:3">
+      <div class="tate k">桶</div>
+      <div class="band keep tate">
+        <p class="m">杉桶<span class="tcy">48</span>本で、<br>二年かけて熟成する</p>
+        <p class="s">最も古い桶は明治<span class="tcy">23</span>年製。<br>熟成期間は短くしない。</p>
+      </div>
+      <div class="band chg tate">
+        <p class="m">桶を、自分たちで<br>組めるようにする</p>
+        <p class="s">職人を社内で育て、<br>年に四本を自社で新調する。</p>
+      </div>
+    </div>
+    <div class="col rv" style="--i:4">
+      <div class="tate k">人</div>
+      <div class="band keep tate">
+        <p class="m">櫂入れは手で、<br>朝と夕に一回ずつ</p>
+        <p class="s">もろみの香りと泡で<br>仕込みの具合を見極める。</p>
+      </div>
+      <div class="band chg tate">
+        <p class="m">蔵人を<span class="tcy">14</span>人から<br><span class="tcy">22</span>人に増やす</p>
+        <p class="s">交代制で週休三日に。<br>技を一人に寄せない。</p>
+      </div>
+    </div>
+    <div class="col rv" style="--i:5">
+      <div class="tate k">台所</div>
+      <div class="band keep tate">
+        <p class="m">丸大豆と小麦と<br>塩だけでつくる</p>
+        <p class="s">原料は国産に限り、<br>添加物は使わない。</p>
+      </div>
+      <div class="band chg tate">
+        <p class="m">海外の家庭へ、<br>蔵から直接届ける</p>
+        <p class="s">二百ミリリットルの小瓶を出し、<br>直販の比率を三割に上げる。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function chart() {
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.getElementById('chart');
+  const add = (t, a, txt) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); if (txt != null) n.textContent = txt; svg.appendChild(n); return n; };
+  const data = [[2016, 118], [2017, 141], [2018, 176], [2019, 203], [2020, 219], [2021, 274], [2022, 322], [2023, 381], [2024, 436], [2025, 484]];
+  const W = 900, X0 = 52, top = 40, base = 340, max = 500, bw = 52, gap = (W - X0 - 10 * bw) / 9;
+  const y = v => base - (base - top) * v / max;
+  [100, 200, 300, 400, 500].forEach(v => {
+    add('line', { x1: X0, x2: W, y1: y(v), y2: y(v), stroke: 'var(--rule)', 'stroke-width': 1 });
+    add('text', { x: 0, y: y(v) + 6, 'text-anchor': 'start', 'font-size': 17, fill: 'var(--sumi-60)', 'font-family': 'EB Garamond' }, v);
+  });
+  data.forEach(([yr, v], i) => {
+    const x = X0 + i * (bw + gap), last = i === data.length - 1;
+    add('rect', { x, y: y(v), width: bw, height: base - y(v), fill: last ? 'var(--ai)' : 'var(--ai-30)' });
+    if (i === 0 || last) add('text', { x: x + bw / 2, y: y(v) - 14, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 500, 'font-family': 'EB Garamond', fill: last ? 'var(--ai)' : 'var(--sumi)' }, v);
+    add('text', { x: x + bw / 2, y: base + 34, 'text-anchor': 'middle', 'font-size': 20, 'font-family': 'EB Garamond', fill: last ? 'var(--sumi)' : 'var(--sumi-60)' }, yr);
+  });
+  add('line', { x1: X0, x2: W, y1: base, y2: base, stroke: 'var(--sumi)', 'stroke-width': 1.5 });
+})();
+
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.i = 0;
+    this.stage = document.getElementById('deckStage');
+    const fit = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    fit(); addEventListener('resize', fit);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.go(this.i + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.i - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    let lock = 0;
+    addEventListener('wheel', e => { const now = Date.now(); if (now - lock < 700) return; lock = now; this.go(this.i + (e.deltaY > 0 ? 1 : -1)); }, { passive: true });
+    let sx = null;
+    addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) this.go(this.i + (dx < 0 ? 1 : -1)); sx = null; });
+    this.go(0);
+  }
+  go(n) {
+    this.i = Math.max(0, Math.min(n, this.slides.length - 1));
+    this.slides.forEach((s, j) => { s.classList.toggle('active', j === this.i); s.classList.toggle('visible', j === this.i); });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

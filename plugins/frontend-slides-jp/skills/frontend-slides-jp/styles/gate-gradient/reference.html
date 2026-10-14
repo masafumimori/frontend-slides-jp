@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ソラネ Company Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,500;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #141816;
+  --ink-2: #565C59;
+  --line: #DADDDB;
+  --paper: #FFFFFF;
+  --shu: #DE4A16;
+  --pine: #04302B;
+  --font-jp: 'Noto Sans JP', sans-serif;
+  --font-lat: 'Bricolage Grotesque', 'Noto Sans JP', sans-serif;
+  --pad-x: 112px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --stage-bg: #0b0d0c;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.slide) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+:where(.slide) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+:where(.slide) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+body {
+  font-family: var(--font-jp);
+  color: var(--ink);
+  font-feature-settings: "palt";
+  line-break: strict;
+  word-break: auto-phrase;
+  -webkit-font-smoothing: antialiased;
+}
+.lat { font-family: var(--font-lat); font-feature-settings: "tnum", "lnum"; }
+
+/* ---------- gate surface: the only place the gradient lives ---------- */
+.gate {
+  --slide-bg: var(--pine);
+  color: #fff;
+  background: linear-gradient(in oklab 177deg,
+    #021816 0%, #04302B 44%, #1B6757 63%, #9DB698 71.5%,
+    #F2A672 74.5%, var(--shu) 77%, #5A1A08 85%, #0B0C0B 100%);
+}
+.gate.alt {
+  background: linear-gradient(in oklab 183.5deg,
+    #021816 0%, #04302B 42%, #1B6757 60%, #9DB698 68.5%,
+    #F2A672 71.5%, var(--shu) 74%, #5A1A08 82%, #0B0C0B 100%);
+}
+.gate::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  opacity: .22; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.gate > * { position: relative; z-index: 1; }
+
+.wordmark { display: flex; align-items: center; gap: 14px; font-family: var(--font-lat); font-weight: 500; font-size: 30px; letter-spacing: -0.01em; }
+.wordmark i { width: 26px; height: 26px; border-radius: 50%; border: 2px solid currentColor; position: relative; }
+.wordmark i::after { content: ""; position: absolute; left: -2px; right: -2px; top: 50%; height: 2px; background: currentColor; }
+
+/* ---------- 1. cover ---------- */
+.cover .wordmark { position: absolute; left: var(--pad-x); top: 96px; }
+.cover .kicker { position: absolute; right: var(--pad-x); top: 102px; font-family: var(--font-lat); font-weight: 300; font-size: 24px; letter-spacing: .14em; opacity: .8; }
+.cover .en {
+  position: absolute; left: calc(var(--pad-x) - 8px); top: 196px;
+  font-family: var(--font-lat); font-weight: 200; font-size: 212px; line-height: 1; letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 96;
+}
+.cover .jp {
+  position: absolute; left: var(--pad-x); top: 486px;
+  font-weight: 700; font-size: 80px; line-height: 1.32; letter-spacing: 0;
+}
+.cover .meta {
+  position: absolute; left: var(--pad-x); right: var(--pad-x); bottom: 84px;
+  display: flex; justify-content: space-between; font-size: 22px; letter-spacing: .03em; opacity: .8;
+}
+
+/* ---------- 2. section gate ---------- */
+.section .num {
+  position: absolute; right: 64px; top: -96px;
+  font-family: var(--font-lat); font-weight: 200; font-size: 940px; line-height: 1; letter-spacing: -0.06em;
+  font-variation-settings: "opsz" 96;
+}
+.section .crumb { position: absolute; left: var(--pad-x); top: 96px; font-family: var(--font-lat); font-weight: 300; font-size: 24px; letter-spacing: .16em; opacity: .8; }
+.section .title { position: absolute; left: var(--pad-x); bottom: 390px; }
+.section .title .en { font-family: var(--font-lat); font-weight: 300; font-size: 40px; letter-spacing: .02em; opacity: .85; margin-bottom: 18px; }
+.section .title h2 { font-weight: 700; font-size: 128px; line-height: 1.12; letter-spacing: 0; }
+.section .title p { margin-top: 30px; font-size: 28px; line-height: 1.7; letter-spacing: .03em; opacity: .88; }
+.toc { position: absolute; left: var(--pad-x); right: var(--pad-x); bottom: 84px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255,255,255,.3); }
+.toc li { list-style: none; padding-top: 20px; font-size: 22px; letter-spacing: .03em; opacity: .55; display: flex; gap: 18px; }
+.toc li b { font-family: var(--font-lat); font-weight: 500; }
+.toc li.now { opacity: 1; box-shadow: inset 0 3px 0 var(--shu); }
+
+/* ---------- content slides ---------- */
+.content { --slide-bg: var(--paper); background: var(--paper); }
+.content .head { position: absolute; left: var(--pad-x); top: 92px; right: var(--pad-x); }
+.content .crumb { font-size: 20px; letter-spacing: .03em; color: var(--ink-2); display: flex; gap: 16px; align-items: center; }
+.content .crumb b { font-family: var(--font-lat); font-weight: 500; color: var(--shu); letter-spacing: .04em; }
+.content h2 { margin-top: 26px; font-weight: 700; font-size: 62px; line-height: 1.3; letter-spacing: 0; }
+.content h2 em, .content .lead em { font-style: normal; color: var(--shu); }
+.content .lead { margin-top: 22px; font-size: 26px; line-height: 1.75; letter-spacing: .03em; color: var(--ink-2); font-weight: 500; }
+.foot { position: absolute; left: var(--pad-x); right: var(--pad-x); bottom: 52px; display: flex; justify-content: space-between; font-size: 18px; letter-spacing: .03em; color: var(--ink-2); }
+.foot .lat { font-weight: 500; }
+.note { position: absolute; left: var(--pad-x); bottom: 100px; font-size: 18px; color: var(--ink-2); letter-spacing: .03em; }
+
+/* 3. KPI + chart */
+.kpi-main { position: absolute; left: var(--pad-x); top: 316px; width: 640px; }
+.kpi-label { font-size: 24px; font-weight: 500; letter-spacing: .03em; }
+.kpi-fig { display: flex; align-items: baseline; margin-top: 4px; color: var(--shu); }
+.kpi-fig .n { font-family: var(--font-lat); font-weight: 300; font-size: 300px; line-height: .95; letter-spacing: -0.05em; font-variation-settings: "opsz" 96; }
+.kpi-fig .u { font-weight: 700; font-size: 80px; margin-left: 14px; letter-spacing: 0; }
+.kpi-sub { margin-top: 38px; display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--ink); }
+.kpi-sub div { padding-top: 22px; }
+.kpi-sub div + div { padding-left: 32px; border-left: 1px solid var(--line); }
+.kpi-sub .n { font-family: var(--font-lat); font-weight: 500; font-size: 76px; line-height: 1; letter-spacing: -0.03em; }
+.kpi-sub .n small { font-family: var(--font-jp); font-weight: 700; font-size: 26px; margin-left: 6px; letter-spacing: 0; }
+.kpi-sub p { margin-top: 12px; font-size: 20px; line-height: 1.6; color: var(--ink-2); letter-spacing: .03em; }
+.chart { position: absolute; right: var(--pad-x); top: 316px; width: 940px; }
+.chart .cap { display: flex; justify-content: space-between; align-items: baseline; font-size: 22px; font-weight: 500; letter-spacing: .03em; }
+.chart .cap span { font-size: 18px; color: var(--ink-2); font-weight: 400; }
+.chart svg { display: block; margin-top: 24px; overflow: visible; }
+.chart text { font-family: var(--font-lat); }
+
+/* 4. diagram */
+.flow { position: absolute; left: var(--pad-x); right: var(--pad-x); top: 372px; height: 504px; align-items: start; display: grid; grid-template-columns: 1fr 120px 1.35fr 120px 1fr; }
+.col { padding-top: 40px; }
+.col h3 { display: flex; align-items: baseline; gap: 18px; font-size: 34px; font-weight: 700; letter-spacing: 0; padding-bottom: 20px; border-bottom: 2px solid var(--ink); }
+.col h3 .lat { font-weight: 500; font-size: 20px; letter-spacing: .12em; color: var(--ink-2); }
+.col ul { list-style: none; }
+.col li { height: 120px; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--line); }
+.col li b { display: block; font-size: 25px; font-weight: 700; letter-spacing: 0; }
+.col li span { display: block; margin-top: 8px; font-size: 19px; line-height: 1.55; color: var(--ink-2); letter-spacing: .03em; }
+.col li span em { font-style: normal; color: var(--shu); font-weight: 700; }
+.engine { background: var(--ink); color: #fff; padding: 40px 44px; height: 504px; }
+.engine h3 { border-color: rgba(255,255,255,.9); }
+.engine h3 .lat { color: rgba(255,255,255,.6); }
+.engine ol { list-style: none; }
+.engine li { height: 120px; display: grid; grid-template-columns: 64px 1fr auto; align-items: center; align-content: center; border-bottom: 1px solid rgba(255,255,255,.18); }
+.engine li:last-child { border-bottom: 0; }
+.engine li .i { font-family: var(--font-lat); font-weight: 500; font-size: 20px; color: rgba(255,255,255,.55); }
+.engine li b { font-size: 28px; font-weight: 700; letter-spacing: 0; }
+.engine li b small { display: block; margin-top: 8px; font-size: 19px; font-weight: 400; color: rgba(255,255,255,.7); letter-spacing: .03em; }
+.engine li .v { font-family: var(--font-lat); font-weight: 500; font-size: 44px; letter-spacing: -0.02em; color: var(--shu); }
+.engine li .v small { font-family: var(--font-jp); font-size: 18px; font-weight: 700; margin-left: 4px; }
+.arrow { display: flex; align-items: center; justify-content: center; height: 504px; }
+.arrow svg { width: 72px; height: 24px; }
+
+/* ---------- motion ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.slide.visible .reveal { opacity: 1; transform: none; }
+.slide.visible .reveal.d1 { transition-delay: .08s; }
+.slide.visible .reveal.d2 { transition-delay: .18s; }
+.slide.visible .reveal.d3 { transition-delay: .3s; }
+.slide.visible .reveal.d4 { transition-delay: .44s; }
+.slide.visible .reveal.d5 { transition-delay: .58s; }
+.bar { transform-origin: bottom; transform-box: fill-box; transform: scaleY(0); transition: transform 1s var(--ease); }
+.slide.visible .bar { transform: scaleY(1); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .bar { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 1. cover -->
+<section class="slide gate cover active visible">
+  <div class="wordmark reveal d1"><i></i>Sorane</div>
+  <div class="kicker reveal d1">2026.10</div>
+  <div class="en reveal d2">Company Deck</div>
+  <h1 class="jp reveal d3">お金の流れを、<br>先に読む会社。</h1>
+  <div class="meta reveal d4"><span>ソラネ株式会社　会社紹介資料</span><span class="lat">sorane.example</span></div>
+</section>
+
+<!-- 2. section gate -->
+<section class="slide gate alt section">
+  <div class="crumb reveal d1">CHAPTER</div>
+  <div class="num reveal d2">2</div>
+  <div class="title">
+    <div class="en reveal d2">Business &amp; Growth</div>
+    <h2 class="reveal d3">事業と成長</h2>
+    <p class="reveal d4">中小企業の資金繰りを、<br>勘と経験から予測の仕事へ。</p>
+  </div>
+  <ol class="toc reveal d5">
+    <li><b>01</b>私たちについて</li>
+    <li class="now"><b>02</b>事業と成長</li>
+    <li><b>03</b>プロダクト</li>
+    <li><b>04</b>組織と採用</li>
+  </ol>
+</section>
+
+<!-- 3. conclusion + numbers -->
+<section class="slide content">
+  <div class="head">
+    <div class="crumb reveal d1"><b>02</b>事業と成長</div>
+    <h2 class="reveal d2">資金ショートの予兆を、<em>平均47日前</em>に知らせる。</h2>
+  </div>
+  <div class="kpi-main reveal d3">
+    <div class="kpi-label">資金ショート予兆の検知リードタイム</div>
+    <div class="kpi-fig"><span class="n">47</span><span class="u">日前</span></div>
+    <div class="kpi-sub">
+      <div><div class="n">38<small>億円</small></div><p>予兆通知のあとに<br>手当てできた資金不足（累計）</p></div>
+      <div><div class="n">±3.8<small>%</small></div><p>90日先残高予測の<br>平均誤差</p></div>
+    </div>
+  </div>
+  <div class="chart reveal d4">
+    <div class="cap">導入企業数の推移<span>四半期末・社</span></div>
+    <svg width="940" height="504" viewBox="0 0 940 504">
+      <line x1="0" y1="440" x2="940" y2="440" stroke="#141816" stroke-width="2"/>
+      <g fill="#C9CDCB">
+        <rect class="bar" x="22" y="345" width="88" height="95"/>
+        <rect class="bar" x="156" y="311" width="88" height="129"/>
+        <rect class="bar" x="290" y="278" width="88" height="162"/>
+        <rect class="bar" x="424" y="232" width="88" height="208"/>
+        <rect class="bar" x="558" y="183" width="88" height="257"/>
+        <rect class="bar" x="692" y="124" width="88" height="316"/>
+        <rect class="bar" x="826" y="60" width="88" height="380" fill="#DE4A16"/>
+      </g>
+      <g font-size="24" font-weight="500" fill="#141816" text-anchor="middle"><text x="66" y="331">310</text><text x="200" y="297">420</text><text x="334" y="264">530</text><text x="468" y="218">680</text><text x="602" y="169">840</text><text x="736" y="110">1,030</text><text x="870" y="46" fill="#DE4A16" font-weight="700">1,240</text></g>
+      <g font-size="19" fill="#565C59" text-anchor="middle">
+        <text x="66" y="474">Q1</text><text x="200" y="474">Q2</text><text x="334" y="474">Q3</text><text x="468" y="474">Q4</text><text x="602" y="474">Q1</text><text x="736" y="474">Q2</text><text x="870" y="474" fill="#141816" font-weight="700">Q3</text>
+        <text x="267" y="500" font-size="17">FY2025</text><text x="736" y="500" font-size="17">FY2026</text>
+      </g>
+    </svg>
+  </div>
+  <p class="note">注：検知リードタイムは2025年4月〜2026年9月に予兆通知を受けた導入企業312社の平均。決算期は3月。</p>
+  <div class="foot"><span><span class="lat">07</span>　｜　事業と成長</span><span class="lat">© Sorane Inc.</span></div>
+</section>
+
+<!-- 4. diagram -->
+<section class="slide content">
+  <div class="head">
+    <div class="crumb reveal d1"><b>02</b>事業と成長</div>
+    <h2 class="reveal d2">経理の手作業を、<em>予測の材料</em>に変える。</h2>
+  </div>
+  <div class="flow">
+    <div class="col reveal d3">
+      <h3>集める<span class="lat">INPUT</span></h3>
+      <ul>
+        <li><b>銀行口座の入出金</b><span>国内14行とAPIで連携</span></li>
+        <li><b>会計ソフトの仕訳</b><span>主要クラウド会計3種に対応</span></li>
+        <li><b>請求書と発注書</b><span>PDF・メール添付を自動で読み取り</span></li>
+      </ul>
+    </div>
+    <div class="arrow reveal d3"><svg viewBox="0 0 72 24"><path d="M0 12H68M58 3l10 9-10 9" fill="none" stroke="#141816" stroke-width="2"/></svg></div>
+    <div class="col engine reveal d4">
+      <h3>読む<span class="lat">SORANE ENGINE</span></h3>
+      <ol>
+        <li><span class="i">01</span><b>入金の自動消込<small>請求と入金を突き合わせる</small></b><span class="v">98.2<small>%</small></span></li>
+        <li><span class="i">02</span><b>90日先の残高予測<small>日次で更新、予兆を通知</small></b><span class="v">±3.8<small>%</small></span></li>
+        <li><span class="i">03</span><b>打ち手の提案<small>支払の調整・借入の時期</small></b><span class="v">3<small>案</small></span></li>
+      </ol>
+    </div>
+    <div class="arrow reveal d4"><svg viewBox="0 0 72 24"><path d="M0 12H68M58 3l10 9-10 9" fill="none" stroke="#141816" stroke-width="2"/></svg></div>
+    <div class="col reveal d5">
+      <h3>動く<span class="lat">OUTCOME</span></h3>
+      <ul>
+        <li><b>経理担当</b><span>月次締めを<em>5営業日→2営業日</em>に</span></li>
+        <li><b>経営者・CFO</b><span>資金調達の判断を前倒しできる</span></li>
+        <li><b>取引金融機関</b><span>実データにもとづく融資の相談</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">注：自動消込の一致率と予測誤差は、2026年4〜9月の全導入企業の平均。</p>
+  <div class="foot"><span><span class="lat">08</span>　｜　事業と成長</span><span class="lat">© Sorane Inc.</span></div>
+</section>
+
+</main>
+</div>
+<script>
+class SlidePresentation {
+  constructor() {
+    this.slides = [...document.querySelectorAll('.slide')];
+    this.i = 0;
+    this.stage = document.getElementById('deckStage');
+    const scale = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    scale(); addEventListener('resize', scale);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.go(this.i + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.i - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    let x0 = null;
+    addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) this.go(this.i + (dx < 0 ? 1 : -1)); x0 = null; });
+    let lock = 0;
+    addEventListener('wheel', e => { const t = Date.now(); if (t - lock < 700 || Math.abs(e.deltaY) < 20) return; lock = t; this.go(this.i + (e.deltaY > 0 ? 1 : -1)); }, { passive: true });
+    this.go(0);
+  }
+  go(n) {
+    this.i = Math.max(0, Math.min(n, this.slides.length - 1));
+    this.slides.forEach((s, j) => { s.classList.toggle('active', j === this.i); s.classList.toggle('visible', j === this.i); });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

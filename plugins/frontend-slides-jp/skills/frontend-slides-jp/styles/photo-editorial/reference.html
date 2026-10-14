@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アヤオリ 統合報告書 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Noto+Serif+JP:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* ===========================================
+   PHOTO-EDITORIAL — tokens
+   Three colors + one neutral. Photos carry the rest.
+   =========================================== */
+:root {
+  --paper: #FFFFFF;
+  --ink: #141414;
+  --red: #C8261B;          /* 赤耳 — selvedge red */
+  --mute: #8C8A86;         /* captions, rules */
+  --rule: rgba(20,20,20,.18);
+  --bar: #DAD7D1;           /* chart bars that are not the key bar */
+
+  --f-latin: 'Archivo', sans-serif;      /* used at wdth 62–75 = condensed caps */
+  --f-mincho: 'Noto Serif JP', serif;
+  --f-gothic: 'Noto Sans JP', sans-serif;
+
+  --m: 128px;              /* outer margin */
+  --ease: cubic-bezier(.2,.7,.1,1);
+  --stage-bg: #0b0b0b;
+  --slide-bg: var(--paper);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.slide) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+:where(.slide) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+:where(.slide) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===========================================
+   Typography system
+   =========================================== */
+.slide {
+  color: var(--ink);
+  font-family: var(--f-gothic);
+  font-feature-settings: "palt";
+  line-break: strict;
+  word-break: auto-phrase;
+  -webkit-font-smoothing: antialiased;
+}
+/* .slide raises specificity above the base heading rule (line-height 1.35). */
+.slide .caps {
+  font-family: var(--f-latin);
+  font-stretch: 62%;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: .86;
+  letter-spacing: -.005em;
+}
+/* Small tracked label */
+.label {
+  font-family: var(--f-latin);
+  font-stretch: 75%;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+/* Mincho — narrative voice */
+.mincho {
+  font-family: var(--f-mincho);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.red { color: var(--red); }
+.label .ja-in { letter-spacing: .03em; }
+
+/* Photo base: full-bleed, no blanket overlays */
+.photo { position: absolute; overflow: hidden; }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; max-width: none; max-height: none; }
+
+/* Folio: page furniture at bottom */
+.folio {
+  position: absolute; bottom: 52px; left: var(--m); right: var(--m);
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--f-latin); font-stretch: 75%; font-weight: 600;
+  font-size: 17px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute);
+}
+.folio b { color: var(--ink); font-weight: 700; }
+
+/* ===========================================
+   Motion — one staggered reveal per slide
+   =========================================== */
+.rv { opacity: 0; transform: translateY(18px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.slide.visible .rv { opacity: 1; transform: none; }
+.slide.visible .rv.d1 { transition-delay: .12s; }
+.slide.visible .rv.d2 { transition-delay: .24s; }
+.slide.visible .rv.d3 { transition-delay: .36s; }
+.slide.visible .rv.d4 { transition-delay: .48s; }
+.slide.visible .rv.d5 { transition-delay: .60s; }
+.photo img { transform: scale(1.04); transition: transform 2.4s var(--ease); }
+.slide.visible .photo img { transform: scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .rv, .photo img { transform: none !important; transition: none !important; }
+  .rv { opacity: 1 !important; }
+}
+
+/* ===========================================
+   01 COVER
+   =========================================== */
+.s-cover { background: #0d0c0b; color: #fff; }
+.s-cover .photo { inset: 0; }
+.s-cover .photo img { object-position: 60% 40%; }
+.s-cover .masthead {
+  position: absolute; top: 96px; left: var(--m);
+  display: flex; gap: 40px; align-items: baseline; color: rgba(255,255,255,.82);
+}
+.s-cover .masthead .label { font-size: 18px; }
+.s-cover .masthead .period { font-size: 17px; letter-spacing: .03em; color: rgba(255,255,255,.66); }
+.s-cover h1 {
+  position: absolute; left: var(--m); top: 236px;
+  font-size: 196px; color: #fff;
+}
+.s-cover h1 .year { color: var(--red); }
+.s-cover .sub {
+  position: absolute; left: var(--m); top: 760px;
+  font-size: 46px; line-height: 1.5; color: #fff; font-weight: 700;
+}
+.s-cover .colophon {
+  position: absolute; left: var(--m); bottom: 72px;
+  font-size: 18px; line-height: 1.7; letter-spacing: .03em; color: rgba(255,255,255,.66);
+}
+.s-cover .tab {
+  position: absolute; right: 0; top: 96px; width: 20px; height: 168px; background: var(--red);
+}
+
+/* ===========================================
+   02 CONTENTS — photo 2/3 + narrow column 1/3 (FR 目次)
+   =========================================== */
+.s-toc .photo { left: 0; top: 0; width: 1176px; height: 1080px; }
+.s-toc .photo img { object-position: 50% 50%; }
+.s-toc .over {
+  position: absolute; left: var(--m); bottom: 112px; color: #fff;
+}
+.s-toc .over .caps { font-size: 168px; }
+.s-toc .over .mincho { font-size: 36px; margin-top: 30px; line-height: 1.55; }
+.s-toc .col {
+  position: absolute; left: 1272px; top: 104px; width: 520px;
+}
+.s-toc .col .label { color: var(--red); }
+.s-toc ol { list-style: none; margin-top: 48px; }
+.s-toc li {
+  display: grid; grid-template-columns: 92px 1fr 56px; align-items: baseline;
+  padding: 22px 0 24px; border-top: 1px solid var(--rule);
+  line-height: 1.45; letter-spacing: 0;
+}
+.s-toc li:last-child { border-bottom: 1px solid var(--rule); }
+.s-toc li .no { font-family: var(--f-latin); font-stretch: 62%; font-weight: 800; font-size: 60px; line-height: .8; color: var(--red); }
+.s-toc li .en { font-family: var(--f-latin); font-stretch: 75%; font-weight: 600; font-size: 18px; letter-spacing: .16em; color: var(--mute); display: block; margin-bottom: 6px; }
+.s-toc li .ja { font-family: var(--f-mincho); font-weight: 700; font-size: 32px; letter-spacing: 0; line-height: 1.3; }
+.s-toc li .pg { font-family: var(--f-latin); font-stretch: 75%; font-weight: 600; font-size: 20px; text-align: right; color: var(--ink); align-self: end; padding-bottom: 6px; }
+.s-toc .folio { left: 1272px; }
+
+/* ===========================================
+   03 NUMBERS — selvedge strip + message + KPI + chart
+   =========================================== */
+.s-num .photo { left: 0; top: 0; width: 520px; height: 1080px; }
+.s-num .photo img { object-position: 38% 50%; }
+.s-num .cap {
+  position: absolute; left: 48px; top: 104px; width: 400px;
+  color: #fff; font-size: 18px; line-height: 1.7; letter-spacing: .03em;
+}
+.s-num .cap .label { font-size: 15px; display: block; margin-bottom: 8px; color: rgba(255,255,255,.75); }
+.s-num .body { position: absolute; left: 640px; top: 112px; width: 1152px; }
+.s-num .kicker { display: flex; gap: 28px; align-items: baseline; }
+.s-num .kicker .label { color: var(--red); }
+.s-num h2 { font-size: 78px; line-height: 1.32; margin-top: 30px; font-weight: 800; letter-spacing: 0; }
+.s-num .lead { font-size: 22px; line-height: 1.85; margin-top: 26px; width: 1152px; color: #3a3a3a; letter-spacing: .02em; }
+
+.kpis { position: absolute; left: 640px; top: 548px; width: 1152px; display: grid; grid-template-columns: 1.15fr 1fr 1fr; }
+.kpi { padding: 0 0 0 30px; border-left: 1px solid var(--rule); }
+.kpi:first-child { padding-left: 0; border-left: 0; }
+.kpi .k-label { font-size: 19px; font-weight: 500; letter-spacing: .03em; }
+.kpi .k-val { margin-top: 12px; display: flex; align-items: baseline; gap: 8px; }
+.kpi .k-val .n { font-family: var(--f-latin); font-stretch: 62%; font-weight: 800; font-size: 128px; line-height: .8; letter-spacing: -.01em; }
+.kpi .k-val .u { font-size: 34px; font-weight: 700; }
+.kpi .k-note { margin-top: 14px; font-size: 18px; color: var(--mute); letter-spacing: .03em; }
+.kpi .k-note b { color: var(--red); font-weight: 700; }
+.kpi.hero .n, .kpi.hero .u { color: var(--red); }
+
+.chart { position: absolute; left: 640px; top: 756px; width: 1152px; height: 210px; }
+.chart .ttl { position: absolute; left: 0; top: 0; font-size: 18px; font-weight: 500; letter-spacing: .03em; }
+.chart .ttl span { color: var(--mute); margin-left: 14px; }
+
+/* ===========================================
+   04 FOLD-OUT — the life of one jacket
+   =========================================== */
+.s-fold .head { position: absolute; left: var(--m); top: 104px; width: 880px; }
+.s-fold .head .label { color: var(--red); }
+.s-fold .head .caps { font-size: 132px; margin-top: 26px; color: var(--red); }
+.s-fold .head .mincho { font-size: 34px; line-height: 1.6; margin-top: 30px; }
+.s-fold .photo { right: var(--m); top: 104px; width: 760px; height: 372px; }
+.s-fold .photo img { object-position: 30% 60%; }
+.s-fold .tag {
+  position: absolute; display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-latin); font-stretch: 75%; font-weight: 700; font-size: 16px; letter-spacing: .12em; color: #fff;
+}
+.s-fold .tag i { font-style: normal; width: 34px; height: 34px; background: var(--red); display: grid; place-items: center; font-size: 17px; letter-spacing: 0; }
+.s-fold .pcap { position: absolute; right: var(--m); top: 488px; width: 760px; font-size: 16px; color: var(--mute); letter-spacing: .03em; }
+
+/* ratio bar */
+.ratio { position: absolute; left: var(--m); right: var(--m); top: 560px; height: 120px; }
+.ratio .row { position: absolute; left: 0; right: 0; top: 46px; height: 28px; display: flex; }
+.ratio .make { width: 30px; background: var(--red); }
+.ratio .wear { flex: 1; background: var(--ink); position: relative; }
+.ratio .wear .fix { position: absolute; top: -10px; bottom: -10px; width: 3px; background: var(--red); }
+.ratio .lab { position: absolute; top: 0; font-size: 19px; font-weight: 500; letter-spacing: .03em; white-space: nowrap; }
+.ratio .lab b { font-family: var(--f-latin); font-stretch: 62%; font-weight: 800; font-size: 34px; margin: 0 4px; letter-spacing: 0; }
+.ratio .lab.end { right: 0; }
+.ratio .sub { position: absolute; top: 90px; font-size: 16px; color: var(--mute); letter-spacing: .03em; white-space: nowrap; }
+
+/* stations */
+.stations { position: absolute; left: var(--m); right: var(--m); top: 744px; display: grid; grid-template-columns: repeat(7, 1fr); }
+.stations::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--ink); }
+.st { position: relative; padding: 24px 22px 0 0; }
+.st::before { content: ""; position: absolute; left: 0; top: -6px; width: 13px; height: 13px; background: var(--paper); border: 2px solid var(--ink); border-radius: 50%; }
+.st.wear::before { background: var(--ink); }
+.st .no { font-family: var(--f-latin); font-stretch: 75%; font-weight: 700; font-size: 16px; letter-spacing: .14em; color: var(--red); }
+.st .ja { font-family: var(--f-mincho); font-weight: 700; font-size: 28px; letter-spacing: 0; margin-top: 8px; line-height: 1.25; }
+.st .v { margin-top: 14px; display: flex; align-items: baseline; gap: 4px; }
+.st .v .n { font-family: var(--f-latin); font-stretch: 62%; font-weight: 800; font-size: 60px; line-height: .8; }
+.st .v .u { font-size: 18px; font-weight: 700; }
+.st .note { font-size: 16px; line-height: 1.6; margin-top: 12px; color: #4a4a4a; letter-spacing: .02em; }
+.loop { position: absolute; left: var(--m); top: 698px; width: 1664px; height: 46px; overflow: visible; }
+.loop-lab { position: absolute; top: 690px; font-size: 16px; color: var(--red); letter-spacing: .03em; font-weight: 500; background: var(--paper); padding: 0 12px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 01 COVER -->
+<section class="slide s-cover active visible" aria-label="表紙">
+  <div class="photo"><img src="assets/photo1.jpg" alt="藍甕から糸の束を引き上げる職人の手"></div>
+  <div class="masthead rv">
+    <span class="label">Ayaori Weaving Co., Ltd.</span>
+    <span class="label">Integrated Report</span>
+    <span class="period">対象期間　2025年4月1日 — 2026年3月31日</span>
+  </div>
+  <h1 class="caps rv d1">Woven<br>to be worn<br>longer. <span class="year">2026</span></h1>
+  <p class="sub mincho rv d2">百年着られる布を、<br>今日も一反ずつ。</p>
+  <div class="tab"></div>
+</section>
+
+<!-- 02 CONTENTS -->
+<section class="slide s-toc" aria-label="目次">
+  <div class="photo"><img src="assets/photo2.jpg" alt="朝の光が入る織布工場のシャトル織機"></div>
+  <div class="over">
+    <div class="caps rv">What we<br>keep.</div>
+    <p class="mincho rv d1">速く織れる機械はある。<br>それでも、この四十二台を止めない。</p>
+  </div>
+  <div class="col">
+    <div class="label rv">Contents</div>
+    <ol>
+      <li class="rv d1"><span class="no">01</span><span><span class="en">Message</span><span class="ja">「直せる服」しか<br>つくらない理由</span></span><span class="pg">04</span></li>
+      <li class="rv d2"><span class="no">02</span><span><span class="en">The Cloth</span><span class="ja">一反ができるまで</span></span><span class="pg">12</span></li>
+      <li class="rv d3"><span class="no">03</span><span><span class="en">Numbers</span><span class="ja">数字で見る一年</span></span><span class="pg">24</span></li>
+      <li class="rv d4"><span class="no">04</span><span><span class="en">Fold-out</span><span class="ja">一着の一生</span></span><span class="pg">30</span></li>
+      <li class="rv d5"><span class="no">05</span><span><span class="en">Data</span><span class="ja">会社概要・財務データ</span></span><span class="pg">38</span></li>
+    </ol>
+  </div>
+  <div class="folio"><span><b>Ayaori</b>　Integrated Report 2026</span><span>02</span></div>
+</section>
+
+<!-- 03 NUMBERS -->
+<section class="slide s-num" aria-label="数字で見る一年">
+  <div class="photo"><img src="assets/photo3.jpg" alt="赤い耳糸が走るセルビッジデニムの端"></div>
+  <p class="cap rv d4"><span class="label">Selvedge / <span class="ja-in">赤耳</span></span>旧式の力織機だけが残す布の端。<br>私たちの布は、ここで見分けられる。</p>
+  <div class="body">
+    <div class="kicker rv"><span class="label">03 — Numbers</span><span class="label" style="color:var(--mute)">FY2025</span></div>
+    <h2 class="mincho rv d1">売上より先に、<br><span class="red">直した数</span>を数えた一年。</h2>
+    <p class="lead rv d2">修理の受付は前年の1.3倍に増えました。売上の伸びは4.8%にとどまりますが、<br>一着が着られる年数は9.4年まで延びています。長く着られることを、私たちは成長と呼びます。</p>
+  </div>
+  <div class="kpis rv d3">
+    <div class="kpi hero">
+      <div class="k-label">修理受付件数</div>
+      <div class="k-val"><span class="n">18,420</span><span class="u">件</span></div>
+      <div class="k-note">前年比 <b>+31.0%</b></div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">平均着用年数</div>
+      <div class="k-val"><span class="n">9.4</span><span class="u">年</span></div>
+      <div class="k-note">業界平均 3.5年（当社調べ）</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">売上高</div>
+      <div class="k-val"><span class="n">64.2</span><span class="u">億円</span></div>
+      <div class="k-note">前年比 +4.8%</div>
+    </div>
+  </div>
+  <div class="chart rv d4">
+    <div class="ttl">修理受付件数の推移<span>単位：件　FY2019–FY2025</span></div>
+    <svg width="1152" height="210" viewBox="0 0 1152 210" aria-hidden="true">
+      <g font-family="Archivo" font-stretch="75%" font-weight="600" font-size="16" letter-spacing="1.5">
+      <rect x="0" y="138" width="120" height="34" fill="var(--bar)"/>
+      <text x="0" y="128" fill="var(--mute)">4,210</text>
+      <text x="0" y="198" fill="var(--ink)">FY19</text>
+      <rect x="164" y="123" width="120" height="49" fill="var(--bar)"/>
+      <text x="164" y="113" fill="var(--mute)">6,050</text>
+      <text x="164" y="198" fill="var(--ink)">FY20</text>
+      <rect x="328" y="104" width="120" height="68" fill="var(--bar)"/>
+      <text x="328" y="94" fill="var(--mute)">8,330</text>
+      <text x="328" y="198" fill="var(--ink)">FY21</text>
+      <rect x="492" y="83" width="120" height="89" fill="var(--bar)"/>
+      <text x="492" y="73" fill="var(--mute)">10,900</text>
+      <text x="492" y="198" fill="var(--ink)">FY22</text>
+      <rect x="656" y="70" width="120" height="102" fill="var(--bar)"/>
+      <text x="656" y="60" fill="var(--mute)">12,480</text>
+      <text x="656" y="198" fill="var(--ink)">FY23</text>
+      <rect x="820" y="58" width="120" height="114" fill="var(--bar)"/>
+      <text x="820" y="48" fill="var(--mute)">14,060</text>
+      <text x="820" y="198" fill="var(--ink)">FY24</text>
+      <rect x="984" y="22" width="168" height="150" fill="var(--red)"/>
+      <text x="1000" y="52" fill="#fff" font-size="22">18,420</text>
+      <text x="984" y="198" fill="var(--red)">FY25</text>
+      <line x1="0" y1="172" x2="1152" y2="172" stroke="var(--ink)" stroke-width="1"/>
+      </g></svg>
+  </div>
+  <div class="folio" style="left:640px"><span><b>Ayaori</b>　Integrated Report 2026</span><span>24</span></div>
+</section>
+
+<!-- 04 FOLD-OUT -->
+<section class="slide s-fold" aria-label="一着の一生">
+    <div class="head">
+    <div class="label rv">04 — Fold-out</div>
+    <div class="caps rv d1">The life of<br>one jacket.</div>
+    <p class="mincho rv d2">つくるのに50日。着られるのは9.4年。<br>その間に、平均2.1回、私たちの工房に戻ってくる。</p>
+  </div>
+  <div class="photo rv d1"><img src="assets/photo4.jpg" alt="川沿いの蔵の前で干される藍染めの糸"></div>
+  <div class="tag" style="right:780px; top:384px"><i>03</i>INDIGO</div>
+  <p class="pcap rv d2">本社工房の干し場。ロープ染色の後、糸は川風で三日かけて乾かす。</p>
+
+  <div class="ratio rv d3">
+    <div class="lab" style="left:0"><span class="red">つくる</span><b class="red">50</b>日</div>
+    <div class="lab end">着る・直す<b>3,431</b>日（平均9.4年）</div>
+    <div class="row">
+      <div class="make"></div>
+      <div class="wear"><span class="fix" style="left:38%"></span><span class="fix" style="left:72%"></span></div>
+    </div>
+    <div class="sub" style="left:0">1本の帯が、一着の時間の全部。赤い印は平均的な修理のタイミング（3.6年目・6.8年目）。</div>
+  </div>
+
+  <svg class="loop rv d4" viewBox="0 0 1664 46" aria-hidden="true">
+    <path d="M1426 40 V12 H0 V40" fill="none" stroke="var(--red)" stroke-width="2" stroke-dasharray="6 6"/>
+    <path d="M-7 30 L0 42 L7 30" fill="none" stroke="var(--red)" stroke-width="2"/>
+  </svg>
+  <div class="loop-lab rv d4" style="left:560px">回収した生地の 3.2% をほどき、糸に戻して再び織る（2030年目標 20%）</div>
+
+  <div class="stations rv d4">
+    <div class="st"><div class="no">01 Cotton</div><div class="ja">綿を選ぶ</div><div class="v"><span class="n">100</span><span class="u">%</span></div><p class="note">産地まで追える<br>オーガニック綿</p></div>
+    <div class="st"><div class="no">02 Spin</div><div class="ja">紡ぐ</div><div class="v"><span class="n">6</span><span class="u">日</span></div><p class="note">撚りを甘くし、<br>糸に空気を残す</p></div>
+    <div class="st"><div class="no">03 Indigo</div><div class="ja">藍で染める</div><div class="v"><span class="n">12</span><span class="u">回</span></div><p class="note">浸けては空気に<br>さらすロープ染色</p></div>
+    <div class="st"><div class="no">04 Weave</div><div class="ja">織る</div><div class="v"><span class="n">50</span><span class="u">m/日</span></div><p class="note">シャトル織機1台が<br>1日に織る長さ</p></div>
+    <div class="st"><div class="no">05 Sew</div><div class="ja">縫う</div><div class="v"><span class="n">9</span><span class="u">日</span></div><p class="note">縫い代を広くとり、<br>直せる余白を残す</p></div>
+    <div class="st wear"><div class="no">06 Wear &amp; Mend</div><div class="ja">着る・直す</div><div class="v"><span class="n">2.1</span><span class="u">回</span></div><p class="note">一着あたりの<br>平均修理回数</p></div>
+    <div class="st"><div class="no">07 Reweave</div><div class="ja">織り直す</div><div class="v"><span class="n">3.2</span><span class="u">%</span></div><p class="note">回収した生地の<br>再織率</p></div>
+  </div>
+  <div class="folio"><span><b>Ayaori</b>　Integrated Report 2026</span><span>30 — 31</span></div>
+</section>
+
+</main>
+</div>
+
+<script>
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.current = 0;
+    this.stage = document.getElementById('deckStage');
+    this.scale();
+    window.addEventListener('resize', () => this.scale());
+    document.addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); this.go(this.current + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.current - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    let x0 = null;
+    document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) this.go(this.current + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+    let lock = false;
+    document.addEventListener('wheel', e => {
+      if (lock || Math.abs(e.deltaY) < 20) return;
+      lock = true; setTimeout(() => lock = false, 700);
+      this.go(this.current + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: true });
+    this.go(0);
+  }
+  scale() {
+    const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+    this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+  }
+  go(i) {
+    this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+    this.slides.forEach((s, j) => {
+      s.classList.toggle('active', j === this.current);
+      s.classList.toggle('visible', j === this.current);
+    });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

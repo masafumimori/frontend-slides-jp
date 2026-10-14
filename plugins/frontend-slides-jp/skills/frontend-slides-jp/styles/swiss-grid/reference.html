@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>運河の建築祭 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Schibsted+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting. Zero specificity, so any deck rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.slide) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.slide) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+:where(.slide) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+:where(.slide) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===========================================
+   SWISS GRID SYSTEM
+   12 columns × 6 rows. Column 122px, gutter 24px, margin 96px.
+   Grid box: x 96–1824, y 120–1008. Row 128px.
+   =========================================== */
+:root {
+  --paper: #F5F4F0;
+  --ink: #0B0B0B;
+  --signal: #E10600;
+  --mute: #8C8B87;
+  --stage-bg: #0B0B0B;
+  --slide-bg: var(--paper);
+  --jp: "Noto Sans JP", sans-serif;
+  --lat: "Schibsted Grotesk", "Noto Sans JP", sans-serif;
+  --col: 122px;
+  --gut: 24px;
+}
+.slide {
+  color: var(--ink);
+  font-family: var(--jp);
+  -webkit-font-smoothing: antialiased;
+}
+.grid {
+  position: absolute; left: 96px; top: 120px; width: 1728px; height: 888px;
+  display: grid;
+  grid-template-columns: repeat(12, var(--col));
+  grid-template-rows: repeat(6, 128px);
+  gap: var(--gut);
+}
+.grid > * { min-width: 0; }
+
+/* Visible grid: drawn on the same column/row lines the content uses */
+.gridlines { position: absolute; left: 96px; top: 120px; width: 1728px; height: 888px; pointer-events: none;
+  display: grid; grid-template-columns: repeat(12, var(--col)); grid-template-rows: repeat(6, 128px); gap: var(--gut); }
+.gridlines i { grid-row: 1 / -1; border-left: 1px solid rgba(11,11,11,.08); border-right: 1px solid rgba(11,11,11,.08); }
+.gridlines.on-signal i { border-color: rgba(255,255,255,.16); background: transparent; }
+/* Grid lines sit beneath text: a text block paints its own ground, so a line stops at its edge and never crosses a glyph. */
+.ko { background: var(--slide-bg); }
+.ko.on-sig { background: var(--signal); }
+.fit { justify-self: start; }
+
+/* Chrome: running head on the column lines */
+.head { position: absolute; left: 96px; top: 44px; width: 1728px; height: 48px;
+  display: grid; grid-template-columns: repeat(12, var(--col)); gap: var(--gut);
+  font-family: var(--lat); font-size: 17px; font-weight: 500; letter-spacing: .06em; line-height: 1.35;
+  border-bottom: 2px solid var(--ink); }
+.head span { white-space: nowrap; }
+.head .jp { font-family: var(--jp); letter-spacing: .02em; font-weight: 500; }
+.head .pg { grid-column: 12; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Type scale */
+.lab { font-family: var(--lat); font-size: 18px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; line-height: 1.3; }
+.lab.sig { color: var(--signal); }
+.slide .h-xl { font-weight: 900; font-size: 272px; line-height: 1.0; letter-spacing: 0; margin: 0; }
+.slide .h-l { font-weight: 900; font-size: 112px; line-height: 1.12; letter-spacing: .01em; margin: 0; }
+.slide .h-m { font-weight: 900; font-size: 84px; line-height: 1.16; letter-spacing: .01em; margin: 0; }
+.slide .body { font-size: 28px; line-height: 1.75; font-weight: 500; letter-spacing: .02em; margin: 0; }
+.slide .note { font-size: 17px; line-height: 1.6; color: var(--mute); font-weight: 500; letter-spacing: .02em; margin: 0; }
+.num { font-family: var(--lat); font-weight: 900; font-variant-numeric: tabular-nums; letter-spacing: -.02em; line-height: .86; }
+.unit { font-family: var(--jp); font-weight: 900; letter-spacing: 0; }
+.rule { border-top: 3px solid var(--ink); }
+
+/* Motion: one staggered rise per slide */
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.slide.active .rv { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@media (prefers-reduced-motion: reduce) { .slide.active .rv { animation: none !important; } }
+
+/* ---------- 01 COVER ---------- */
+.s-cover .panel { position: absolute; left: 1264px; top: 0; width: 656px; height: 1080px; background: var(--signal); color: #fff; }
+.s-cover .head { border-bottom-color: var(--ink); width: 1144px; grid-template-columns: repeat(8, var(--col)); }
+.s-cover .head-r { position: absolute; left: 1264px; top: 44px; width: 560px; height: 48px; border-bottom: 2px solid #fff; color: #fff;
+  display: grid; grid-template-columns: repeat(4, var(--col)); gap: var(--gut);
+  font-family: var(--lat); font-size: 17px; font-weight: 700; letter-spacing: .06em; padding-left: 0; }
+.s-cover .title { grid-column: 1 / 9; grid-row: 1 / 5; align-self: start; margin-top: -14px; }
+.s-cover .latin { grid-column: 1 / 5; grid-row: 5 / 7; align-self: end;
+  font-family: var(--lat); font-weight: 900; font-size: 60px; line-height: .98; letter-spacing: -.01em; text-transform: uppercase; }
+.s-cover .lead { grid-column: 5 / 9; grid-row: 5 / 7; align-self: end; }
+.s-cover .lead .body { font-size: 27px; }
+.s-cover .lead .lab { margin-bottom: 18px; }
+.s-cover .yr { grid-column: 9 / 13; grid-row: 1 / 3; color: #fff; font-size: 218px; align-self: start; margin-top: -8px; }
+.s-cover .dates { grid-column: 9 / 13; grid-row: 3 / 5; color: #fff; align-self: start; border-top: 3px solid #fff; padding-top: 22px; }
+.s-cover .dates .d { font-family: var(--lat); font-weight: 900; font-size: 96px; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 14px; }
+.s-cover .dates .d small { font-family: var(--jp); font-size: 34px; font-weight: 900; letter-spacing: 0; }
+.s-cover .facts { grid-column: 9 / 13; grid-row: 5 / 7; color: #fff; align-self: end;
+  display: grid; grid-template-columns: repeat(2, 268px); gap: 0 var(--gut); }
+.s-cover .facts div { border-top: 2px solid #fff; padding-top: 14px; }
+.s-cover .facts b { display: block; font-family: var(--lat); font-weight: 900; font-size: 72px; line-height: 1; letter-spacing: -.02em; }
+.s-cover .facts b span { font-family: var(--jp); font-size: 26px; margin-left: 6px; letter-spacing: 0; }
+.s-cover .facts p { margin: 10px 0 0; font-size: 20px; font-weight: 500; line-height: 1.5; letter-spacing: .02em; }
+
+/* ---------- 02 CONTENTS ---------- */
+.s-toc .intro { grid-column: 1 / 5; grid-row: 1 / 4; align-self: start; }
+.s-toc .intro .lab { margin-bottom: 30px; }
+.s-toc .intro-b { grid-column: 1 / 4; grid-row: 5 / 7; align-self: end; }
+.s-toc .list { grid-column: 5 / 13; grid-row: 1 / 7; display: grid; grid-template-rows: repeat(4, 1fr); }
+.s-toc .row { display: grid; grid-template-columns: var(--col) calc(var(--col) * 4 + var(--gut) * 3) calc(var(--col) * 3 + var(--gut) * 2); gap: var(--gut);
+  border-top: 3px solid var(--ink); padding-top: 18px; }
+.s-toc .row:last-child { border-bottom: 3px solid var(--ink); }
+.s-toc .idx { font-family: var(--lat); font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.s-toc .row.night .idx { color: var(--signal); }
+.s-toc .nm h3 { margin: 0; font-size: 60px; font-weight: 900; line-height: 1.05; letter-spacing: .01em; }
+.s-toc .nm .lab { margin: 12px 0 10px; color: var(--mute); }
+.s-toc .nm p { margin: 0; font-size: 22px; line-height: 1.55; font-weight: 500; letter-spacing: .02em; }
+.s-toc .ct { display: flex; align-items: baseline; gap: 10px; }
+.s-toc .ct .num { font-size: 168px; }
+.s-toc .ct .unit { font-size: 48px; }
+.s-toc .row.night .ct .num { color: var(--signal); }
+
+/* ---------- 03 CONCLUSION + NUMBERS ---------- */
+.s-kpi .hl { grid-column: 1 / 11; grid-row: 1 / 3; align-self: start; margin-top: -6px; }
+.s-kpi .k1 { grid-column: 1 / 6; grid-row: 3 / 5; align-self: start; border-top: 3px solid var(--ink); padding-top: 20px; }
+.s-kpi .k2 { grid-column: 1 / 6; grid-row: 5 / 7; align-self: end; border-top: 3px solid var(--ink); padding-top: 20px; }
+.s-kpi .kv { display: flex; align-items: baseline; gap: 12px; margin-top: 8px; }
+.s-kpi .kv .num { font-size: 168px; font-variant-numeric: proportional-nums; }
+.s-kpi .kv .unit { font-size: 56px; }
+.s-kpi .k2 .kv .num, .s-kpi .k2 .kv .unit { color: var(--signal); }
+.s-kpi .split { display: flex; height: 22px; margin-top: 20px; }
+.s-kpi .split i { display: block; height: 100%; }
+.s-kpi .split-l { display: flex; justify-content: space-between; margin-top: 10px; font-size: 18px; font-weight: 500; letter-spacing: .02em; }
+.s-kpi .chart { grid-column: 7 / 13; grid-row: 3 / 7; display: grid; grid-template-rows: auto 1fr auto; }
+.s-kpi .bars { display: grid; grid-template-rows: repeat(4, 1fr); padding-top: 8px; }
+.s-kpi .bar { display: grid; grid-template-columns: var(--col) 1fr; gap: var(--gut); align-items: end; border-bottom: 1px solid rgba(11,11,11,.18); padding-bottom: 14px; }
+.s-kpi .bar .y { font-family: var(--lat); font-weight: 700; font-size: 36px; line-height: 1; font-variant-numeric: tabular-nums; }
+.s-kpi .bar .v { font-family: var(--lat); font-weight: 700; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; margin-bottom: 10px; }
+.s-kpi .bar .b { height: 44px; background: var(--ink); }
+.s-kpi .bar.now .b { background: var(--signal); }
+.s-kpi .bar.now .v, .s-kpi .bar.now .y { color: var(--signal); }
+.s-kpi .chart .note { margin-top: 16px; }
+
+/* ---------- 04 MATRIX ---------- */
+.s-mx .hl { grid-column: 1 / 9; grid-row: 1 / 3; align-self: start; margin-top: -6px; }
+.s-mx .side { grid-column: 10 / 13; grid-row: 1 / 3; align-self: end; }
+.s-mx .side .lab { margin-bottom: 14px; }
+.s-mx .side .body { font-size: 24px; line-height: 1.7; }
+.s-mx .mx { grid-column: 1 / 13; grid-row: 3 / 7; display: grid; grid-template-columns: repeat(12, var(--col)); column-gap: var(--gut);
+  grid-template-rows: 92px repeat(4, 1fr); }
+.s-mx .dh { border-top: 3px solid var(--ink); padding-top: 10px; }
+.s-mx .dh.we { border-top-width: 10px; padding-top: 3px; }
+.s-mx .dh b { font-family: var(--lat); font-weight: 900; font-size: 44px; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.s-mx .dh span { font-size: 20px; font-weight: 700; margin-left: 6px; }
+.s-mx .dh.corner { grid-column: 1 / 3; }
+.s-mx .rl { grid-column: 1 / 3; border-top: 1px solid rgba(11,11,11,.25); padding-top: 12px; }
+.s-mx .rl h4 { margin: 0; font-size: 30px; font-weight: 900; line-height: 1.1; letter-spacing: .01em; }
+.s-mx .rl p { margin: 6px 0 0; font-family: var(--lat); font-size: 17px; font-weight: 500; letter-spacing: .04em; color: var(--mute); font-variant-numeric: tabular-nums; }
+.s-mx .rl.night h4 { color: var(--signal); }
+.s-mx .c { border-top: 1px solid rgba(11,11,11,.25); padding-top: 12px; display: flex; gap: 10px; align-items: flex-start; }
+.s-mx .c i { display: block; background: var(--ink); flex: none; }
+.s-mx .c.night i { background: var(--signal); }
+.s-mx .c b { font-family: var(--lat); font-weight: 700; font-size: 22px; line-height: 1; font-variant-numeric: tabular-nums; }
+.s-mx .c.zero b { color: var(--mute); font-weight: 500; }
+.s-mx .rl, .s-mx .dh.corner { background: var(--slide-bg); }
+.s-mx .dh:not(.corner), .s-mx .c { padding-left: 10px; }
+.s-mx .foot { position: absolute; left: 96px; top: 1024px; width: 1728px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<div class="deck-stage" id="deckStage">
+
+<!-- 01 COVER -->
+<section class="slide s-cover" data-title="表紙">
+  <div class="panel"></div>
+  <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="gridlines on-signal" aria-hidden="true" style="left:1264px;width:560px;grid-template-columns:repeat(4,var(--col))"><i></i><i></i><i></i><i></i></div>
+  <header class="head">
+    <span class="jp">第4回</span><span></span><span></span>
+    <span></span><span></span><span></span>
+    <span class="jp">プログラム発表</span>
+  </header>
+  <div class="head-r"><span>2027.03.18</span><span></span><span></span><span>01 / 04</span></div>
+  <div class="grid">
+    <h1 class="h-xl title ko fit rv" style="--i:0">運河の<br>建築祭</h1>
+    <div class="latin ko fit rv" style="--i:2">Canal<br>Architecture<br>Week</div>
+    <div class="lead ko fit rv" style="--i:3">
+      <div class="lab">Programme 2027</div>
+      <p class="body">運河沿いの倉庫、水門、集合住宅。<br>ふだん閉じている38の建築を、<br>10日間だけ開きます。</p>
+    </div>
+    <div class="num yr ko on-sig fit rv" style="--i:1">2027</div>
+    <div class="dates ko on-sig rv" style="--i:2">
+      <div class="d">5.14<small>金</small></div>
+      <div class="d">5.23<small>日</small></div>
+    </div>
+    <div class="facts ko on-sig rv" style="--i:4">
+      <div><b>12<span>会場</span></b><p>運河沿い<br>徒歩と水上バスで巡る</p></div>
+      <div><b>38<span>建築</span></b><p>入場無料<br>ツアーのみ事前予約</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 CONTENTS -->
+<section class="slide s-toc" data-title="目次">
+  <header class="head">
+    <span>CANAL ARCHITECTURE WEEK</span><span></span><span></span>
+    <span class="jp">第4回 運河の建築祭</span><span></span><span></span>
+    <span class="jp">プログラム</span><span></span><span></span><span></span><span></span>
+    <span class="pg">02 / 04</span>
+  </header>
+  <div class="grid">
+    <div class="intro rv" style="--i:0">
+      <div class="lab sig">Programme</div>
+      <h2 class="h-l">10日間に、<br>4つの<br>入口。</h2>
+    </div>
+    <p class="body intro-b rv" style="--i:1">公開建築を軸に、話す・つくる・巡るを重ねました。平日は夕方以降、週末は朝から開いています。</p>
+    <div class="list">
+      <div class="row rv" style="--i:1">
+        <div class="idx">01</div>
+        <div class="nm"><h3>公開建築</h3><div class="lab">Open Buildings</div><p>倉庫、水門、集合住宅の内部を設計者が案内</p></div>
+        <div class="ct"><span class="num">38</span><span class="unit">件</span></div>
+      </div>
+      <div class="row rv" style="--i:2">
+        <div class="idx">02</div>
+        <div class="nm"><h3>トーク</h3><div class="lab">Talks</div><p>建築家、施工者、運河の管理者が登壇</p></div>
+        <div class="ct"><span class="num">24</span><span class="unit">本</span></div>
+      </div>
+      <div class="row rv" style="--i:3">
+        <div class="idx">03</div>
+        <div class="nm"><h3>ワークショップ</h3><div class="lab">Workshops</div><p>週末のみ。模型と実測で街を読む</p></div>
+        <div class="ct"><span class="num">16</span><span class="unit">回</span></div>
+      </div>
+      <div class="row night rv" style="--i:4">
+        <div class="idx">04</div>
+        <div class="nm"><h3>夜の運河ツアー</h3><div class="lab">Night Canal Tours</div><p>18:30発。水上から照明の入った建築を見る</p></div>
+        <div class="ct"><span class="num">10</span><span class="unit">便</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 CONCLUSION + NUMBERS -->
+<section class="slide s-kpi" data-title="来場者">
+  <header class="head">
+    <span>CANAL ARCHITECTURE WEEK</span><span></span><span></span>
+    <span class="jp">第4回 運河の建築祭</span><span></span><span></span>
+    <span class="jp">これまでの3回</span><span></span><span></span><span></span><span></span>
+    <span class="pg">03 / 04</span>
+  </header>
+  <div class="grid">
+    <h2 class="h-m hl rv" style="--i:0">来場者は3年で2.4倍。<br>半数以上が、建築の外から来た。</h2>
+    <div class="k1 rv" style="--i:1">
+      <div class="lab">Visitors 2026</div>
+      <div class="kv"><span class="num">41,800</span><span class="unit">人</span></div>
+      <p class="note" style="margin-top:14px">2026年（第3回）の延べ来場者数。12会場の入口カウントの合計</p>
+    </div>
+    <div class="k2 rv" style="--i:2">
+      <div class="lab sig">Outside Architecture</div>
+      <div class="kv"><span class="num">53</span><span class="unit">%</span></div>
+      <div class="split" id="split"></div>
+      <div class="split-l"><span>建築・設計の仕事に就いていない 53%</span><span>建築・設計関係 47%</span></div>
+    </div>
+    <div class="chart rv" style="--i:3">
+      <div class="lab">延べ来場者数の推移（人）</div>
+      <div class="bars" id="bars"></div>
+      <p class="note">出典　運河の建築祭実行委員会。2023年は試行開催（3日間）。属性は2026年の来場者アンケート（n=3,214）</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 MATRIX -->
+<section class="slide s-mx" data-title="日程">
+  <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <header class="head">
+    <span>CANAL ARCHITECTURE WEEK</span><span></span><span></span>
+    <span class="jp">第4回 運河の建築祭</span><span></span><span></span>
+    <span class="jp">日程</span><span></span><span></span><span></span><span></span>
+    <span class="pg">04 / 04</span>
+  </header>
+  <div class="grid">
+    <h2 class="h-m hl ko fit rv" style="--i:0">週末は昼に開き、<br>平日は夜に集める。</h2>
+    <div class="side ko rv" style="--i:1">
+      <div class="lab sig">May 14–23, 2027</div>
+      <p class="body">平日の公開建築は6件に絞り、トークとツアーを18:30以降に集めました。</p>
+    </div>
+    <div class="mx rv" style="--i:2" id="mx"></div>
+  </div>
+  <p class="note foot">■ の面積は各プログラム内の最大値に対する比率。数字は件数・本数・回数・便数</p>
+</section>
+
+</div>
+</div>
+
+<script>
+/* Data: one source for every number drawn on slides 03 and 04. */
+const VISITORS = [[2023, 17400], [2024, 24900], [2025, 33100], [2026, 41800]];
+const OUTSIDE = 53;
+const DAYS = [['14','金'],['15','土'],['16','日'],['17','月'],['18','火'],['19','水'],['20','木'],['21','金'],['22','土'],['23','日']];
+const PROGRAMS = [
+  { name: '公開建築', meta: '38件　10:00–17:00', v: [14,38,38,6,6,6,6,14,38,38] },
+  { name: 'トーク', meta: '24本　平日は19:00開始', v: [3,4,4,1,1,1,1,3,3,3] },
+  { name: 'ワークショップ', meta: '16回　土日 10:00–', v: [0,4,4,0,0,0,0,0,4,4] },
+  { name: '夜の運河ツアー', meta: '10便　18:30発', v: [2,1,0,1,1,1,1,2,1,0], night: true },
+];
+
+const h = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+const fmt = n => n.toLocaleString('en-US');
+
+(function bars() {
+  const box = document.getElementById('bars');
+  const max = Math.max(...VISITORS.map(d => d[1]));
+  VISITORS.forEach(([y, v], i) => {
+    const row = h('div', 'bar' + (i === VISITORS.length - 1 ? ' now' : ''));
+    row.append(h('div', 'y', y));
+    const right = h('div');
+    right.append(h('div', 'v', fmt(v)));
+    const b = h('div', 'b'); b.style.width = (v / max * 100) + '%';
+    right.append(b);
+    row.append(right);
+    box.append(row);
+  });
+  const split = document.getElementById('split');
+  const a = h('i'); a.style.cssText = `width:${OUTSIDE}%;background:var(--signal)`;
+  const b = h('i'); b.style.cssText = `width:${100 - OUTSIDE}%;background:var(--ink);margin-left:4px`;
+  split.append(a, b);
+})();
+
+(function matrix() {
+  const mx = document.getElementById('mx');
+  mx.append(h('div', 'dh corner', '<span style="margin:0">2027年5月</span>'));
+  DAYS.forEach(([d, w]) => mx.append(h('div', 'dh' + (w === '土' || w === '日' ? ' we' : ''), `<b>${d}</b><span>${w}</span>`)));
+  const MAXSIDE = 64;
+  PROGRAMS.forEach(p => {
+    const max = Math.max(...p.v);
+    mx.append(h('div', 'rl' + (p.night ? ' night' : ''), `<h4>${p.name}</h4><p>${p.meta}</p>`));
+    p.v.forEach(v => {
+      const c = h('div', 'c' + (p.night ? ' night' : '') + (v === 0 ? ' zero' : ''));
+      if (v > 0) {
+        const s = Math.round(Math.sqrt(v / max) * MAXSIDE);
+        const sq = h('i'); sq.style.width = sq.style.height = s + 'px';
+        c.append(sq);
+      }
+      c.append(h('b', '', v === 0 ? '—' : v));
+      mx.append(c);
+    });
+  });
+})();
+
+/* Deck controller: fixed stage scaling + keyboard, wheel, touch navigation. */
+class SlidePresentation {
+  constructor() {
+    this.slides = [...document.querySelectorAll('.slide')];
+    this.stage = document.getElementById('deckStage');
+    this.current = 0;
+    this.lock = false;
+    const scale = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    scale();
+    addEventListener('resize', scale);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); this.go(this.current + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.current - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    addEventListener('wheel', e => {
+      if (this.lock || Math.abs(e.deltaY) < 20) return;
+      this.lock = true; setTimeout(() => (this.lock = false), 700);
+      this.go(this.current + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: true });
+    let sx = 0;
+    addEventListener('touchstart', e => (sx = e.touches[0].clientX), { passive: true });
+    addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) this.go(this.current + (dx < 0 ? 1 : -1));
+    });
+    this.go(0);
+  }
+  go(i) {
+    this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+    this.slides.forEach((s, j) => {
+      s.classList.toggle('active', j === this.current);
+      s.classList.toggle('visible', j === this.current);
+    });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

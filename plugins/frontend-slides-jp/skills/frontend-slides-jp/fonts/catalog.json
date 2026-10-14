@@ -1,0 +1,680 @@
+{
+  "fonts": [
+    {
+      "family": "Noto Sans JP",
+      "script": "ja",
+      "class": "gothic",
+      "mood": [
+        "neutral",
+        "clean",
+        "corporate"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900",
+      "palt_gain": 0.169,
+      "vpal_gain": 0.158,
+      "palt": true,
+      "vpal": true,
+      "role": "any"
+    },
+    {
+      "family": "IBM Plex Sans JP",
+      "script": "ja",
+      "class": "gothic",
+      "mood": [
+        "technical",
+        "precise",
+        "research"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700
+      ],
+      "css": "family=IBM+Plex+Sans+JP:wght@100;200;300;400;500;600;700",
+      "palt_gain": 0.165,
+      "vpal_gain": 0.146,
+      "palt": true,
+      "vpal": true,
+      "role": "any"
+    },
+    {
+      "family": "Zen Kaku Gothic New",
+      "script": "ja",
+      "class": "gothic",
+      "mood": [
+        "modern",
+        "soft",
+        "friendly"
+      ],
+      "weights": [
+        300,
+        400,
+        500,
+        700,
+        900
+      ],
+      "css": "family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "M PLUS 1p",
+      "script": "ja",
+      "class": "gothic",
+      "mood": [
+        "casual",
+        "web",
+        "geometric"
+      ],
+      "weights": [
+        100,
+        300,
+        400,
+        500,
+        700,
+        800,
+        900
+      ],
+      "css": "family=M+PLUS+1p:wght@100;300;400;500;700;800;900",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Murecho",
+      "script": "ja",
+      "class": "gothic",
+      "mood": [
+        "sharp",
+        "contemporary"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Murecho:wght@100;200;300;400;500;600;700;800;900",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "BIZ UDPGothic",
+      "script": "ja",
+      "class": "gothic",
+      "mood": [
+        "accessible",
+        "public",
+        "plain"
+      ],
+      "weights": [
+        400,
+        700
+      ],
+      "css": "family=BIZ+UDPGothic:wght@400;700",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Noto Serif JP",
+      "script": "ja",
+      "class": "mincho",
+      "mood": [
+        "editorial",
+        "literary",
+        "trustworthy"
+      ],
+      "weights": [
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Noto+Serif+JP:wght@200;300;400;500;600;700;800;900",
+      "palt_gain": 0.165,
+      "vpal_gain": 0.164,
+      "palt": true,
+      "vpal": true,
+      "role": "any"
+    },
+    {
+      "family": "Shippori Mincho B1",
+      "script": "ja",
+      "class": "mincho",
+      "mood": [
+        "classical",
+        "elegant",
+        "brand"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "css": "family=Shippori+Mincho+B1:wght@400;500;600;700;800",
+      "palt_gain": 0,
+      "vpal_gain": 0.214,
+      "palt": false,
+      "vpal": true,
+      "role": "vertical-heading"
+    },
+    {
+      "family": "Zen Old Mincho",
+      "script": "ja",
+      "class": "mincho",
+      "mood": [
+        "traditional",
+        "warm"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        900
+      ],
+      "css": "family=Zen+Old+Mincho:wght@400;500;600;700;900",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "BIZ UDPMincho",
+      "script": "ja",
+      "class": "mincho",
+      "mood": [
+        "accessible",
+        "formal"
+      ],
+      "weights": [
+        400,
+        700
+      ],
+      "css": "family=BIZ+UDPMincho:wght@400;700",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Zen Maru Gothic",
+      "script": "ja",
+      "class": "maru",
+      "mood": [
+        "gentle",
+        "approachable"
+      ],
+      "weights": [
+        300,
+        400,
+        500,
+        700,
+        900
+      ],
+      "css": "family=Zen+Maru+Gothic:wght@300;400;500;700;900",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "M PLUS Rounded 1c",
+      "script": "ja",
+      "class": "maru",
+      "mood": [
+        "playful",
+        "soft"
+      ],
+      "weights": [
+        100,
+        300,
+        400,
+        500,
+        700,
+        800,
+        900
+      ],
+      "css": "family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Kosugi Maru",
+      "script": "ja",
+      "class": "maru",
+      "mood": [
+        "retro",
+        "plain"
+      ],
+      "weights": [
+        400
+      ],
+      "css": "family=Kosugi+Maru:wght@400",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Klee One",
+      "script": "ja",
+      "class": "hand",
+      "mood": [
+        "handwritten",
+        "education",
+        "warm"
+      ],
+      "weights": [
+        400,
+        600
+      ],
+      "css": "family=Klee+One:wght@400;600",
+      "palt_gain": 0.186,
+      "vpal_gain": 0.192,
+      "palt": true,
+      "vpal": true,
+      "role": "any"
+    },
+    {
+      "family": "Yomogi",
+      "script": "ja",
+      "class": "hand",
+      "mood": [
+        "casual",
+        "notes"
+      ],
+      "weights": [
+        400
+      ],
+      "css": "family=Yomogi:wght@400",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Dela Gothic One",
+      "script": "ja",
+      "class": "display",
+      "mood": [
+        "poster",
+        "loud"
+      ],
+      "weights": [
+        400
+      ],
+      "css": "family=Dela+Gothic+One:wght@400",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Reggae One",
+      "script": "ja",
+      "class": "display",
+      "mood": [
+        "poster",
+        "bold",
+        "event"
+      ],
+      "weights": [
+        400
+      ],
+      "css": "family=Reggae+One:wght@400",
+      "palt_gain": 0.162,
+      "vpal_gain": 0.158,
+      "palt": true,
+      "vpal": true,
+      "role": "any"
+    },
+    {
+      "family": "RocknRoll One",
+      "script": "ja",
+      "class": "display",
+      "mood": [
+        "pop",
+        "rounded",
+        "event"
+      ],
+      "weights": [
+        400
+      ],
+      "css": "family=RocknRoll+One:wght@400",
+      "palt_gain": 0.15,
+      "vpal_gain": 0.141,
+      "palt": true,
+      "vpal": true,
+      "role": "any"
+    },
+    {
+      "family": "Stick",
+      "script": "ja",
+      "class": "display",
+      "mood": [
+        "quirky",
+        "pop"
+      ],
+      "weights": [
+        400
+      ],
+      "css": "family=Stick:wght@400",
+      "palt_gain": 0.176,
+      "vpal_gain": 0.155,
+      "palt": true,
+      "vpal": true,
+      "role": "any"
+    },
+    {
+      "family": "Mochiy Pop One",
+      "script": "ja",
+      "class": "display",
+      "mood": [
+        "cute",
+        "pop"
+      ],
+      "weights": [
+        400
+      ],
+      "css": "family=Mochiy+Pop+One:wght@400",
+      "palt_gain": 0,
+      "vpal_gain": 0,
+      "palt": false,
+      "vpal": false,
+      "role": "body-only"
+    },
+    {
+      "family": "Inter Tight",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "neutral",
+        "dense"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Inter+Tight:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
+      "family": "Hanken Grotesk",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "corporate",
+        "light"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Hanken+Grotesk:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
+      "family": "Schibsted Grotesk",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "neo-grotesk",
+        "editorial"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Schibsted+Grotesk:wght@400;500;600;700;800;900"
+    },
+    {
+      "family": "Archivo",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "condensed",
+        "wide",
+        "poster"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Archivo:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
+      "family": "Barlow",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "industrial",
+        "data"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Barlow:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
+      "family": "Barlow Semi Condensed",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "condensed",
+        "data",
+        "industrial"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Barlow+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
+      "family": "Bricolage Grotesque",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "characterful",
+        "tech"
+      ],
+      "weights": [
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "css": "family=Bricolage+Grotesque:wght@200;300;400;500;600;700;800"
+    },
+    {
+      "family": "Jost",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "geometric",
+        "product"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Jost:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
+      "family": "IBM Plex Sans",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "technical",
+        "public"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700
+      ],
+      "css": "family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700"
+    },
+    {
+      "family": "Fraunces",
+      "script": "latin",
+      "class": "serif",
+      "mood": [
+        "warm",
+        "soft",
+        "brand"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Fraunces:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
+      "family": "EB Garamond",
+      "script": "latin",
+      "class": "serif",
+      "mood": [
+        "classical",
+        "literary"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "css": "family=EB+Garamond:wght@400;500;600;700;800"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "script": "latin",
+      "class": "mono",
+      "mood": [
+        "code",
+        "caption"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700
+      ],
+      "css": "family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700"
+    }
+  ],
+  "measured": {
+    "date": "2026-10-14",
+    "method": "Chromium, Google Fonts css2, 80px \"ことこと、「待つ」時間までおいしい。\", gain = 1 - with/without"
+  }
+}

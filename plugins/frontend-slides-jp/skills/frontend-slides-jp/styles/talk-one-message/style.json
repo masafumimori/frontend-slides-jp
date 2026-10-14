@@ -1,0 +1,39 @@
+{
+  "slug": "talk-one-message",
+  "name": "One-Message Talk",
+  "name_ja": "1枚1メッセージの登壇",
+  "tagline": "Light gray-blue ground, one black-weight navy conclusion per slide, and every duration drawn as cells where one cell is one minute.",
+  "summary_ja": "明るい地に極太の結論を1枚に1つ。時間はすべて「1マス＝1分」で描く。",
+  "group": "stage",
+  "mood": [
+    "clear",
+    "confident",
+    "technical"
+  ],
+  "formality": "medium",
+  "density": "low",
+  "scheme": "light",
+  "best_for": "勉強会、技術カンファレンス、社内LT、プロジェクター投影",
+  "avoid_for": "読ませる配布資料、表や本文が多い資料、時間や量の話がない資料",
+  "formats": [
+    "slide-16x9"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "Noto Sans JP",
+    "latin": [
+      "Inter Tight"
+    ]
+  },
+  "colors": {
+    "bg": "#F0F2F5",
+    "ink": "#0D2A4A",
+    "ink-sub": "#5E6E82",
+    "accent": "#E2621B"
+  },
+  "refs": [
+    "「見せる」登壇資料デザインの極意（takanorip）"
+  ]
+}
