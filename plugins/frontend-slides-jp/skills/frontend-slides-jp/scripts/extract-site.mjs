@@ -47,22 +47,25 @@ function checkedLookup(hostname, options, cb) {
 const MAX_BODY = 25_000_000;
 // One request, then its redirects, each hop through checkedLookup. Chromium follows a redirect
 // from a fulfilled response without routing it again, so redirects never reach the browser.
-function send(url, { method = 'GET', headers = {}, body = null, allowPrivate = false } = {}, hops = 0) {
+const privateHosts = new Set();
+function send(url, { method = 'GET', headers = {}, body = null } = {}, hops = 0) {
   return new Promise((resolve, reject) => {
     const u = new URL(url);
     if (!/^https?:$/.test(u.protocol)) return reject(new Error(`blocked scheme ${u.protocol}`));
     const host = u.hostname.replace(/^\[|\]$/g, '');
-    if (!allowPrivate && isIP(host) && !publicAddress(host)) return reject(new Error(`${host} is not a public address`));
+    // --allow-private exempts only the hosts the user named, never a host the page names.
+    const exempt = privateHosts.has(host);
+    if (!exempt && isIP(host) && !publicAddress(host)) return reject(new Error(`${host} is not a public address`));
     const h = { ...headers, host: u.host, 'accept-encoding': 'identity' };
     const r = (u.protocol === 'https:' ? https : http).request(u, {
-      method, headers: h, timeout: 20000, ...(allowPrivate ? {} : { lookup: checkedLookup }),
+      method, headers: h, timeout: 20000, ...(exempt ? {} : { lookup: checkedLookup }),
     }, res => {
       const location = res.headers.location;
       if ([301, 302, 303, 307, 308].includes(res.statusCode) && location) {
         res.resume();
         if (hops >= 5) return reject(new Error('too many redirects'));
         const keep = [307, 308].includes(res.statusCode);
-        return send(new URL(location, u).href, { method: keep ? method : 'GET', headers, body: keep ? body : null, allowPrivate }, hops + 1).then(resolve, reject);
+        return send(new URL(location, u).href, { method: keep ? method : 'GET', headers, body: keep ? body : null }, hops + 1).then(resolve, reject);
       }
       const chunks = [];
       let size = 0;
@@ -76,12 +79,20 @@ function send(url, { method = 'GET', headers = {}, body = null, allowPrivate = f
     r.end();
   });
 }
-async function fetchFor(route, allowPrivate) {
+// Reading a site needs GET and HEAD only. Script reads across origins keep the browser's rule:
+// the response must allow the page's origin, as CORS would require without interception.
+async function fetchFor(route) {
   const req = route.request();
   if (/^(data|blob):/.test(req.url())) return route.continue();
+  if (!['GET', 'HEAD'].includes(req.method())) return route.abort('blockedbyclient');
   try {
     const headers = Object.fromEntries(Object.entries(await req.allHeaders()).filter(([k]) => !k.startsWith(':') && k !== 'host'));
-    const res = await send(req.url(), { method: req.method(), headers, body: req.postDataBuffer(), allowPrivate });
+    const res = await send(req.url(), { method: req.method(), headers });
+    if (['fetch', 'xhr', 'eventsource'].includes(req.resourceType())) {
+      const origin = new URL(req.frame().url()).origin;
+      const allow = res.headers['access-control-allow-origin'];
+      if (new URL(res.url).origin !== origin && allow !== '*' && allow !== origin) return route.abort('accessdenied');
+    }
     const h = {};
     for (const [k, v] of Object.entries(res.headers)) {
       if (!/^(content-encoding|content-length|transfer-encoding|connection|location)$/i.test(k)) h[k] = Array.isArray(v) ? v.join('\n') : String(v);
@@ -96,8 +107,10 @@ const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright')
 const args = process.argv.slice(2);
 const out = args.includes('--out') ? args[args.indexOf('--out') + 1] : null;
 const urls = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--out');
-// --allow-private lets the page reach private addresses: only for the user's own staging site.
+// --allow-private lets the URLs given here sit on private addresses (the user's own staging
+// site). Hosts the page itself names must still be public.
 const allowPrivate = args.includes('--allow-private');
+if (allowPrivate) for (const u of urls) privateHosts.add(new URL(u).hostname.replace(/^\[|\]$/g, ''));
 if (!out || !urls.length) throw new Error('usage: extract-site.mjs <url> [<url> …] --out <dir> [--allow-private]');
 for (const u of urls) if (!/^https?:\/\//.test(u)) throw new Error(`not an http(s) URL: ${u}`);
 mkdirSync(out, { recursive: true });
@@ -106,7 +119,7 @@ const browser = await chromium.launch();
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'ja-JP', reducedMotion: 'reduce', serviceWorkers: 'block' });
 // Requests the route cannot see: service workers are blocked above, WebSockets are closed here.
 await context.routeWebSocket(/.*/, ws => ws.close());
-await context.route('**/*', route => fetchFor(route, allowPrivate));
+await context.route('**/*', route => fetchFor(route));
 // The sanitizer runs in its own blank page, where no script from the site can reach its builtins.
 const sanitizer = await (await browser.newContext()).newPage();
 await sanitizer.goto('about:blank');
@@ -119,7 +132,7 @@ for (const [i, url] of urls.entries()) {
   page.on('response', r => { if (r.request().resourceType() === 'image' && r.ok()) images.set(r.url(), r); });
   // Resolve the page's own redirects first, so the browser opens the final URL and relative
   // links resolve against it.
-  const target = await send(url, { allowPrivate }).catch(e => { throw new Error(`cannot open ${url}: ${e.message}${allowPrivate ? '' : ' (use --allow-private for your own staging site)'}`); });
+  const target = await send(url).catch(e => { throw new Error(`cannot open ${url}: ${e.message}${allowPrivate ? '' : ' (use --allow-private for your own staging site)'}`); });
   await page.goto(target.url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.waitForLoadState('load'));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(800);
