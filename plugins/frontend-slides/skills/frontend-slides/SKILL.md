@@ -56,6 +56,7 @@ These come from the Japanese reference decks the styles were built from. Every s
 - At most three items sit in one row; four or more become a list, a 2×2 grid or a table.
 - In a KPI callout the number is 3-4× the size of its unit. In tables, units stay at caption size or larger.
 - Charts are 2D, keep their size and position across slides, and carry a source line.
+- Every diagram or chart starts from a pattern in [references/diagrams.md](references/diagrams.md), chosen by the relationship the slide shows.
 - Never leave a placeholder where an image belongs (grey boxes, empty frames, "photo here"). Without real images, redesign the slide as text, initials or a diagram.
 - Section gates look different from content slides (full-bleed color or image unless the style defines another gate). Decks under about 10 slides may skip gates.
 
@@ -229,6 +230,7 @@ If the user selected a listed style or a brand, read that one style's `design.md
 - Preserve its tokens, fonts, type scale, signature devices and slide grammar.
 - Copy CSS from `reference.html`; write new copy for the user's content. Never reuse its fictional company, numbers or slogans.
 - Build missing slide types from the `design.md` slide-grammar section.
+- For each diagram or chart slide, copy the chosen pattern's CSS, markup and script from `references/diagrams.html` and map its `--d-*` tokens onto the style's tokens, as `references/diagrams.md` describes.
 - `reference.html` omits inline editing; add it from [html-template.md](html-template.md).
 - When the user gave only a topic, mark invented names, numbers and sources as fictional: one line in the cover meta and a short note in each data slide's source line (for example 「数値は架空」).
 - The density choice changes how much goes on each slide and how many slides there are, never the style's type scale.
@@ -385,6 +387,7 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 | [references/brand-import.md](references/brand-import.md) | Turning a company design system into a style | Phase 2, when the user brings a brand |
 | [fonts/catalog.json](fonts/catalog.json) | Japanese and Latin families with measured palt/vpal and css queries | Phase 2 and 3 (fonts) |
 | [styles/gallery.html](styles/gallery.html) | Browsable page of every style for the user | Phase 2, when the user wants to browse |
+| [references/diagrams.md](references/diagrams.md), [diagrams.html](references/diagrams.html) | 45 diagram and chart patterns: which to pick per relationship, and working code; run `node scripts/check-diagrams.mjs` after edits | Phase 3, for every diagram or chart slide |
 | [scripts/shoot.mjs](scripts/shoot.mjs) | Screenshot every slide, at 1920×1080 or `--phone` | Phase 3 verification |
 | [viewport-base.css](viewport-base.css)             | Mandatory fixed-stage CSS — copy into every presentation             | Phase 3 (generation)      |
 | [html-template.md](html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      |
