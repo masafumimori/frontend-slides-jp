@@ -135,8 +135,8 @@ cat > "$TEMP_SCRIPT" << 'EXPORT_SCRIPT'
 
 import { chromium } from 'playwright';
 import { createServer } from 'http';
-import { readFileSync, existsSync, mkdirSync, unlinkSync, writeFileSync } from 'fs';
-import { join, extname, resolve } from 'path';
+import { readFileSync, existsSync, mkdirSync, unlinkSync, writeFileSync, realpathSync } from 'fs';
+import { join, extname, resolve, sep } from 'path';
 import { execSync } from 'child_process';
 
 const SERVE_DIR = process.argv[2];
@@ -166,10 +166,23 @@ const MIME_TYPES = {
   '.eot': 'application/vnd.ms-fontobject',
 };
 
+const SERVE_ROOT = realpathSync(resolve(SERVE_DIR));
+
 const server = createServer((req, res) => {
-  // Decode URL-encoded characters (e.g., %20 → space) so filenames with spaces resolve correctly
-  const decodedUrl = decodeURIComponent(req.url);
-  let filePath = join(SERVE_DIR, decodedUrl === '/' ? HTML_FILE : decodedUrl);
+  // Serve only files inside the deck's folder: decode %20 and the like, then
+  // refuse any path (including a symlink) that resolves outside SERVE_ROOT.
+  let filePath;
+  try {
+    const urlPath = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    filePath = realpathSync(resolve(SERVE_ROOT, '.' + (urlPath === '/' ? '/' + HTML_FILE : urlPath)));
+  } catch {
+    res.writeHead(404);
+    return res.end('Not found');
+  }
+  if (filePath !== SERVE_ROOT && !filePath.startsWith(SERVE_ROOT + sep)) {
+    res.writeHead(403);
+    return res.end('Forbidden');
+  }
   try {
     const content = readFileSync(filePath);
     const ext = extname(filePath).toLowerCase();
@@ -183,7 +196,7 @@ const server = createServer((req, res) => {
 
 // Find a free port
 const port = await new Promise((resolve) => {
-  server.listen(0, () => resolve(server.address().port));
+  server.listen(0, '127.0.0.1', () => resolve(server.address().port));
 });
 
 console.log(`  Local server on port ${port}`);
@@ -196,7 +209,7 @@ const page = await browser.newPage({
 });
 
 // Load the presentation
-await page.goto(`http://localhost:${port}/`, { waitUntil: 'networkidle' });
+await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
 
 // Wait for fonts to load
 await page.evaluate(() => document.fonts.ready);
