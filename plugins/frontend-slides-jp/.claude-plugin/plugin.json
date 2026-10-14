@@ -1,6 +1,6 @@
 {
   "name": "frontend-slides-jp",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Japanese-first HTML presentations and A4 documents: 15 styles drawn from Japanese reference decks and reports, 50 diagram patterns, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
   "skills": "./skills/",
   "author": {

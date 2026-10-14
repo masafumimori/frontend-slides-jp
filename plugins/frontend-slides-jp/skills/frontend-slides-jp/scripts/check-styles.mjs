@@ -74,9 +74,10 @@ for (const slug of readdirSync(stylesDir, { withFileTypes: true }).filter(d => d
       if (!html.includes(family.replaceAll(' ', '+'))) fail(`${file} does not load "${family}" from Google Fonts`);
     }
     for (const family of extra) if (html.includes(family.replaceAll(' ', '+'))) extraLoaded.add(family);
-    for (const [, src] of html.matchAll(/(?:src|href)="(?!https?:|data:|#)([^"]+)"/g)) {
+    for (const [, src] of html.matchAll(/(?:src|href)="(?![a-z][a-z0-9+.-]*:|#)([^"]+)"/g)) {
       if (!existsSync(join(dir, src))) fail(`${file} points at missing ${src}`);
     }
+    if (new RegExp(`<section class="${format.unit}"[^>]*\\sid="d-`).test(html)) fail(`${file}: a diagram id sits on .${format.unit}; put it on a wrapper around the figure`);
     const units = (html.match(new RegExp(`class="${format.unit}[\\s"]`, 'g')) ?? []).length;
     if (units < 4) fail(`${file} has fewer than 4 .${format.unit} sections`);
     for (const n of ['01', '02', '03', '04']) {
