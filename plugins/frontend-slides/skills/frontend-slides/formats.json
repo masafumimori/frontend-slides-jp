@@ -1,0 +1,8 @@
+{
+  "slide-16x9": {
+    "label": "16:9 presentation",
+    "stage": { "width": 1920, "height": 1080 },
+    "navigation": "deck",
+    "print": "1920px 1080px"
+  }
+}
