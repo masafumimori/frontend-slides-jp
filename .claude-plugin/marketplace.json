@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "frontend-slides",
+  "name": "frontend-slides-jp",
   "description": "Japanese-first HTML presentations in styles drawn from Japanese reference decks.",
   "owner": {
     "name": "masafumimori",
@@ -8,9 +8,9 @@
   },
   "plugins": [
     {
-      "name": "frontend-slides",
+      "name": "frontend-slides-jp",
       "description": "Japanese-first HTML presentation generator: 11 styles drawn from Japanese reference decks, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
-      "source": "./plugins/frontend-slides",
+      "source": "./plugins/frontend-slides-jp",
       "category": "productivity",
       "tags": [
         "design",

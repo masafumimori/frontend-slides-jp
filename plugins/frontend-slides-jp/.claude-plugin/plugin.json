@@ -1,5 +1,5 @@
 {
-  "name": "frontend-slides",
+  "name": "frontend-slides-jp",
   "version": "3.0.0",
   "description": "Japanese-first HTML presentation generator: 11 styles drawn from Japanese reference decks, a measured Japanese font catalog, brand import, PPT conversion, and anti-AI-slop design rules.",
   "skills": "./skills/",
@@ -7,8 +7,8 @@
     "name": "zarazhangrui",
     "url": "https://github.com/zarazhangrui"
   },
-  "homepage": "https://github.com/masafumimori/frontend-slides",
-  "repository": "https://github.com/masafumimori/frontend-slides",
+  "homepage": "https://github.com/masafumimori/frontend-slides-jp",
+  "repository": "https://github.com/masafumimori/frontend-slides-jp",
   "license": "MIT",
   "keywords": [
     "animations",

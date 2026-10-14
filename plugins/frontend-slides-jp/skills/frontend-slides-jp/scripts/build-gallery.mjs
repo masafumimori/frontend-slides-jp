@@ -99,7 +99,7 @@ dt{color:var(--sub)}dd{margin:0}
 @media (max-width:440px){.grid{grid-template-columns:1fr}}
 </style></head><body><div class="wrap">
 <div class="top">
-  <div><p class="eyebrow">FRONTEND-SLIDES · STYLES</p><h1>スタイル一覧</h1>
+  <div><p class="eyebrow">FRONTEND-SLIDES-JP · STYLES</p><h1>スタイル一覧</h1>
   <p class="lede">${styles.length}種のスタイルを用途ごとに並べています。表紙を押すと4枚の見本が開き、矢印キーで送れます。使いたいスタイルは名前か右の英字名でスキルに伝えてください。</p></div>
   <div class="filters" role="group" aria-label="絞り込み">
     <button data-f="all" aria-pressed="true">すべて</button>

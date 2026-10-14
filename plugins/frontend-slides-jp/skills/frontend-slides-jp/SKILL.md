@@ -1,9 +1,9 @@
 ---
-name: frontend-slides
+name: frontend-slides-jp
 description: Create Japanese-first, animation-rich HTML presentations from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers pick a look by seeing it.
 ---
 
-# Frontend Slides
+# Frontend Slides JP
 
 Create zero-dependency, animation-rich HTML presentations that run entirely in the browser. Slide copy is Japanese and the design targets Japanese audiences unless the user asks otherwise.
 
@@ -197,7 +197,7 @@ If the user wants to browse every style before choosing, open [styles/gallery.ht
 - If the slide needs chrome, use real deck chrome only: the deck title, section title, date, author, company, page number, or a genuine content phrase from the user's material.
 - Before opening previews, inspect the visible text and revise if any internal metadata appears.
 
-Save previews to `.frontend-slides/slide-previews/` (style-a.html, style-b.html, style-c.html). Each should be self-contained and compact, showing one animated title slide.
+Save previews to `.frontend-slides-jp/slide-previews/` (style-a.html, style-b.html, style-c.html). Each should be self-contained and compact, showing one animated title slide.
 
 Open each preview automatically for the user.
 
@@ -274,7 +274,7 @@ When converting PowerPoint files:
 
 ## Phase 5: Delivery
 
-1. **Clean up** — Delete `.frontend-slides/slide-previews/` if it exists
+1. **Clean up** — Delete `.frontend-slides-jp/slide-previews/` if it exists
 2. **Open** — Use `open [filename].html` to launch in browser
 3. **Summarize** — Tell the user:
    - File location, style name, slide count

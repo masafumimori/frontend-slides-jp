@@ -2,6 +2,8 @@
 
 50 diagram and chart patterns for Japanese business slides, one 1920×1080 slide each, in [diagrams.html](diagrams.html). Open `diagrams.html#d-<id>` to see one; arrow keys step through all of them.
 
+Read this file down to the end of "Slop signs" first. Below that, read only the entries of the patterns you are considering; the full catalogue is long.
+
 A pattern supplies the structure: which relationship it shows, how the parts are laid out, and the function that turns data into marks. The chosen style supplies the appearance. Where the style's `design.md` and a pattern disagree (labels on every value or only some, gridline count, boxes or rules, centred or left-aligned text, line weights, which colors exist), the style wins.
 
 ## Does this slide need a diagram?

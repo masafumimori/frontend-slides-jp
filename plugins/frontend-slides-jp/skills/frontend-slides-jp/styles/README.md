@@ -1,6 +1,6 @@
 # Style format
 
-One folder per style: `styles/<slug>/`. A brand imported from a company design system uses the same folder shape under `~/.frontend-slides/brands/<slug>/`.
+One folder per style: `styles/<slug>/`. A brand imported from a company design system uses the same folder shape under `~/.frontend-slides-jp/brands/<slug>/`.
 
 | File | Read when | Holds |
 | --- | --- | --- |

@@ -1,8 +1,8 @@
-# Frontend Slides（日本語版）
+# Frontend Slides JP
 
 日本語のプレゼン資料を、1枚の HTML ファイルとして作る AI エージェント用のスキルです。日本で評価の高い会社紹介・採用ピッチ・決算資料・統合報告書を調べて作った 11 のスタイルから選べます。自社のデザインシステムを渡して、その見た目で作ることもできます。
 
-[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) のフォークです。元のスキルの考え方（AI が作りがちな凡庸なデザインを避ける、選ぶ前に見せる、1920×1080 の固定ステージ）はそのまま引き継いでいます。
+[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) のフォークです。元のスキルと区別するため、リポジトリ・プラグイン・スキルの名前はすべて `frontend-slides-jp` にしています。元のスキルと同時に入れても名前はぶつかりません。元のスキルの考え方（AI が作りがちな凡庸なデザインを避ける、選ぶ前に見せる、1920×1080 の固定ステージ）はそのまま引き継いでいます。
 
 ## できること
 
@@ -27,7 +27,7 @@
 | ![](docs/images/swiss-grid.jpg) | **スイス・タイポグリッド** `swiss-grid` | デザイン・建築・文化イベント |
 | ![](docs/images/color-index.jpg) | **章色インデックス** `color-index` | 中期経営計画、複数事業の会社案内 |
 
-全スタイルは `plugins/frontend-slides/skills/frontend-slides/styles/gallery.html` で一覧できます。用途ごとに並び、明暗・格式・写真の要否で絞り込めます。各スタイルの `reference.html` をブラウザで開くと、4 枚の見本を矢印キーで送れます。
+全スタイルは `plugins/frontend-slides-jp/skills/frontend-slides-jp/styles/gallery.html` で一覧できます。用途ごとに並び、明暗・格式・写真の要否で絞り込めます。各スタイルの `reference.html` をブラウザで開くと、4 枚の見本を矢印キーで送れます。
 
 ## 日本語のための工夫
 
@@ -44,45 +44,45 @@
 次の 2 つを、別々のメッセージとして実行してください。
 
 ```text
-/plugin marketplace add https://github.com/masafumimori/frontend-slides
+/plugin marketplace add https://github.com/masafumimori/frontend-slides-jp
 ```
 
 ```text
-/plugin install frontend-slides@frontend-slides
+/plugin install frontend-slides-jp@frontend-slides-jp
 ```
 
-使うときは `/frontend-slides:frontend-slides` と入力します。
+使うときは `/frontend-slides-jp:frontend-slides-jp` と入力します。
 
 ### Claude Code（手動）
 
 ```bash
-git clone https://github.com/masafumimori/frontend-slides.git /tmp/frontend-slides && cp -R /tmp/frontend-slides/plugins/frontend-slides/skills/frontend-slides ~/.claude/skills/
+git clone https://github.com/masafumimori/frontend-slides-jp.git /tmp/frontend-slides-jp && cp -R /tmp/frontend-slides-jp/plugins/frontend-slides-jp/skills/frontend-slides-jp ~/.claude/skills/
 ```
 
-使うときは `/frontend-slides` と入力します。
+使うときは `/frontend-slides-jp` と入力します。
 
 ### ほかのエージェント
 
-Codex などには、このリポジトリの URL を渡して「Frontend Slides スキルを使って」と頼んでください。エージェントは `plugins/frontend-slides/skills/frontend-slides/SKILL.md` から読み始め、必要なファイルだけを読みます。
+Codex などには、このリポジトリの URL を渡して「Frontend Slides JP スキルを使って」と頼んでください。エージェントは `plugins/frontend-slides-jp/skills/frontend-slides-jp/SKILL.md` から読み始め、必要なファイルだけを読みます。
 
 ## 使い方
 
 ```text
-/frontend-slides:frontend-slides
+/frontend-slides-jp:frontend-slides-jp
 
 > 来月の採用説明会で使う会社紹介資料を作りたい
 ```
 
-自社のデザインシステムを使うときは、ロゴ・ブランドガイドの PDF・サイトの URL などを一緒に渡してください。スキルがそれを `~/.frontend-slides/brands/<名前>/` にスタイルとして保存し、次からも使えるようにします。リポジトリの中には保存しません。
+自社のデザインシステムを使うときは、ロゴ・ブランドガイドの PDF・サイトの URL などを一緒に渡してください。スキルがそれを `~/.frontend-slides-jp/brands/<名前>/` にスタイルとして保存し、次からも使えるようにします。リポジトリの中には保存しません。
 
 ## 共有
 
 ```bash
-bash plugins/frontend-slides/skills/frontend-slides/scripts/deploy.sh ./my-deck.html
+bash plugins/frontend-slides-jp/skills/frontend-slides-jp/scripts/deploy.sh ./my-deck.html
 ```
 
 ```bash
-bash plugins/frontend-slides/skills/frontend-slides/scripts/export-pdf.sh ./my-deck.html
+bash plugins/frontend-slides-jp/skills/frontend-slides-jp/scripts/export-pdf.sh ./my-deck.html
 ```
 
 URL の発行には Vercel のアカウント、PDF の書き出しには Node.js が必要です（Playwright は自動で入ります）。
@@ -92,7 +92,7 @@ URL の発行には Vercel のアカウント、PDF の書き出しには Node.j
 形式は `styles/README.md` にあります。足したり直したりしたあとは、次を実行してください。全スタイルを検査し、`styles/selection-index.json` を作り直します。
 
 ```bash
-node plugins/frontend-slides/skills/frontend-slides/scripts/check-styles.mjs
+node plugins/frontend-slides-jp/skills/frontend-slides-jp/scripts/check-styles.mjs
 ```
 
 サムネイルの撮影（`scripts/shoot.mjs`）と一覧ページの再生成（`scripts/build-gallery.mjs`）の手順も `styles/README.md` にあります。
