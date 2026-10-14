@@ -10,6 +10,37 @@
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { lookup } from 'node:dns/promises';
+import { BlockList, isIP } from 'node:net';
+
+// True for a public unicast address. IPv6 is allowed only in global unicast (2000::/3) outside
+// the ranges that embed or tunnel an IPv4 address; IPv4 must miss every special-purpose range.
+const BLOCKED_V4 = new BlockList();
+for (const [net, bits] of [['0.0.0.0', 8], ['10.0.0.0', 8], ['100.64.0.0', 10], ['127.0.0.0', 8], ['169.254.0.0', 16],
+  ['172.16.0.0', 12], ['192.0.0.0', 24], ['192.0.2.0', 24], ['192.168.0.0', 16], ['198.18.0.0', 15],
+  ['198.51.100.0', 24], ['203.0.113.0', 24], ['224.0.0.0', 4], ['240.0.0.0', 4]]) BLOCKED_V4.addSubnet(net, bits, 'ipv4');
+const GLOBAL_V6 = new BlockList();
+GLOBAL_V6.addSubnet('2000::', 3, 'ipv6');
+const BLOCKED_V6 = new BlockList();
+for (const [net, bits] of [['2001::', 32], ['2001:db8::', 32], ['2002::', 16]]) BLOCKED_V6.addSubnet(net, bits, 'ipv6');
+function publicAddress(a) {
+  a = String(a).replace(/^\[|\]$/g, '').replace(/%.*$/, '');
+  const kind = isIP(a);
+  if (kind === 4) return !BLOCKED_V4.check(a, 'ipv4');
+  if (kind === 6) return GLOBAL_V6.check(a, 'ipv6') && !BLOCKED_V6.check(a, 'ipv6');
+  return false;
+}
+const hostCache = new Map();
+async function hostIsPublic(host) {
+  if (isIP(host)) return publicAddress(host);
+  if (/(^|\.)(localhost|local|internal|lan|home\.arpa)$/i.test(host)) return false;
+  if (!hostCache.has(host)) {
+    hostCache.set(host, lookup(host, { all: true, verbatim: true })
+      .then(list => list.length > 0 && list.every(({ address }) => publicAddress(address)))
+      .catch(() => false));
+  }
+  return hostCache.get(host);
+}
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const args = process.argv.slice(2);
@@ -21,6 +52,9 @@ mkdirSync(out, { recursive: true });
 
 const browser = await chromium.launch();
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'ja-JP', reducedMotion: 'reduce' });
+// The sanitizer runs in its own blank page, where no script from the site can reach its builtins.
+const sanitizer = await (await browser.newContext()).newPage();
+await sanitizer.goto('about:blank');
 const sites = [];
 
 for (const [i, url] of urls.entries()) {
@@ -28,6 +62,16 @@ for (const [i, url] of urls.entries()) {
   // Logo files come from what the page itself loaded; this script sends no request of its own.
   const images = new Map();
   page.on('response', r => { if (r.request().resourceType() === 'image' && r.ok()) images.set(r.url(), r); });
+  // The page may ask the browser for this machine or its network. Only the host the user named
+  // may be private (their own staging site); every other request must go to a public address.
+  const userHost = new URL(url).hostname;
+  await page.route('**/*', async route => {
+    const target = route.request().url();
+    if (/^(data|blob|about):/.test(target)) return route.continue();
+    const host = new URL(target).hostname.replace(/^\[|\]$/g, '');
+    if (host === userHost || (await hostIsPublic(host))) return route.continue();
+    return route.abort('blockedbyclient');
+  });
   await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.waitForLoadState('load'));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(800);
@@ -154,7 +198,7 @@ for (const [i, url] of urls.entries()) {
       data = l.markup;
       delete l.markup;
     }
-    if (ext === 'svg') data = await page.evaluate(cleanSvg, data);
+    if (ext === 'svg') data = await sanitizer.evaluate(cleanSvg, String(data).slice(0, 500_000));
     if (!data) continue;
     l.file = `site-${n}-logo-${k + 1}.${ext}`;
     writeFileSync(join(out, l.file), data);
@@ -213,10 +257,18 @@ function cleanSvg(markup) {
     }
   };
   copy(root, out.documentElement);
+  // Prefix ids so a pasted logo cannot shadow the deck's own ids or globals (DOM clobbering).
+  const ids = new Set([...out.querySelectorAll('[id]')].map(e => e.id));
+  const ref = v => v.replace(/#([\w-]+)/g, (m, id) => (ids.has(id) ? `#logo-${id}` : m));
+  for (const el of out.querySelectorAll('*')) {
+    if (el.id) el.id = `logo-${el.id}`;
+    for (const a of ['href', 'style', 'fill', 'stroke', 'clip-path', 'mask']) if (el.hasAttribute(a)) el.setAttribute(a, ref(el.getAttribute(a)));
+    if (el.localName === 'style') el.textContent = ref(el.textContent);
+  }
   const result = new XMLSerializer().serializeToString(out);
   // The file may later be pasted into HTML. Parse the result the way the HTML parser does and
   // refuse it if anything outside the allowlist appears there.
-  const check = document.createElement('div');
+  const check = document.implementation.createHTMLDocument('').createElement('div');
   check.innerHTML = result;
   for (const el of check.querySelectorAll('*')) {
     if (!ELEMENTS.has(el.localName.toLowerCase()) || el.namespaceURI !== NS) return null;
@@ -228,15 +280,4 @@ function cleanSvg(markup) {
     if (el.localName === 'style' && css(el.textContent) !== el.textContent) return null;
   }
   return result;
-}
-
-// True for an IP address outside loopback, private, link-local, CGNAT and unique-local ranges.
-function publicAddress(a) {
-  a = String(a).replace(/^\[|\]$/g, '').replace(/^::ffff:/i, '');
-  if (/^\d+\.\d+\.\d+\.\d+$/.test(a)) {
-    const [p, q] = a.split('.').map(Number);
-    return !(p === 0 || p === 10 || p === 127 || (p === 169 && q === 254) || (p === 172 && q >= 16 && q <= 31)
-      || (p === 192 && q === 168) || (p === 100 && q >= 64 && q <= 127) || p >= 224);
-  }
-  return a.includes(':') && !/^(::1?$|f[cd]|fe[89ab])/i.test(a);
 }
