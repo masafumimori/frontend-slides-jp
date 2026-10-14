@@ -6,14 +6,15 @@ Reference architecture for generating slide presentations. Every presentation fo
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presentation Title</title>
 
-    <!-- Fonts: use Fontshare or Google Fonts — never system fonts -->
-    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=...">
+    <!-- Fonts: one Google Fonts link built from the css queries in fonts/catalog.json -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Inter+Tight:wght@500;800&display=swap">
 
     <style>
         /* ===========================================
@@ -30,8 +31,9 @@ Reference architecture for generating slide presentations. Every presentation fo
             --accent-glow: rgba(0, 255, 204, 0.3);
 
             /* Typography — authored at 1920×1080 stage size */
-            --font-display: 'Clash Display', sans-serif;
-            --font-body: 'Satoshi', sans-serif;
+            --font-display: 'Noto Sans JP', sans-serif;
+            --font-body: 'Noto Sans JP', sans-serif;
+            --font-latin: 'Inter Tight', 'Noto Sans JP', sans-serif;
             --title-size: 112px;
             --subtitle-size: 34px;
             --body-size: 28px;

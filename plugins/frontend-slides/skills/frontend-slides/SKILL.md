@@ -1,18 +1,18 @@
 ---
 name: frontend-slides
-description: Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstract choices.
+description: Create Japanese-first, animation-rich HTML presentations from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers pick a look by seeing it.
 ---
 
 # Frontend Slides
 
-Create zero-dependency, animation-rich HTML presentations that run entirely in the browser.
+Create zero-dependency, animation-rich HTML presentations that run entirely in the browser. Slide copy is Japanese and the design targets Japanese audiences unless the user asks otherwise.
 
 ## Core Principles
 
 1. **Zero Dependencies** — Single HTML files with inline CSS/JS. No npm, no build tools.
 2. **Show, Don't Tell** — Generate visual previews, not abstract choices. People discover what they want by seeing it.
 3. **Distinctive Design** — No generic "AI slop." Every presentation must feel custom-crafted.
-4. **Progressive Disclosure** — Read lightweight style indexes first. For bold templates, use small preview cards for style previews and load the full `design.md` only after the user picks that template.
+4. **Progressive Disclosure** — Read `styles/selection-index.json` first, then only the shortlisted styles' `preview.md`, then the chosen style's `design.md` and `reference.html`.
 5. **Fixed 16:9 Stage (NON-NEGOTIABLE)** — Every deck uses a 1920×1080 slide canvas scaled as a whole to the viewport. Slides must stay 16:9 on every screen, including phones. Do not reflow slide content to fit the device.
 
 ## Design Aesthetics
@@ -34,6 +34,27 @@ Avoid generic AI-generated aesthetics:
 - Cookie-cutter design that lacks context-specific character
 
 Interpret creatively and make unexpected choices that feel genuinely designed for the context. Vary between light and dark themes, different fonts, different aesthetics. You still tend to converge on common choices (Space Grotesk, for example) across generations. Avoid this: it is critical that you think outside the box!
+
+### Japanese Typography
+
+- Pick Japanese families from [fonts/catalog.json](fonts/catalog.json). Headings use a family whose `role` is `any`; a `vertical-heading` family may set vertical headings only; `body-only` families never set headings, because palt does not tighten them and kana sit full-width.
+- Heading tracking is 0 with palt. Body tracking is 0.02em at most. Wide tracking (≥ 0.1em) belongs to Latin caps captions only.
+- Break headlines by hand with `<br>` at 文節 boundaries. No line may start with 、。」) or end with 「(, and no line may hold a single character.
+- Vertical runs use the `.tate` class from `viewport-base.css`. Two-digit numbers in vertical text use `text-combine-upright: all`.
+- Mixed Japanese and Latin: numbers and Latin words take the paired Latin family; units (億円, 件, %) sit at about a third of the number's size.
+
+### Design Rules
+
+These come from the Japanese reference decks the styles were built from. They apply to every style.
+
+- Colors: neutrals plus at most 4 hues per slide. Charts use shades of one hue, with the accent only on the value the headline is about.
+- Emphasis: at most 3 methods per deck (for example color, weight, size).
+- Every content slide's headline states its conclusion as a sentence, never a topic label.
+- Left-align body text. Bullets stay one level deep.
+- Three items sit side by side; four or more become a list, grid or table.
+- A KPI number is 3-4× the size of its unit.
+- Charts are 2D, keep their size and position across slides, and carry a source line.
+- Section gates use a full-bleed color or image; content slides use the light (or, in dark styles, dark) ground.
 
 ## Fixed Stage Rules
 
@@ -139,43 +160,27 @@ Do not ask the user whether they want options or a preset picker. The default di
 
 If the user already gave a vibe, use it. If they did not, infer the likely mood from the occasion, audience, content, and stakes. Keep the options diverse enough that the user can react visually instead of needing to articulate taste up front.
 
-If the user explicitly names a preset or bold template, honor that as one option and generate the remaining preview slots around it.
+If the user names a style, honor it as one option and generate the remaining preview slots around it.
 
-Read [STYLE_PRESETS.md](STYLE_PRESETS.md) for safe preset candidates. If [bold-template-pack/selection-index.json](bold-template-pack/selection-index.json) exists, read that compact index too, but do not read any `design.md` files yet.
+If the user brings a company design system, logo, brand guide or URL, follow [references/brand-import.md](references/brand-import.md) first. The resulting brand style is always one of the three previews.
 
-| Mood                | Suggested Presets                                  |
-| ------------------- | -------------------------------------------------- |
-| Impressed/Confident | Bold Signal, Electric Studio, Dark Botanical       |
-| Excited/Energized   | Creative Voltage, Neon Cyber, Split Pastel         |
-| Calm/Focused        | Notebook Tabs, Paper & Ink, Swiss Modern           |
-| Inspired/Moved      | Dark Botanical, Vintage Editorial, Pastel Geometry |
+Read [styles/selection-index.json](styles/selection-index.json). Do not read any `design.md` or `reference.html` yet.
 
 **Preview mix rules:**
 
-- Generate 3 previews by default: 1 safe preset from `STYLE_PRESETS.md`, at least 1 bold template from `bold-template-pack/selection-index.json`, and 1 wildcard.
-- The wildcard may be either a second bold template or a self-generated custom design. Choose whichever creates the strongest, most useful contrast for the user's occasion, audience, mood, and content.
-- Do not force every expressive option to come from the template library. If the brief has a sharper, more specific design opportunity than the available templates, use the wildcard slot to design freely.
-- For conservative or high-stakes decks, make the safe preset especially restrained; choose a calm, higher-formality bold template; make the wildcard either another restrained template or a custom design that feels authoritative rather than decorative.
-- For expressive decks, keep the safe preset as a readable fallback; choose one strong bold template; make the wildcard adventurous, context-specific, and clearly different from both other previews.
-- If bold template matches feel weak, use the wildcard as a custom design or fall back to another safe preset instead of forcing a template.
+- Generate 3 previews: one restrained style (`formality: high`), one expressive style, and one wildcard. With a brand, the brand takes the restrained slot.
+- Match purpose and mood against `mood`, `formality`, `density`, `scheme`, `best_for` and `avoid_for`. Treat `best_for` as a soft signal.
+- Respect `needs`: offer a style that needs `photos` only when the user has photos or accepts generated ones.
+- Keep the three previews genuinely different in ground, typography and signature device.
+- The wildcard may be a custom design when the brief has a sharper opportunity than any listed style.
+- After shortlisting, read only those styles' `preview.md` from the `preview_md` paths.
 
 **Custom wildcard design rules:**
 
-- Follow the Design Aesthetics section above: no generic "AI slop", no default font/color/layout choices, no purple-gradient-on-white clichés, no cookie-cutter dashboard/card look.
-- Match the user's stated occasion, audience, mood/vibe, and content density. The custom design should feel authored for this deck, not merely "stylish."
-- Make a deliberate visual thesis: distinctive typography, a committed palette, a recognizable layout system, and one strong atmospheric or graphic device.
-- Keep it feasible for a full deck. The preview must imply a design system that can expand into section, content, quote, comparison, and closing slides.
-- Use fixed 1920×1080 stage rules and pass the same preview authenticity checks as every other option.
+- Follow Design Aesthetics, Japanese Typography and Design Rules above.
+- Make a deliberate visual thesis: a committed palette, a recognizable layout system, and one signature device that does a job.
+- The preview must imply a system that expands into section, content, comparison, quote and closing slides.
 - Never render "custom", "wildcard", "AI-generated", or design-process labels on the slide itself.
-
-**Bold template selection rules:**
-
-- Match user purpose and mood against `mood`, `tone`, `best_for`, `avoid_for`, `formality`, `density`, and `scheme`.
-- Treat `best_for` examples as soft signals, not strict industry filters.
-- Keep the three previews genuinely different from each other.
-- After choosing bold template candidate(s), read only those candidate(s)' `preview.md` files from the `preview_md` paths in the selection index.
-- Use `preview.md` only for title-slide previews. Do not read full `design.md` files until the user picks the final template.
-- Do not read or copy `template.html` unless the selected final `design.md` is missing a critical implementation detail.
 
 **Preview authenticity rules (NON-NEGOTIABLE):**
 
@@ -214,20 +219,17 @@ If the user's stated needs are mixed, choose the closer of the two modes instead
 
 Never let high density become visual clutter. If a high-density slide starts to overflow, split it or redesign it into a clearer structure.
 
-If the user selected a bold template from `bold-template-pack`, read that one template's full `design.md` before generating. Do not read the other bold templates. Treat `design.md` as the design recipe:
+If the user selected a listed style or a brand, read that one style's `design.md` and `reference.html` before generating. Do not read other styles.
 
-- Preserve its fonts, palette, decorative vocabulary, spacing rhythm, and component grammar.
-- Generate the final deck as a fixed 1920×1080 stage scaled uniformly to the viewport, regardless of whether the source template originally used `deck-stage.js` or viewport-fluid CSS.
-- Treat viewport-fluid values in `design.md` as design proportions to translate into 1920×1080 stage coordinates. Do not keep them as live viewport reflow rules in the final deck.
-- Keep the output as a single self-contained Frontend Slides HTML file.
-- Do not copy demo slide content or mimic the source template too literally.
-- Use `template.html` only as a last-resort implementation reference for the selected template.
-- After generating, verify both content overflow and panel overlap in rendered browser screenshots. `scrollHeight` checks alone are not enough because grid panels can visually cover each other.
+- Preserve its tokens, fonts, type scale, signature devices and slide grammar.
+- Copy CSS from `reference.html`; write new copy for the user's content. Never reuse its fictional company, numbers or slogans.
+- Build missing slide types from the `design.md` slide-grammar section.
+- Before delivery, walk the style's slop-signs checklist and the Design Rules against rendered screenshots. `scrollHeight` checks alone are not enough because grid panels can visually cover each other.
 
 If the user selected a self-generated custom wildcard, treat that preview's CSS and layout as the design recipe:
 
 - Preserve its fonts, palette, decorative vocabulary, spacing rhythm, grid logic, and component grammar.
-- Expand the same visual system across the full deck. Do not switch to a preset or bold template after the user has chosen the custom direction.
+- Expand the same visual system across the full deck. Do not switch to a listed style after the user has chosen the custom direction.
 - Design any missing slide layouts from that system rather than importing patterns from another style.
 - Keep the output fixed-stage, single-file, and visually verified like every other deck.
 
@@ -241,7 +243,7 @@ If the user selected a self-generated custom wildcard, treat that preview's CSS 
 
 - Single self-contained HTML file, all CSS/JS inline
 - Include the FULL contents of viewport-base.css in the `<style>` block
-- Use fonts from Fontshare or Google Fonts — never system fonts
+- Load fonts from Google Fonts with the `css` queries in `fonts/catalog.json` — never system fonts
 - Add detailed comments explaining each section
 - Every section needs a clear `/* === SECTION NAME === */` comment block
 
@@ -368,10 +370,12 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 
 | File                                               | Purpose                                                              | When to Read              |
 | -------------------------------------------------- | -------------------------------------------------------------------- | ------------------------- |
-| [STYLE_PRESETS.md](STYLE_PRESETS.md)               | 12 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
-| [bold-template-pack/selection-index.json](bold-template-pack/selection-index.json) | Compact bold template metadata for candidate selection | Phase 2 (style selection) |
-| [bold-template-pack/templates/*/preview.md](bold-template-pack/templates/) | Lightweight style cards for shortlisted bold title previews | Phase 2 after shortlisting |
-| [bold-template-pack/templates/*/design.md](bold-template-pack/templates/) | Detailed design-system docs for the selected bold template only | Phase 3 after user selection |
+| [styles/selection-index.json](styles/selection-index.json) | Generated metadata for every style | Phase 2 (style selection) |
+| `styles/<slug>/preview.md` | Cover recipe for a shortlisted style | Phase 2 after shortlisting |
+| `styles/<slug>/design.md`, `reference.html` | The chosen style's design system and working deck | Phase 3 after selection |
+| [styles/README.md](styles/README.md) | Style folder format; run `node scripts/check-styles.mjs` after edits | Adding or editing a style |
+| [references/brand-import.md](references/brand-import.md) | Turning a company design system into a style | Phase 2, when the user brings a brand |
+| [fonts/catalog.json](fonts/catalog.json) | Japanese and Latin families with measured palt/vpal and css queries | Phase 2 and 3 (fonts) |
 | [viewport-base.css](viewport-base.css)             | Mandatory fixed-stage CSS — copy into every presentation             | Phase 3 (generation)      |
 | [html-template.md](html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      |
 | [animation-patterns.md](animation-patterns.md)     | CSS/JS animation snippets and effect-to-feeling guide                | Phase 3 (generation)      |
