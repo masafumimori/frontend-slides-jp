@@ -1,7 +1,7 @@
 // Records what a website renders, as raw facts for references/brand-import.md:
 // colors by role, CSS custom properties, the type of each text role, corner radii,
-// logo candidates (saved as files) and two screenshots. It reads the site; it never
-// decides the brand.
+// logo candidates (saved as files, from what the page loaded) and two screenshots.
+// It reads the site; it never decides the brand.
 //   node scripts/extract-site.mjs <url> [<url> …] --out <dir>
 // Writes <dir>/site-facts.json, <dir>/site-<n>.png (first screen) and
 // <dir>/site-<n>-full.png (whole page, up to 8000px). Give 1–3 URLs of one site:
@@ -10,8 +10,6 @@
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { lookup } from 'node:dns/promises';
-import { isIP } from 'node:net';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const args = process.argv.slice(2);
@@ -27,6 +25,9 @@ const sites = [];
 
 for (const [i, url] of urls.entries()) {
   const page = await context.newPage();
+  // Logo files come from what the page itself loaded; this script sends no request of its own.
+  const images = new Map();
+  page.on('response', r => { if (r.request().resourceType() === 'image' && r.ok()) images.set(r.url(), r); });
   await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.waitForLoadState('load'));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(800);
@@ -136,26 +137,25 @@ for (const [i, url] of urls.entries()) {
     };
   });
 
-  // Logo files are fetched from this machine, so only from public hosts, without redirects,
-  // and only as images. SVG from the site is untrusted markup: it is cleaned before saving.
+  // Site SVG is untrusted markup: it is rebuilt from an allowlist in the browser before saving.
   for (const [k, l] of facts.logos.entries()) {
-    if (l.kind !== 'img' || !l.src || !(await publicHost(l.src))) continue;
-    const res = await page.request.get(l.src, { maxRedirects: 0, timeout: 15000 }).catch(() => null);
-    if (!res?.ok()) continue;
-    const ext = (res.headers()['content-type'] ?? '').match(/image\/(svg|png|jpe?g|webp|gif)/)?.[1].replace('jpeg', 'jpg');
-    const body = await res.body();
-    if (!ext || body.length > 2_000_000) continue;
+    let ext = 'svg', data;
+    if (l.kind === 'img') {
+      const res = l.src && images.get(l.src);
+      if (!res) continue;
+      ext = (res.headers()['content-type'] ?? '').match(/image\/(svg|png|jpe?g|webp|gif)/)?.[1].replace('jpeg', 'jpg');
+      const body = await res.body().catch(() => null);
+      if (!ext || !body || body.length > 2_000_000) continue;
+      data = ext === 'svg' ? body.toString('utf8') : body;
+    } else {
+      data = l.markup;
+      delete l.markup;
+    }
+    if (ext === 'svg') data = await page.evaluate(cleanSvg, data);
+    if (!data) continue;
     l.file = `site-${n}-logo-${k + 1}.${ext}`;
-    writeFileSync(join(out, l.file), ext === 'svg' ? cleanSvg(body.toString('utf8')) : body);
+    writeFileSync(join(out, l.file), data);
   }
-  facts.logos.forEach((l, k) => {
-    if (l.kind !== 'svg') return;
-    const file = `site-${n}-logo-${k + 1}.svg`;
-    const svg = l.markup.includes('xmlns') ? l.markup : l.markup.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
-    writeFileSync(join(out, file), cleanSvg(svg));
-    l.file = file;
-    delete l.markup;
-  });
   sites.push({ url, screenshot: `site-${n}.png`, fullPage: `site-${n}-full.png`, ...facts });
   await page.close();
 }
@@ -169,31 +169,46 @@ const result = {
 writeFileSync(join(out, 'site-facts.json'), JSON.stringify(result, null, 2));
 console.log(JSON.stringify({ out, sites: sites.map(s => ({ url: s.url, title: s.title, accent: s.colors.accent.slice(0, 3), h1: s.type.h1?.family, logos: s.logos.length })) }));
 
-// True when every address the host resolves to is public (not loopback, private or link-local).
-async function publicHost(url) {
-  let host;
-  try {
-    const u = new URL(url);
-    if (!/^https?:$/.test(u.protocol)) return false;
-    host = u.hostname.replace(/^\[|\]$/g, '');
-  } catch { return false; }
-  const addrs = isIP(host) ? [{ address: host }] : await lookup(host, { all: true }).catch(() => []);
-  if (!addrs.length) return false;
-  return addrs.every(({ address: a }) => !(
-    /^(0\.|10\.|127\.|169\.254\.|192\.168\.)/.test(a) || /^172\.(1[6-9]|2\d|3[01])\./.test(a)
-    || /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(a)
-    || /^(::1?$|f[cd]|fe[89ab]|::ffff:(0|10|127|169\.254|192\.168)\.)/i.test(a)));
-}
-
-// Strip what can run or reach out from an SVG: scripts, embedded documents, event handlers,
-// @import, and references that are not fragments or inline images. Style blocks stay:
-// logos often set their fills there.
-function cleanSvg(svg) {
-  return svg
-    .replace(/<(script|foreignObject|iframe|object|embed)\b[\s\S]*?<\/\1\s*>/gi, '')
-    .replace(/<(script|foreignObject|iframe|object|embed)\b[^>]*\/?>/gi, '')
-    .replace(/\s+on[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
-    .replace(/\s+(xlink:)?href\s*=\s*("(?!#|data:image\/(png|jpe?g|gif|webp);)[^"]*"|'(?!#|data:image\/(png|jpe?g|gif|webp);)[^']*')/gi, '')
-    .replace(/@import[^;]*;?/gi, '')
-    .replace(/url\(\s*['"]?(?!#)[^)]*\)/gi, 'none');
+// Runs in the page: parses SVG markup and rebuilds it from allowed elements and attributes.
+// References survive only as fragments (#id), in attributes and in CSS.
+function cleanSvg(markup) {
+  const ELEMENTS = new Set(['svg', 'g', 'path', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'text', 'tspan',
+    'defs', 'clippath', 'mask', 'lineargradient', 'radialgradient', 'stop', 'use', 'symbol', 'title', 'desc', 'style']);
+  const ATTRS = /^(id|class|d|x|y|x1|y1|x2|y2|cx|cy|r|rx|ry|width|height|viewbox|points|transform|fill|fill-rule|fill-opacity|stroke|stroke-width|stroke-linecap|stroke-linejoin|stroke-miterlimit|stroke-dasharray|stroke-opacity|opacity|clip-path|clip-rule|mask|offset|stop-color|stop-opacity|gradientunits|gradienttransform|font-family|font-size|font-weight|text-anchor|letter-spacing|preserveaspectratio|xmlns|style|href|xlink:href|aria-label|role)$/i;
+  // CSS keeps url(#id) only. Anything that could still load or escape (another url(), a CSS
+  // escape, image-set, @import, @font-face, markup) empties the whole value instead of patching it.
+  const css = t => {
+    const kept = t.replace(/url\(\s*(['"]?)#([\w-]+)\1\s*\)/gi, '\u0001$2\u0002');
+    if (/url\s*\(|\\|image-set|@import|@font-face|expression|[<>]/i.test(kept)) return '';
+    return kept.replace(/\u0001([\w-]+)\u0002/g, 'url(#$1)');
+  };
+  const doc = new DOMParser().parseFromString(markup, 'image/svg+xml');
+  const root = doc.documentElement;
+  if (!root || root.nodeName.toLowerCase() !== 'svg' || doc.querySelector('parsererror')) return null;
+  const NS = 'http://www.w3.org/2000/svg';
+  const out = document.implementation.createDocument(NS, 'svg', null);
+  const copy = (src, dst) => {
+    for (const attr of src.attributes ?? []) {
+      const name = attr.name, value = attr.value;
+      if (!ATTRS.test(name)) continue;
+      if (/href$/i.test(name) && !/^#[\w-]+$/.test(value.trim())) continue;
+      if (name === 'style') { dst.setAttribute('style', css(value)); continue; }
+      if (name === 'xmlns') continue;
+      if (/^(fill|stroke|clip-path|mask)$/i.test(name) && /url\(/i.test(value)) { dst.setAttribute(name, css(value)); continue; }
+      if (name === 'xlink:href') dst.setAttribute('href', value.trim());
+      else dst.setAttribute(name, value);
+    }
+    for (const child of src.childNodes) {
+      if (child.nodeType === 3) {
+        dst.appendChild(out.createTextNode(dst.nodeName === 'style' ? css(child.textContent) : child.textContent));
+      } else if (child.nodeType === 4 && dst.nodeName === 'style') {
+        dst.appendChild(out.createTextNode(css(child.textContent)));
+      } else if (child.nodeType === 1 && ELEMENTS.has(child.nodeName.toLowerCase())) {
+        const tag = { clippath: 'clipPath', lineargradient: 'linearGradient', radialgradient: 'radialGradient' }[child.nodeName.toLowerCase()] ?? child.nodeName.toLowerCase();
+        copy(child, dst.appendChild(out.createElementNS(NS, tag)));
+      }
+    }
+  };
+  copy(root, out.documentElement);
+  return new XMLSerializer().serializeToString(out);
 }
