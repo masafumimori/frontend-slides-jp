@@ -1,0 +1,18 @@
+{
+  "slug": "swiss-grid",
+  "name": "Swiss Typogrid",
+  "name_ja": "スイス・タイポグリッド",
+  "tagline": "A visible 12×6 grid that every element snaps to: black 900-weight type, off-white paper and one signal red.",
+  "mood": ["rigorous", "bold", "architectural"],
+  "formality": "medium",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "デザイン・建築・文化イベントの告知、展覧会や講演会のプログラム、ポートフォリオ",
+  "avoid_for": "やわらかさや親しみを出したい資料、写真が主役の資料、長文で説明する資料",
+  "formats": ["slide-16x9"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": { "heading": "Noto Sans JP", "body": "Noto Sans JP", "latin": ["Schibsted Grotesk"] },
+  "colors": { "paper": "#F5F4F0", "ink": "#0B0B0B", "signal": "#E10600", "mute": "#8C8B87" },
+  "refs": ["International Typographic Style（スイス・スタイル）のポスター", "Josef Müller-Brockmann『Grid Systems in Graphic Design』"]
+}

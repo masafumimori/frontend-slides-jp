@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAGI One 発表会</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Noto+Sans+JP:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1012;
+  --panel:#17181B;
+  --line:#34363B;
+  --fg:#F3F1EC;
+  --fg-2:#C9C6BF;
+  --fg-3:#B4B1AA;
+  --accent:#FFD23F;
+  --stage-bg:#0F1012;
+  --slide-bg:#0F1012;
+  --jp:'Noto Sans JP',sans-serif;
+  --num:'Jost','Noto Sans JP',sans-serif;
+  --mono:'IBM Plex Mono','Noto Sans JP',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting.
+   palt/vpal only tighten fonts that ship those features; fonts/catalog.json
+   records which ones do. Headings use a family with palt: true. */
+.slide {
+    line-break: strict;
+    word-break: auto-phrase;
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+.slide :is(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+.slide :is(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+.slide .tate {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--jp);-webkit-font-smoothing:antialiased}
+.slide{background:radial-gradient(1400px 620px at 70% 118%, #1B1C20 0%, rgba(27,28,32,0) 70%), var(--bg)}
+.cap{font-family:var(--mono);font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3);font-weight:500}
+.cap b{color:var(--accent);font-weight:500}
+.cap .jp{font-family:var(--jp);letter-spacing:.02em;font-size:21px;text-transform:none}
+.chrome{position:absolute;left:120px;right:120px;top:72px;display:flex;justify-content:space-between;align-items:baseline}
+.foot{position:absolute;left:120px;right:120px;bottom:56px;display:flex;justify-content:space-between;align-items:baseline}
+.foot .note{font-size:20px;color:var(--fg-3);letter-spacing:.02em}
+.num{font-family:var(--num);font-feature-settings:"tnum","lnum";}
+.acc{color:var(--accent)}
+
+/* motion: one staggered reveal per slide */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.slide.visible .rv{opacity:1;transform:none}
+.slide.visible .rv.d1{transition-delay:.15s}.slide.visible .rv.d2{transition-delay:.3s}
+.slide.visible .rv.d3{transition-delay:.45s}.slide.visible .rv.d4{transition-delay:.6s}
+.slide.visible .rv.d5{transition-delay:.75s}
+.prod{opacity:0;transform:translateY(40px);transition:opacity 1.4s var(--ease),transform 1.6s var(--ease)}
+.slide.visible .prod{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.rv,.prod{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ---------- 1 cover ---------- */
+.s1 .hero{position:absolute;left:1080px;top:0;width:620px;height:1080px}
+.s1 .hero svg{position:absolute;left:50%;transform:translateX(-50%);top:104px;width:330px;height:auto;max-height:none;overflow:visible}
+.s1 .copy{position:absolute;left:120px;top:236px;width:960px}
+.s1 .name{font-family:var(--num);font-weight:200;font-size:196px;line-height:.9;letter-spacing:-.01em;color:var(--fg);white-space:nowrap}
+.s1 .name span{font-weight:400}
+.s1 .tag{margin-top:72px;font-size:72px;font-weight:700;line-height:1.32;letter-spacing:.01em}
+.s1 .specs{position:absolute;left:120px;bottom:132px;display:flex;gap:0}
+.s1 .specs div{padding:0 56px 0 0;margin-right:56px;border-right:1px solid var(--line)}
+.s1 .specs div:last-child{border:0;margin:0;padding:0}
+.s1 .specs dt{font-size:22px;color:var(--fg-2);font-weight:500;letter-spacing:.02em;margin-bottom:10px}
+.s1 .specs dd{letter-spacing:0;font-family:var(--num);font-weight:300;font-size:52px;line-height:1;color:var(--fg)}
+.s1 .specs dd small{font-family:var(--jp);font-size:24px;font-weight:500;margin-left:6px;color:var(--fg-2)}
+
+/* ---------- 2 chapter gate ---------- */
+.s2 .macro{position:absolute;left:1000px;top:0;width:920px;height:1080px;overflow:hidden}
+.s2 .macro svg{position:absolute;left:0;top:0;width:920px;height:1080px}
+.s2 .gate{position:absolute;left:120px;top:150px;width:900px}
+.s2 .big{font-family:var(--num);font-weight:200;font-size:240px;line-height:.82;letter-spacing:-.02em;color:var(--fg);margin:24px 0 44px -10px}
+.s2 h2{font-size:88px;font-weight:700;line-height:1.2;letter-spacing:.01em}
+.s2 .sub{margin-top:32px;font-size:28px;line-height:1.7;color:var(--fg-2);letter-spacing:.02em}
+.s2 .agenda{position:absolute;left:120px;bottom:80px;width:860px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.s2 .agenda li{list-style:none;line-height:normal;letter-spacing:0;border-top:2px solid var(--line);padding-top:18px;color:var(--fg-3)}
+.s2 .agenda li .n{font-family:var(--num);font-size:26px;font-weight:400;display:block;margin-bottom:8px}
+.s2 .agenda li .t{font-size:22px;font-weight:500;line-height:1.5;letter-spacing:.02em}
+.s2 .agenda li.on{border-top-color:var(--accent);color:var(--fg)}
+.s2 .agenda li.on .n{color:var(--accent)}
+
+/* ---------- 3 conclusion + numbers ---------- */
+.s3 h2{position:absolute;left:120px;top:150px;font-size:68px;font-weight:700;line-height:1.36;letter-spacing:.01em}
+.s3 .kpi{position:absolute;left:120px;top:400px;width:760px}
+.s3 .kpi .label{font-size:24px;font-weight:500;color:var(--fg-2);letter-spacing:.02em}
+.s3 .kpi .val{display:flex;align-items:baseline;margin-top:4px}
+.s3 .kpi .val b{font-family:var(--num);font-weight:200;font-size:380px;line-height:.86;letter-spacing:-.03em;color:var(--fg);margin-left:-18px}
+.s3 .kpi .val i{font-style:normal;font-family:var(--num);font-weight:300;font-size:112px;color:var(--accent);margin-left:18px}
+.s3 .row{position:absolute;left:120px;top:808px;display:flex}
+.s3 .row div{width:250px;border-left:1px solid var(--line);padding-left:24px}
+.s3 .row div:first-child{border:0;padding-left:0}
+.s3 .row b{display:block;font-family:var(--num);font-weight:300;font-size:64px;line-height:1}
+.s3 .row b small{font-family:var(--jp);font-size:24px;font-weight:500;margin-left:4px}
+.s3 .row span{display:block;margin-top:12px;font-size:22px;line-height:1.5;color:var(--fg-2)}
+.s3 .chart{position:absolute;left:1000px;top:400px;width:800px}
+.s3 .chart .ttl{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:12px}
+.s3 .chart .ttl b{font-size:26px;font-weight:700;letter-spacing:.02em}
+.s3 .chart .ttl span{font-size:20px;color:var(--fg-3)}
+.s3 .bar{display:grid;grid-template-columns:270px 1fr 96px;align-items:center;height:86px;border-bottom:1px solid #222327}
+.s3 .bar .k{font-size:24px;font-weight:500;color:var(--fg-2);letter-spacing:.02em;line-height:1.3}
+.s3 .bar .k small{display:block;font-size:19px;color:var(--fg-3);font-weight:400}
+.s3 .bar .t{height:14px;position:relative}
+.s3 .bar .t i{position:absolute;left:0;top:0;bottom:0;background:#5A5C62;transform-origin:left;transition:transform 1.1s var(--ease)}
+.s3 .bar .v{text-align:right;font-family:var(--num);font-size:34px;font-weight:300}
+.s3 .bar .v small{font-size:20px;margin-left:2px;color:var(--fg-2)}
+.s3 .bar.me .k{color:var(--fg);font-weight:700}
+.s3 .bar.me .t i{background:var(--accent)}
+.s3 .bar.me .v{color:var(--accent);font-weight:400}
+.s3 .axis{display:grid;grid-template-columns:270px 1fr 96px;margin-top:10px}
+.s3 .axis div{position:relative;height:24px;font-family:var(--num);font-size:18px;color:var(--fg-3)}
+.s3 .axis span{position:absolute;white-space:nowrap;transform:translateX(-50%)}
+.slide.s3 .bar .t i{transform:scaleX(0)}
+.slide.s3.visible .bar .t i{transform:scaleX(1)}
+.slide.s3.visible .bar:nth-child(3) .t i{transition-delay:.1s}.slide.s3.visible .bar:nth-child(4) .t i{transition-delay:.2s}
+.slide.s3.visible .bar:nth-child(5) .t i{transition-delay:.3s}.slide.s3.visible .bar:nth-child(6) .t i{transition-delay:.45s}
+@media (prefers-reduced-motion: reduce){.slide.s3 .bar .t i{transform:scaleX(1)!important;transition:none!important}}
+
+/* ---------- 4 comparison ---------- */
+.s4 .lead{position:absolute;left:120px;top:150px;width:560px}
+.s4 h2{font-size:72px;font-weight:700;line-height:1.3;letter-spacing:.01em}
+.s4 .lead p{margin-top:40px;font-size:27px;line-height:1.8;color:var(--fg-2);letter-spacing:.02em}
+.s4 .lead p b{color:var(--fg);font-weight:700}
+.s4 table{position:absolute;left:760px;top:160px;width:1040px;border-collapse:collapse}
+.s4 th,.s4 td{text-align:left;vertical-align:bottom}
+.s4 thead th{padding:0 0 20px 28px;border-bottom:1px solid var(--line)}
+.s4 thead th:first-child{padding-left:0}
+.s4 thead .pic{height:250px;display:flex;align-items:flex-end}
+.s4 thead .pic svg{height:auto;max-height:none;overflow:visible}
+.s4 thead .pn{display:block;margin-top:22px;font-family:var(--num);font-size:38px;font-weight:300;color:var(--fg);white-space:nowrap}
+.s4 thead .ps{display:block;margin-top:6px;font-size:20px;color:var(--fg-3);font-weight:500}
+.s4 thead th.old .pn{color:var(--fg-2)}
+.s4 tbody th{font-size:23px;font-weight:500;color:var(--fg-2);padding:0;width:250px;letter-spacing:.02em;vertical-align:middle}
+.s4 tbody td{letter-spacing:0;height:70px;padding:0 0 0 28px;vertical-align:middle;font-family:var(--num);font-size:34px;font-weight:300;border-bottom:1px solid #222327;white-space:nowrap}
+.s4 tbody th{border-bottom:1px solid #222327}
+.s4 tbody td small{font-family:var(--jp);font-size:21px;font-weight:500;margin-left:4px;color:var(--fg-2)}
+.s4 td.one{background:var(--panel)}
+.s4 thead th.one{background:var(--panel);border-top:3px solid var(--accent)}
+.s4 td.old{color:var(--fg-2)}
+.s4 td .hi{color:var(--accent)}
+.s4 .col-one{width:270px}.s4 .col-max{width:270px}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 1 cover -->
+<section class="slide s1 active">
+  <div class="chrome rv"><span class="cap">NAGI LABS &nbsp;/&nbsp; Product Event 2026</span><span class="cap">2026.10.28 &nbsp;Tokyo</span></div>
+  <div class="copy">
+    <div class="name rv d1">NAGI <span>One</span></div>
+    <p class="tag rv d2">部屋の空気を、<br>音もなく入れ替える。</p>
+  </div>
+  <dl class="specs rv d3">
+    <div><dt>発売日</dt><dd class="num">11.18<small>水曜日</small></dd></div>
+    <div><dt>価格（税込）</dt><dd class="num">¥39,800</dd></div>
+    <div><dt>適用床面積</dt><dd class="num">14<small>畳まで</small></dd></div>
+  </dl>
+  <div class="hero prod"><svg data-tower="cover"></svg></div>
+  <div class="foot"><span class="note">ナギ・ラボ株式会社　新製品発表会</span><span class="cap num">01 / 04</span></div>
+</section>
+
+<!-- 2 chapter gate -->
+<section class="slide s2">
+  <div class="macro prod"><svg data-tower="macro"></svg></div>
+  <div class="chrome rv"><span class="cap">NAGI One &nbsp;/&nbsp; Keynote</span><span class="cap"></span></div>
+  <div class="gate">
+    <span class="cap rv d1">Chapter</span>
+    <div class="big rv d1">02</div>
+    <h2 class="rv d2">静けさを、<br>数字で。</h2>
+    <p class="sub rv d3">眠っている部屋で回し続けるために、<br>音から先に設計しました。</p>
+  </div>
+  <ol class="agenda rv d4">
+    <li><span class="n">01</span><span class="t">なぜ「静か」から<br>作ったのか</span></li>
+    <li class="on"><span class="n">02</span><span class="t">静けさを、<br>数字で</span></li>
+    <li><span class="n">03</span><span class="t">2つのサイズと<br>選び方</span></li>
+    <li><span class="n">04</span><span class="t">発売日と<br>予約特典</span></li>
+  </ol>
+  
+</section>
+
+<!-- 3 conclusion + numbers -->
+<section class="slide s3">
+  <div class="chrome rv"><span class="cap"><b>02</b> &nbsp;<span class="jp">静けさを、数字で</span></span><span class="cap">NAGI One</span></div>
+  <h2 class="rv d1">眠っている間は、19dB。<br>時計の秒針より、静かに回る。</h2>
+  <div class="kpi rv d2">
+    <div class="label">おやすみモードの運転音</div>
+    <div class="val"><b>19</b><i>dB</i></div>
+  </div>
+  <div class="row rv d3">
+    <div><b>9<small>分</small></b><span>6畳の空気を<br>ひと通り清浄</span></div>
+    <div><b>4.2<small>W</small></b><span>おやすみモードの<br>消費電力</span></div>
+    <div><b>3<small>年</small></b><span>フィルター<br>交換の目安</span></div>
+  </div>
+  <div class="chart rv d4">
+    <div class="ttl"><b>音の大きさの目安</b><span>単位 dB（A特性）</span></div>
+    <div class="bar"><div class="k">図書館の中</div><div class="t"><i style="width:80%"></i></div><div class="v">40</div></div>
+    <div class="bar"><div class="k">KAZE 2<small>当社従来機・静音運転</small></div><div class="t"><i style="width:62%"></i></div><div class="v">31</div></div>
+    <div class="bar"><div class="k">ささやき声</div><div class="t"><i style="width:60%"></i></div><div class="v">30</div></div>
+    <div class="bar"><div class="k">時計の秒針</div><div class="t"><i style="width:40%"></i></div><div class="v">20</div></div>
+    <div class="bar me"><div class="k">NAGI One<small style="color:var(--fg-2)">おやすみモード</small></div><div class="t"><i style="width:38%"></i></div><div class="v">19</div></div>
+    <div class="axis"><div></div><div><span style="left:0">0</span><span style="left:20%">10</span><span style="left:40%">20</span><span style="left:60%">30</span><span style="left:80%">40</span><span style="left:100%">50</span></div><div></div></div>
+  </div>
+  <div class="foot"><span class="note">※ 当社無響室で本体正面1m・高さ1mの位置で測定。生活音の数値は一般的な目安です。</span><span class="cap num">03 / 04</span></div>
+</section>
+
+<!-- 4 comparison -->
+<section class="slide s4">
+  <div class="chrome rv"><span class="cap"><b>03</b> &nbsp;<span class="jp">2つのサイズと選び方</span></span><span class="cap">NAGI One</span></div>
+  <div class="lead">
+    <h2 class="rv d1">選ぶ基準は、<br>部屋の広さだけ。</h2>
+    <p class="rv d2">静けさとフィルターの寿命は、どちらも同じです。寝室やワンルームなら <b>One</b>、リビングまで1台で受け持つなら <b>Max</b> を。</p>
+  </div>
+  <table class="rv d3">
+    <colgroup><col><col class="col-one"><col class="col-max"><col></colgroup>
+    <thead><tr>
+      <th></th>
+      <th class="one"><div class="pic"><svg data-tower="one"></svg></div><span class="pn">NAGI One</span><span class="ps">寝室・ワンルームに</span></th>
+      <th><div class="pic"><svg data-tower="max"></svg></div><span class="pn">NAGI One Max</span><span class="ps">リビングまで1台で</span></th>
+      <th class="old"><div class="pic"><svg data-box="kaze"></svg></div><span class="pn">KAZE 2</span><span class="ps">当社従来機（2023）</span></th>
+    </tr></thead>
+    <tbody>
+      <tr><th>適用床面積</th><td class="one">14<small>畳まで</small></td><td>24<small>畳まで</small></td><td class="old">12<small>畳まで</small></td></tr>
+      <tr><th>6畳の清浄時間</th><td class="one">9<small>分</small></td><td>6<small>分</small></td><td class="old">15<small>分</small></td></tr>
+      <tr><th>最小運転音</th><td class="one"><span class="hi">19</span><small>dB</small></td><td><span class="hi">19</span><small>dB</small></td><td class="old">31<small>dB</small></td></tr>
+      <tr><th>フィルター交換</th><td class="one"><span class="hi">3</span><small>年ごと</small></td><td><span class="hi">3</span><small>年ごと</small></td><td class="old">1<small>年ごと</small></td></tr>
+      <tr><th>本体の高さ・重さ</th><td class="one">52<small>cm</small>　2.1<small>kg</small></td><td>68<small>cm</small>　3.4<small>kg</small></td><td class="old">56<small>cm</small>　6.0<small>kg</small></td></tr>
+      <tr><th>価格（税込）</th><td class="one">¥39,800</td><td>¥54,800</td><td class="old"><small style="margin:0;font-size:24px">販売終了</small></td></tr>
+    </tbody>
+  </table>
+  <div class="foot"><span class="note">※ 清浄時間は日本電機工業会規格 JEM1467 に準じた当社試算。</span><span class="cap num">04 / 04</span></div>
+</section>
+
+</main>
+</div>
+<script>
+/* tower renderer: a matte ceramic cylinder with projected micro-perforations */
+function tower(svg, o){
+  const W=o.w, r=W/2, ry=W*o.tilt, H=o.h, top=ry+2, bot=top+H, NS='http://www.w3.org/2000/svg';
+  const id='t'+Math.random().toString(36).slice(2,7);
+  const pad=o.floor?W*0.45:4;
+  svg.setAttribute('viewBox',`0 0 ${W} ${bot+ry+pad}`);
+  svg.setAttribute('width',o.px); if(o.view){svg.setAttribute('viewBox',o.view);svg.setAttribute('height',1080);svg.setAttribute('preserveAspectRatio','xMinYMin slice')} svg.setAttribute('xmlns',NS);
+  const body=`M0 ${top} V${bot} A${r} ${ry} 0 0 0 ${W} ${bot} V${top} Z`;
+  let holes='';
+  const s=W*o.pitch, y0=top+H*o.holeTop, y1=bot-H*0.07;
+  let row=0;
+  for(let y=y0;y<y1;y+=s*0.92,row++){
+    const off=(row%2)*0.5, dt=s/r;
+    for(let k=-Math.floor(1.55/dt);k<=Math.floor(1.55/dt);k++){
+      const th=(k+off)*dt; if(Math.abs(th)>1.52) continue;
+      const c=Math.cos(th), x=r+r*Math.sin(th), yy=y+ry*c, hr=s*0.27;
+      holes+=`<ellipse cx="${x.toFixed(1)}" cy="${yy.toFixed(1)}" rx="${(hr*c).toFixed(2)}" ry="${hr.toFixed(2)}"/>`;
+    }
+  }
+  const arc=(y,a)=>{const pts=[];for(let i=0;i<=40;i++){const th=-a+2*a*i/40;pts.push(`${(r+r*Math.sin(th)).toFixed(1)},${(y+ry*Math.cos(th)).toFixed(1)}`)}return 'M'+pts.join(' L')};
+  const rings=[0.86,0.72,0.58,0.44,0.30].map(f=>`<ellipse cx="${r}" cy="${top}" rx="${r*f}" ry="${ry*f}" fill="none" stroke="#45464B" stroke-width="${W/300}"/>`).join('');
+  const g=`
+  <defs>
+    <linearGradient id="${id}sh" x1="0" x2="1">
+      <stop offset="0" stop-color="#000" stop-opacity=".62"/><stop offset=".16" stop-color="#000" stop-opacity=".26"/>
+      <stop offset=".34" stop-color="#000" stop-opacity="0"/><stop offset=".46" stop-color="#fff" stop-opacity=".10"/>
+      <stop offset=".62" stop-color="#000" stop-opacity=".04"/><stop offset=".86" stop-color="#000" stop-opacity=".46"/>
+      <stop offset=".955" stop-color="#000" stop-opacity=".62"/><stop offset="1" stop-color="#fff" stop-opacity=".20"/>
+    </linearGradient>
+    <linearGradient id="${id}v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/>
+    </linearGradient>
+    <linearGradient id="${id}cap" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#F7F5F0"/><stop offset="1" stop-color="#C9C5BD"/>
+    </linearGradient>
+    <clipPath id="${id}c"><path d="${body}"/></clipPath>
+    <linearGradient id="${id}rf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <mask id="${id}m"><rect x="0" y="${bot}" width="${W}" height="${H}" fill="url(#${id}rf)"/></mask>
+    <filter id="${id}b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${W*0.04}"/></filter>
+  </defs>`;
+  const tw=`<g>
+    <path d="${body}" fill="#E7E3DB"/>
+    <g clip-path="url(#${id}c)">
+      <g fill="#3A3835" fill-opacity=".72">${holes}</g>
+      <path d="${arc(top+H*0.055,1.57)}" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="${W/220}"/>
+      <rect x="0" y="0" width="${W}" height="${bot+ry}" fill="url(#${id}sh)"/>
+      <rect x="0" y="0" width="${W}" height="${bot+ry}" fill="url(#${id}v)"/>
+    </g>
+    <path d="${arc(top+H*o.led,0.16)}" fill="none" stroke="#FFD23F" stroke-width="${W/110}" stroke-linecap="round"/>
+    <ellipse cx="${r}" cy="${top}" rx="${r}" ry="${ry}" fill="url(#${id}cap)"/>
+    <ellipse cx="${r}" cy="${top+ry*0.04}" rx="${r*0.92}" ry="${ry*0.92}" fill="#232427"/>
+    ${rings}
+    <ellipse cx="${r}" cy="${top+ry*0.02}" rx="${r*0.16}" ry="${ry*0.16}" fill="#2E2F33"/>
+  </g>`;
+  const floor=o.floor?`<ellipse cx="${r}" cy="${bot+ry*0.2}" rx="${r*1.25}" ry="${ry*0.7}" fill="#000" opacity=".75" filter="url(#${id}b)"/>`:'';
+  const refl=o.floor?`<g mask="url(#${id}m)"><g transform="translate(0 ${2*bot}) scale(1 -1)">${tw}</g></g>`:'';
+  svg.innerHTML=g+floor+refl+tw;
+}
+/* box renderer: a squarish plastic cabinet seen from the front-left, top louvres and side intake */
+function box(svg, o){
+  const W=o.w, D=o.d, T=o.t, H=o.h, NS='http://www.w3.org/2000/svg';
+  const id='b'+Math.random().toString(36).slice(2,7);
+  const foot=H*0.03, VH=T+H+foot+2;
+  svg.setAttribute('viewBox',`0 0 ${W+D+1} ${VH}`);svg.setAttribute('width',o.px);svg.setAttribute('xmlns',NS);
+  const top=(u,v)=>[u*W+v*D, T*(1-v)];
+  const side=(s,y)=>[W+s*D, T*(1-s)+y];
+  const P=pts=>'M'+pts.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' L')+' Z';
+  const L=(a,b)=>`M${a[0].toFixed(1)},${a[1].toFixed(1)} L${b[0].toFixed(1)},${b[1].toFixed(1)}`;
+  const front=`M0 ${T} H${W} V${T+H} H0 Z`;
+  const sideF=P([side(0,0),side(1,0),side(1,H),side(0,H)]);
+  const topF=P([top(0,0),top(0,1),top(1,1),top(1,0)]);
+  let louv='';
+  for(let i=0;i<o.louvres;i++){const v=.22+.56*i/(o.louvres-1);louv+=L(top(.1,v),top(.9,v))}
+  const grill=P([top(.08,.16),top(.08,.84),top(.92,.84),top(.92,.16)]);
+  let slots='';
+  const cols=o.slotCols, rows=o.slotRows, sw=D/(cols*2.2);
+  for(let c=0;c<cols;c++){const s=.18+.64*c/(cols-1);
+    for(let r=0;r<rows;r++){const y=H*(.3+.6*r/rows);slots+=L(side(s,y),side(s,y+H*.6/rows*.62))}}
+  let dots='';const px=W*.84/o.holeCols, iy0=T+H*.44, iy1=T+H*.92;
+  for(let y=iy0+px/2;y<iy1;y+=px)for(let x=W*.08+px/2;x<W*.92;x+=px)dots+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(px*.28).toFixed(2)}"/>`;
+  const strip=T+H*.045, sh=H*.07, btn=sh*.17;
+  const btns=[.2,.32,.44].map(f=>`<circle cx="${W*f}" cy="${strip+sh/2}" r="${btn}" fill="#8E8A82"/>`).join('');
+  svg.innerHTML=`
+  <defs>
+    <linearGradient id="${id}v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".24"/>
+    </linearGradient>
+    <linearGradient id="${id}h" x1="0" x2="1">
+      <stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".10"/>
+    </linearGradient>
+  </defs>
+  <rect x="${W*.06}" y="${T+H}" width="${W*.88}" height="${foot}" fill="#1E1F22"/>
+  <path d="${sideF}" fill="${o.finish}"/><path d="${sideF}" fill="#000" fill-opacity=".42"/>
+  <path d="${slots}" stroke="#1E1F22" stroke-opacity=".75" stroke-width="${sw}" stroke-linecap="round" fill="none"/>
+  <path d="${L(side(.3,H*.11),side(.7,H*.11))}" stroke="#1E1F22" stroke-width="${H*.03}" stroke-linecap="round"/>
+  <path d="${topF}" fill="${o.finish}"/><path d="${topF}" fill="#fff" fill-opacity=".08"/>
+  <path d="${grill}" fill="#2A2B2E"/>
+  <path d="${louv}" stroke="${o.finish}" stroke-opacity=".7" stroke-width="${T/12}" fill="none"/>
+  <path d="${front}" fill="${o.finish}"/>
+  <rect x="${W*.08}" y="${strip}" width="${W*.84}" height="${sh}" rx="${sh*.2}" fill="#2E2F33"/>
+  ${btns}
+  <rect x="${W*.7}" y="${strip+sh*.3}" width="${W*.14}" height="${sh*.4}" rx="${sh*.08}" fill="#4A4C51"/>
+  <rect x="${W*.06}" y="${T+H*.17}" width="${W*.88}" height="${H*.79}" rx="${W*.025}" fill="none" stroke="#000" stroke-opacity=".22" stroke-width="${W/140}"/>
+  <rect x="${W*.08}" y="${iy0}" width="${W*.84}" height="${iy1-iy0}" rx="${W*.02}" fill="#000" fill-opacity=".10"/>
+  <g fill="#3A3835" fill-opacity=".72">${dots}</g>
+  <path d="${front}" fill="url(#${id}h)"/><path d="${front}" fill="url(#${id}v)"/>
+  <path d="${L(top(0,0),top(1,0))}" stroke="#fff" stroke-opacity=".35" stroke-width="${W/180}"/>
+  <path d="${L(side(0,0),side(0,H))}" stroke="#000" stroke-opacity=".3" stroke-width="${W/200}"/>`;
+}
+
+const T={
+  cover:{w:300,h:620,tilt:.13,pitch:.034,holeTop:.2,led:.115,floor:true,px:360},
+  macro:{w:300,h:760,tilt:.13,pitch:.03,holeTop:.2,led:.115,floor:false,px:920,view:'-40 22 279 327'},
+  one:{w:84,h:166,tilt:.13,pitch:.055,holeTop:.22,led:.12,floor:false,px:84},
+  max:{w:100,h:217,tilt:.13,pitch:.05,holeTop:.22,led:.12,floor:false,px:100},
+};
+document.querySelectorAll('svg[data-tower]').forEach(s=>tower(s,T[s.dataset.tower]));
+const B={
+  kaze:{w:118,d:36,t:22,h:180,louvres:6,slotCols:5,slotRows:9,holeCols:20,finish:'#A9A398',px:154},
+};
+document.querySelectorAll('svg[data-box]').forEach(s=>box(s,B[s.dataset.box]));
+
+class SlidePresentation{
+  constructor(){
+    this.slides=document.querySelectorAll('.slide');this.i=0;this.stage=document.getElementById('deckStage');
+    const fit=()=>{const f=Math.min(innerWidth/1920,innerHeight/1080);this.stage.style.transform=`translate(${(innerWidth-1920*f)/2}px,${(innerHeight-1080*f)/2}px) scale(${f})`};
+    fit();addEventListener('resize',fit);
+    addEventListener('keydown',e=>{
+      if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();this.show(this.i+1)}
+      if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();this.show(this.i-1)}
+      if(e.key==='Home')this.show(0); if(e.key==='End')this.show(this.slides.length-1);
+    });
+    let lock=0;addEventListener('wheel',e=>{const n=Date.now();if(n-lock<700||Math.abs(e.deltaY)<20)return;lock=n;this.show(this.i+(e.deltaY>0?1:-1))},{passive:true});
+    let sx=0;addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+    addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)this.show(this.i+(dx<0?1:-1))});
+    requestAnimationFrame(()=>this.show(0));
+  }
+  show(n){this.i=Math.max(0,Math.min(n,this.slides.length-1));this.slides.forEach((s,j)=>{s.classList.toggle('active',j===this.i);s.classList.toggle('visible',j===this.i)})}
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

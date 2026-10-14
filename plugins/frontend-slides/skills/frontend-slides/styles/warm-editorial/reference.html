@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ことこと ブランドブック 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,100;1,9..144,300..700,100&family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
+<style>
+:root {
+  --cream: #F3EBDD;
+  --ink: #2E2420;
+  --tomato: #DD5A2B;
+  --squash: #EDB33E;
+  --ink-sub: color-mix(in srgb, var(--ink) 68%, var(--cream));
+  --ink-rule: color-mix(in srgb, var(--ink) 22%, var(--cream));
+  --tomato-30: color-mix(in srgb, var(--tomato) 30%, var(--cream));
+  --tomato-55: color-mix(in srgb, var(--tomato) 55%, var(--cream));
+
+  --jp: 'Noto Sans JP', sans-serif;
+  --latin: 'Fraunces', serif;
+
+  --m-x: 128px;
+  --line: 5px;
+
+  --stage-bg: #1b1512;
+  --slide-bg: var(--cream);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting.
+   palt/vpal only tighten fonts that ship those features; fonts/catalog.json
+   records which ones do. Headings use a family with palt: true. */
+.slide {
+    line-break: strict;
+    word-break: auto-phrase;
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+.slide :is(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+.slide :is(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+.slide .tate {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+body { font-family: var(--jp); color: var(--ink); }
+.slide {
+  font-family: var(--jp);
+  color: var(--ink);
+  font-feature-settings: "palt";
+  line-break: strict;
+  word-break: auto-phrase;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Illustration language: every drawing is one symbol rendered twice.
+   The fill pass sits at the origin; the ink pass is offset up-right,
+   like a two-plate print slightly out of register. */
+.ill { overflow: visible; }
+.ill .pf { --s: none; }
+.ill .pl { --fo: none; --fy: none; --fc: none; --s: var(--ink); transform: translate(9px, -7px); }
+.ill .pf { --fo: var(--tomato); --fy: var(--squash); --fc: var(--cream); }
+.on-tomato .ill .pf { --fo: var(--squash); --fy: var(--cream); --fc: var(--cream); }
+.on-squash .ill .pf { --fo: var(--tomato); --fy: var(--cream); --fc: var(--cream); }
+.sym .o { fill: var(--fo, none); }
+.sym .y { fill: var(--fy, none); }
+.sym .c { fill: var(--fc, none); }
+.sym .o, .sym .y, .sym .c, .sym .l {
+  stroke: var(--s, none);
+  stroke-width: var(--line);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.sym .l { fill: none; }
+
+.cap {
+  font-family: var(--latin);
+  font-variation-settings: "opsz" 9, "SOFT" 100;
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+.chrome {
+  position: absolute;
+  left: var(--m-x);
+  right: var(--m-x);
+  top: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.chrome .chap { font-size: 20px; font-weight: 500; letter-spacing: 0.03em; }
+.chrome .chap b {
+  font-family: var(--latin);
+  font-weight: 500;
+  font-variation-settings: "opsz" 9, "SOFT" 100;
+  letter-spacing: 0.1em;
+  margin-right: 14px;
+  color: var(--tomato);
+}
+.folio {
+  position: absolute;
+  left: var(--m-x);
+  right: var(--m-x);
+  bottom: 56px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  color: var(--ink-sub);
+  letter-spacing: 0.03em;
+}
+.folio .num { font-family: var(--latin); font-variation-settings: "opsz" 9; letter-spacing: 0.2em; }
+
+.corner {
+  position: absolute;
+  right: -190px;
+  top: -190px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: var(--tomato);
+}
+.corner b {
+  position: absolute;
+  left: 44px; top: 222px;
+  font-family: var(--latin);
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 76px;
+  line-height: 1;
+  color: var(--cream);
+}
+.chrome { right: 320px; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.slide.visible .reveal { opacity: 1; transform: none; }
+.slide.visible .reveal.d1 { transition-delay: .12s; }
+.slide.visible .reveal.d2 { transition-delay: .24s; }
+.slide.visible .reveal.d3 { transition-delay: .36s; }
+.slide.visible .reveal.d4 { transition-delay: .48s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* 01 cover */
+.s-cover .sun {
+  position: absolute;
+  width: 1120px; height: 1120px;
+  right: -300px; bottom: -420px;
+  border-radius: 50%;
+  background: var(--tomato);
+}
+.s-cover .mast {
+  position: absolute;
+  left: calc(var(--m-x) - 12px);
+  top: 120px;
+  font-family: var(--latin);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-size: 272px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.s-cover .mast em { font-style: normal; color: var(--tomato); }
+.s-cover .catch {
+  position: absolute;
+  left: var(--m-x);
+  top: 490px;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: 0;
+}
+.s-cover .meta {
+  position: absolute;
+  left: var(--m-x);
+  bottom: 72px;
+  font-size: 22px;
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  color: var(--ink-sub);
+}
+.s-cover .topcap { position: absolute; left: var(--m-x); right: var(--m-x); top: 64px; display: flex; justify-content: space-between; }
+.s-cover .pot { position: absolute; width: 640px; right: 150px; bottom: 150px; }
+.s-cover .steam { position: absolute; width: 230px; right: 352px; bottom: 642px; }
+.s-cover .carrot { position: absolute; width: 230px; right: 40px; bottom: 120px; transform: rotate(28deg); }
+.s-cover .stamp {
+  position: absolute;
+  right: 120px; top: 150px;
+  text-align: right;
+  font-size: 24px; font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.7;
+}
+.s-cover .stamp .cap { display: block; color: var(--tomato); margin-bottom: 6px; }
+
+/* 02 contents */
+.s-toc .field {
+  position: absolute;
+  width: 1080px; height: 1080px;
+  left: -460px; top: 0;
+  border-radius: 50%;
+  background: var(--squash);
+}
+.s-toc .veg { position: absolute; }
+.s-toc .veg.onion { width: 270px; left: 60px; top: 170px; }
+.s-toc .veg.carrot { width: 300px; left: 250px; top: 410px; transform: rotate(-24deg); }
+.s-toc .veg.pumpkin { width: 290px; left: 40px; top: 640px; }
+.s-toc .head { position: absolute; left: 800px; top: 150px; }
+.s-toc .head .cap { color: var(--tomato); }
+.s-toc .head h2 { margin-top: 26px; font-size: 64px; font-weight: 700; letter-spacing: 0; line-height: 1.4; }
+.s-toc ol { position: absolute; left: 800px; right: var(--m-x); top: 420px; list-style: none; border-top: 3px solid var(--ink); }
+.s-toc li {
+  display: grid;
+  grid-template-columns: 150px 1fr 300px;
+  align-items: baseline;
+  padding: 26px 0 28px;
+  border-bottom: 2px solid var(--ink-rule);
+}
+.s-toc li .n {
+  font-family: var(--latin);
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1;
+}
+.s-toc li .t { font-size: 40px; font-weight: 700; letter-spacing: 0; }
+.s-toc li .d { font-size: 22px; color: var(--ink-sub); letter-spacing: 0.03em; line-height: 1.6; }
+.s-toc li.now .n { color: var(--tomato); font-style: italic; }
+
+/* shared headline for content slides */
+.hl {
+  position: absolute;
+  left: var(--m-x);
+  top: 148px;
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 1.36;
+  letter-spacing: 0;
+}
+
+.hl .nm { font-family: var(--latin); font-variation-settings: "opsz" 144, "SOFT" 100; font-weight: 600; font-size: 1.12em; letter-spacing: 0; margin: 0 0.06em; font-feature-settings: "lnum"; }
+
+/* 03 kpi */
+.s-kpi .kpi { position: absolute; left: var(--m-x); top: 448px; width: 640px; }
+.s-kpi .kpi .lab { font-size: 26px; font-weight: 700; letter-spacing: 0; line-height: 1.45; }
+.s-kpi .kpi .lab small { display: block; margin-top: 4px; font-size: 20px; font-weight: 400; color: var(--ink-sub); }
+.s-kpi .big {
+  font-family: var(--latin);
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-weight: 400;
+  font-size: 290px;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: var(--tomato);
+  margin-top: 40px;
+  font-feature-settings: "lnum";
+}
+.s-kpi .big span { font-size: 96px; letter-spacing: 0; margin-left: 10px; color: var(--ink); }
+.s-kpi .subs { display: flex; gap: 72px; margin-top: 44px; border-top: 3px solid var(--ink); padding-top: 22px; }
+.s-kpi .subs div { font-size: 20px; color: var(--ink-sub); line-height: 1.55; letter-spacing: 0.03em; }
+.s-kpi .subs b {
+  display: block;
+  font-family: var(--latin);
+  font-variation-settings: "opsz" 72, "SOFT" 100;
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 1.1;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.s-kpi .subs b i { font-style: normal; font-family: var(--jp); font-size: 22px; font-weight: 700; margin-left: 6px; }
+.s-kpi .chart { position: absolute; left: 900px; top: 448px; width: 892px; }
+.s-kpi .subs div { white-space: nowrap; }
+.s-kpi .chart .cap { color: var(--ink-sub); margin-bottom: 16px; display: block; }
+.s-kpi .chart svg { display: block; width: 892px; height: 440px; font-family: var(--latin); }
+.s-kpi .spoon { position: absolute; width: 150px; right: 70px; top: 30px; transform: rotate(-30deg); }
+
+/* 04 flow */
+.s-flow .tl { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.s-flow .ev { position: absolute; width: 310px; }
+.s-flow .ev .t {
+  font-family: var(--latin);
+  font-variation-settings: "opsz" 72, "SOFT" 100;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1;
+  font-feature-settings: "lnum";
+}
+.s-flow .ev .t small { font-family: var(--jp); font-size: 20px; font-weight: 700; margin-left: 4px; }
+.s-flow .ev h3 { margin-top: 12px; font-size: 30px; font-weight: 700; letter-spacing: 0; }
+.s-flow .ev p { margin-top: 8px; font-size: 20px; line-height: 1.6; letter-spacing: 0.03em; color: var(--ink-sub); }
+.s-flow .ev.key .t { color: var(--tomato); }
+.s-flow .bowl { position: absolute; width: 300px; right: 120px; bottom: 96px; }
+.s-flow .steam { position: absolute; width: 150px; }
+.s-flow .lede { position: absolute; right: var(--m-x); top: 210px; width: 520px; font-size: 24px; line-height: 1.8; letter-spacing: 0.03em; color: var(--ink-sub); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-pot" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M32 86 H168 V138 Q168 176 130 176 H70 Q32 176 32 138 Z"/>
+      <path class="y" d="M22 86 Q100 38 178 86 Z"/>
+      <circle class="c" cx="100" cy="54" r="9"/>
+      <path class="l" d="M32 106 H12 M168 106 H188 M58 132 H92"/>
+    </symbol>
+    <symbol id="i-steam" viewBox="0 0 200 200" class="sym">
+      <path class="l" d="M60 190 q-22 -24 0 -48 q22 -24 0 -48 q-22 -24 0 -48"/>
+      <path class="l" d="M110 170 q-22 -24 0 -48 q22 -24 0 -48 q-22 -24 0 -48"/>
+      <path class="l" d="M160 190 q-22 -24 0 -48 q22 -24 0 -48"/>
+    </symbol>
+    <symbol id="i-carrot" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M62 66 Q100 48 138 66 Q118 136 100 192 Q82 136 62 66 Z"/>
+      <path class="l" d="M100 58 Q88 30 66 14 M100 58 Q100 30 106 6 M100 58 Q116 32 138 20 M80 96 H96 M104 124 H118 M88 150 H100"/>
+    </symbol>
+    <symbol id="i-onion" viewBox="0 0 200 200" class="sym">
+      <path class="y" d="M100 34 Q112 62 146 84 Q176 120 150 160 Q126 190 100 190 Q74 190 50 160 Q24 120 54 84 Q88 62 100 34 Z"/>
+      <path class="l" d="M100 34 Q98 18 106 6 M100 70 Q78 124 100 188 M100 70 Q122 124 100 188"/>
+    </symbol>
+    <symbol id="i-pumpkin" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M100 66 Q168 58 176 122 Q172 184 100 180 Q28 184 24 122 Q32 58 100 66 Z"/>
+      <path class="l" d="M100 68 Q70 124 100 180 M100 68 Q130 124 100 180 M100 66 Q98 44 116 32"/>
+    </symbol>
+    <symbol id="i-bowl" viewBox="0 0 200 200" class="sym">
+      <path class="o" d="M20 92 H180 Q174 168 100 172 Q26 168 20 92 Z"/>
+      <ellipse class="y" cx="100" cy="92" rx="80" ry="14"/>
+      <path class="l" d="M72 176 H128"/>
+    </symbol>
+    <symbol id="i-spoon" viewBox="0 0 200 200" class="sym">
+      <ellipse class="y" cx="100" cy="46" rx="30" ry="40"/>
+      <path class="l" d="M100 86 V192"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+  <!-- 01 cover -->
+  <section class="slide s-cover active">
+    <div class="sun"></div>
+    <div class="topcap"><span class="cap">Kotokoto Soup Works</span><span class="cap">Brand Book / Vol.03</span></div>
+    <div class="mast reveal">koto<em>koto</em></div>
+    <h1 class="catch reveal d1">ことこと、<br>待つ時間まで<br>おいしい。</h1>
+    <div class="stamp reveal d2"><span class="cap">Spring 2027</span>野菜のポタージュ<br>定期便、はじまります。</div>
+    <div class="on-tomato">
+      <svg class="ill steam" viewBox="0 0 200 200"><use href="#i-steam" class="pf"/><use href="#i-steam" class="pl"/></svg>
+      <svg class="ill pot" viewBox="0 0 200 200"><use href="#i-pot" class="pf"/><use href="#i-pot" class="pl"/></svg>
+      <svg class="ill carrot" viewBox="0 0 200 200"><use href="#i-carrot" class="pf"/><use href="#i-carrot" class="pl"/></svg>
+    </div>
+    <p class="meta">株式会社ことこと舎　ブランドブック 第3版<br>2027年3月 発行</p>
+  </section>
+
+  <!-- 02 contents -->
+  <section class="slide s-toc">
+    <div class="field"></div>
+    <div class="on-squash">
+      <svg class="ill veg onion" viewBox="0 0 200 200"><use href="#i-onion" class="pf"/><use href="#i-onion" class="pl"/></svg>
+      <svg class="ill veg carrot" viewBox="0 0 200 200"><use href="#i-carrot" class="pf"/><use href="#i-carrot" class="pl"/></svg>
+      <svg class="ill veg pumpkin" viewBox="0 0 200 200"><use href="#i-pumpkin" class="pf"/><use href="#i-pumpkin" class="pl"/></svg>
+    </div>
+    <div class="head reveal">
+      <span class="cap">Contents</span>
+      <h2>一杯のスープが、<br>食卓に届くまで。</h2>
+    </div>
+    <ol class="reveal d1">
+      <li><span class="n">01</span><span class="t">わたしたちのこと</span><span class="d">創業の台所と、<br>変えない三つの約束</span></li>
+      <li><span class="n">02</span><span class="t">春のポタージュ</span><span class="d">新じゃが、新玉ねぎ、<br>春キャベツの3品</span></li>
+      <li class="now"><span class="n">03</span><span class="t">数字で見る一年</span><span class="d">定期便の会員と、<br>続けている理由</span></li>
+      <li><span class="n">04</span><span class="t">畑から食卓まで</span><span class="d">収穫から72時間で<br>届けるしくみ</span></li>
+    </ol>
+  </section>
+
+  <!-- 03 kpi -->
+  <section class="slide s-kpi">
+    <div class="corner"><b>03</b></div>
+    <div class="chrome"><span class="cap">Kotokoto Brand Book 2027</span><span class="chap">数字で見る一年</span></div>
+    <h2 class="hl reveal"><span class="nm">12</span>か月たっても、<br><span class="nm">10</span>人に<span class="nm">8</span>人が続けている。</h2>
+    <div class="kpi reveal d1">
+      <p class="lab">定期便の12か月継続率<small>2026年1月に入会した会員 1,240人のうち</small></p>
+      <p class="big">82<span>%</span></p>
+      <div class="subs">
+        <div><b>4.7<i>点</i></b>商品の平均評価（5点満点）</div>
+        <div><b>3.2<i>万人</i></b>12月時点の会員数</div>
+      </div>
+    </div>
+    <div class="chart reveal d2">
+      <span class="cap">Retention by month</span>
+      <svg viewBox="0 0 892 440" id="retention"></svg>
+    </div>
+    <div class="folio"><span>出典　ことこと舎 会員データ（2026年1月〜12月）。評価は購入後アンケート n=3,960</span><span class="num">P.24</span></div>
+  </section>
+
+  <!-- 04 flow -->
+  <section class="slide s-flow">
+    <div class="corner"><b>04</b></div>
+    <div class="chrome"><span class="cap">Kotokoto Brand Book 2027</span><span class="chap">畑から食卓まで</span></div>
+    <h2 class="hl reveal">畑で抜いてから、<br><span class="nm">72</span>時間で食卓へ。</h2>
+    <p class="lede reveal d1">野菜は、収穫した日のうちに煮込みます。冷凍するまでを工房の中で終えるので、保存料を使わずに香りを残せます。</p>
+    <svg class="tl reveal d2" viewBox="0 0 1920 1080" id="timeline"></svg>
+    <div class="reveal d3" id="events"></div>
+    <svg class="ill bowl" viewBox="0 0 200 200"><use href="#i-bowl" class="pf"/><use href="#i-bowl" class="pl"/></svg>
+    <div class="folio"><span>時間は収穫を0時間とした目安。24時間以降は横軸を1/4に縮めています。配送は地域により異なります。</span><span class="num">P.31</span></div>
+  </section>
+
+</main>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs, parent, text) => {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (text != null) n.textContent = text;
+  parent.appendChild(n);
+  return n;
+};
+
+(function retentionChart() {
+  const data = [100, 95, 92, 90, 89, 87, 86, 85, 84, 83, 83, 82];
+  const svg = document.getElementById('retention');
+  const css = getComputedStyle(document.documentElement);
+  const ink = css.getPropertyValue('--ink').trim();
+  const sub = getComputedStyle(document.querySelector('.folio')).color;
+  const W = 892, top = 64, base = 380, left = 0, bw = 52, gap = (W - 12 * bw) / 11;
+  const y = v => base - (base - top) * v / 100;
+  [50, 100].forEach(v => {
+    el('line', { x1: 0, x2: W, y1: y(v), y2: y(v), stroke: sub, 'stroke-width': 1, 'stroke-dasharray': '3 6', opacity: .6 }, svg);
+    el('text', { x: W, y: y(v) - 10, 'text-anchor': 'end', 'font-size': 18, fill: sub }, svg, v + '%');
+  });
+  data.forEach((v, i) => {
+    const x = left + i * (bw + gap);
+    const last = i === data.length - 1;
+    el('rect', { x, y: y(v), width: bw, height: base - y(v), rx: 0,
+      fill: last ? 'var(--tomato)' : (i === 0 ? 'var(--tomato-55)' : 'var(--tomato-30)') }, svg);
+    if (i === 0 || last) el('text', { x: x + bw / 2, y: y(v) - 14, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 500, fill: last ? 'var(--tomato)' : ink }, svg, v);
+    if (i === 0 || i === 5 || last) el('text', { x: last ? x + bw : x + bw / 2, y: base + 36, 'text-anchor': last ? 'end' : 'middle', 'font-size': 20, fill: sub, 'font-family': 'Noto Sans JP' }, svg, (i + 1) + 'か月');
+  });
+  el('line', { x1: 0, x2: W, y1: base, y2: base, stroke: ink, 'stroke-width': 3 }, svg);
+})();
+
+(function timeline() {
+  const svg = document.getElementById('timeline');
+  const box = document.getElementById('events');
+  const sub = getComputedStyle(document.querySelector('.folio')).color;
+  const AX = 652, X0 = 128, XA = 1190, XB = 1262, X72 = 1792;
+  const day = (XA - X0) / 24;
+  const x = h => h <= 24 ? X0 + day * h : XB + (X72 - XB) * (h - 24) / 48;
+  const axis = (x1, x2) => el('line', { x1, x2, y1: AX, y2: AX, stroke: 'var(--ink)', 'stroke-width': 4, 'stroke-linecap': 'round' }, svg);
+  axis(X0, XA); axis(XB, X72);
+  const seg = (a, b, color) => el('line', { x1: x(a), x2: x(b), y1: AX, y2: AX, stroke: color, 'stroke-width': 22, 'stroke-linecap': 'butt' }, svg);
+  seg(4, 8, 'var(--tomato-30)');
+  seg(8, 14, 'var(--tomato)');
+  seg(48, 72, 'var(--squash)');
+  const mid = (XA + XB) / 2;
+  el('path', { d: `M${mid - 16} ${AX + 16} l12 -32 M${mid + 4} ${AX + 16} l12 -32`, stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linecap': 'round' }, svg);
+  [0, 6, 12, 18, 24, 48, 72].forEach(h => {
+    el('line', { x1: x(h), x2: x(h), y1: AX + 18, y2: AX + 30, stroke: 'var(--ink)', 'stroke-width': 3 }, svg);
+    el('text', { x: x(h), y: AX + 60, 'text-anchor': 'middle', 'font-size': 20, fill: sub, 'font-family': 'Fraunces', 'font-feature-settings': 'lnum' }, svg, h);
+  });
+
+  const events = [
+    { h: 0, side: 'up', t: '0', u: '時間', title: '朝5時に収穫', body: '長野と群馬の<br>契約農家14軒の畑で' },
+    { h: 4, side: 'down', t: '4', u: '時間', title: '下ごしらえ', body: '上田の工房で洗い、<br>皮ごと刻む' },
+    { h: 8, side: 'up', key: true, t: '8–14', u: '時間', title: '6時間、ことこと', body: '弱火で煮込み、<br>裏ごしは一度だけ' },
+    { h: 15, side: 'down', t: '15', u: '時間', title: '急速冷凍', body: '−35℃で30分。<br>香りを閉じこめる' },
+    { h: 48, side: 'up', t: '48–72', u: '時間', title: 'お客さまの食卓へ', body: '冷凍便で、<br>月2回お届け' },
+  ];
+  events.forEach(e => {
+    const left = x(e.h);
+    const d = document.createElement('div');
+    d.className = 'ev' + (e.key ? ' key' : '');
+    d.style.left = left + 'px';
+    d.innerHTML = `<div class="t">${e.t}<small>${e.u}</small></div><h3>${e.title}</h3><p>${e.body}</p>`;
+    if (e.side === 'up') d.style.bottom = (1080 - AX + 40) + 'px';
+    else d.style.top = (AX + 104) + 'px';
+    box.appendChild(d);
+    if (e.side === 'down') el('line', { x1: left, x2: left, y1: AX + 34, y2: AX + 90, stroke: 'var(--ink)', 'stroke-width': 2 }, svg);
+    el('circle', { cx: left, cy: AX, r: 9, fill: 'var(--cream)', stroke: 'var(--ink)', 'stroke-width': 4 }, svg);
+  });
+})();
+
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.i = 0;
+    this.stage = document.getElementById('deckStage');
+    const fit = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    fit(); addEventListener('resize', fit);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.go(this.i + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.i - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    let lock = 0;
+    addEventListener('wheel', e => { const now = Date.now(); if (now - lock < 700) return; lock = now; this.go(this.i + (e.deltaY > 0 ? 1 : -1)); }, { passive: true });
+    let sx = null;
+    addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) this.go(this.i + (dx < 0 ? 1 : -1)); sx = null; });
+    this.go(0);
+  }
+  go(n) {
+    this.i = Math.max(0, Math.min(n, this.slides.length - 1));
+    this.slides.forEach((s, j) => { s.classList.toggle('active', j === this.i); s.classList.toggle('visible', j === this.i); });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

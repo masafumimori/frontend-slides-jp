@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporate Mono reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand: #9C3A21;
+  --brand-tint: #F5EAE4;
+  --ink: #1E1A17;
+  --ink-2: #6B635D;
+  --rule: #DCD5CF;
+  --paper: #FFFFFF;
+  --chart-1: #E8D2C8;
+  --chart-2: #C98A73;
+  --stage-bg: #141110;
+
+  --font-jp: 'IBM Plex Sans JP', sans-serif;
+  --font-en: 'Hanken Grotesk', 'IBM Plex Sans JP', sans-serif;
+
+  --band: 88px;
+  --pad-l: 184px;
+  --pad-r: 104px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting.
+   palt/vpal only tighten fonts that ship those features; fonts/catalog.json
+   records which ones do. Headings use a family with palt: true. */
+.slide {
+    line-break: strict;
+    word-break: auto-phrase;
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+.slide :is(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+.slide :is(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+.slide .tate {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+.slide {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-jp);
+}
+.en { font-family: var(--font-en); font-feature-settings: "tnum", "lnum"; word-break: normal; }
+
+/* ---------- chrome ---------- */
+.band {
+  position: absolute; left: 0; top: 0; bottom: 0; width: var(--band);
+  background: var(--brand); color: #fff;
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: 52px;
+}
+.band .mark { width: 34px; height: 34px; }
+.band .ch-no { margin-top: 64px; font: 500 26px/1 var(--font-en); letter-spacing: 0.04em; }
+.band .ch-no::after { content: ""; display: block; width: 1px; height: 40px; background: rgba(255,255,255,.55); margin: 22px auto 22px; }
+.band .ch-name { writing-mode: vertical-rl; font: 500 22px/1 var(--font-jp); letter-spacing: 0.03em; line-height: 1; }
+
+.crumb {
+  position: absolute; left: var(--pad-l); top: 52px;
+  display: flex; align-items: stretch;
+  border: 1px solid var(--ink); font-size: 17px; line-height: 1; letter-spacing: 0.02em;
+}
+.crumb span { padding: 9px 14px 8px; }
+.crumb span + span { border-left: 1px solid var(--ink); }
+.crumb .en { font-weight: 600; }
+.corp { position: absolute; right: var(--pad-r); top: 60px; font-size: 17px; letter-spacing: 0.02em; color: var(--ink-2); }
+
+.foot { position: absolute; left: var(--pad-l); right: var(--pad-r); bottom: 44px; display: flex; justify-content: space-between; align-items: baseline; }
+.foot .copy { font: 400 15px/1 var(--font-en); letter-spacing: 0.04em; color: var(--ink-2); }
+.foot .page { font: 400 20px/1 var(--font-en); letter-spacing: 0.06em; color: var(--ink-2); }
+.foot .page b { font-weight: 600; color: var(--ink); }
+.on-brand .foot .copy, .on-brand .foot .page, .on-brand .foot .page b { color: rgba(255,255,255,.82); }
+.on-brand .foot .page b { color: #fff; }
+
+.kicker { font: 500 22px/1 var(--font-en); letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand); display: flex; align-items: center; gap: 18px; }
+.kicker::before { content: ""; width: 36px; height: 2px; background: var(--brand); }
+.headline { margin-top: 30px; font-weight: 700; font-size: 66px; }
+.note { font-size: 16px; line-height: 1.7; letter-spacing: 0.02em; color: var(--ink-2); }
+
+/* ---------- motion ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.slide.visible .reveal { opacity: 1; transform: none; }
+.slide.visible .reveal.d1 { transition-delay: .08s; }
+.slide.visible .reveal.d2 { transition-delay: .18s; }
+.slide.visible .reveal.d3 { transition-delay: .28s; }
+.slide.visible .reveal.d4 { transition-delay: .38s; }
+.bar i { transform: scaleY(0); transform-origin: bottom; transition: transform .9s var(--ease); }
+.slide.visible .bar i { transform: none; }
+.slide.visible .bar:nth-child(2) i { transition-delay: .08s; }
+.slide.visible .bar:nth-child(3) i { transition-delay: .16s; }
+.slide.visible .bar:nth-child(4) i { transition-delay: .24s; }
+.slide.visible .bar:nth-child(5) i { transition-delay: .32s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .bar i { transition: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- 01 cover ---------- */
+.cover { background: var(--brand); color: #fff; }
+.cover .ledger { position: absolute; left: 1196px; right: 104px; top: 318px; --lab: 236px; }
+.ledger .hd, .ledger .row { display: grid; grid-template-columns: var(--lab) repeat(4, 1fr); }
+.ledger .hd { padding-bottom: 16px; border-bottom: 1px solid #fff; font-size: 18px; font-weight: 500; }
+.ledger .hd span { padding-left: 14px; }
+.ledger .hd .en { font-size: 15px; font-weight: 500; opacity: .7; margin-right: 8px; padding: 0; }
+.ledger .hd .cap { padding-left: 0; font: 500 15px/1 var(--font-en); letter-spacing: 0.14em; text-transform: uppercase; opacity: .7; align-self: end; }
+.ledger .rows { position: relative; }
+.ledger .rows::before { content: ""; position: absolute; inset: 0 0 0 var(--lab); background: linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px) 0 0 / 25% 100%; }
+.ledger .row { position: relative; height: 66px; align-items: center; border-bottom: 1px solid rgba(255,255,255,.3); }
+.ledger .row .site { font-size: 18px; letter-spacing: 0.02em; opacity: .85; }
+.ledger .row .site .en { font-size: 15px; opacity: .7; margin-right: 12px; }
+.ledger .row i { position: absolute; left: var(--lab); height: 6px; top: 30px; background: #fff; width: calc((100% - var(--lab)) * var(--p)); transform-origin: left; transition: transform 1.1s var(--ease); }
+.ledger .row i::after { content: ""; position: absolute; right: -7px; top: -7px; width: 20px; height: 20px; background: #fff; }
+.ledger .row.done i::after { display: none; }
+.ledger .ft { display: flex; justify-content: space-between; margin-top: 18px; font-size: 16px; opacity: .78; }
+.slide:not(.visible) .ledger .row i { transform: scaleX(0); }
+.slide.visible .ledger .row:nth-child(2) i { transition-delay: .06s; }
+.slide.visible .ledger .row:nth-child(3) i { transition-delay: .12s; }
+.slide.visible .ledger .row:nth-child(4) i { transition-delay: .18s; }
+.slide.visible .ledger .row:nth-child(5) i { transition-delay: .24s; }
+.slide.visible .ledger .row:nth-child(6) i { transition-delay: .30s; }
+.slide.visible .ledger .row:nth-child(7) i { transition-delay: .36s; }
+@media (prefers-reduced-motion: reduce) { .ledger .row i { transition: none !important; transform: none !important; } }
+.cover .logo { position: absolute; left: 120px; top: 96px; display: flex; align-items: center; gap: 18px; }
+.cover .logo svg { width: 44px; height: 44px; }
+.cover .logo .word { font: 600 34px/1 var(--font-en); letter-spacing: 0.02em; }
+.cover .logo .jp { font-size: 17px; letter-spacing: 0.03em; opacity: .85; padding-left: 18px; border-left: 1px solid rgba(255,255,255,.5); }
+.cover .main { position: absolute; left: 120px; top: 318px; }
+.cover .display { font: 300 156px/1.0 var(--font-en); letter-spacing: -0.01em; }
+.cover .copy-jp { margin-top: 56px; font-weight: 700; font-size: 60px; line-height: 1.45; letter-spacing: 0.02em; }
+.cover .meta { position: absolute; left: 120px; bottom: 104px; display: flex; gap: 0; font-size: 20px; letter-spacing: 0.03em; }
+.cover .meta span { padding-right: 32px; margin-right: 32px; border-right: 1px solid rgba(255,255,255,.5); }
+.cover .meta span:last-child { border: 0; }
+.cover .foot { left: 120px; right: 104px; bottom: 44px; justify-content: flex-end; }
+
+/* ---------- 02 gate ---------- */
+.gate .panel { position: absolute; left: 0; top: 0; bottom: 0; width: 1160px; background: var(--brand); color: #fff; }
+.gate .panel .mark { position: absolute; left: 120px; top: 96px; width: 40px; height: 40px; }
+.gate .chap { position: absolute; left: 120px; top: 238px; font: 500 22px/1 var(--font-en); letter-spacing: 0.16em; text-transform: uppercase; opacity: .85; }
+.gate .num { position: absolute; left: 106px; top: 262px; font: 300 340px/1 var(--font-en); letter-spacing: -0.03em; }
+.gate .title-en { position: absolute; left: 120px; top: 610px; font: 300 120px/1.02 var(--font-en); letter-spacing: -0.005em; }
+.gate .title-jp { position: absolute; left: 124px; top: 900px; font-weight: 700; font-size: 44px; letter-spacing: 0.02em; }
+.gate .toc { position: absolute; left: 1256px; right: var(--pad-r); top: 150px; }
+.gate .toc h3 { font: 500 22px/1 var(--font-en); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2); padding-bottom: 26px; border-bottom: 1px solid var(--ink); }
+.toc ol { list-style: none; }
+.toc li { line-height: 1.5; }
+.toc .ch { display: grid; grid-template-columns: 64px 1fr auto; align-items: baseline; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+.toc .ch .n { font: 500 22px/1 var(--font-en); letter-spacing: 0.04em; color: var(--ink-2); }
+.toc .ch .t { font-weight: 500; font-size: 28px; letter-spacing: 0.02em; }
+.toc .ch .t small { display: block; margin-top: 8px; font: 400 16px/1 var(--font-en); letter-spacing: 0.08em; color: var(--ink-2); }
+.toc .ch .p { font: 400 18px/1 var(--font-en); letter-spacing: 0.06em; color: var(--ink-2); }
+.toc .ch.cur .n, .toc .ch.cur .t { color: var(--brand); }
+.toc .ch.cur .t { font-weight: 700; }
+.toc .ch.cur { border-bottom: 0; padding-bottom: 14px; }
+.toc .subs { list-style: none; padding: 0 0 22px 64px; border-bottom: 1px solid var(--rule); }
+.toc .subs li { display: grid; grid-template-columns: 1fr auto; padding: 9px 0; font-size: 20px; letter-spacing: 0.02em; }
+.toc .subs li .p { font: 400 17px/1 var(--font-en); color: var(--ink-2); }
+.gate .foot { left: 1256px; }
+
+/* ---------- 03 kpi ---------- */
+.kpi .head { position: absolute; left: var(--pad-l); top: 168px; }
+.kpi .hero { position: absolute; left: var(--pad-l); top: 470px; width: 600px; }
+.kpi .label { font-size: 20px; font-weight: 500; letter-spacing: 0.02em; color: var(--ink-2); }
+.kpi .big { display: flex; align-items: baseline; margin-top: 12px; color: var(--brand); }
+.kpi .big .v { font: 300 248px/0.86 var(--font-en); letter-spacing: -0.035em; }
+.kpi .big .u { font: 400 68px/1 var(--font-en); margin-left: 8px; }
+.kpi .sub { margin-top: 44px; padding-top: 30px; border-top: 1px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.kpi .sub .v { font: 400 88px/1 var(--font-en); letter-spacing: -0.02em; }
+.kpi .sub .u { font-size: 26px; font-weight: 500; margin-left: 6px; letter-spacing: 0; }
+.kpi .sub .label { margin-top: 14px; font-size: 18px; }
+.chart { position: absolute; left: 920px; right: var(--pad-r); top: 470px; }
+.chart .ttl { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 16px; border-bottom: 1px solid var(--ink); }
+.chart .ttl b { font-size: 22px; font-weight: 700; letter-spacing: 0.01em; }
+.chart .ttl span { font-size: 16px; color: var(--ink-2); letter-spacing: 0.02em; }
+.plot { position: relative; height: 300px; margin-top: 28px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px; align-items: end; border-bottom: 1px solid var(--ink); }
+.bar { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
+.bar i { display: block; width: 100%; background: var(--chart-1); }
+.bar .val { font: 500 26px/1 var(--font-en); letter-spacing: 0; margin-bottom: 12px; }
+.bar .val small { font-size: 16px; font-weight: 400; margin-left: 2px; color: var(--ink-2); }
+.bar.mid i { background: var(--chart-2); }
+.bar.key i { background: var(--brand); }
+.bar.key .val { color: var(--brand); font-weight: 600; }
+.xax { display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px; margin-top: 14px; font-size: 18px; letter-spacing: 0.02em; color: var(--ink-2); }
+.xax .k { color: var(--ink); font-weight: 700; }
+.kpi .note { position: absolute; left: 920px; right: var(--pad-r); bottom: 96px; }
+.ref { position: absolute; left: 0; bottom: 240px; border-top: 1px dashed var(--ink-2); width: calc(80% - 8px); }
+.ref::after { content: "導入前"; position: absolute; right: 0; top: -26px; font-size: 15px; color: var(--ink-2); letter-spacing: .02em; }
+
+/* ---------- 04 diagram ---------- */
+.flow .head { position: absolute; left: var(--pad-l); top: 168px; }
+.lanes { position: absolute; left: var(--pad-l); right: var(--pad-r); top: 452px; display: grid; grid-template-columns: 200px repeat(4, 1fr); column-gap: 0; }
+.lanes .phase { padding: 0 24px 16px; border-bottom: 1px solid var(--ink); display: flex; align-items: baseline; gap: 14px; }
+.lanes .phase .n { font: 500 20px/1 var(--font-en); color: var(--brand); letter-spacing: 0.04em; }
+.lanes .phase .t { font-size: 26px; font-weight: 700; letter-spacing: 0.02em; }
+.lanes .corner { border-bottom: 1px solid var(--ink); }
+.lanes .who { display: flex; flex-direction: column; justify-content: center; padding-right: 20px; }
+.lanes .who b { font-size: 24px; font-weight: 700; letter-spacing: 0.01em; }
+.lanes .who small { margin-top: 8px; font: 400 15px/1 var(--font-en); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+.lanes .cell { position: relative; padding: 26px 24px; font-size: 22px; line-height: 1.55; letter-spacing: 0.02em; min-height: 124px; }
+.lanes .row-a { border-bottom: 1px solid var(--rule); }
+.lanes .row-c { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--ink); }
+.lanes .spine-who { background: var(--brand); color: #fff; padding-left: 22px; }
+.lanes .spine-who small { color: rgba(255,255,255,.8); }
+.lanes .spine { position: relative; background: var(--brand); color: #fff; font-weight: 700; font-size: 23px; letter-spacing: 0.01em; padding: 34px 24px; min-height: 0; }
+.lanes .spine::after { content: ""; position: absolute; right: -1px; top: 50%; width: 14px; height: 14px; border-top: 2px solid rgba(255,255,255,.7); border-right: 2px solid rgba(255,255,255,.7); transform: translate(-6px,-50%) rotate(45deg); }
+.lanes .spine.last::after { display: none; }
+.lanes .spine .dot { position: absolute; left: 24px; width: 10px; height: 10px; background: #fff; border-radius: 50%; }
+.lanes .cell.v-up::before, .lanes .cell.v-dn::before { content: ""; position: absolute; left: 28px; width: 2px; background: var(--brand); }
+.lanes .cell.v-up::before { bottom: 0; height: 22px; }
+.lanes .cell.v-dn::before { top: 0; height: 22px; }
+.lanes .cell.v-up { padding-bottom: 34px; }
+.lanes .cell.v-dn { padding-top: 34px; }
+.result { position: absolute; left: var(--pad-l); right: var(--pad-r); bottom: 104px; display: flex; align-items: baseline; gap: 28px; }
+.result .lbl { font-size: 20px; font-weight: 500; letter-spacing: 0.02em; }
+.result .from { font: 400 44px/1 var(--font-en); color: var(--ink-2); }
+.result .from small, .result .to small { font: 500 20px/1 var(--font-jp); margin-left: 4px; }
+.result .arrow { font: 300 32px/1 var(--font-en); color: var(--ink-2); }
+.result .to { font: 500 64px/1 var(--font-en); color: var(--brand); }
+.result .to small { color: var(--brand); }
+.result .note { margin-left: auto; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="kanawa" viewBox="0 0 40 40">
+      <path d="M0 0H27V11H11V40H0Z" fill="currentColor"/>
+      <path d="M40 40H13V29H29V0H40Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- 01 cover -->
+<section class="slide cover on-brand active">
+  <div class="ledger reveal d3" aria-hidden="true">
+<div class="hd"><span class="cap">Site ledger</span><span><span class="en">01</span>見積</span><span><span class="en">02</span>発注</span><span><span class="en">03</span>施工</span><span><span class="en">04</span>請求</span></div>
+<div class="rows">
+<div class="row "><span class="site"><span class="en">0412</span>世田谷区 集合住宅</span><i style="--p:0.625"></i></div>
+<div class="row done"><span class="site"><span class="en">0418</span>川崎市 物流倉庫</span><i style="--p:1"></i></div>
+<div class="row "><span class="site"><span class="en">0423</span>横浜市 小学校 耐震</span><i style="--p:0.375"></i></div>
+<div class="row "><span class="site"><span class="en">0431</span>練馬区 戸建12棟</span><i style="--p:0.625"></i></div>
+<div class="row done"><span class="site"><span class="en">0436</span>品川区 オフィス改修</span><i style="--p:1"></i></div>
+<div class="row "><span class="site"><span class="en">0440</span>千葉市 店舗内装</span><i style="--p:0.125"></i></div>
+<div class="row "><span class="site"><span class="en">0447</span>相模原市 工場増築</span><i style="--p:0.875"></i></div>
+</div>
+<div class="ft"><span>工程が進むたび、同じ台帳に記録される。</span><span class="en">2026.10</span></div>
+</div>
+  <div class="logo reveal d1"><svg><use href="#kanawa"/></svg><span class="word en">Kanawa</span><span class="jp">株式会社カナワ</span></div>
+  <div class="main">
+    <div class="display en reveal d2">Every jobsite,<br>one ledger.</div>
+    <p class="copy-jp reveal d3">現場と現場の、<br>つなぎ目になる。</p>
+  </div>
+  <div class="meta reveal d4"><span>会社紹介資料</span><span>2026年10月版</span><span>採用候補者・取引先さま向け</span></div>
+  <div class="foot"><span class="page en"><b>01</b> | 24</span></div>
+</section>
+
+<!-- 02 gate -->
+<section class="slide gate">
+  <div class="panel on-brand">
+    <svg class="mark" aria-hidden="true"><use href="#kanawa"/></svg>
+    <div class="chap en reveal d1">Chapter</div>
+    <div class="num en reveal d1">02</div>
+    <div class="title-en en reveal d2">Business &amp;<br>Impact</div>
+    <div class="title-jp reveal d3">事業と実績</div>
+  </div>
+  <nav class="toc reveal d3">
+    <h3 class="en">Contents</h3>
+    <ol>
+      <li class="ch"><span class="n en">01</span><span class="t">会社概要<small>Company</small></span><span class="p en">P.03</span></li>
+      <li class="ch cur"><span class="n en">02</span><span class="t">事業と実績<small>Business &amp; Impact</small></span><span class="p en">P.08</span></li>
+      <li><ol class="subs">
+        <li><span>建設現場の「つなぎ目」問題</span><span class="p en">P.09</span></li>
+        <li><span>導入効果</span><span class="p en">P.10</span></li>
+        <li><span>見積から請求までの仕組み</span><span class="p en">P.11</span></li>
+        <li><span>主な導入企業</span><span class="p en">P.12</span></li>
+      </ol></li>
+      <li class="ch"><span class="n en">03</span><span class="t">組織と文化<small>People &amp; Culture</small></span><span class="p en">P.14</span></li>
+      <li class="ch"><span class="n en">04</span><span class="t">募集職種<small>Open Positions</small></span><span class="p en">P.20</span></li>
+    </ol>
+  </nav>
+  <div class="foot"><span class="copy">© Kanawa Inc.</span><span class="page en"><b>08</b> | 24</span></div>
+</section>
+
+<!-- 03 kpi -->
+<section class="slide kpi">
+  <aside class="band"><svg class="mark"><use href="#kanawa"/></svg><span class="ch-no en">02</span><span class="ch-name">事業と実績</span></aside>
+  <div class="crumb"><span class="en">02</span><span>事業と実績</span><span>導入効果</span></div>
+  <div class="corp">株式会社カナワ</div>
+  <div class="head">
+    <div class="kicker reveal d1">Impact on the jobsite</div>
+    <h2 class="headline reveal d2">導入3か月で、現場の事務時間は<br>平均42%減った。</h2>
+  </div>
+  <div class="hero reveal d3">
+    <div class="label">導入3か月後の月間事務時間（導入前比）</div>
+    <div class="big"><span class="v en">−42</span><span class="u en">%</span></div>
+    <div class="sub">
+      <div><div><span class="v en">1,280</span><span class="u">社</span></div><div class="label">導入企業数（2026年9月末）</div></div>
+      <div><div><span class="v en">0.4</span><span class="u">%</span></div><div class="label">月次解約率（直近12か月平均）</div></div>
+    </div>
+  </div>
+  <div class="chart reveal d3">
+    <div class="ttl"><b>現場1か所あたりの月間事務時間</b><span>単位：時間／平均</span></div>
+    <div class="plot">
+      <div class="bar"><span class="val en">62.0<small>h</small></span><i style="height:240px"></i></div>
+      <div class="bar mid"><span class="val en">49.5<small>h</small></span><i style="height:192px"></i></div>
+      <div class="bar mid"><span class="val en">41.0<small>h</small></span><i style="height:159px"></i></div>
+      <div class="bar key"><span class="val en">36.0<small>h</small></span><i style="height:139px"></i></div>
+      <div class="bar mid"><span class="val en">33.8<small>h</small></span><i style="height:131px"></i></div>
+      <div class="ref"></div>
+    </div>
+    <div class="xax"><span>導入前</span><span>1か月</span><span>2か月</span><span class="k">3か月</span><span>6か月</span></div>
+  </div>
+  <p class="note">※2025年4月〜2026年3月に導入した312現場の平均。見積・発注・日報・請求に関わる事務作業を、現場担当者の作業ログから集計。</p>
+  <div class="foot"><span class="copy">© Kanawa Inc.</span><span class="page en"><b>10</b> | 24</span></div>
+</section>
+
+<!-- 04 diagram -->
+<section class="slide flow">
+  <aside class="band"><svg class="mark"><use href="#kanawa"/></svg><span class="ch-no en">02</span><span class="ch-name">事業と実績</span></aside>
+  <div class="crumb"><span class="en">02</span><span>事業と実績</span><span>見積から請求までの仕組み</span></div>
+  <div class="corp">株式会社カナワ</div>
+  <div class="head">
+    <div class="kicker reveal d1">How it works</div>
+    <h2 class="headline reveal d2">見積から請求まで、<br>ひとつの台帳が現場を流れる。</h2>
+  </div>
+  <div class="lanes reveal d3">
+    <div class="corner"></div>
+    <div class="phase"><span class="n en">01</span><span class="t">見積</span></div>
+    <div class="phase"><span class="n en">02</span><span class="t">発注</span></div>
+    <div class="phase"><span class="n en">03</span><span class="t">施工</span></div>
+    <div class="phase"><span class="n en">04</span><span class="t">請求</span></div>
+
+    <div class="who row-a"><b>元請</b><small>Contractor</small></div>
+    <div class="cell row-a v-up">見積依頼を<br>協力会社へ一斉送付</div>
+    <div class="cell row-a v-up">注文書を<br>電子で発行</div>
+    <div class="cell row-a v-up">日報と写真を<br>その日のうちに承認</div>
+    <div class="cell row-a v-up">出来高から<br>支払額を確定</div>
+
+    <div class="who spine-who"><b>カナワ</b><small>Shared ledger</small></div>
+    <div class="spine">比較表を自動で作成</div>
+    <div class="spine">発注台帳へ自動転記</div>
+    <div class="spine">工程表に実績を反映</div>
+    <div class="spine last">請求書と注文書を突合</div>
+
+    <div class="who row-c"><b>協力会社</b><small>Partner</small></div>
+    <div class="cell row-c v-dn">スマホから<br>見積を返信</div>
+    <div class="cell row-c v-dn">注文請書を<br>ワンタップで返送</div>
+    <div class="cell row-c v-dn">作業後に<br>日報と写真を送信</div>
+    <div class="cell row-c v-dn">請求書が<br>自動で作られる</div>
+  </div>
+  <div class="result reveal d4">
+    <span class="lbl">手作業の転記が発生する箇所</span>
+    <span class="from en">11<small>か所</small></span><span class="arrow en">→</span><span class="to en">0<small>か所</small></span>
+    <span class="note">※当社調べ。中規模の元請1社と協力会社14社の業務フローで比較（2026年6月）。</span>
+  </div>
+  <div class="foot"><span class="copy">© Kanawa Inc.</span><span class="page en"><b>11</b> | 24</span></div>
+</section>
+
+</main>
+</div>
+<script>
+class SlidePresentation {
+  constructor() {
+    this.slides = [...document.querySelectorAll('.slide')];
+    this.i = 0;
+    this.stage = document.getElementById('deckStage');
+    const scale = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    scale(); addEventListener('resize', scale);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.go(this.i + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.i - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    let x0 = null;
+    addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    addEventListener('touchend', e => { if (x0 === null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 50) this.go(this.i + (d < 0 ? 1 : -1)); x0 = null; });
+    let lock = false;
+    addEventListener('wheel', e => { if (lock || Math.abs(e.deltaY) < 20) return; lock = true; this.go(this.i + (e.deltaY > 0 ? 1 : -1)); setTimeout(() => lock = false, 700); }, { passive: true });
+    this.go(0);
+  }
+  go(n) {
+    this.i = Math.max(0, Math.min(n, this.slides.length - 1));
+    this.slides.forEach((s, k) => { s.classList.toggle('active', k === this.i); s.classList.toggle('visible', k === this.i); });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "slug": "tategumi-editorial",
+  "name": "Tategumi Editorial",
+  "name_ja": "縦組みエディトリアル",
+  "tagline": "Headings and prose set vertically, read right to left like a book; data stays horizontal as one island on the left, and indigo marks only what changes.",
+  "mood": ["literary", "dignified", "calm"],
+  "formality": "high",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "老舗の長期構想、周年記念、社史、文化財団・自治体の理念やビジョンの説明",
+  "avoid_for": "数字や表が主役の決算・IR、英語や型番が多い技術資料、スピード重視のピッチ",
+  "formats": ["slide-16x9"],
+  "writing": "vertical",
+  "needs": [],
+  "fonts": { "heading": "Noto Serif JP", "body": "Noto Serif JP", "latin": ["EB Garamond"] },
+  "colors": { "paper": "#F2EEE5", "sumi": "#1D1C1A", "ai": "#24466B", "ai-30": "#BCC6D1", "ai-55": "#8297AE", "stage-bg": "#121110" },
+  "refs": ["文芸書・単行本の縦組み本文（柱とノンブル）", "老舗の周年誌・社史の縦組み表紙"]
+}

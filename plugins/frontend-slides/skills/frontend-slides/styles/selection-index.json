@@ -1,0 +1,425 @@
+{
+  "styles": [
+    {
+      "slug": "color-index",
+      "name": "Color Index",
+      "name_ja": "章色インデックス",
+      "tagline": "Navy skeleton with one color per business chapter; the top rule, square markers, charts and the right-edge thumb tab switch to the current chapter's color.",
+      "mood": [
+        "structured",
+        "trustworthy",
+        "analytical"
+      ],
+      "formality": "high",
+      "density": "high",
+      "scheme": "light",
+      "best_for": "中期経営計画、複数事業の会社案内、事業別の長い報告書",
+      "avoid_for": "単一事業の短い登壇、エンタメ、子ども向け",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "Barlow",
+          "Barlow Semi Condensed"
+        ]
+      },
+      "palette": [
+        "#1E3348",
+        "#1D232A",
+        "#F5F4F0"
+      ],
+      "preview_md": "styles/color-index/preview.md",
+      "design_md": "styles/color-index/design.md",
+      "reference_html": "styles/color-index/reference.html"
+    },
+    {
+      "slug": "corporate-mono",
+      "name": "Corporate Mono",
+      "name_ja": "コーポレート単色",
+      "tagline": "White ground and one corporate color used only on full-bleed gates, the left chapter band and chart shades.",
+      "mood": [
+        "trustworthy",
+        "calm",
+        "structured"
+      ],
+      "formality": "high",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "会社紹介、採用ピッチ、サービス資料、30〜60枚の長尺資料",
+      "avoid_for": "エンタメ、子ども向け、写真で魅せるブランド発表",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "IBM Plex Sans JP",
+        "body": "IBM Plex Sans JP",
+        "latin": [
+          "Hanken Grotesk"
+        ]
+      },
+      "palette": [
+        "#9C3A21",
+        "#1E1A17",
+        "#FFFFFF",
+        "#6B635D",
+        "#E8D2C8",
+        "#C98A73"
+      ],
+      "preview_md": "styles/corporate-mono/preview.md",
+      "design_md": "styles/corporate-mono/design.md",
+      "reference_html": "styles/corporate-mono/reference.html"
+    },
+    {
+      "slug": "dark-keynote",
+      "name": "Dark Keynote",
+      "name_ja": "ダーク・キーノート",
+      "tagline": "Near-black stage with one rendered product, hairline-thin giant numerals for specs, and a single yellow accent that marks only the current product.",
+      "mood": [
+        "premium",
+        "quiet",
+        "confident"
+      ],
+      "formality": "medium",
+      "density": "low",
+      "scheme": "dark",
+      "best_for": "製品発表会、配信イベント、ハードウェア・家電の新製品紹介",
+      "avoid_for": "明るい会議室でのプロジェクター投影、文字量の多い報告書、決算説明",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "Jost",
+          "IBM Plex Mono"
+        ]
+      },
+      "palette": [
+        "#0F1012",
+        "#17181B",
+        "#F3F1EC",
+        "#C9C6BF",
+        "#B4B1AA",
+        "#FFD23F"
+      ],
+      "preview_md": "styles/dark-keynote/preview.md",
+      "design_md": "styles/dark-keynote/design.md",
+      "reference_html": "styles/dark-keynote/reference.html"
+    },
+    {
+      "slug": "gate-gradient",
+      "name": "Gate Gradient",
+      "name_ja": "グラデーション扉",
+      "tagline": "Only the cover and chapter gates carry a deep pine sky with a vermilion horizon; every content slide is white with ink and one vermilion accent.",
+      "mood": [
+        "tech",
+        "confident",
+        "clean"
+      ],
+      "formality": "medium",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "テック企業の会社紹介、採用ピッチ、カンファレンスのスポンサー資料",
+      "avoid_for": "伝統・和の世界観、子ども向け、写真主体の資料",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "Bricolage Grotesque"
+        ]
+      },
+      "palette": [
+        "#141816",
+        "#565C59",
+        "#DADDDB",
+        "#FFFFFF",
+        "#DE4A16",
+        "#04302B"
+      ],
+      "preview_md": "styles/gate-gradient/preview.md",
+      "design_md": "styles/gate-gradient/design.md",
+      "reference_html": "styles/gate-gradient/reference.html"
+    },
+    {
+      "slug": "geometric-blue",
+      "name": "Geometric Blue",
+      "name_ja": "青白と幾何モチーフ",
+      "tagline": "Royal blue and white only, with a square-cell motif that is data: the cover grid is the attention matrix of the headline itself.",
+      "mood": [
+        "technical",
+        "precise",
+        "confident"
+      ],
+      "formality": "medium",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "研究開発の紹介、エンジニア採用ピッチ、技術説明、法人向けの技術提案",
+      "avoid_for": "情緒的なブランド発表、子ども向け、写真が主役の資料",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "IBM Plex Sans JP",
+        "body": "IBM Plex Sans JP",
+        "latin": [
+          "Archivo",
+          "IBM Plex Mono"
+        ]
+      },
+      "palette": [
+        "#1534D6",
+        "#0A1A5E",
+        "#E9EDFD",
+        "#FFFFFF"
+      ],
+      "preview_md": "styles/geometric-blue/preview.md",
+      "design_md": "styles/geometric-blue/design.md",
+      "reference_html": "styles/geometric-blue/reference.html"
+    },
+    {
+      "slug": "photo-editorial",
+      "name": "Photo Editorial",
+      "name_ja": "写真主導エディトリアル",
+      "tagline": "Full-bleed documentary photos carry the color; the page itself is white, black and one selvedge red, with condensed Latin caps naming and Mincho telling.",
+      "mood": [
+        "authentic",
+        "confident",
+        "crafted"
+      ],
+      "formality": "high",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "統合報告書、ブランドブック、企業の思想を語る資料、採用ピッチの現場紹介",
+      "avoid_for": "写真素材が用意できない案件、SaaS の機能説明、図表中心の社内報告",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [
+        "photos"
+      ],
+      "fonts": {
+        "heading": "Noto Serif JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "Archivo"
+        ]
+      },
+      "palette": [
+        "#FFFFFF",
+        "#141414",
+        "#C8261B",
+        "#8C8A86",
+        "#DAD7D1"
+      ],
+      "preview_md": "styles/photo-editorial/preview.md",
+      "design_md": "styles/photo-editorial/design.md",
+      "reference_html": "styles/photo-editorial/reference.html"
+    },
+    {
+      "slug": "public-standard",
+      "name": "Public Standard",
+      "name_ja": "公共・標準",
+      "tagline": "Zero decoration: a 12-column grid, an 8px spacing scale, three weights of rule and careful Japanese and Latin typesetting, with one blue kept to the top edge and labels.",
+      "mood": [
+        "trustworthy",
+        "neutral",
+        "accessible"
+      ],
+      "formality": "high",
+      "density": "high",
+      "scheme": "light",
+      "best_for": "行政・自治体の報告、公式な会議資料、仕様や制度の説明、アクセシビリティが要件の資料",
+      "avoid_for": "エンタメ、ブランドの世界観を見せる発表、写真や感情で引き込む登壇",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "IBM Plex Sans"
+        ]
+      },
+      "palette": [
+        "#FFFFFF",
+        "#1A1A1C",
+        "#55555C",
+        "#D6D6DB",
+        "#0A3BD1"
+      ],
+      "preview_md": "styles/public-standard/preview.md",
+      "design_md": "styles/public-standard/design.md",
+      "reference_html": "styles/public-standard/reference.html"
+    },
+    {
+      "slug": "swiss-grid",
+      "name": "Swiss Typogrid",
+      "name_ja": "スイス・タイポグリッド",
+      "tagline": "A visible 12×6 grid that every element snaps to: black 900-weight type, off-white paper and one signal red.",
+      "mood": [
+        "rigorous",
+        "bold",
+        "architectural"
+      ],
+      "formality": "medium",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "デザイン・建築・文化イベントの告知、展覧会や講演会のプログラム、ポートフォリオ",
+      "avoid_for": "やわらかさや親しみを出したい資料、写真が主役の資料、長文で説明する資料",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "Schibsted Grotesk"
+        ]
+      },
+      "palette": [
+        "#F5F4F0",
+        "#0B0B0B",
+        "#E10600",
+        "#8C8B87"
+      ],
+      "preview_md": "styles/swiss-grid/preview.md",
+      "design_md": "styles/swiss-grid/design.md",
+      "reference_html": "styles/swiss-grid/reference.html"
+    },
+    {
+      "slug": "talk-one-message",
+      "name": "One-Message Talk",
+      "name_ja": "1枚1メッセージの登壇",
+      "tagline": "Light gray-blue ground, one black-weight navy conclusion per slide, and every duration drawn as cells where one cell is one minute.",
+      "mood": [
+        "clear",
+        "confident",
+        "technical"
+      ],
+      "formality": "medium",
+      "density": "low",
+      "scheme": "light",
+      "best_for": "勉強会、技術カンファレンス、社内LT、プロジェクター投影",
+      "avoid_for": "読ませる配布資料、表や本文が多い資料、時間や量の話がない資料",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "Inter Tight"
+        ]
+      },
+      "palette": [
+        "#F0F2F5",
+        "#0D2A4A",
+        "#5E6E82",
+        "#E2621B"
+      ],
+      "preview_md": "styles/talk-one-message/preview.md",
+      "design_md": "styles/talk-one-message/design.md",
+      "reference_html": "styles/talk-one-message/reference.html"
+    },
+    {
+      "slug": "tategumi-editorial",
+      "name": "Tategumi Editorial",
+      "name_ja": "縦組みエディトリアル",
+      "tagline": "Headings and prose set vertically, read right to left like a book; data stays horizontal as one island on the left, and indigo marks only what changes.",
+      "mood": [
+        "literary",
+        "dignified",
+        "calm"
+      ],
+      "formality": "high",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "老舗の長期構想、周年記念、社史、文化財団・自治体の理念やビジョンの説明",
+      "avoid_for": "数字や表が主役の決算・IR、英語や型番が多い技術資料、スピード重視のピッチ",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "vertical",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Serif JP",
+        "body": "Noto Serif JP",
+        "latin": [
+          "EB Garamond"
+        ]
+      },
+      "palette": [
+        "#F2EEE5",
+        "#1D1C1A",
+        "#24466B",
+        "#BCC6D1",
+        "#8297AE",
+        "#121110"
+      ],
+      "preview_md": "styles/tategumi-editorial/preview.md",
+      "design_md": "styles/tategumi-editorial/design.md",
+      "reference_html": "styles/tategumi-editorial/reference.html"
+    },
+    {
+      "slug": "warm-editorial",
+      "name": "Warm Editorial",
+      "name_ja": "ブランド温色",
+      "tagline": "Cream paper, one big edge-anchored circle per slide, and two-plate illustrations whose fill sits slightly out of register with the ink line.",
+      "mood": [
+        "warm",
+        "friendly",
+        "crafted"
+      ],
+      "formality": "low",
+      "density": "low",
+      "scheme": "light",
+      "best_for": "BtoC のブランドブック、食品・生活雑貨の商品紹介、採用ピッチのカルチャー章、イベント告知",
+      "avoid_for": "決算説明、行政・公共の資料、表や数字が密に並ぶ資料",
+      "formats": [
+        "slide-16x9"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Sans JP",
+        "body": "Noto Sans JP",
+        "latin": [
+          "Fraunces"
+        ]
+      },
+      "palette": [
+        "#F3EBDD",
+        "#2E2420",
+        "#DD5A2B",
+        "#EDB33E"
+      ],
+      "preview_md": "styles/warm-editorial/preview.md",
+      "design_md": "styles/warm-editorial/design.md",
+      "reference_html": "styles/warm-editorial/reference.html"
+    }
+  ]
+}

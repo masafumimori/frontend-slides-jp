@@ -1,0 +1,18 @@
+{
+  "slug": "photo-editorial",
+  "name": "Photo Editorial",
+  "name_ja": "写真主導エディトリアル",
+  "tagline": "Full-bleed documentary photos carry the color; the page itself is white, black and one selvedge red, with condensed Latin caps naming and Mincho telling.",
+  "mood": ["authentic", "confident", "crafted"],
+  "formality": "high",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "統合報告書、ブランドブック、企業の思想を語る資料、採用ピッチの現場紹介",
+  "avoid_for": "写真素材が用意できない案件、SaaS の機能説明、図表中心の社内報告",
+  "formats": ["slide-16x9"],
+  "writing": "horizontal",
+  "needs": ["photos"],
+  "fonts": { "heading": "Noto Serif JP", "body": "Noto Sans JP", "latin": ["Archivo"] },
+  "colors": { "paper": "#FFFFFF", "ink": "#141414", "red": "#C8261B", "mute": "#8C8A86", "bar": "#DAD7D1" },
+  "refs": ["ファーストリテイリング 統合報告書"]
+}

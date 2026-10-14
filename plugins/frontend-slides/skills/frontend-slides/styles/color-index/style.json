@@ -1,0 +1,18 @@
+{
+  "slug": "color-index",
+  "name": "Color Index",
+  "name_ja": "章色インデックス",
+  "tagline": "Navy skeleton with one color per business chapter; the top rule, square markers, charts and the right-edge thumb tab switch to the current chapter's color.",
+  "mood": ["structured", "trustworthy", "analytical"],
+  "formality": "high",
+  "density": "high",
+  "scheme": "light",
+  "best_for": "中期経営計画、複数事業の会社案内、事業別の長い報告書",
+  "avoid_for": "単一事業の短い登壇、エンタメ、子ども向け",
+  "formats": ["slide-16x9"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": { "heading": "Noto Sans JP", "body": "Noto Sans JP", "latin": ["Barlow", "Barlow Semi Condensed"] },
+  "colors": { "base": "#1E3348", "ink": "#1D232A", "paper": "#F5F4F0" },
+  "refs": ["Sansan 決算説明資料", "東映アニメーション IR資料", "アシックス IR資料"]
+}

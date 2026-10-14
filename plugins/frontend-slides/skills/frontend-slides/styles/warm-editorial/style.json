@@ -1,0 +1,39 @@
+{
+  "slug": "warm-editorial",
+  "name": "Warm Editorial",
+  "name_ja": "ブランド温色",
+  "tagline": "Cream paper, one big edge-anchored circle per slide, and two-plate illustrations whose fill sits slightly out of register with the ink line.",
+  "mood": [
+    "warm",
+    "friendly",
+    "crafted"
+  ],
+  "formality": "low",
+  "density": "low",
+  "scheme": "light",
+  "best_for": "BtoC のブランドブック、食品・生活雑貨の商品紹介、採用ピッチのカルチャー章、イベント告知",
+  "avoid_for": "決算説明、行政・公共の資料、表や数字が密に並ぶ資料",
+  "formats": [
+    "slide-16x9"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "Noto Sans JP",
+    "latin": [
+      "Fraunces"
+    ]
+  },
+  "colors": {
+    "cream": "#F3EBDD",
+    "ink": "#2E2420",
+    "tomato": "#DD5A2B",
+    "squash": "#EDB33E"
+  },
+  "refs": [
+    "イオンモール サステナビリティレポート",
+    "双葉電子 会社案内",
+    "@yoshifujidesign のブランド・エディトリアル版 HTML スライド"
+  ]
+}

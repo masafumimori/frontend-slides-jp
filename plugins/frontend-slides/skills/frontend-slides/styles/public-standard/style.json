@@ -1,0 +1,18 @@
+{
+  "slug": "public-standard",
+  "name": "Public Standard",
+  "name_ja": "公共・標準",
+  "tagline": "Zero decoration: a 12-column grid, an 8px spacing scale, three weights of rule and careful Japanese and Latin typesetting, with one blue kept to the top edge and labels.",
+  "mood": ["trustworthy", "neutral", "accessible"],
+  "formality": "high",
+  "density": "high",
+  "scheme": "light",
+  "best_for": "行政・自治体の報告、公式な会議資料、仕様や制度の説明、アクセシビリティが要件の資料",
+  "avoid_for": "エンタメ、ブランドの世界観を見せる発表、写真や感情で引き込む登壇",
+  "formats": ["slide-16x9"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": { "heading": "Noto Sans JP", "body": "Noto Sans JP", "latin": ["IBM Plex Sans"] },
+  "colors": { "paper": "#FFFFFF", "ink": "#1A1A1C", "ink2": "#55555C", "rule": "#D6D6DB", "blue": "#0A3BD1" },
+  "refs": ["デジタル庁デザインシステム準拠の HTML スライド", "JAFCO 決算説明資料"]
+}

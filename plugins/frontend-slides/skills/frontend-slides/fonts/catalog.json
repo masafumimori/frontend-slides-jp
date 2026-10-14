@@ -534,6 +534,28 @@
       "css": "family=Barlow:wght@100;200;300;400;500;600;700;800;900"
     },
     {
+      "family": "Barlow Semi Condensed",
+      "script": "latin",
+      "class": "sans",
+      "mood": [
+        "condensed",
+        "data",
+        "industrial"
+      ],
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "css": "family=Barlow+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900"
+    },
+    {
       "family": "Bricolage Grotesque",
       "script": "latin",
       "class": "sans",

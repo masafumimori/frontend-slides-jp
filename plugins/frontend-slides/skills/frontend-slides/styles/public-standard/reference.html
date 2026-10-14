@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汐見市 行政DX推進状況報告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Theme tokens. Four colors: paper, ink (with one lighter step), rule gray, one blue. */
+:root {
+  --stage-bg: #E9E9EC;
+  --slide-bg: #FFFFFF;
+  --ink: #1A1A1C;
+  --ink-2: #55555C;
+  --rule: #D6D6DB;
+  --rule-strong: #1A1A1C;
+  --blue: #0A3BD1;
+
+  --font-jp: 'Noto Sans JP', sans-serif;
+  --font-num: 'IBM Plex Sans', 'Noto Sans JP', sans-serif;
+
+  /* 8px spacing scale */
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 48px; --s6: 64px; --s7: 96px; --s8: 128px;
+
+  /* 12-column grid at 1920: 120px margins, 24px gutter, 118px column */
+  --margin-x: 120px;
+  --gutter: 24px;
+
+  --t-label: 22px;
+  --t-note: 18px;
+  --t-body: 26px;
+  --t-h2: 64px;
+  --t-h1: 108px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 4b. Japanese typesetting.
+   palt/vpal only tighten fonts that ship those features; fonts/catalog.json
+   records which ones do. Headings use a family with palt: true. */
+.slide {
+    line-break: strict;
+    word-break: auto-phrase;
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+.slide :is(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+.slide :is(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+.slide .tate {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ---------- Base typography ---------- */
+body {
+  font-family: var(--font-jp);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+.num {
+  font-family: var(--font-num);
+  font-feature-settings: "tnum", "lnum";
+  letter-spacing: -0.01em;
+}
+.slide .label {
+  font-size: var(--t-label);
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+.slide .note {
+  font-size: var(--t-note);
+  color: var(--ink-2);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+h1, h2 { font-weight: 700; }
+.slide h2 {
+  font-size: var(--t-h2);
+  line-height: 1.38;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Slide frame: top rule, running header, footer ---------- */
+.slide::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 8px;
+  background: var(--blue);
+}
+.frame {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--margin-x);
+}
+.run-head {
+  position: absolute;
+  left: var(--margin-x); right: var(--margin-x); top: 48px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: var(--s2);
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--t-note);
+  color: var(--ink-2);
+  letter-spacing: 0.03em;
+}
+.run-head b { color: var(--ink); font-weight: 500; }
+.run-foot {
+  position: absolute;
+  left: var(--margin-x); right: var(--margin-x); bottom: 48px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: var(--s6);
+}
+.run-foot .page {
+  font-family: var(--font-num);
+  font-size: var(--t-note);
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.run-foot .page b { color: var(--ink); font-weight: 600; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+}
+
+/* ---------- Reveal (one staggered fade per slide) ---------- */
+.rv {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+.slide.visible .rv { opacity: 1; transform: none; }
+.slide.visible .rv.d1 { transition-delay: .08s; }
+.slide.visible .rv.d2 { transition-delay: .16s; }
+.slide.visible .rv.d3 { transition-delay: .24s; }
+.slide.visible .rv.d4 { transition-delay: .32s; }
+.slide.visible .rv.d5 { transition-delay: .40s; }
+@media (prefers-reduced-motion: reduce) {
+  .rv, .slide.visible .rv { opacity: 1; transform: none; transition: none !important; }
+}
+
+/* =========================================================
+   01 Cover
+   ========================================================= */
+.cover .grid { position: absolute; left: var(--margin-x); right: var(--margin-x); top: 0; bottom: 0; }
+.cover-main {
+  grid-column: 1 / span 7;
+  align-self: center;
+  padding-bottom: 40px;
+}
+.cover-main .label { margin-bottom: var(--s5); }
+.cover-main h1 {
+  font-size: var(--t-h1);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+.cover-main .sub {
+  margin-top: var(--s5);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+}
+.cover-main .sub .num { font-weight: 500; letter-spacing: 0.02em; }
+
+.spec {
+  grid-column: 9 / span 4;
+  align-self: center;
+  padding-bottom: 40px;
+  border-top: 2px solid var(--rule-strong);
+}
+.spec-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  padding: var(--s3) 0 22px;
+  border-bottom: 1px solid var(--rule);
+}
+.spec-row dt { font-size: 22px; color: var(--ink-2); letter-spacing: 0.03em; }
+.spec-row dd { font-size: 22px; font-weight: 500; line-height: normal; letter-spacing: 0.02em; text-align: right; }
+.spec-row dd .num { font-size: 44px; font-weight: 500; margin-right: 6px; }
+.spec-row dd.text { font-size: 24px; }
+
+.cover-org {
+  position: absolute; left: var(--margin-x); bottom: 64px;
+  display: flex; gap: var(--s4); align-items: baseline;
+}
+.cover-org .org { font-size: 26px; font-weight: 700; letter-spacing: 0.02em; }
+.cover-org .dept { font-size: 22px; color: var(--ink-2); letter-spacing: 0.03em; }
+.cover-meta {
+  position: absolute; right: var(--margin-x); bottom: 64px;
+  text-align: right;
+}
+.doc-no {
+  display: inline-block;
+  font-size: var(--t-note);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 6px 14px;
+  border: 1px solid var(--ink);
+  margin-bottom: var(--s2);
+}
+
+/* =========================================================
+   02 Contents
+   ========================================================= */
+.toc .grid { position: absolute; left: var(--margin-x); right: var(--margin-x); top: 164px; bottom: 140px; }
+.toc-side { grid-column: 1 / span 4; display: flex; flex-direction: column; }
+.toc-side h2 { margin-top: var(--s3); font-size: 88px; letter-spacing: 0.02em; line-height: 1.2; }
+.toc-side .lead { margin-top: var(--s4); font-size: var(--t-body); line-height: 1.7; letter-spacing: 0.02em; color: var(--ink); }
+.agenda {
+  margin-top: auto;
+  padding-top: var(--s2);
+  border-top: 4px solid var(--blue);
+}
+.agenda .label { font-size: 20px; font-weight: 500; line-height: 1.6; letter-spacing: 0.02em; margin-bottom: var(--s1); }
+.agenda p { font-size: 24px; font-weight: 500; line-height: 1.6; letter-spacing: 0.02em; }
+
+.toc-list { grid-column: 6 / span 7; list-style: none; border-top: 2px solid var(--rule-strong); display: flex; flex-direction: column; }
+.slide .toc-item {
+  line-height: normal;
+  letter-spacing: normal;
+  display: grid;
+  grid-template-columns: 120px 1fr 96px;
+  align-items: baseline;
+  flex: 1;
+  align-content: center;
+  border-bottom: 1px solid var(--rule);
+}
+.toc-item .no { font-family: var(--font-num); font-size: 30px; font-weight: 500; color: var(--blue); letter-spacing: 0.02em; }
+.toc-item h3 { font-size: 40px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; }
+.toc-item p { margin-top: 10px; font-size: 22px; color: var(--ink-2); letter-spacing: 0.02em; line-height: 1.5; }
+.toc-item .pg { font-family: var(--font-num); font-size: 22px; color: var(--ink-2); text-align: right; }
+
+/* =========================================================
+   03 Conclusion + KPI + chart
+   ========================================================= */
+.head-block { position: absolute; left: var(--margin-x); right: var(--margin-x); top: 136px; }
+.head-block .label { margin-bottom: var(--s2); }
+
+.kpi-area { position: absolute; left: var(--margin-x); right: var(--margin-x); top: 418px; height: 520px; }
+.chart-box { grid-column: 1 / span 7; display: flex; flex-direction: column; }
+.chart-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--s2); }
+.slide .chart-title { line-height: normal; font-size: 24px; font-weight: 700; letter-spacing: 0.02em; }
+.legend { display: flex; gap: var(--s4); font-size: 20px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 10px; }
+.legend i { display: inline-block; width: 28px; height: 0; border-top: 3px solid var(--ink-2); }
+.legend i.cur { border-top-color: var(--blue); border-top-width: 4px; }
+.legend i.prev { border-top-color: #9A9AA2; border-top-style: solid; }
+#lineChart { width: 100%; height: 456px; display: block; overflow: visible; }
+#lineChart text { font-family: var(--font-num); font-size: 18px; fill: var(--ink-2); }
+#lineChart .jp { font-family: var(--font-jp); }
+
+.kpis {
+  grid-column: 8 / span 5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--gutter);
+  row-gap: var(--s4);
+  align-content: start;
+}
+.kpi { border-top: 4px solid var(--blue); padding-top: var(--s2); }
+.kpi .k-label { font-size: 22px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.4; }
+.kpi .k-val { line-height: normal; letter-spacing: normal; margin-top: var(--s1); display: flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+.kpi .k-val .num { font-size: 104px; font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; }
+.kpi .k-val .unit { font-size: 30px; font-weight: 700; letter-spacing: 0.02em; }
+.kpi .k-val .unit.pre { margin-right: 2px; }
+.kpi .k-desc { margin-top: var(--s1); font-size: 20px; line-height: 1.55; color: var(--ink-2); letter-spacing: 0.02em; }
+.kpi .k-desc b { color: var(--ink); font-weight: 500; font-family: var(--font-num); }
+
+/* =========================================================
+   04 Matrix diagram
+   ========================================================= */
+.mx-area { position: absolute; left: var(--margin-x); right: var(--margin-x); top: 388px; height: 560px; }
+.mx-wrap { grid-column: 1 / span 9; display: grid; grid-template-columns: 48px 1fr; grid-template-rows: 1fr 44px; }
+.y-axis {
+  grid-row: 1; grid-column: 1;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start;
+  font-size: 20px; color: var(--ink-2); letter-spacing: 0.03em;
+  padding: var(--s3) 0;
+}
+.y-axis span { writing-mode: vertical-rl; }
+.y-axis .ttl { color: var(--ink); font-weight: 700; }
+.x-axis {
+  grid-row: 2; grid-column: 2;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  font-size: 20px; color: var(--ink-2); letter-spacing: 0.03em;
+  padding: 0 var(--s4);
+}
+.x-axis .ttl { color: var(--ink); font-weight: 700; }
+.mx {
+  grid-row: 1; grid-column: 2;
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  border-left: 2px solid var(--rule-strong);
+  border-bottom: 2px solid var(--rule-strong);
+}
+.q {
+  padding: var(--s3) var(--s4);
+  border-right: 1px solid var(--rule);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: var(--s4);
+  align-content: start;
+}
+.q:nth-child(n+3) { border-top: 1px solid var(--rule); }
+.q .q-head { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--s2); }
+.q .q-label { line-height: normal; font-size: 20px; font-weight: 700; color: var(--ink-2); letter-spacing: 0.02em; }
+.q .q-vol { line-height: normal; font-size: 19px; color: var(--ink-2); letter-spacing: 0.02em; }
+.q .q-vol .num { font-size: 19px; color: var(--ink); font-weight: 500; }
+.q .q-val { line-height: normal; letter-spacing: normal; display: flex; align-items: baseline; gap: 4px; }
+.q .q-val .num { font-size: 96px; font-weight: 500; line-height: .9; letter-spacing: -0.02em; }
+.q .q-val .unit { font-size: 26px; font-weight: 700; }
+.q .q-body { padding-top: 2px; }
+.q .q-act { font-size: 24px; font-weight: 700; line-height: 1.4; letter-spacing: 0.02em; }
+.q .q-ex { margin-top: var(--s1); font-size: 19px; line-height: 1.6; color: var(--ink-2); letter-spacing: 0.02em; }
+.q.focus { box-shadow: inset 0 4px 0 var(--blue); border-top-color: transparent; }
+.q.focus .q-label { color: var(--blue); }
+
+.plan { grid-column: 10 / span 3; padding-left: var(--s3); display: flex; flex-direction: column; }
+.slide .plan-title { line-height: normal; font-size: 24px; font-weight: 700; letter-spacing: 0.02em; padding-bottom: var(--s2); border-bottom: 2px solid var(--rule-strong); }
+.step { display: grid; grid-template-columns: 104px 1fr; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+.step .when { font-size: 20px; font-weight: 700; color: var(--blue); letter-spacing: 0.02em; line-height: 1.55; }
+.step .what { font-size: 21px; line-height: 1.55; letter-spacing: 0.02em; }
+.result { margin-top: auto; padding-bottom: 44px; }
+.result .r-label { line-height: normal; font-size: 20px; color: var(--ink-2); letter-spacing: 0.03em; }
+.result .r-val { line-height: normal; letter-spacing: normal; display: flex; align-items: baseline; gap: 10px; margin-top: var(--s1); white-space: nowrap; }
+.result .r-val .from { font-size: 32px; color: var(--ink-2); }
+.result .r-val .arrow { font-size: 26px; color: var(--ink-2); }
+.result .r-val .num.to { font-size: 80px; font-weight: 500; line-height: 1; }
+.result .r-val .unit { font-size: 28px; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- ============ 01 表紙 ============ -->
+<section class="slide cover active" aria-label="表紙">
+  <div class="grid">
+    <div class="cover-main">
+      <p class="label rv d1">第3回 汐見市デジタル推進本部会議　報告資料</p>
+      <h1 class="rv d2">行政手続の<br>オンライン化<br>進捗報告</h1>
+      <p class="sub rv d3">令和8年度 上半期（<span class="num">4</span>月〜<span class="num">9</span>月）</p>
+    </div>
+    <dl class="spec rv d4">
+      <div class="spec-row"><dt>対象手続</dt><dd><span class="num">412</span>手続</dd></div>
+      <div class="spec-row"><dt>オンライン化済み</dt><dd><span class="num">282</span>手続</dd></div>
+      <div class="spec-row"><dt>オンライン申請率</dt><dd><span class="num">64.2</span>%</dd></div>
+      <div class="spec-row"><dt>集計基準日</dt><dd class="text">令和8年9月30日</dd></div>
+    </dl>
+  </div>
+  <div class="cover-org rv d5">
+    <span class="org">汐見市</span>
+    <span class="dept">総務部 デジタル推進課</span>
+  </div>
+  <div class="cover-meta rv d5">
+    <span class="doc-no">資料 1</span>
+    <p class="note">令和8年10月14日</p>
+  </div>
+</section>
+
+<!-- ============ 02 目次 ============ -->
+<section class="slide toc" aria-label="目次">
+  <header class="run-head"><span><b>汐見市</b>　行政手続のオンライン化 進捗報告</span><span>令和8年度 上半期</span></header>
+  <div class="grid">
+    <div class="toc-side rv d1">
+      <p class="label">Contents</p>
+      <h2>目次</h2>
+      <p class="lead">上半期の実績を報告したうえで、<br>下半期に優先する手続を<br>ご審議いただきます。</p>
+      <div class="agenda">
+        <p class="label">本日の審議事項</p>
+        <p>下半期の重点38手続と<br>工程の承認（議題3）</p>
+      </div>
+    </div>
+    <ol class="toc-list">
+      <li class="toc-item rv d2"><span class="no">01</span><div><h3>上半期の成果</h3><p>オンライン申請率、窓口の待ち時間、事務処理時間</p></div><span class="pg">p.3</span></li>
+      <li class="toc-item rv d3"><span class="no">02</span><div><h3>手続別の進捗</h3><p>412手続の分類と、残る130手続の内訳</p></div><span class="pg">p.6</span></li>
+      <li class="toc-item rv d4"><span class="no">03</span><div><h3>下半期の重点</h3><p>優先する38手続の選定理由と工程</p></div><span class="pg">p.9</span></li>
+      <li class="toc-item rv d5"><span class="no">04</span><div><h3>体制と予算</h3><p>推進体制、予算の執行状況、次年度の要求額</p></div><span class="pg">p.12</span></li>
+    </ol>
+  </div>
+  <footer class="run-foot"><p class="note">※ ページ番号は本編資料（全15ページ）のものです。</p><span class="page"><b>02</b> / 15</span></footer>
+</section>
+
+<!-- ============ 03 結論＋数字 ============ -->
+<section class="slide kpi-slide" aria-label="上半期の成果">
+  <header class="run-head"><span><b>01</b>　上半期の成果</span><span>行政手続のオンライン化 進捗報告</span></header>
+  <div class="head-block rv d1">
+    <p class="label">結論</p>
+    <h2>オンライン申請が6割を超え、<br>窓口の待ち時間は半分になった。</h2>
+  </div>
+  <div class="kpi-area grid">
+    <div class="chart-box rv d2">
+      <div class="chart-head">
+        <p class="chart-title">オンライン申請率の推移（月次）</p>
+        <div class="legend"><span><i class="cur"></i>令和8年度</span><span><i class="prev"></i>令和7年度</span></div>
+      </div>
+      <svg id="lineChart" viewBox="0 0 970 456" role="img" aria-label="オンライン申請率は令和7年4月の38.2%から令和8年9月の64.2%まで上昇"></svg>
+    </div>
+    <div class="kpis">
+      <div class="kpi rv d2">
+        <p class="k-label">オンライン申請率</p>
+        <p class="k-val"><span class="num">64.2</span><span class="unit">%</span></p>
+        <p class="k-desc">前年同月比 <b>+20.4</b>ポイント</p>
+      </div>
+      <div class="kpi rv d3">
+        <p class="k-label">窓口の平均待ち時間</p>
+        <p class="k-val"><span class="num">18</span><span class="unit">分</span></p>
+        <p class="k-desc">前年同期 <b>37</b>分（本庁舎 市民課）</p>
+      </div>
+      <div class="kpi rv d4">
+        <p class="k-label">オンライン化済みの手続</p>
+        <p class="k-val"><span class="num">282</span><span class="unit">手続</span></p>
+        <p class="k-desc">対象 <b>412</b>手続の <b>68.4</b>%</p>
+      </div>
+      <div class="kpi rv d5">
+        <p class="k-label">職員の事務処理時間の削減</p>
+        <p class="k-val"><span class="num">1.9</span><span class="unit">万時間</span></p>
+        <p class="k-desc">年換算。正規職員 <b>11</b>人分に相当</p>
+      </div>
+    </div>
+  </div>
+  <footer class="run-foot">
+    <p class="note">※ オンライン申請率は、オンライン化済み手続の申請総数に占める電子申請の割合。<br>出典：汐見市 電子申請システム利用記録、窓口受付システム（令和8年9月30日時点の速報値）</p>
+    <span class="page"><b>03</b> / 15</span>
+  </footer>
+</section>
+
+<!-- ============ 04 図解（マトリクス） ============ -->
+<section class="slide mx-slide" aria-label="下半期の重点">
+  <header class="run-head"><span><b>03</b>　下半期の重点</span><span>行政手続のオンライン化 進捗報告</span></header>
+  <div class="head-block rv d1">
+    <p class="label">残る130手続の優先順位</p>
+    <h2>下半期は、申請が多く改修が軽い<br>38手続に集中する。</h2>
+  </div>
+  <div class="mx-area grid">
+    <div class="mx-wrap rv d2">
+      <div class="y-axis"><span>多い</span><span class="ttl">年間申請件数</span><span>少ない</span></div>
+      <div class="mx">
+        <div class="q focus">
+          <div class="q-head"><p class="q-label">優先｜下半期に公開</p><p class="q-vol">年間 <span class="num">4.1</span>万件</p></div>
+          <p class="q-val"><span class="num">38</span><span class="unit">手続</span></p>
+          <div class="q-body"><p class="q-act">汎用フォームで改修できる</p><p class="q-ex">児童手当の現況届、<br>住民票の写しの郵送請求 ほか</p></div>
+        </div>
+        <div class="q">
+          <div class="q-head"><p class="q-label">基幹システムの更新に合わせる</p><p class="q-vol">年間 <span class="num">2.8</span>万件</p></div>
+          <p class="q-val"><span class="num">21</span><span class="unit">手続</span></p>
+          <div class="q-body"><p class="q-act">令和9年度の更新時に実装</p><p class="q-ex">要介護認定の申請、<br>国民健康保険の資格届出 ほか</p></div>
+        </div>
+        <div class="q">
+          <div class="q-head"><p class="q-label">担当課が一括で対応</p><p class="q-vol">年間 <span class="num">0.6</span>万件</p></div>
+          <p class="q-val"><span class="num">46</span><span class="unit">手続</span></p>
+          <div class="q-body"><p class="q-act">担当課が汎用フォームで公開</p><p class="q-ex">公園の占用許可、<br>犬の登録事項の変更 ほか</p></div>
+        </div>
+        <div class="q">
+          <div class="q-head"><p class="q-label">当面は窓口で継続</p><p class="q-vol">年間 <span class="num">0.2</span>万件</p></div>
+          <p class="q-val"><span class="num">25</span><span class="unit">手続</span></p>
+          <div class="q-body"><p class="q-act">年度末に費用対効果を再評価</p><p class="q-ex">開発行為の許可申請、<br>屋外広告物の許可 ほか</p></div>
+        </div>
+      </div>
+      <div class="x-axis"><span>軽い</span><span class="ttl">改修の負荷</span><span>重い</span></div>
+    </div>
+    <div class="plan">
+      <p class="plan-title rv d3">優先38手続の工程</p>
+      <div class="step rv d3"><span class="when">10月</span><span class="what">対象の確定と、<br>業務フローの確認</span></div>
+      <div class="step rv d4"><span class="when">11〜12月</span><span class="what">先行20手続を公開し、<br>利用状況を計測</span></div>
+      <div class="step rv d4"><span class="when">1〜3月</span><span class="what">残る18手続を公開し、<br>効果を検証</span></div>
+      <div class="result rv d5">
+        <p class="r-label">完了時の手続のオンライン化率</p>
+        <p class="r-val"><span class="num from">68.4</span><span class="arrow">→</span><span class="num to">77.7</span><span class="unit">%</span></p>
+      </div>
+    </div>
+  </div>
+  <footer class="run-foot">
+    <p class="note">※ 改修の負荷は、汎用フォームで対応できるか、基幹システムの改修が必要かで区分。<br>出典：汐見市 手続棚卸し調査（令和8年8月、全庁42課）、申請件数は令和7年度実績</p>
+    <span class="page"><b>09</b> / 15</span>
+  </footer>
+</section>
+
+</main>
+</div>
+
+<script>
+/* Line chart: drawn from the data arrays so the numbers on the slide are the numbers in the chart. */
+(function drawChart() {
+  const svg = document.getElementById('lineChart');
+  const NS = 'http://www.w3.org/2000/svg';
+  const W = 970, H = 456, padL = 64, padR = 72, padT = 16, padB = 48;
+  const prev = [38.2, 39.0, 40.1, 41.5, 42.0, 43.8, 45.1, 46.0, 47.9, 49.2, 51.0, 52.6];
+  const cur  = [55.4, 57.9, 59.6, 61.8, 62.7, 64.2];
+  const months = ['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'];
+  const yMin = 30, yMax = 70;
+  const x = i => padL + i * (W - padL - padR) / 11;
+  const y = v => padT + (yMax - v) * (H - padT - padB) / (yMax - yMin);
+  const el = (tag, attrs, text) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    svg.appendChild(n);
+    return n;
+  };
+  for (let v = yMin; v <= yMax; v += 10) {
+    el('line', { x1: padL, x2: W - padR, y1: y(v), y2: y(v), stroke: v === yMin ? '#1A1A1C' : '#D6D6DB', 'stroke-width': v === yMin ? 1.5 : 1 });
+    el('text', { x: padL - 14, y: y(v) + 6, 'text-anchor': 'end' }, v + (v === yMax ? '%' : ''));
+  }
+  months.forEach((m, i) => el('text', { x: x(i), y: H - padB + 32, 'text-anchor': 'middle', class: 'jp' }, m));
+  const path = (arr, attrs) => el('polyline', Object.assign({ fill: 'none', points: arr.map((v, i) => x(i) + ',' + y(v)).join(' '), 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, attrs));
+  path(prev, { stroke: '#9A9AA2', 'stroke-width': 2.5 });
+  path(cur, { stroke: '#0A3BD1', 'stroke-width': 4 });
+  const li = cur.length - 1;
+  el('circle', { cx: x(li), cy: y(cur[li]), r: 7, fill: '#0A3BD1' });
+  el('circle', { cx: x(5), cy: y(prev[5]), r: 5, fill: '#FFFFFF', stroke: '#9A9AA2', 'stroke-width': 2.5 });
+  const t1 = el('text', { x: x(li) + 16, y: y(cur[li]) + 7, style: 'fill:#1A1A1C;font-size:24px;font-weight:600' }, '64.2');
+  el('text', { x: x(5) + 14, y: y(prev[5]) + 28, style: 'font-size:20px' }, '43.8');
+  el('text', { x: W - padR + 12, y: y(prev[11]) + 7, style: 'font-size:20px' }, '52.6');
+})();
+
+/* Deck controller: fixed stage scaling + keyboard, wheel, touch navigation. */
+class SlidePresentation {
+  constructor() {
+    this.slides = [...document.querySelectorAll('.slide')];
+    this.stage = document.getElementById('deckStage');
+    this.current = 0;
+    this.lock = false;
+    const scale = () => {
+      const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+      this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    };
+    scale();
+    addEventListener('resize', scale);
+    addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); this.go(this.current + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.go(this.current - 1); }
+      if (e.key === 'Home') this.go(0);
+      if (e.key === 'End') this.go(this.slides.length - 1);
+    });
+    addEventListener('wheel', e => {
+      if (this.lock || Math.abs(e.deltaY) < 20) return;
+      this.lock = true; setTimeout(() => (this.lock = false), 700);
+      this.go(this.current + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: true });
+    let sx = 0;
+    addEventListener('touchstart', e => (sx = e.touches[0].clientX), { passive: true });
+    addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) this.go(this.current + (dx < 0 ? 1 : -1));
+    });
+    this.go(0);
+  }
+  go(i) {
+    this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+    this.slides.forEach((s, j) => {
+      s.classList.toggle('active', j === this.current);
+      s.classList.toggle('visible', j === this.current);
+    });
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>
