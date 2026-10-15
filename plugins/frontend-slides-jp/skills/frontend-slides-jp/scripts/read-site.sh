@@ -6,7 +6,8 @@
 # Needs Docker. Builds the image frontend-slides-jp/site-reader on first use.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
-image=frontend-slides-jp/site-reader:1.48.2
+# The tag follows the image sources, so an edited entrypoint is never run from a stale image.
+image=frontend-slides-jp/site-reader:$(cat "$here/site-reader/Dockerfile" "$here/site-reader/entrypoint.sh" | shasum | cut -c1-12)
 args=()
 out=""
 while [[ $# -gt 0 ]]; do
@@ -26,6 +27,7 @@ out="$(cd "$out" && pwd)"
 docker run --rm --init \
   --cap-drop ALL --cap-add NET_ADMIN --cap-add SETUID --cap-add SETGID --cap-add SETPCAP \
   --security-opt no-new-privileges \
+  --sysctl net.ipv6.conf.all.disable_ipv6=1 --sysctl net.ipv6.conf.default.disable_ipv6=1 \
   --read-only --tmpfs /tmp:size=512m --tmpfs /home/pwuser:size=512m,uid=1000,gid=1000 \
   --shm-size 1g --memory 2g --pids-limit 512 \
   -v "$here/extract-site.mjs:/app/extract-site.mjs:ro" \
