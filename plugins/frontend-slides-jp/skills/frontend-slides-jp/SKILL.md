@@ -400,7 +400,7 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 | [styles/gallery.html](styles/gallery.html) | Browsable page of every style for the user | Phase 2, when the user wants to browse |
 | [references/diagrams.md](references/diagrams.md), [diagrams.html](references/diagrams.html) | 50 diagram and chart patterns: which to pick per relationship, and working code; run `node scripts/check-diagrams.mjs` after edits | Phase 3, for every diagram or chart slide |
 | [scripts/shoot.mjs](scripts/shoot.mjs) | Screenshot every slide, at 1920×1080 or `--phone` | Phase 3 verification |
-| [scripts/extract-site.mjs](scripts/extract-site.mjs) | Record colors, type, radii and logos a website renders, with screenshots | Brand import, when the user gives a URL |
+| [scripts/read-site.sh](scripts/read-site.sh) | Run `scripts/extract-site.mjs` in an isolated Docker container: colors, type, radii, logos and screenshots of a website | Brand import, when the user gives a URL |
 | [scripts/check-pages.mjs](scripts/check-pages.mjs) | Check the page frame and text sizes of a `doc-a4` document | Phase 3 verification, for documents |
 | [viewport-base.css](viewport-base.css)             | Mandatory fixed-stage CSS — copy into every presentation             | Phase 3 (generation)      |
 | [page-base.css](page-base.css), [references/document-pages.md](references/document-pages.md) | Mandatory CSS and page rules for `doc-a4` documents | Phase 3, for an A4 document |
