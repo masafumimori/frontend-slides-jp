@@ -104,7 +104,8 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-if (!customDir && !only) {
+// A brands folder gets its own index too: Phase 2 reads ~/.frontend-slides-jp/brands/selection-index.json.
+if (!only) {
   writeFileSync(join(stylesDir, 'selection-index.json'), JSON.stringify({ styles: index }, null, 2) + '\n');
 }
 console.log(`${index.length} styles ok`);
