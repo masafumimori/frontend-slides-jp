@@ -1,10 +1,11 @@
 // Records what a website renders, as raw facts for references/brand-import.md:
 // colors by role, CSS custom properties, the type of each text role, corner radii,
-// logo candidates (saved as files, from what the page loaded) and two screenshots.
+// logo candidates (saved as files, from what the page loaded) and screenshots.
 // It reads the site; it never decides the brand.
 //   node scripts/extract-site.mjs <url> [<url> …] --out <dir> [--allow-private]
-// Writes <dir>/site-facts.json, <dir>/site-<n>.png (first screen) and
-// <dir>/site-<n>-full.png (whole page, up to 8000px). Give 1–3 URLs of one site:
+// Writes <dir>/site-facts.json, <dir>/site-<n>.png (first screen), <dir>/site-<n>-screen-<k>.png
+// (one per screen while scrolling, up to 16) and <dir>/site-<n>-full.png (whole page, up to
+// 8000px; parts revealed only on scroll can be blank there). Give 1–3 URLs of one site:
 // the home page, plus a company or product page.
 // Needs Playwright: PLAYWRIGHT_MODULE=/path/to/node_modules/playwright/index.mjs
 
@@ -135,23 +136,28 @@ for (const [i, url] of urls.entries()) {
   const target = await send(url).catch(e => { throw new Error(`cannot open ${url}: ${e.message}${allowPrivate ? '' : ' (use --allow-private for your own staging site)'}`); });
   await page.goto(target.url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.waitForLoadState('load'));
   await page.evaluate(() => document.fonts.ready);
-  // Let a preloader finish, then scroll the whole page once so content that appears on scroll
-  // (Webflow, GSAP and similar) is drawn before the screenshots.
+  // Let a preloader finish. Pages that reveal content on scroll (Webflow, GSAP and similar) show
+  // it only while it is in view, so the page is read one screen at a time: a screenshot and a
+  // color count per screen, merged. The full-page shot is kept, but it can be blank in places.
   await page.waitForTimeout(2500);
-  await page.evaluate(async () => {
-    const step = innerHeight * 0.8;
-    for (let y = 0; y < document.documentElement.scrollHeight && y < 20000; y += step) {
-      scrollTo(0, y);
-      await new Promise(r => setTimeout(r, 250));
-    }
-    scrollTo(0, 0);
-  });
-  await page.waitForTimeout(1200);
-  // Hide cookie and consent banners (never click them), so they stay out of screenshots and facts.
   await page.addStyleTag({ content: '[class*="cookie" i], [id*="cookie" i], [class*="consent" i], [id*="consent" i], [aria-label*="cookie" i] { display: none !important; }' }).catch(() => {});
   const n = i + 1;
-  await page.screenshot({ path: join(out, `site-${n}.png`) });
+  const screens = [];
+  const tallies = { text: new Map(), background: new Map(), border: new Map(), accent: new Map() };
   const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  const step = 810;
+  for (let y = 0, k = 1; y < height && k <= 16; y += step, k++) {
+    await page.evaluate(top => scrollTo(0, top), y);
+    await page.waitForTimeout(700);
+    const file = `site-${n}-screen-${String(k).padStart(2, '0')}.png`;
+    await page.screenshot({ path: join(out, file) });
+    screens.push(file);
+    const counts = await page.evaluate(countColorsInView);
+    for (const role of Object.keys(tallies)) for (const [hex, w] of counts[role]) tallies[role].set(hex, (tallies[role].get(hex) ?? 0) + w);
+  }
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.waitForTimeout(700);
+  await page.screenshot({ path: join(out, `site-${n}.png`) });
   await page.screenshot({ path: join(out, `site-${n}-full.png`), fullPage: true, clip: { x: 0, y: 0, width: 1440, height: Math.min(height, 8000) } });
 
   const facts = await page.evaluate(() => {
@@ -289,7 +295,13 @@ for (const [i, url] of urls.entries()) {
     l.file = `site-${n}-logo-${k + 1}.${ext}`;
     writeFileSync(join(out, l.file), data);
   }
-  sites.push({ url, screenshot: `site-${n}.png`, fullPage: `site-${n}-full.png`, ...facts });
+  // Colors counted screen by screen replace the single count, which misses content not in view.
+  const top = (map, k) => {
+    const total = [...map.values()].reduce((x, y) => x + y, 0) || 1;
+    return [...map].sort((x, y) => y[1] - x[1]).slice(0, k).map(([hex, w]) => ({ hex, share: Math.round((w / total) * 1000) / 10 }));
+  };
+  facts.colors = { text: top(tallies.text, 8), background: top(tallies.background, 8), border: top(tallies.border, 5), accent: top(tallies.accent, 6) };
+  sites.push({ url, screenshot: `site-${n}.png`, screens, fullPage: `site-${n}-full.png`, ...facts });
   await page.close();
 }
 
@@ -301,6 +313,43 @@ const result = {
 };
 writeFileSync(join(out, 'site-facts.json'), JSON.stringify(result, null, 2));
 console.log(JSON.stringify({ out, sites: sites.map(s => ({ url: s.url, title: s.title, accent: s.colors.accent.slice(0, 3), h1: s.type.h1?.family, logos: s.logos.length })) }));
+
+// Runs in the page: counts colors of visible elements that intersect the viewport, by role.
+// Text by length × size, backgrounds by on-screen area, borders by width; accents are saturated
+// colors, weighted up on links and buttons.
+function countColorsInView() {
+  const hex = c => {
+    const m = c.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/);
+    if (!m || (m[4] !== undefined && Number(m[4]) < 0.5)) return null;
+    return '#' + m.slice(1, 4).map(v => Math.round(Number(v)).toString(16).padStart(2, '0')).join('').toUpperCase();
+  };
+  const sat = h => {
+    const [r, g, b] = [1, 3, 5].map(k => parseInt(h.slice(k, k + 2), 16) / 255);
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
+    return { s: max === min ? 0 : (max - min) / (1 - Math.abs(2 * l - 1)), l };
+  };
+  const out = { text: new Map(), background: new Map(), border: new Map(), accent: new Map() };
+  const add = (role, key, w) => key && w > 0 && out[role].set(key, (out[role].get(key) ?? 0) + w);
+  for (const el of document.body.querySelectorAll('*')) {
+    const r = el.getBoundingClientRect();
+    const w = Math.min(r.right, innerWidth) - Math.max(r.left, 0), h = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
+    if (w < 2 || h < 2) continue;
+    const cs = getComputedStyle(el);
+    if (cs.visibility === 'hidden' || cs.display === 'none' || Number(cs.opacity) < 0.3) continue;
+    const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent.trim()).join('');
+    if (own) add('text', hex(cs.color), own.length * parseFloat(cs.fontSize));
+    const b = hex(cs.backgroundColor);
+    if (b) add('background', b, w * h);
+    if (parseFloat(cs.borderTopWidth) > 0) add('border', hex(cs.borderTopColor), w);
+    const action = el.matches('a, button, [role="button"], input[type="submit"], .btn, [class*="button"]');
+    for (const c of [b, own ? hex(cs.color) : null]) {
+      if (!c) continue;
+      const { s, l } = sat(c);
+      if (s > 0.35 && l > 0.15 && l < 0.85) add('accent', c, action ? 3 : 1);
+    }
+  }
+  return Object.fromEntries(Object.entries(out).map(([k, m]) => [k, [...m]]));
+}
 
 // Runs in the page: parses SVG markup and rebuilds it from allowed elements and attributes.
 // References survive only as fragments (#id), in attributes and in CSS.
