@@ -42,7 +42,7 @@ After adding or editing a style:
 ```
 
 - `formats`: the keys of [formats.json](../formats.json) this style ships a reference for. Each one needs its reference file and thumbnails folder.
-- `formality`, `density`: `low` | `medium` | `high`. `scheme`: `light` | `dark`. `writing`: `horizontal` | `vertical`. `group` (the gallery section): `business` | `tech` | `stage` | `editorial`.
+- `formality`, `density`: `low` | `medium` | `high`. `scheme`: `light` | `dark`. `writing`: `horizontal` | `vertical`. `group` (the gallery section): `business` | `tech` | `stage` | `editorial` | `learning` (textbooks and study materials).
 - `needs`: inputs the style cannot do without, such as `"photos"`.
 - `fonts.extra` (optional): families one format needs, such as a UD body face for A4. Every reference loads `heading`, `body` and `latin`; an `extra` family needs to load in at least one.
 - Every family in `fonts` must exist in `fonts/catalog.json`. The heading family must have `role: "any"`, or `"vertical-heading"` when `writing` is `vertical`.

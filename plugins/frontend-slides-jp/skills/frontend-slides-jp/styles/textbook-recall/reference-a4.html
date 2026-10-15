@@ -1,0 +1,772 @@
+<!-- style: textbook-recall（赤シート暗記の参考書）— 重要語を赤シートで消える朱赤で組み、画面では「赤シート」切替とタップで1語ずつ確認。本文・一問一答と年表・史料の穴埋め・総まとめテストの4ページ。 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鎌倉幕府の成立と執権政治｜暗記の日本史 一問一答ノート（架空の教材）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=BIZ+UDPMincho:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS ===
+   Two inks and one tint, as a red-sheet 参考書 is printed.
+   --red is an orange-red (#F04A2C), not a crimson. A standard red sheet passes
+   long wavelengths, so a colour survives under it only by how dark it is in the
+   red channel. Crimson/brick reds (#C00, #B22) are dark there and stay legible
+   as dark grey through the sheet; an orange-red with a high red channel and some
+   green (R 240, G 74) is as light as the paper through the sheet and vanishes,
+   while on white it still reads as a clear 赤. That is why 赤シート用 inks are
+   vermilion rather than deep red.
+   --tint is the same red at 9%: it also vanishes under the sheet, so the tinted
+   bands never fight the hidden words. */
+:root {
+    --ink: #1E1B19;
+    --sub: #55504B;
+    --red: #F04A2C;
+    --tint: color-mix(in srgb, var(--red) 9%, #fff);
+    --rule: color-mix(in srgb, var(--ink) 28%, #fff);
+    --paper: #FFFFFF;
+
+    --jp-head: "Noto Sans JP", sans-serif;
+    --jp-body: "BIZ UDPMincho", serif;
+    --num: "IBM Plex Sans", sans-serif;
+
+    --desk-bg: #DEDBD5;
+    --page-bg: var(--paper);
+}
+
+body { color: var(--ink); font-family: var(--jp-body); }
+.page { font-family: var(--jp-body); color: var(--ink); }
+.page * { box-sizing: border-box; margin: 0; padding: 0; }
+.n { font-family: var(--num); font-feature-settings: "tnum" 1, "lnum" 1; }
+
+/* === PAGE FRAME === */
+.rh { position: absolute; left: 96px; right: 96px; top: 56px; height: 36px; display: flex; justify-content: space-between; align-items: center; font-family: var(--jp-head); font-size: 18px; color: var(--sub); }
+.rh .bk { display: flex; gap: 14px; align-items: baseline; }
+.rh .bk b { color: var(--ink); font-weight: 700; }
+.rh .un { display: flex; gap: 12px; align-items: center; color: var(--ink); font-weight: 700; }
+.rh .un .n { font-size: 18px; font-weight: 600; border: 1.5px solid var(--ink); padding: 0 8px; line-height: 1.4; }
+.hr-top { position: absolute; left: 96px; right: 96px; top: 104px; border-top: 2px solid var(--ink); }
+.hr-bot { position: absolute; left: 96px; right: 96px; top: 1650px; border-top: 1px solid var(--ink); }
+.pf { position: absolute; left: 96px; right: 96px; top: 1666px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--jp-head); font-size: 18px; color: var(--sub); }
+.folio { font-family: var(--num); font-size: 22px; font-weight: 600; color: var(--ink); }
+/* Subject tab: the 時代 index on the outer edge, as on a 参考書 fore-edge */
+.tab { position: absolute; right: 0; top: 220px; width: 44px; height: 240px; background: var(--ink); color: #fff; writing-mode: vertical-rl; font-feature-settings: "vpal"; font-family: var(--jp-head); font-size: 19px; font-weight: 700; letter-spacing: 0.12em; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.tab .n { text-combine-upright: all; font-weight: 600; font-size: 18px; letter-spacing: 0; }
+/* .alt mirrors the frame for the facing page: tab on the left edge, folio left */
+.alt .tab { right: auto; left: 0; }
+
+/* === FLOW === */
+.flow { position: absolute; left: 96px; right: 96px; top: 132px; bottom: 120px; display: flex; flex-direction: column; }
+
+/* Unit head: unit label, review record, headline */
+.uh { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; }
+.kick { font-family: var(--jp-head); font-size: 20px; font-weight: 700; color: var(--sub); display: flex; gap: 14px; align-items: baseline; padding-top: 6px; }
+.kick .n { font-size: 20px; color: var(--ink); }
+.h1 { font-family: var(--jp-head); font-weight: 700; font-size: 50px; line-height: 1.38; margin-top: 12px; }
+.lead { font-size: 24px; line-height: 1.75; margin-top: 16px; }
+
+/* Review record: three rounds, a box and a date each */
+.rev { display: grid; grid-template-columns: auto repeat(3, 132px); border: 1.5px solid var(--ink); font-family: var(--jp-head); }
+.rev-h { display: flex; flex-direction: column; justify-content: center; padding: 0 14px; font-size: 18px; font-weight: 700; background: var(--ink); color: #fff; line-height: 1.3; text-align: center; }
+.rd { display: grid; grid-template-columns: 26px 1fr; grid-template-rows: auto auto; column-gap: 8px; align-items: center; padding: 8px 12px 8px; border-left: 1px solid var(--rule); cursor: pointer; }
+.rd input { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; border: 2px solid var(--ink); background: #fff; display: grid; place-items: center; cursor: pointer; grid-row: 1; }
+.rd input::after { content: ""; width: 7px; height: 13px; border: solid var(--ink); border-width: 0 3px 3px 0; transform: translateY(-2px) rotate(45deg); opacity: 0; }
+.rd input:checked::after { opacity: 1; }
+.rd input:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+.rd-n { font-size: 18px; font-weight: 700; }
+.rd-d { grid-column: 1 / -1; font-family: var(--num); font-size: 18px; color: var(--sub); margin-top: 4px; white-space: nowrap; }
+.rd-d.on { color: var(--ink); font-weight: 600; }
+.rd-g { grid-column: 1 / -1; font-size: 17px; color: var(--sub); }
+
+/* === KEY TERMS: the red-sheet ink ===
+   Set in the body family's weight-matched gothic, as 参考書 set 重要語. */
+.kw { color: var(--red); font-family: var(--jp-head); font-weight: 700; }
+.b { font-family: var(--jp-head); font-weight: 700; }
+
+/* 赤シート mode (screen): every term becomes a same-width blank; a tap opens one. */
+.sheet .kw { color: transparent; background: var(--tint); box-shadow: inset 0 -2px 0 var(--ink); cursor: pointer; border-radius: 0; transition: color .15s; }
+.sheet .kw.open { color: var(--red); background: transparent; box-shadow: inset 0 -2px 0 var(--red); }
+.sheet .kw:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* === BODY === */
+.cols { display: grid; grid-template-columns: 500px 500px; column-gap: 48px; margin-top: 24px; }
+.body { font-size: 22px; line-height: 1.8; }
+.body p { text-indent: 1em; }
+.body p + p { margin-top: 0.2em; }
+.h2 { font-family: var(--jp-head); font-size: 25px; font-weight: 700; line-height: 1.4; display: flex; gap: 12px; align-items: baseline; padding: 6px 0 6px 14px; border-left: 6px solid var(--ink); background: var(--tint); margin-bottom: 10px; }
+.h2 .n { font-size: 23px; font-weight: 700; }
+.body .h2:not(:first-child) { margin-top: 18px; }
+
+/* Note box: the 成立年 debate */
+.note { margin-top: 14px; border: 1.5px solid var(--ink); padding: 10px 16px 12px; font-size: 19px; line-height: 1.7; }
+.note .lbl { font-family: var(--jp-head); font-weight: 700; font-size: 18px; display: inline-block; background: var(--ink); color: #fff; padding: 0 8px; margin-right: 8px; }
+.note p { text-indent: 0; line-height: 1.7; }
+
+/* === 機構図 (diagram) === */
+.fig { margin-top: 22px; }
+.cap { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--jp-head); font-size: 21px; font-weight: 700; padding-bottom: 8px; border-bottom: 1.5px solid var(--ink); }
+.cap small { font-size: 17px; font-weight: 400; color: var(--sub); }
+.org { display: grid; grid-template-columns: 150px 1fr; gap: 0; margin-top: 14px; font-family: var(--jp-head); }
+.org .side { font-size: 18px; font-weight: 700; color: var(--sub); padding-top: 10px; }
+.org .row { display: flex; align-items: stretch; gap: 0; }
+.org .row + .side, .org .row + .side + .row { margin-top: 10px; }
+.box { border: 1.5px solid var(--ink); padding: 6px 14px; font-size: 21px; font-weight: 700; line-height: 1.35; background: #fff; }
+.box small { display: block; font-size: 17px; font-weight: 400; color: var(--sub); line-height: 1.4; }
+.box.top { background: var(--ink); color: #fff; }
+.arw { width: 30px; align-self: center; border-top: 1.5px solid var(--ink); position: relative; }
+.arw::after { content: ""; position: absolute; right: -1px; top: -6px; border: 5px solid transparent; border-left: 8px solid var(--ink); border-right: 0; }
+.stack { display: flex; flex-direction: column; gap: 8px; border-left: 1.5px solid var(--ink); padding-left: 18px; position: relative; }
+.stack .box { position: relative; }
+.stack .box::before { content: ""; position: absolute; left: -19.5px; top: 50%; width: 18px; border-top: 1.5px solid var(--ink); }
+.grp { display: flex; gap: 10px; padding: 0 0 0 10px; border-left: 3px solid var(--ink); }
+.loc { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; flex: 1; }
+.loc .box { font-size: 20px; }
+
+/* === PAGE 2 === */
+.sec-h { font-family: var(--jp-head); font-size: 25px; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.sec-h small { font-size: 18px; font-weight: 400; color: var(--sub); }
+.sq { display: inline-block; border: 1.5px solid var(--ink); font-size: 16.5px; line-height: 22px; width: 25px; text-align: center; font-weight: 700; color: var(--ink); }
+.qa-wrap { margin-top: 26px; }
+
+/* 一問一答: 山川-style rows, question left, answer in the right column */
+.qa { list-style: none; }
+.qa li { display: grid; grid-template-columns: 50px 1fr 236px; column-gap: 0; border-bottom: 1px solid var(--rule); }
+.qa .qn { font-family: var(--num); font-size: 21px; font-weight: 700; line-height: 1.6; padding: 6px 0; }
+.qa .qt { font-size: 21px; line-height: 1.6; letter-spacing: 0.01em; word-break: normal; padding: 6px 24px 6px 0; }
+.qa .qr { display: flex; align-items: center; justify-content: center; padding: 6px 12px; border-left: 1.5px solid var(--ink); }
+.qa.main { border-bottom: 1.5px solid var(--ink); }
+.qa.main li:last-child { border-bottom: 0; }
+
+/* The answer is a button on screen: blank until tapped. It prints as red text. */
+.ans { font: inherit; font-family: var(--jp-head); font-weight: 700; font-size: 23px; line-height: 1.4; color: transparent; background: var(--tint); border: 0; box-shadow: inset 0 -2px 0 var(--ink); padding: 3px 12px; width: 100%; cursor: pointer; text-align: center; position: relative; }
+.ans::after { content: "答"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 18px; font-weight: 500; color: var(--sub); }
+.ans[aria-expanded="true"] { color: var(--red); background: transparent; box-shadow: none; }
+.ans[aria-expanded="true"]::after { content: none; }
+.ans:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.p2cols { display: grid; grid-template-columns: 560px 440px; column-gap: 48px; margin-top: 28px; }
+
+/* 年表 */
+.nen { width: 100%; border-collapse: collapse; margin-top: 2px; }
+.nen td { font-size: 20px; line-height: 1.45; padding: 4px 0; border-bottom: 1px solid var(--rule); vertical-align: top; word-break: normal; letter-spacing: 0.01em; }
+.nen td.y { width: 70px; font-family: var(--num); font-size: 21px; font-weight: 600; padding-right: 6px; }
+.nen td.m { width: 36px; padding-top: 5px; }
+.nen tr.st td.m span { display: inline-block; border: 1.5px solid var(--ink); width: 25px; line-height: 22px; text-align: center; font-family: var(--jp-head); font-size: 16.5px; font-weight: 700; }
+
+/* 前の単元から: interleaved review, set apart by an ink frame */
+.prev { border: 2px solid var(--ink); align-self: start; }
+.prev-h { display: flex; justify-content: space-between; align-items: baseline; background: var(--ink); color: #fff; font-family: var(--jp-head); padding: 6px 16px 8px; }
+.prev-h b { font-size: 23px; }
+.prev-h span { font-size: 18px; }
+.prev-l { font-size: 18px; line-height: 1.65; padding: 12px 18px 4px; text-align: left; color: var(--sub); }
+.prev .qa li { grid-template-columns: 36px 1fr; padding: 12px 18px 14px; }
+.prev .qa li:last-child { border-bottom: 0; }
+.prev .qa .qn { padding: 0; font-size: 20px; }
+.prev .qa .qt { padding: 0; font-size: 20px; }
+.prev .qa .qr { grid-column: 2; border-left: 0; padding: 8px 0 0; justify-content: flex-end; }
+.prev .qa .ans { width: auto; min-width: 9em; }
+
+/* === PAGE 3: 史料 === */
+.src { margin-top: 26px; border-top: 2px solid var(--ink); }
+.sr { display: grid; grid-template-columns: 452px 1fr; column-gap: 36px; padding: 14px 0 18px; border-bottom: 1px solid var(--rule); }
+.sr-h { grid-column: 1 / -1; display: flex; gap: 14px; align-items: baseline; font-family: var(--jp-head); font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+.sr-h .no { background: var(--ink); color: #fff; font-size: 18px; padding: 0 10px; line-height: 1.5; }
+.sr-h small { font-size: 17px; font-weight: 400; color: var(--sub); margin-left: auto; }
+.lbl2 { display: block; font-family: var(--jp-head); font-size: 17px; font-weight: 700; color: var(--sub); margin-bottom: 4px; }
+/* 書き下し: the source text in a ruled frame, set in the mincho */
+.kd { border-left: 4px solid var(--ink); background: var(--tint); padding: 8px 16px 10px; }
+.kd p { font-size: 20px; line-height: 1.75; text-indent: 0; letter-spacing: 0.01em; }
+.kd p .wr { font-size: 17px; }
+.yk p { font-size: 21px; line-height: 1.75; text-indent: 0; }
+/* 穴埋め: a numbered bracket around a red key term */
+.blank { display: inline-flex; align-items: baseline; gap: 6px; border: 1.5px solid var(--ink); padding: 0 8px 0 0; margin: 0 3px; line-height: 1.45; }
+.blank .bn { font-family: var(--num); font-size: 16px; font-weight: 700; background: var(--ink); color: #fff; padding: 0 6px; align-self: stretch; display: flex; align-items: center; }
+.yomi { margin-top: 22px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 28px; }
+.yomi .sec-h { grid-column: 1 / -1; margin-bottom: 12px; }
+.yomi p { font-size: 20px; line-height: 1.7; text-indent: 0; }
+.yomi p b { display: block; font-family: var(--jp-head); font-size: 20px; margin-bottom: 4px; }
+.srcnote { margin-top: auto; padding-top: 12px; font-size: 17px; line-height: 1.6; color: var(--sub); text-indent: 0; }
+
+/* === PAGE 4: 総まとめテスト === */
+.score { display: grid; grid-template-columns: auto 200px; border: 1.5px solid var(--ink); font-family: var(--jp-head); }
+.score .sc-v { display: flex; align-items: baseline; justify-content: center; gap: 6px; padding: 6px 12px; font-size: 18px; }
+.score .sc-v .n { font-size: 40px; font-weight: 700; line-height: 1.1; min-width: 1.2em; text-align: right; }
+.score .sc-v .n.tot { font-size: 28px; min-width: 0; }
+.score .sc-d { grid-column: 2; font-family: var(--num); font-size: 17px; color: var(--sub); text-align: center; padding: 0 0 6px; }
+.score .rev-h { grid-row: 1 / span 2; }
+.test-h { margin-top: 30px; }
+.test { list-style: none; border-bottom: 1.5px solid var(--ink); }
+.test li { display: grid; grid-template-columns: 46px 144px 1fr 226px 64px; border-bottom: 1px solid var(--rule); }
+.test li:last-child { border-bottom: 0; }
+.test .qn { font-family: var(--num); font-size: 21px; font-weight: 700; line-height: 1.6; padding: 8px 0; }
+.test .tg { padding: 9px 8px 0 0; white-space: nowrap; font-family: var(--jp-head); font-size: 17px; line-height: 1.35; color: var(--sub); }
+.test .tg b { display: inline-block; font-size: 17px; color: var(--ink); border: 1.5px solid var(--ink); padding: 0 5px; margin: 0 4px 4px 0; }
+.test .qt { font-size: 21px; line-height: 1.6; letter-spacing: 0.01em; word-break: normal; padding: 8px 22px 8px 0; }
+.test .qt .ch { display: block; margin-top: 2px; }
+.test .qr { display: flex; align-items: center; justify-content: center; padding: 6px 12px; border-left: 1.5px solid var(--ink); }
+.test .ok { display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--rule); cursor: pointer; }
+.test .ok input { appearance: none; -webkit-appearance: none; width: 34px; height: 34px; border: 2px solid var(--ink); border-radius: 50%; background: #fff; cursor: pointer; display: grid; place-items: center; }
+.test .ok input::after { content: ""; width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--red); opacity: 0; }
+.test .ok input:checked { border-color: var(--red); }
+.test .ok input:checked::after { opacity: 1; }
+.test .ok input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.test-colh { display: grid; grid-template-columns: 46px 144px 1fr 226px 64px; font-family: var(--jp-head); font-size: 17px; font-weight: 700; color: var(--sub); padding: 14px 0 6px; border-bottom: 1.5px solid var(--ink); }
+.test-colh span:nth-child(4), .test-colh span:nth-child(5) { text-align: center; }
+.back { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; }
+.back p { font-size: 20px; line-height: 1.7; text-indent: 0; }
+.back p b { font-family: var(--jp-head); }
+
+.prn { display: none; }
+
+/* === SCREEN CONTROLS (outside the page; never printed) === */
+.doc-stage { padding-top: 0; }
+/* Slim toolbar above page 1, inside the stage column. It scrolls away with the
+   document (not sticky), so it never lies over a page; the gutter toggle below
+   takes over once it is out of view. Counter-zoomed (JS) to stay usable on phones. */
+.doc-controls.tb { position: static; display: flex; justify-content: flex-end; align-items: center; gap: 8px; padding: 10px 0; margin: 0 auto 20px; font-family: "Noto Sans JP", sans-serif; }
+.doc-controls.tb::before { content: "学習モード"; margin-right: auto; font-size: 15px; font-weight: 700; color: #55504B; }
+.doc-controls.tb.narrow::before { display: none; }
+.doc-controls button { font: inherit; font-size: 16px; font-weight: 700; white-space: nowrap; padding: 8px 14px; -webkit-tap-highlight-color: transparent; border: 2px solid #1E1B19; background: #fff; color: #1E1B19; cursor: pointer; }
+.doc-controls button[aria-pressed="true"] { background: #F04A2C; border-color: #F04A2C; color: #fff; }
+.doc-controls button:focus-visible { outline: 3px solid #1E1B19; outline-offset: 2px; }
+/* Gutter toggle: fixed in the bottom-left gutter, outside the page column.
+   JS shows it only when the toolbar is out of view and the left gutter is wide
+   enough to hold it, so it can never cover page content. */
+.doc-controls.fab { position: fixed; left: 10px; right: auto; bottom: 16px; z-index: 1000; display: none; font-family: "Noto Sans JP", sans-serif; }
+.doc-controls.fab.show { display: block; }
+.doc-controls.fab button { width: 36px; padding: 10px 0; writing-mode: vertical-rl; font-size: 15px; letter-spacing: 0.08em; line-height: 1; box-shadow: 0 1px 6px rgba(0, 0, 0, .18); }
+
+/* === PRINT: red-sheet usable on paper ===
+   Every key term and every answer prints in the red, whatever the screen state. */
+@media print {
+    .page, .page * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sheet .kw, .kw { transition: none !important; color: var(--red) !important; background: transparent !important; box-shadow: none !important; }
+    .ans { color: var(--red) !important; background: transparent !important; box-shadow: none !important; padding: 0 2px; min-width: 0; }
+    .ans::after { content: none !important; }
+    .test .ok input { border-color: var(--ink) !important; }
+    .test .ok input::after { opacity: 0 !important; }
+    .score .sc-v #scoreN { color: transparent !important; }
+    .score .sc-d { color: transparent !important; }
+    .scr { display: none !important; }
+    .prn { display: inline !important; }
+}
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage" data-book="nihonshi-ichimon">
+<div class="doc-controls tb" id="toolbar" role="toolbar" aria-label="学習の切り替え">
+  <button type="button" id="sheetBtn" aria-pressed="false">赤シート</button>
+  <button type="button" id="ansBtn" aria-pressed="false">答えを全部表示</button>
+</div>
+
+<!-- ================= PAGE 1: 本文と重要語 ================= -->
+<section class="page p1" aria-label="62ページ 本文">
+  <header class="rh">
+    <span class="bk"><b>暗記の日本史 一問一答ノート</b><span>架空書房（架空の教材）</span></span>
+    <span class="un"><span class="n">5-1</span>武家社会の成立</span>
+  </header>
+  <div class="hr-top"></div>
+  <div class="tab"><span class="n">05</span>中世</div>
+
+  <div class="flow">
+    <div class="uh">
+      <div>
+        <div class="kick"><span class="n">5-1</span><span>第5章 武家社会の成立 ｜ 鎌倉時代①</span></div>
+      </div>
+      <div class="rev" id="rev" data-unit="5-1">
+        <div class="rev-h">復習<br>記録</div>
+        <label class="rd"><input type="checkbox" data-r="1" aria-label="1回目の復習"><span class="rd-n">1回目</span><span class="rd-d" data-d="1">　月　日</span></label>
+        <label class="rd"><input type="checkbox" data-r="2" aria-label="2回目の復習"><span class="rd-n">2回目</span><span class="rd-d" data-d="2">　月　日</span></label>
+        <label class="rd"><input type="checkbox" data-r="3" aria-label="3回目の復習"><span class="rd-n">3回目</span><span class="rd-d" data-d="3">　月　日</span></label>
+      </div>
+    </div>
+    <h1 class="h1">頼朝が東国に築いた武家政権は、<br>承久の乱を経て北条氏の執権政治へ移った</h1>
+    <p class="lead">赤字の重要語は赤シートで消える。本文を読んだら赤シートを重ね、隠れた語を言えるか確かめよう。次のページの一問一答で仕上げ、復習記録に当日・翌日・1週間後の3回をつけよう。</p>
+
+    <div class="cols body">
+      <div>
+        <h2 class="h2"><span class="n">1</span>鎌倉幕府の成立</h2>
+        <p>1180年、<span class="kw">以仁王</span>の令旨を受けて伊豆で挙兵した<span class="kw">源頼朝</span>は、相模の<span class="kw">鎌倉</span>を根拠地とし、御家人を統率する<span class="kw">侍所</span>を置いた。1183年には<span class="kw">寿永二年十月宣旨</span>で東国の支配権を朝廷に認められ、翌年、一般政務を扱う<span class="kw">公文所</span>（のち<span class="kw">政所</span>）と、裁判を扱う<span class="kw">問注所</span>を設けた。</p>
+        <p>1185年、<span class="kw">壇の浦の戦い</span>で平氏が滅ぶと、頼朝は弟<span class="b">源義経</span>の追討を名目に、国ごとに<span class="kw">守護</span>を、荘園や公領に<span class="kw">地頭</span>を置くことを朝廷に認めさせた。1189年には義経をかくまった<span class="kw">奥州藤原氏</span>を滅ぼし、1192年、<span class="b">後白河法皇</span>の死後に<span class="kw">征夷大将軍</span>に任じられた。</p>
+        <div class="note"><p><span class="lbl">成立年</span>幕府がいつ成立したかには、1180年・1183年・1185年・1190年・1192年などの説がある。教科書は、一度ではなく段階的に成立したと説明している。</p></div>
+
+        <h2 class="h2"><span class="n">2</span>御恩と奉公</h2>
+        <p>将軍は御家人に、先祖伝来の所領の支配を保障する<span class="kw">本領安堵</span>や、新たな所領を与える<span class="kw">新恩給与</span>などの<span class="kw">御恩</span>を与えた。御家人は戦時の軍役や<span class="kw">京都大番役</span>などの<span class="kw">奉公</span>でこれに応えた。土地の給与を通じて主従関係を結ぶこのしくみを<span class="kw">封建制度</span>という。</p>
+      </div>
+      <div>
+        <p>守護は<span class="kw">大犯三カ条</span>（大番催促、謀叛人・殺害人の逮捕）を職務とし、地頭は年貢の徴収・納入や土地の管理、治安の維持にあたった。</p>
+
+        <h2 class="h2"><span class="n">3</span>執権政治の確立</h2>
+        <p>1199年に頼朝が死ぬと、有力御家人による<span class="b">十三人の合議制</span>がしかれた。1203年、<span class="kw">北条時政</span>は将軍<span class="b">源頼家</span>を退けて弟の<span class="b">源実朝</span>を立て、<span class="kw">政所</span>の長官（別当）として実権を握った。この地位を<span class="kw">執権</span>という。子の<span class="kw">北条義時</span>は1213年に<span class="b">和田義盛</span>を滅ぼし、侍所の長官も兼ねて地位を固めた。</p>
+        <p>1219年に実朝が暗殺されると、1221年、<span class="kw">後鳥羽上皇</span>は義時追討の兵をあげた。これが<span class="kw">承久の乱</span>である。幕府軍が勝利して3上皇を配流し、京都に<span class="kw">六波羅探題</span>を置いて朝廷を監視した。上皇方から没収した所領には<span class="kw">新補地頭</span>が任命された。</p>
+
+        <h2 class="h2"><span class="n">4</span>執権政治の展開</h2>
+        <p>3代執権<span class="kw">北条泰時</span>は、1225年に執権を補佐する<span class="kw">連署</span>と、合議にあたる<span class="kw">評定衆</span>を置いた。1232年には、頼朝以来の先例や<span class="b">道理</span>をもとに、御家人の裁判の基準となる<span class="kw">御成敗式目</span>（貞永式目）51か条を定めた。</p>
+      </div>
+    </div>
+
+    <figure class="fig" aria-label="図 鎌倉幕府のしくみ">
+      <figcaption class="cap"><span>図 鎌倉幕府のしくみ（泰時のころ）</span><small>赤字は本文の重要語</small></figcaption>
+      <div class="org">
+        <div class="side">中央</div>
+        <div class="row">
+          <div class="box top">将軍</div>
+          <div class="arw"></div>
+          <div class="box"><span class="kw">執権</span>・<span class="kw">連署</span><small>北条氏が就く</small></div>
+          <div class="arw"></div>
+          <div class="box"><span class="kw">評定衆</span><small>合議・裁判</small></div>
+          <div class="arw"></div>
+          <div class="grp">
+            <div class="box"><span class="kw">侍所</span><small>御家人の統率</small></div>
+            <div class="box"><span class="kw">政所</span><small>一般政務・財政</small></div>
+            <div class="box"><span class="kw">問注所</span><small>裁判事務</small></div>
+          </div>
+        </div>
+        <div class="side">地方</div>
+        <div class="row">
+          <div class="loc">
+            <div class="box"><span class="kw">六波羅探題</span><small>京都・西国</small></div>
+            <div class="box">鎮西奉行<small>九州</small></div>
+            <div class="box">奥州総奉行<small>陸奥・出羽</small></div>
+            <div class="box"><span class="kw">守護</span><small>国ごと</small></div>
+            <div class="box"><span class="kw">地頭</span><small>荘園・公領</small></div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+
+  <div class="hr-bot"></div>
+  <footer class="pf"><span>5-1 鎌倉幕府の成立と執権政治 ｜ 本文</span><span class="folio n">62</span></footer>
+</section>
+
+<!-- ================= PAGE 2: 一問一答・年表・前の単元 ================= -->
+<section class="page p2 alt" aria-label="63ページ 一問一答と年表">
+  <header class="rh">
+    <span class="un"><span class="n">5-1</span>武家社会の成立</span>
+    <span class="bk"><b>暗記の日本史 一問一答ノート</b></span>
+  </header>
+  <div class="hr-top"></div>
+  <div class="tab"><span class="n">05</span>中世</div>
+
+  <div class="flow">
+    <div class="kick"><span class="n">5-1</span><span>確認と復習 ｜ 一問一答・年表</span></div>
+    <h1 class="h1">幕府は一度に生まれたのではなく、<br>1180年から1192年にかけて形を整えた</h1>
+
+    <div class="qa-wrap">
+      <div class="sec-h"><span>一問一答</span><small class="scr">右の答えの欄をタップすると1問ずつ表示</small><small class="prn">赤シートで右の答えを隠して解く</small></div>
+      <ol class="qa main" id="qa">
+          <li><span class="qn">01</span><span class="qt">1180年、頼朝が御家人を統率するために鎌倉に置いた機関は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">侍所</button></span></li>
+          <li><span class="qn">02</span><span class="qt">はじめ公文所と呼ばれ、一般政務と財政を担当した機関は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">政所</button></span></li>
+          <li><span class="qn">03</span><span class="qt">1185年、頼朝が朝廷に認めさせ、国ごとに置いた職は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">守護</button></span></li>
+          <li><span class="qn">04</span><span class="qt">守護の職務である大番催促と、謀叛人・殺害人の逮捕をまとめて何というか。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">大犯三カ条</button></span></li>
+          <li><span class="qn">05</span><span class="qt">将軍が御家人の先祖伝来の所領の支配を保障することを何というか。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">本領安堵</button></span></li>
+          <li><span class="qn">06</span><span class="qt">1192年、頼朝が任じられた官職は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">征夷大将軍</button></span></li>
+          <li><span class="qn">07</span><span class="qt">1203年、政所別当として実権を握り、初代の執権とされる人物は誰か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">北条時政</button></span></li>
+          <li><span class="qn">08</span><span class="qt">1221年、後鳥羽上皇が北条義時追討の兵をあげ、敗れた戦乱は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">承久の乱</button></span></li>
+          <li><span class="qn">09</span><span class="qt">承久の乱後、朝廷の監視と西国の統轄のため京都に置かれた機関は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">六波羅探題</button></span></li>
+          <li><span class="qn">10</span><span class="qt">1232年、北条泰時が先例や道理をもとに定めた51か条の法は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">御成敗式目</button></span></li>
+      </ol>
+    </div>
+
+    <div class="p2cols">
+      <div>
+        <div class="sec-h"><span>年表</span><small><span class="sq">説</span> は成立年の説</small></div>
+        <table class="nen">
+          <tbody>
+            <tr class="st"><td class="y">1180</td><td class="m"><span>説</span></td><td>頼朝が挙兵、鎌倉に<span class="kw">侍所</span>を置く</td></tr>
+            <tr class="st"><td class="y">1183</td><td class="m"><span>説</span></td><td><span class="kw">寿永二年十月宣旨</span>で東国の支配権を得る</td></tr>
+            <tr><td class="y">1184</td><td class="m"></td><td><span class="kw">公文所</span>・<span class="kw">問注所</span>を置く</td></tr>
+            <tr class="st"><td class="y">1185</td><td class="m"><span>説</span></td><td>壇の浦で平氏滅亡。<span class="kw">守護</span>・<span class="kw">地頭</span>を置く</td></tr>
+            <tr><td class="y">1189</td><td class="m"></td><td><span class="kw">奥州藤原氏</span>を滅ぼす</td></tr>
+            <tr class="st"><td class="y">1190</td><td class="m"><span>説</span></td><td>頼朝が<span class="kw">右近衛大将</span>に任じられる</td></tr>
+            <tr class="st"><td class="y">1192</td><td class="m"><span>説</span></td><td>頼朝が<span class="kw">征夷大将軍</span>に任じられる</td></tr>
+            <tr><td class="y">1199</td><td class="m"></td><td>頼朝が死去、<span class="kw">十三人の合議制</span></td></tr>
+            <tr><td class="y">1203</td><td class="m"></td><td><span class="kw">北条時政</span>が政所別当に（執権）</td></tr>
+            <tr><td class="y">1213</td><td class="m"></td><td><span class="kw">和田合戦</span>。義時が侍所別当を兼ねる</td></tr>
+            <tr><td class="y">1219</td><td class="m"></td><td>将軍<span class="kw">源実朝</span>が暗殺される</td></tr>
+            <tr><td class="y">1221</td><td class="m"></td><td><span class="kw">承久の乱</span>。<span class="kw">六波羅探題</span>を置く</td></tr>
+            <tr><td class="y">1225</td><td class="m"></td><td><span class="kw">連署</span>・<span class="kw">評定衆</span>を置く</td></tr>
+            <tr><td class="y">1232</td><td class="m"></td><td><span class="kw">北条泰時</span>が<span class="kw">御成敗式目</span>を定める</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <section class="prev" aria-label="前の単元から">
+        <div class="prev-h"><b>前の単元から</b><span>4-3 院政と平氏政権</span></div>
+        <p class="prev-l">前の単元の問題を混ぜて解くと、忘れかけた語を思い出す練習になる。</p>
+        <ol class="qa">
+          <li><span class="qn">A</span><span class="qt">1086年、幼い堀河天皇に位を譲り、上皇として院政を始めたのは誰か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">白河上皇</button></span></li>
+          <li><span class="qn">B</span><span class="qt">1159年、平清盛が源義朝を破り、頼朝が伊豆へ流されるもとになった戦乱は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">平治の乱</button></span></li>
+          <li><span class="qn">C</span><span class="qt">1167年、武士として初めて太政大臣となったのは誰か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">平清盛</button></span></li>
+        </ol>
+      </section>
+    </div>
+  </div>
+
+  <div class="hr-bot"></div>
+  <footer class="pf"><span class="folio n">63</span><span>5-1 鎌倉幕府の成立と執権政治 ｜ 確認と復習</span></footer>
+</section>
+
+<!-- ================= PAGE 3: 史料（書き下しと現代語訳の穴埋め） ================= -->
+<section class="page p3" aria-label="64ページ 史料">
+  <header class="rh">
+    <span class="bk"><b>暗記の日本史 一問一答ノート</b><span>架空書房（架空の教材）</span></span>
+    <span class="un"><span class="n">5-1</span>武家社会の成立</span>
+  </header>
+  <div class="hr-top"></div>
+  <div class="tab"><span class="n">05</span>中世</div>
+
+  <div class="flow">
+    <div class="kick"><span class="n">5-1</span><span>史料で確かめる ｜ 御成敗式目</span></div>
+    <h1 class="h1">御成敗式目は、頼朝以来の先例と道理を<br>御家人にわかる言葉で定めた</h1>
+    <p class="lead">書き下しを読み、現代語訳の空欄の語を答えよう。空欄の赤字は赤シートで消える。</p>
+
+    <div class="src">
+      <div class="sr">
+        <div class="sr-h"><span class="no">史料1</span><span>第3条　諸国守護人奉行の事</span><small>守護の職務</small></div>
+        <div class="kd"><span class="lbl2">書き下し</span><p>一　諸国守護人奉行の事<br>右、右大将家の御時定め置かるる所は、大番催促・謀叛・殺害人<span class="wr">〈付たり、夜討・強盗・山賊・海賊〉</span>等の事なり。（後略）</p></div>
+        <div class="yk"><span class="lbl2">現代語訳</span><p>諸国の守護の職務について。右大将家（<span class="blank"><span class="bn">1</span><span class="kw">源頼朝</span></span>）の時に定められたのは、京都大番役の催促と、謀叛人・殺害人（夜討・強盗・山賊・海賊を含む）の逮捕である。この3つを<span class="blank"><span class="bn">2</span><span class="kw">大犯三カ条</span></span>という。</p></div>
+      </div>
+      <div class="sr">
+        <div class="sr-h"><span class="no">史料2</span><span>第8条　知行の年数</span><small>20年の知行で権利が固まる</small></div>
+        <div class="kd"><span class="lbl2">書き下し</span><p>一　御下文を帯ぶると雖も知行せしめず、年序を経る所領の事<br>右、当知行の後、廿箇年を過ぐれば、大将家の例に任せて、理非を論ぜず改替に能はず。（後略）</p></div>
+        <div class="yk"><span class="lbl2">現代語訳</span><p>将軍の下文（所領を与える文書）を持っていても、実際には支配しないまま年月がたった所領について。現に支配して<span class="blank"><span class="bn">3</span><span class="kw">20</span></span>年を過ぎれば、頼朝の時の例にならい、どちらが正しいかを問わず、支配者を替えることはできない。</p></div>
+      </div>
+      <div class="sr">
+        <div class="sr-h"><span class="no">史料3</span><span>北条泰時の手紙</span><small>弟の六波羅探題 北条重時へ</small></div>
+        <div class="kd"><span class="lbl2">原文（一部）</span><p>さてこの式目をつくられ候事は、なにを本説として注し載せらるるの由、人さだめて謗難を加ふる事候か。ま事にさせる本文にすがりたる事候はねども、ただどうりのおすところを記され候者なり。（中略）この式目は只かなをしれる物の世間におほく候ごとく、あまねく人に心えやすからせんために、武家の人へのはからひのためばかりに候。これによりて京都の御沙汰、律令のおきて、聊も改まるべきにあらず候也。</p></div>
+        <div class="yk"><span class="lbl2">現代語訳</span><p>この式目は何を根拠に書いたのかと、人はきっと非難するだろう。実は特に典拠とした書物はなく、ただ<span class="blank"><span class="bn">4</span><span class="kw">道理</span></span>の示すところを記したのである。この式目は、<span class="blank"><span class="bn">5</span><span class="kw">仮名</span></span>しか知らない者が世間に多いので、広く人々にわかりやすくするため、武家の人々のためだけに定めたものだ。これによって<span class="blank"><span class="bn">6</span><span class="kw">朝廷</span></span>の裁判や律令の定めが少しも改まるものではない。</p></div>
+      </div>
+    </div>
+
+    <div class="yomi">
+      <div class="sec-h"><span>読み解きのポイント</span><small>本文 62ページとつなげる</small></div>
+      <p><b>先例を法にした</b>守護の職務も20年の知行も「大将家の例」による。頼朝以来の<span class="kw">先例</span>が裁判の基準になった。</p>
+      <p><b>公家法は改めない</b>泰時は、式目で朝廷の裁判や律令が変わるのではないと断った。朝廷の支配下では<span class="kw">公家法</span>が使われ続けた。</p>
+      <p><b>武家のための法</b>適用されたのは幕府の勢力の及ぶ範囲で、のちに追加された法令は<span class="kw">式目追加</span>と呼ばれる。</p>
+    </div>
+    <p class="srcnote">史料：『御成敗式目』（1232年）第3条・第8条、北条泰時の書状（1232年、北条重時あて）。いずれも一部を略した。</p>
+  </div>
+
+  <div class="hr-bot"></div>
+  <footer class="pf"><span>5-1 鎌倉幕府の成立と執権政治 ｜ 史料</span><span class="folio n">64</span></footer>
+</section>
+
+<!-- ================= PAGE 4: 総まとめテスト（単元と形式を混ぜた交互練習） ================= -->
+<section class="page p4 alt" aria-label="65ページ 総まとめテスト">
+  <header class="rh">
+    <span class="un"><span class="n">5-1</span>武家社会の成立</span>
+    <span class="bk"><b>暗記の日本史 一問一答ノート</b></span>
+  </header>
+  <div class="hr-top"></div>
+  <div class="tab"><span class="n">05</span>中世</div>
+
+  <div class="flow">
+    <div class="uh">
+      <div>
+        <div class="kick"><span class="n">5-1</span><span>総まとめテスト ｜ 4-3・5-1 の混合</span></div>
+      </div>
+      <div class="score" id="score" data-unit="5-1" data-total="12">
+        <div class="rev-h">得点</div>
+        <div class="sc-v"><span class="n" id="scoreN">0</span><span>／</span><span class="n tot">12</span></div>
+        <div class="sc-d" id="scoreD">　月　日</div>
+      </div>
+    </div>
+    <h1 class="h1">単元も形式も混ぜて解き、<br>思い出せなかった語は本文に戻る</h1>
+    <p class="lead">前の単元と形式を混ぜて並べてある。答えは赤字なので、赤シートで隠して解こう。正解した問題は右端の○をつけ、まちがえた問題は「戻り先」のページを読み直す。</p>
+
+    <div class="test-colh"><span>番号</span><span>単元・形式</span><span>問題</span><span>答え</span><span>正解</span></div>
+    <ol class="test" id="test">
+      <li><span class="qn">01</span><span class="tg"><b>5-1</b> 一問一答<br>戻り先 p.62</span><span class="qt">御家人が交代で京都の警備にあたった奉公を何というか。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">京都大番役</button></span><label class="ok"><input type="checkbox" aria-label="01 正解"></label></li>
+      <li><span class="qn">02</span><span class="tg"><b>4-3</b> 一問一答<br>戻り先 p.58</span><span class="qt">1156年、崇徳上皇と後白河天皇の対立に、摂関家の争いが結びついて起きた戦乱は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">保元の乱</button></span><label class="ok"><input type="checkbox" aria-label="02 正解"></label></li>
+      <li><span class="qn">03</span><span class="tg"><b>5-1</b> 正誤<br>戻り先 p.62</span><span class="qt">承久の乱の後、幕府は朝廷を監視するため京都に鎮西奉行を置いた。正しければ○、誤りなら誤った語を正せ。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">×　六波羅探題</button></span><label class="ok"><input type="checkbox" aria-label="03 正解"></label></li>
+      <li><span class="qn">04</span><span class="tg"><b>5-1</b> 史料<br>戻り先 p.64</span><span class="qt">御成敗式目第8条では、所領を現に支配して何年を過ぎれば、支配者を替えないとしたか。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">20年</button></span><label class="ok"><input type="checkbox" aria-label="04 正解"></label></li>
+      <li><span class="qn">05</span><span class="tg"><b>4-3</b> 一問一答<br>戻り先 p.59</span><span class="qt">平清盛が日宋貿易のために修築した、摂津の港は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">大輪田泊</button></span><label class="ok"><input type="checkbox" aria-label="05 正解"></label></li>
+      <li><span class="qn">06</span><span class="tg"><b>5-1</b> 年代整序<br>戻り先 p.63</span><span class="qt">次のできごとを年代の古い順に並べよ。<span class="ch">ア 承久の乱　イ 御成敗式目の制定　ウ 和田合戦</span></span><span class="qr"><button class="ans" type="button" aria-expanded="false">ウ→ア→イ</button></span><label class="ok"><input type="checkbox" aria-label="06 正解"></label></li>
+      <li><span class="qn">07</span><span class="tg"><b>4-3</b> 正誤<br>戻り先 p.59</span><span class="qt">平清盛は1167年、武士として初めて征夷大将軍となった。正しければ○、誤りなら誤った語を正せ。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">×　太政大臣</button></span><label class="ok"><input type="checkbox" aria-label="07 正解"></label></li>
+      <li><span class="qn">08</span><span class="tg"><b>5-1</b> 一問一答<br>戻り先 p.62</span><span class="qt">1225年、北条泰時が執権を補佐するために置いた役職は何か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">連署</button></span><label class="ok"><input type="checkbox" aria-label="08 正解"></label></li>
+      <li><span class="qn">09</span><span class="tg"><b>4-3</b> 一問一答<br>戻り先 p.58</span><span class="qt">院政で、院司が上皇の命令を受けて出した文書を何というか。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">院宣</button></span><label class="ok"><input type="checkbox" aria-label="09 正解"></label></li>
+      <li><span class="qn">10</span><span class="tg"><b>5-1</b> 史料<br>戻り先 p.64</span><span class="qt">北条泰時は手紙で、御成敗式目は何の示すところを記したものだと述べたか。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">道理</button></span><label class="ok"><input type="checkbox" aria-label="10 正解"></label></li>
+      <li><span class="qn">11</span><span class="tg"><b>4-3</b> 年代整序<br>戻り先 p.58</span><span class="qt">次のできごとを年代の古い順に並べよ。<span class="ch">ア 平治の乱　イ 保元の乱　ウ 白河上皇の院政開始</span></span><span class="qr"><button class="ans" type="button" aria-expanded="false">ウ→イ→ア</button></span><label class="ok"><input type="checkbox" aria-label="11 正解"></label></li>
+      <li><span class="qn">12</span><span class="tg"><b>5-1</b> 一問一答<br>戻り先 p.62</span><span class="qt">承久の乱に敗れ、隠岐に流された上皇は誰か。</span><span class="qr"><button class="ans" type="button" aria-expanded="false">後鳥羽上皇</button></span><label class="ok"><input type="checkbox" aria-label="12 正解"></label></li>
+    </ol>
+  </div>
+
+  <div class="hr-bot"></div>
+  <footer class="pf"><span class="folio n">65</span><span>5-1 鎌倉幕府の成立と執権政治 ｜ 総まとめテスト</span></footer>
+</section>
+
+</main>
+<div class="doc-controls fab" id="fab"><button type="button" id="sheetFab" aria-pressed="false" aria-label="赤シートの切り替え">赤シート</button></div>
+
+
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it ===
+   visualViewport: mobile Chrome widens the layout viewport to the 1240px column
+   before the zoom applies, so innerWidth alone leaves the zoom near 1.
+   Below 1272px the fit also reserves a left gutter (GUT) for the red-sheet toggle,
+   so the toggle sits beside the page column and never over a page. */
+const stage = document.getElementById('docStage');
+const toolbar = document.getElementById('toolbar');
+const fab = document.getElementById('fab');
+const vv = window.visualViewport;
+const viewW = () => Math.min(window.innerWidth, vv ? vv.width * vv.scale : window.innerWidth);
+const GUT = 40, FAB_W = 36;
+let gutter = 0;
+const fit = () => {
+  const w = viewW();
+  const reserve = w < 1240 + 32 ? GUT : 0;
+  const z = Math.min(1, (w - 32 - reserve) / 1240);
+  document.body.style.paddingLeft = reserve + 'px';
+  stage.style.zoom = z;
+  toolbar.style.zoom = 1 / z;           /* nested zoom multiplies: the bar renders at 1:1 */
+  toolbar.style.width = (1240 * z) + 'px';
+  toolbar.classList.toggle('narrow', 1240 * z < 420);   /* phones: drop the label so both buttons fit on one line */
+  gutter = reserve + (w - reserve - 1240 * z) / 2;   /* free space left of the page column */
+  updateFab();
+};
+let toolbarVisible = true;
+const updateFab = () => { fab.classList.toggle('show', !toolbarVisible && gutter >= FAB_W + 16); };
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(es => { toolbarVisible = es[0].isIntersecting; updateFab(); }).observe(toolbar);
+}
+fit();
+window.addEventListener('resize', fit);
+if (vv) vv.addEventListener('resize', fit);
+
+/* === Storage: never let a blocked localStorage break the page === */
+const BOOK = stage.dataset.book;
+const key = (kind, unit) => 'tbr-' + kind + '-' + BOOK + '-' + unit;   /* e.g. tbr-review-nihonshi-ichimon-5-1 */
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode etc. */ } }
+};
+
+/* === 赤シート: hide every key term, tap to open one === */
+const sheetBtn = document.getElementById('sheetBtn');
+const kws = [...document.querySelectorAll('.kw')];
+const setSheet = on => {
+  document.body.classList.toggle('sheet', on);
+  sheetBtn.setAttribute('aria-pressed', String(on));
+  sheetFab.setAttribute('aria-pressed', String(on));
+  kws.forEach(k => {
+    k.classList.remove('open');
+    if (on) { k.setAttribute('tabindex', '0'); k.setAttribute('role', 'button'); k.setAttribute('aria-label', '隠れた重要語。押すと表示'); }
+    else { k.removeAttribute('tabindex'); k.removeAttribute('role'); k.removeAttribute('aria-label'); }
+  });
+};
+const sheetFab = document.getElementById('sheetFab');
+const flipSheet = () => setSheet(!document.body.classList.contains('sheet'));
+sheetBtn.addEventListener('click', flipSheet);
+sheetFab.addEventListener('click', flipSheet);
+const openKw = k => {
+  if (!document.body.classList.contains('sheet')) return;
+  const open = k.classList.toggle('open');
+  if (open) k.removeAttribute('aria-label'); else k.setAttribute('aria-label', '隠れた重要語。押すと表示');
+};
+kws.forEach(k => {
+  k.addEventListener('click', () => openKw(k));
+  k.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openKw(k); } });
+});
+
+/* === 一問一答: one answer per tap, or all at once === */
+const answers = [...document.querySelectorAll('.ans')];
+answers.forEach(a => {
+  a.dataset.label = a.textContent;
+  a.setAttribute('aria-label', '答えを表示');
+  a.addEventListener('click', () => {
+    const open = a.getAttribute('aria-expanded') !== 'true';
+    a.setAttribute('aria-expanded', String(open));
+    if (open) a.removeAttribute('aria-label'); else a.setAttribute('aria-label', '答えを表示');
+  });
+});
+const ansBtn = document.getElementById('ansBtn');
+ansBtn.addEventListener('click', () => {
+  const on = ansBtn.getAttribute('aria-pressed') !== 'true';
+  ansBtn.setAttribute('aria-pressed', String(on));
+  ansBtn.textContent = on ? '答えを全部隠す' : '答えを全部表示';
+  answers.forEach(a => {
+    a.setAttribute('aria-expanded', String(on));
+    if (on) a.removeAttribute('aria-label'); else a.setAttribute('aria-label', '答えを表示');
+  });
+});
+
+/* === 復習記録: three rounds with the date each was done, kept per unit === */
+const rev = document.getElementById('rev');
+const KEY = key('review', rev.dataset.unit);
+const state = store.get(KEY) || {};
+const fmt = iso => { const d = new Date(iso + 'T00:00:00'); return (d.getMonth() + 1) + '月' + d.getDate() + '日'; };
+const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const render = () => {
+  rev.querySelectorAll('input').forEach(cb => {
+    const r = cb.dataset.r, d = rev.querySelector('[data-d="' + r + '"]');
+    cb.checked = Boolean(state[r]);
+    d.textContent = state[r] ? fmt(state[r]) : '　月　日';
+    d.classList.toggle('on', Boolean(state[r]));
+  });
+};
+rev.addEventListener('change', e => {
+  const cb = e.target.closest('input[data-r]');
+  if (!cb) return;
+  if (cb.checked) state[cb.dataset.r] = today(); else delete state[cb.dataset.r];
+  store.set(KEY, state);
+  render();
+});
+render();
+
+/* === 総まとめテスト: self-marked ○ per question, score and date kept per unit === */
+const score = document.getElementById('score');
+const TKEY = key('test', score.dataset.unit);
+const marks = [...document.querySelectorAll('#test .ok input')];
+const tsaved = store.get(TKEY);
+const tstate = tsaved && Array.isArray(tsaved.ok) ? tsaved : { ok: [], date: null };
+const renderScore = () => {
+  marks.forEach((cb, i) => { cb.checked = tstate.ok.includes(i); });
+  document.getElementById('scoreN').textContent = tstate.ok.length;
+  document.getElementById('scoreD').textContent = tstate.date ? fmt(tstate.date) : '　月　日';
+};
+document.getElementById('test').addEventListener('change', e => {
+  const i = marks.indexOf(e.target);
+  if (i < 0) return;
+  tstate.ok = marks.map((cb, j) => cb.checked ? j : -1).filter(j => j >= 0);
+  tstate.date = today();
+  store.set(TKEY, tstate);
+  renderScore();
+});
+renderScore();
+</script>
+</body>
+</html>

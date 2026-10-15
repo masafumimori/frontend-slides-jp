@@ -20,7 +20,7 @@ const ENUMS = {
   density: ['low', 'medium', 'high'],
   scheme: ['light', 'dark'],
   writing: ['horizontal', 'vertical'],
-  group: ['business', 'tech', 'stage', 'editorial'],
+  group: ['business', 'tech', 'stage', 'editorial', 'learning'],
 };
 const REQUIRED = ['slug', 'name', 'name_ja', 'tagline', 'summary_ja', 'group', 'mood', 'formality', 'density', 'scheme',
   'best_for', 'avoid_for', 'formats', 'writing', 'needs', 'fonts', 'colors', 'refs'];

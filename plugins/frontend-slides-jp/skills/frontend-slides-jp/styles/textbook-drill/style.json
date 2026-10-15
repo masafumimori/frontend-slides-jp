@@ -1,0 +1,42 @@
+{
+  "slug": "textbook-drill",
+  "name": "Textbook Drill",
+  "name_ja": "例題と練習の参考書",
+  "tagline": "A study-guide page: a tinted side-note column, worked examples that fade into blanks, practice with reveal and a self-check that turns into a review list, a unit opener and a chapter test.",
+  "summary_ja": "右3分の1を薄い帯の傍注欄にし、例題1は全手順、例題2は空欄つき、練習は［解答を見る］と手ごたえの記録。単元の扉に解ける問題の一覧と前提の確認、章末テストは解答を1か所にまとめて採点する。",
+  "group": "learning",
+  "mood": [
+    "studious",
+    "calm",
+    "structured"
+  ],
+  "formality": "medium",
+  "density": "high",
+  "scheme": "light",
+  "best_for": "高校・中学の数学や理科の参考書・問題集、資格試験の計算問題、手順で解く単元の自習教材（独学する生徒・受験生向け）",
+  "avoid_for": "暗記中心の社会・語彙、読み物としての教科書、小学校低学年向け、投影する授業スライド",
+  "formats": [
+    "doc-a4"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "BIZ UDPMincho",
+    "latin": [
+      "STIX Two Text"
+    ]
+  },
+  "colors": {
+    "ink": "#1A1D24",
+    "sub": "#50555F",
+    "line": "#B8BCC4",
+    "accent": "#1D4E9E",
+    "tint": "#EEF1F5",
+    "paper": "#FFFFFF"
+  },
+  "refs": [
+    "数研出版 チャート式 数学（例題・指針・練習の構成）",
+    "高校数学の検定教科書（単元の扉・章末問題・傍注）"
+  ]
+}

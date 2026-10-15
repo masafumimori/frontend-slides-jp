@@ -1,0 +1,837 @@
+<!-- textbook-case reference-a4: case opener → case + 問1 → 問2・framework・worksheet → discussion and reflection -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASE 03 価格改定の伝え方｜営業研修ケースブック（架空の教材）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700;800;900&family=IBM+Plex+Sans+JP:wght@100;200;300;400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+
+/* === TOKENS === */
+:root {
+  --desk-bg: #E7E3DA;
+  --page-bg: #FBF9F4;
+  --ink: #1E1C19;
+  --sub: #5E5950;
+  --rule: #CFC8BB;
+  --hair: #E2DCD0;
+  --accent: #8E2B1E;
+  --accent-tint: #F3E4DF;
+  --serif: 'Noto Serif JP', serif;
+  --latin: 'EB Garamond', 'Noto Serif JP', serif;
+  --sans: 'IBM Plex Sans JP', sans-serif;
+  /* diagram tokens */
+  --d-ink: var(--ink); --d-sub: var(--sub); --d-rule: var(--hair); --d-mid: #A79F92;
+  --d-tint: #EDE8DE; --d-accent: var(--accent); --d-accent-tint: var(--accent-tint);
+  --font-jp: var(--sans); --font-latin: var(--sans);
+}
+.page { color: var(--ink); font-family: var(--sans); font-variant-numeric: lining-nums; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page * { box-sizing: border-box; }
+.page h1, .page h2, .page h3, .page p { margin: 0; }
+
+/* === PAGE FRAME === */
+.rh { position: absolute; top: 60px; left: 96px; right: 96px; display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 18px; color: var(--sub); border-bottom: 1px solid var(--ink); padding-bottom: 12px; }
+.rh .pub { font-family: var(--serif); }
+.rh .pub b { font-weight: 600; color: var(--ink); margin-right: 14px; }
+.rh .chap { font-weight: 600; color: var(--ink); }
+.rh .chap .n { font-family: var(--latin); font-size: 20px; margin-right: 10px; color: var(--accent); }
+.folio { position: absolute; bottom: 52px; font-feature-settings: "lnum" 1; font-family: var(--latin); font-size: 20px; color: var(--ink); display: flex; gap: 14px; align-items: baseline; }
+.folio small { font-family: var(--sans); font-size: 17px; color: var(--sub); }
+.recto .folio { right: 96px; }
+.verso .folio { left: 96px; }
+.tab { position: absolute; top: 220px; width: 44px; height: 240px; background: var(--accent); color: #FBF9F4;
+       writing-mode: vertical-rl; font-feature-settings: "vpal"; font-size: 18px; font-weight: 600; letter-spacing: .08em;
+       display: flex; align-items: center; justify-content: center; gap: 10px; }
+.tab .n { text-combine-upright: all; font-family: var(--latin); font-size: 20px; }
+.recto .tab { right: 0; }
+.verso .tab { left: 0; }
+
+.body { position: absolute; top: 132px; left: 96px; right: 96px; bottom: 112px; display: flex; flex-direction: column; }
+
+/* === CASE (serif) === */
+.kicker { font-family: var(--latin); font-size: 22px; letter-spacing: .16em; color: var(--accent); text-transform: uppercase; }
+.kicker span { font-family: var(--sans); letter-spacing: .04em; text-transform: none; color: var(--sub); font-size: 18px; margin-left: 16px; }
+h1.title { font-family: var(--serif); font-weight: 700; font-size: 56px; line-height: 1.32; margin-top: 8px; }
+.page p.aims { margin-top: 14px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 9px 0; font-size: 19px; line-height: 1.5; text-align: left; }
+.aims b { font-weight: 700; margin-right: 18px; }
+.aims span { font-family: var(--latin); font-size: 22px; color: var(--accent); margin: 0 8px 0 20px; }
+.aims b + span { margin-left: 0; }
+.case { column-count: 2; column-gap: 48px; margin-top: 16px; font-family: var(--serif); font-size: 22px; }
+.case p { line-height: 1.8; text-indent: 1em; }
+.case p.first { text-indent: 0; }
+.case p.first::first-letter { font-weight: 700; }
+.case .q { font-weight: 600; }
+
+.exhibits { display: grid; grid-template-columns: 470px 1fr; gap: 0 40px; margin-top: 18px; }
+.ex-cap { font-size: 18px; font-weight: 700; padding-bottom: 6px; border-bottom: 2px solid var(--ink); display: flex; justify-content: space-between; }
+.ex-cap span { font-weight: 400; color: var(--sub); }
+table.ex { width: 100%; border-collapse: collapse; font-size: 19px; }
+table.ex th, table.ex td { padding: 3px 0; border-bottom: 1px solid var(--hair); text-align: right; font-weight: 400; line-height: 1.4; letter-spacing: 0; }
+table.ex th { color: var(--sub); font-size: 18px; }
+table.ex th:first-child, table.ex td:first-child { text-align: left; }
+table.ex .num { font-family: var(--sans); font-feature-settings: "tnum" 1; }
+table.ex tr.tot td { font-weight: 700; border-bottom: 2px solid var(--ink); }
+table.ex .neg { color: var(--accent); font-weight: 700; }
+table.ex td.desc { text-align: left; color: var(--sub); font-size: 18px; padding-left: 16px; word-break: normal; }
+.src { font-size: 17px; color: var(--sub); margin-top: 8px; line-height: 1.5; }
+.src.wide { grid-column: 1 / -1; margin-top: 6px; }
+
+/* === QUESTIONS (sans) === */
+.qblock { margin-top: 18px; }
+.qhead { display: grid; grid-template-columns: 96px 1fr; align-items: start; }
+.qno { font-family: var(--latin); font-size: 40px; line-height: 1; color: var(--accent); }
+.qno small { display: block; font-family: var(--sans); font-size: 17px; color: var(--sub); margin-top: 6px; }
+.qtext { font-size: 24px; font-weight: 600; line-height: 1.6; }
+
+.think { margin: 12px 0 0 96px; border: 1.5px solid var(--ink); }
+.think-bar { display: flex; align-items: center; gap: 14px; padding: 8px 8px 8px 16px; border-bottom: 1px solid var(--rule); }
+.think-bar .lbl { font-size: 18px; font-weight: 700; margin-right: auto; }
+.think-bar .lbl span { font-weight: 400; color: var(--sub); margin-left: 10px; }
+.btn { font: 600 18px/1 var(--sans); padding: 10px 16px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; border-radius: 0; }
+.btn:hover { background: var(--ink); color: var(--page-bg); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #FBF9F4; }
+.btn.primary:hover { background: var(--ink); border-color: var(--ink); }
+.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.clock { font: 500 22px/1 var(--sans); font-feature-settings: "tnum" 1; min-width: 70px; text-align: right; }
+.clock.done { color: var(--accent); font-weight: 700; }
+.ruled { display: block; width: 100%; border: 0; resize: none; outline: none; background-color: transparent;
+         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='44'%3E%3Cline x1='0' y1='43.5' x2='10' y2='43.5' stroke='%23CFC8BB' stroke-width='1'/%3E%3C/svg%3E");
+         background-size: 10px 44px; background-repeat: repeat; background-origin: content-box;
+         font: 400 20px/44px var(--sans); color: var(--ink); padding: 0 16px; overflow: hidden; }
+.ruled:focus { background-color: #FFFDF8; }
+.ruled::placeholder { color: #9A9285; }
+.think .ruled { height: 88px; }
+
+/* answer region: space is reserved so the page never reflows */
+.ans { position: relative; margin: 12px 0 0 96px; }
+.ans-body { border-left: 4px solid var(--accent); padding: 4px 0 4px 24px; }
+.ans-cover { position: absolute; inset: 0; border: 1.5px dashed var(--rule); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--page-bg); text-align: center; }
+.ans-cover p { text-align: center; font-size: 20px; color: var(--sub); line-height: 1.6; }
+.ans-cover .big { font-size: 22px; color: var(--ink); font-weight: 600; }
+.qblock.is-open .ans-cover { display: none; }
+.ans-tag { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: .06em; display: flex; justify-content: space-between; align-items: center; }
+.ans-tag .btn { font-size: 17px; padding: 6px 12px; }
+.ans-lead { font-size: 22px; font-weight: 700; line-height: 1.6; margin-top: 4px; }
+dl.pts { margin: 6px 0 0; display: grid; grid-template-columns: 150px 1fr; row-gap: 4px; }
+dl.pts dt { font-size: 20px; font-weight: 700; line-height: 1.6; }
+dl.pts dd { margin: 0; font-size: 20px; line-height: 1.6; letter-spacing: .01em; word-break: normal; }
+dl.pts dd b { font-weight: 700; }
+.ans-note { margin-top: 8px; font-size: 19px; line-height: 1.6; padding: 10px 14px; background: var(--accent-tint); }
+.ans-note b { color: var(--accent); }
+ol.steps { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 6px; counter-reset: s; grid-template-rows: repeat(3, auto); grid-auto-flow: column; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; font-size: 20px; line-height: 1.55; word-break: normal; }
+ol.steps li::before { content: counter(s); font-feature-settings: "lnum" 1; font-family: var(--latin); font-size: 24px; color: var(--accent); line-height: 1.3; }
+.calc { font-size: 22px; margin-top: 8px; line-height: 1.6; }
+.calc .n { font-feature-settings: "tnum" 1; }
+.calc b { color: var(--accent); }
+
+/* === FRAMEWORK === */
+.fw { margin-top: 26px; border-top: 2px solid var(--ink); padding-top: 16px; }
+.fw h2 { font-size: 30px; font-weight: 700; line-height: 1.45; margin-top: 6px; }
+.fw .lead { font-size: 20px; color: var(--sub); line-height: 1.6; margin-top: 6px; text-align: left; }
+#d-matrix-2x2 { height: 420px; margin-top: 8px; }
+#d-matrix-2x2 svg { width: 100%; height: 100%; display: block; }
+#d-matrix-2x2 text { font-family: var(--font-jp); fill: var(--d-ink); }
+#d-matrix-2x2 .n { font-family: var(--font-latin); font-feature-settings: "tnum" 1; }
+#d-matrix-2x2 .sub { fill: var(--d-sub); }
+#d-matrix-2x2 .acc { fill: var(--d-accent); }
+#d-matrix-2x2 .t19 { font-size: 19px; }
+#d-matrix-2x2 .t20 { font-size: 20px; }
+#d-matrix-2x2 .t22 { font-size: 22px; font-weight: 700; }
+#d-matrix-2x2 .t24 { font-size: 24px; font-weight: 700; }
+#d-matrix-2x2 .zone { fill: var(--d-accent-tint); }
+#d-matrix-2x2 .grid { stroke: var(--d-rule); stroke-width: 1; }
+#d-matrix-2x2 .grid.base { stroke-width: 2; }
+#d-matrix-2x2 .mid { stroke: var(--d-mid); stroke-width: 2; stroke-dasharray: 6 6; }
+#d-matrix-2x2 .axis { stroke: var(--d-ink); stroke-width: 2; }
+#d-matrix-2x2 .bub { fill: var(--d-tint); stroke: var(--d-mid); stroke-width: 2; }
+#d-matrix-2x2 .bub.is-pick { fill: var(--d-accent); stroke: var(--d-accent); }
+#d-matrix-2x2 .dot { fill: var(--d-accent); }
+
+/* === WORK === */
+.work { margin-top: 20px; border: 1.5px solid var(--ink); }
+.work-head { display: flex; align-items: baseline; gap: 16px; padding: 12px 16px; background: var(--ink); color: var(--page-bg); }
+.work-head h2 { font-size: 24px; font-weight: 700; }
+.work-head span { font-size: 18px; margin-right: auto; }
+.work-head .saved { font-size: 17px; color: #D9D2C4; margin: 0; }
+.work-head .btn { color: var(--page-bg); border-color: #8A8377; font-size: 17px; padding: 6px 12px; }
+.work-head .btn:hover { background: var(--page-bg); color: var(--ink); }
+.wrow { display: grid; grid-template-columns: 300px 1fr; border-top: 1px solid var(--rule); }
+.wrow:first-of-type { border-top: 0; }
+.wrow > label, .wrow > .label-cell { font-size: 19px; font-weight: 600; line-height: 1.5; padding: 10px 16px; border-right: 1px solid var(--hair); }
+.wrow > label small, .wrow > .label-cell small { display: block; font-weight: 400; color: var(--sub); font-size: 17px; margin-top: 2px; }
+.wrow .ruled { height: 88px; }
+
+/* === CASE OPENER === */
+h1.display { font-family: var(--serif); font-weight: 700; font-size: 84px; line-height: 1.25; margin-top: 6px; }
+.page p.deck { font-family: var(--serif); font-size: 27px; line-height: 1.6; margin-top: 10px; text-align: left; }
+dl.meta { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; margin: 20px 0 0; padding: 10px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+dl.meta div { display: flex; flex-direction: column; gap: 2px; }
+dl.meta dt { font-size: 17px; color: var(--sub); line-height: 1.4; }
+dl.meta dd { margin: 0; font-size: 21px; font-weight: 700; line-height: 1.45; letter-spacing: 0; }
+dl.meta dd .n { font-feature-settings: "tnum" 1; }
+.sect { margin-top: 28px; }
+.sect-h { display: flex; align-items: baseline; gap: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.sect-h .en { font-family: var(--latin); font-size: 22px; letter-spacing: .16em; color: var(--accent); text-transform: uppercase; }
+.sect-h h2 { font-size: 26px; font-weight: 700; }
+.sect-h span:last-child { margin-left: auto; font-size: 17px; color: var(--sub); }
+.cast-in { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: 14px; }
+.person { display: grid; grid-template-columns: 100px 1fr; gap: 0 20px; }
+.person .ini { width: 100px; height: 100px; border: 1.5px solid var(--ink); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 52px; font-weight: 700; }
+.person.lead .ini { background: var(--accent); border-color: var(--accent); color: #FBF9F4; }
+.person .role { font-size: 17px; color: var(--sub); line-height: 1.5; }
+.person .name { font-family: var(--serif); font-size: 30px; font-weight: 700; line-height: 1.35; }
+.person .name small { font-size: 18px; font-weight: 400; color: var(--sub); margin-left: 8px; }
+.page .person p.say { font-family: var(--serif); font-size: 20px; line-height: 1.6; margin-top: 6px; text-align: left; }
+.page .person p.what { font-size: 18px; line-height: 1.6; margin-top: 4px; color: var(--sub); text-align: left; }
+.cast-out { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; margin-top: 16px; }
+.party { border-top: 1px solid var(--rule); padding-top: 10px; }
+.party .who { font-size: 19px; font-weight: 700; line-height: 1.5; }
+.party .who b { font-family: var(--latin); font-size: 26px; color: var(--accent); margin-right: 10px; font-weight: 500; }
+.party .who small { display: block; font-size: 17px; font-weight: 400; color: var(--sub); }
+.page .party p.say { font-family: var(--serif); font-size: 20px; line-height: 1.6; margin-top: 6px; text-align: left; }
+.status { display: grid; grid-template-columns: 470px 1fr; gap: 0 48px; margin-top: 14px; }
+dl.prof { margin: 0; display: grid; grid-template-columns: 120px 1fr; }
+dl.prof dt, dl.prof dd { padding: 4px 0; border-bottom: 1px solid var(--hair); font-size: 19px; line-height: 1.5; }
+dl.prof dt { color: var(--sub); }
+dl.prof dd { margin: 0; letter-spacing: .01em; word-break: normal; }
+dl.prof dd b { font-weight: 700; }
+dl.prof dd .acc { color: var(--accent); font-weight: 700; }
+.wf-cap { font-size: 18px; font-weight: 700; padding-bottom: 6px; border-bottom: 2px solid var(--ink); display: flex; justify-content: space-between; }
+.wf-cap span { font-weight: 400; color: var(--sub); }
+#wf { margin-top: 6px; }
+#wf svg { display: block; width: 100%; height: auto; }
+#wf text { font-family: var(--sans); fill: var(--ink); }
+#wf .n { font-feature-settings: "tnum" 1; font-size: 20px; font-weight: 600; }
+#wf .lbl { font-size: 18px; fill: var(--sub); }
+#wf .acc { fill: var(--accent); }
+#wf .base { fill: var(--sub); }
+#wf .up { fill: #A79F92; }
+#wf .down { fill: var(--accent-tint); stroke: var(--accent); stroke-width: 1.5; }
+#wf .res { fill: var(--accent); }
+#wf .zero { stroke: var(--ink); stroke-width: 1.5; }
+#wf .link { stroke: var(--sub); stroke-width: 1; stroke-dasharray: 4 4; }
+ol.qlist { list-style: none; margin: 8px 0 0; padding: 0; }
+ol.qlist li { display: grid; grid-template-columns: 110px 1fr 150px; align-items: baseline; padding: 5px 0; border-bottom: 1px solid var(--hair); }
+ol.qlist .no { font-family: var(--latin); font-size: 28px; color: var(--accent); line-height: 1.2; }
+ol.qlist .t { font-size: 21px; font-weight: 600; line-height: 1.55; word-break: normal; }
+ol.qlist .at { font-size: 18px; color: var(--sub); text-align: right; font-feature-settings: "tnum" 1; }
+.plan { display: flex; margin-top: 14px; border: 1.5px solid var(--ink); }
+.plan > div { padding: 6px 10px; border-left: 1px solid var(--rule); min-width: 0; }
+.plan > div:first-child { border-left: 0; }
+.plan .m { font-family: var(--sans); font-feature-settings: "tnum" 1; font-size: 20px; font-weight: 700; line-height: 1.3; display: block; }
+.plan .m small { font-size: 16px; font-weight: 400; color: var(--sub); }
+.plan .l { font-size: 17px; line-height: 1.35; display: block; white-space: nowrap; }
+.plan > div.on { background: var(--accent-tint); }
+.plan-note { display: flex; justify-content: space-between; font-size: 17px; color: var(--sub); margin-top: 6px; }
+
+/* === DISCUSSION AND REFLECTION === */
+h1.title.sm { font-size: 48px; }
+.page p.lead2 { font-size: 21px; color: var(--sub); line-height: 1.6; margin-top: 8px; text-align: left; }
+.disc { margin-top: 18px; border: 1.5px solid var(--ink); }
+.disc-head { display: flex; align-items: center; gap: 14px; padding: 8px 8px 8px 16px; border-bottom: 1px solid var(--rule); }
+.disc-head h2 { font-size: 24px; font-weight: 700; margin-right: auto; }
+.disc-head h2 span { font-size: 18px; font-weight: 400; color: var(--sub); margin-left: 12px; }
+ol.flow { list-style: none; margin: 0; padding: 0; display: flex; }
+ol.flow li { padding: 8px 12px 10px; border-left: 1px solid var(--hair); min-width: 0; }
+ol.flow li:first-child { border-left: 0; }
+ol.flow .m { display: block; font-feature-settings: "tnum" 1; font-size: 20px; font-weight: 700; line-height: 1.3; }
+ol.flow .m i { font-style: normal; font-family: var(--latin); color: var(--accent); font-size: 22px; margin-right: 8px; font-weight: 500; }
+ol.flow .l { display: block; font-size: 17px; line-height: 1.45; word-break: normal; }
+ol.flow li { flex: 1 1 0; border-top: 4px solid var(--d-tint); }
+ol.flow li.on { border-top-color: var(--accent); }
+ol.flow .m small { font-size: 18px; font-weight: 400; color: var(--sub); margin-left: 8px; }
+.topic { display: grid; grid-template-columns: 116px 1fr; padding: 12px 16px 12px 16px; border-top: 1px solid var(--rule); }
+.topic .qno { font-size: 30px; }
+.topic .qno small { font-size: 17px; }
+.topic .qtext { font-size: 22px; }
+.disc .ruled { height: 44px; border-top: 1px solid var(--rule); }
+.disc .ruled-lbl { font-size: 17px; color: var(--sub); padding: 6px 16px 0; border-top: 1px solid var(--rule); }
+.disc .ruled-lbl + .ruled { border-top: 0; }
+
+.qblock.tn { margin-top: 16px; border: 1.5px solid var(--ink); }
+.tn-bar { display: flex; align-items: center; gap: 14px; padding: 8px 8px 8px 16px; border-bottom: 1px solid var(--rule); background: var(--d-tint); }
+.tn-bar .lbl { font-size: 20px; font-weight: 700; margin-right: auto; }
+.tn-bar .lbl span { font-size: 17px; font-weight: 400; color: var(--sub); margin-left: 10px; }
+.tn .ans { margin: 0; padding: 10px 16px 12px; }
+.qblock.tn.is-open .tn-bar .js-reveal { display: none; }
+.ans-cover .prt { display: none; }
+.rec .wrow .ruled { height: 132px; }
+.tn dl.pts { grid-template-columns: 130px 1fr; }
+.tn dl.pts dt, .tn dl.pts dd { font-size: 19px; }
+.tn .ans-lead { font-size: 21px; }
+
+.work.rec { margin-top: 16px; }
+.conf { padding: 6px 16px 8px; }
+.conf-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; padding: 2px 0; }
+.conf-row > span { font-size: 19px; line-height: 1.5; }
+.conf-row > span b { font-family: var(--latin); color: var(--accent); font-weight: 500; font-size: 22px; margin-right: 10px; }
+.scale { display: flex; gap: 6px; border: 0; margin: 0; padding: 0; }
+.scale label { position: relative; cursor: pointer; }
+.scale input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.scale label span { display: flex; align-items: center; justify-content: center; width: 40px; height: 34px; border: 1.5px solid var(--rule); font: 600 18px/1 var(--sans); font-feature-settings: "tnum" 1; color: var(--sub); }
+.scale label:hover span { border-color: var(--ink); color: var(--ink); }
+.scale input:checked + span { background: var(--accent); border-color: var(--accent); color: #FBF9F4; }
+.scale input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.page p.conf-key { font-size: 17px; color: var(--sub); line-height: 1.5; margin-top: 4px; text-align: left; }
+
+@media print {
+  .no-print, .think-bar .btn, .disc-head .btn, .tn-bar .btn, .clock, .ans-cover, .ans-tag .btn, .work-head .btn, .work-head .saved { display: none !important; }
+  /* the teaching note prints as it is on screen: closed gives a learner copy, open gives the instructor copy */
+  .qblock.tn:not(.is-open) .ans-cover { display: flex !important; }
+  .ans-cover .scr { display: none; }
+  .ans-cover .prt { display: block; }
+  .scale input:checked + span { background: transparent; border-color: var(--rule); color: var(--sub); }
+  .ruled { color: transparent !important; }
+  .ruled::placeholder { color: transparent !important; }
+}
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ PAGE 1: CASE OPENER ============ -->
+<section class="page recto" data-chapter="03">
+  <header class="rh"><span class="pub"><b>港町ビジネス出版</b>営業研修ケースブック（架空の教材）</span><span class="chap"><span class="n">CASE 03</span>価格改定の伝え方</span></header>
+  <div class="tab"><span class="n">03</span>価格改定</div>
+
+  <div class="body">
+    <p class="kicker">Case 03<span>営業研修ケースブック　卸売業・価格交渉</span></p>
+    <h1 class="display">価格改定の伝え方</h1>
+    <p class="deck">原価が6％上がった製パン資材の卸で、営業部長が<br>「誰に、何から伝えるか」を決める。</p>
+
+    <dl class="meta">
+      <div><dt>対象</dt><dd>法人営業の担当者・リーダー</dd></div>
+      <div><dt>個人学習</dt><dd><span class="n">40</span>分</dd></div>
+      <div><dt>集合研修</dt><dd>グループ討議 ＋<span class="n">30</span>分</dd></div>
+      <div><dt>立場</dt><dd>営業部長の佐伯になって考える</dd></div>
+    </dl>
+
+    <section class="sect">
+      <div class="sect-h"><span class="en">Cast</span><h2>登場人物</h2><span>人物と会社は架空</span></div>
+      <div class="cast-in">
+        <div class="person lead"><div class="ini">佐</div><div>
+          <p class="role">営業部長　値上げの伝え方を決める</p>
+          <p class="name">佐伯<small>さえき</small></p>
+          <p class="say">「同じ5.2％でも、相手によって<br>聞こえ方が違うんだ」</p></div></div>
+        <div class="person"><div class="ini">野</div><div>
+          <p class="role">営業部・入社3年目　個人のパン店を担当</p>
+          <p class="name">野口<small>のぐち</small></p>
+          <p class="say">「全社一律5.2％で<br>通知を出せば済みます」</p></div></div>
+      </div>
+      <div class="cast-out">
+        <div class="party"><p class="who"><b>A</b>スーパー内ベーカリー<small>3社の購買担当</small></p>
+          <p class="say">「他社にも見積もりを取ります」</p></div>
+        <div class="party"><p class="who"><b>B</b>個人のパン店<small>約180店の店主</small></p>
+          <p class="say">「うちも利益は薄いんだ」</p></div>
+        <div class="party"><p class="who"><b>C</b>ホテル・カフェ<small>40社の購買・料理長</small></p>
+          <p class="say">「早めに予算に入れておきたい」</p></div>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-h"><span class="en">Company</span><h2>会社の状況</h2><span>数字は架空</span></div>
+      <div class="status">
+        <dl class="prof">
+          <dt>社名</dt><dd><b>みなと製パン資材</b></dd>
+          <dt>事業</dt><dd>小麦粉・バター・包材の卸（県内）</dd>
+          <dt>社員</dt><dd>42名</dd>
+          <dt>売上高</dt><dd>30億円（A 40％、B・C 各30％）</dd>
+          <dt>営業利益</dt><dd>0.9億円（利益率3.0％）</dd>
+          <dt>この春</dt><dd class="acc">仕入原価＋6％、物流費＋10％</dd>
+        </dl>
+        <div>
+          <div class="wf-cap">図　売値を据え置いたときの営業利益<span>億円</span></div>
+          <div id="wf"><svg viewBox="0 0 560 290" role="img" aria-label="前期の営業利益0.90億円から、原価の増加1.44億円と物流費の増加0.12億円を引くと、据え置きでは0.66億円の赤字"><line class="zero" x1="8" x2="552" y1="139.0" y2="139.0"/><rect class="base" x="24" y="40.0" width="92" height="99.0"/><text class="n" x="70.0" y="28.0" text-anchor="middle">0.90</text><rect class="down" x="164" y="40.0" width="92" height="158.4"/><text class="n acc" x="210.0" y="224.4" text-anchor="middle">−1.44</text><rect class="down" x="304" y="198.4" width="92" height="13.2"/><text class="n acc" x="350.0" y="237.6" text-anchor="middle">−0.12</text><rect class="res" x="444" y="139.0" width="92" height="72.6"/><text class="n acc" x="490.0" y="237.6" text-anchor="middle">−0.66</text><line class="link" x1="116" x2="164" y1="40.0" y2="40.0"/><line class="link" x1="256" x2="304" y1="198.4" y2="198.4"/><line class="link" x1="396" x2="444" y1="211.6" y2="211.6"/><text class="lbl" x="552" y="131.0" text-anchor="end">0</text><text class="lbl" x="70.0" y="282" text-anchor="middle">前期の営業利益</text><text class="lbl" x="210.0" y="282" text-anchor="middle">原価＋6％</text><text class="lbl" x="350.0" y="282" text-anchor="middle">物流費＋10％</text><text class="lbl" x="490.0" y="282" text-anchor="middle">据え置き</text></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-h"><span class="en">Questions</span><h2>このケースで考える問い</h2><span>ページ・目安</span></div>
+      <ol class="qlist">
+        <li><span class="no">問1</span><span class="t">全顧客に一律5.2％で通知してよいか。A・B・Cに何を・いつ伝えるか</span><span class="at">p.2　3分</span></li>
+        <li><span class="no">問2</span><span class="t">個人パン店の店主に、負担増をどの数字で、何から順に話すか</span><span class="at">p.3　3分</span></li>
+        <li><span class="no">Work</span><span class="t">自分の顧客をタイプに分け、最初に伝える相手を決める</span><span class="at">p.3　10分</span></li>
+        <li><span class="no">討議</span><span class="t">譲ってほしいと言われたら、どこまで、何と引き換えに譲るか</span><span class="at">p.4　30分</span></li>
+      </ol>
+      <div class="plan" aria-label="個人学習の時間割 40分"><div style="flex:8 1 0"><span class="m">8<small>分</small></span><span class="l">ケースを読む</span></div><div style="flex:7 1 0" class="on"><span class="m">7<small>分</small></span><span class="l">問1</span></div><div style="flex:6 1 0" class="on"><span class="m">6<small>分</small></span><span class="l">問2</span></div><div style="flex:5 1 0"><span class="m">5<small>分</small></span><span class="l">枠組み</span></div><div style="flex:10 1 0"><span class="m">10<small>分</small></span><span class="l">職場ワーク</span></div><div style="flex:4 1 0"><span class="m">4<small>分</small></span><span class="l">学びの記録</span></div></div><p class="plan-note"><span>色の欄は「まず自分で考える」時間を含む（問1・問2 各3分）</span><span>個人学習 計40分</span></p>
+    </section>
+  </div>
+  <p class="folio">1<small>CASE 03　ケースの概要</small></p>
+</section>
+
+<!-- ============ PAGE 2 ============ -->
+<section class="page verso" data-chapter="03">
+  <header class="rh"><span class="chap"><span class="n">CASE 03</span>価格改定の伝え方</span><span class="pub">営業研修ケースブック（架空の教材）</span></header>
+  <div class="tab"><span class="n">03</span>価格改定</div>
+
+  <div class="body">
+    <p class="kicker">Case 03<span>ケース → 問い → 解説 → 枠組み → 職場ワーク → 振り返り</span></p>
+    <h1 class="title">原価が6％上がった。<br>誰に、何から伝えるか</h1>
+
+    <p class="aims"><b>学ぶこと</b><span>1</span>値上げ幅を費用から説明する<span>2</span>タイプで順番と時期を変える<span>3</span>％を相手の言葉に直す</p>
+
+    <div class="case">
+      <p class="first">みなと製パン資材は、県内のパン店やホテルに小麦粉・バター・包材を卸す、社員42名の会社だ。年間売上は30億円、営業利益は0.9億円。利益率3.0％の薄い商売である。</p>
+      <p>この春、仕入先から値上げの通知が相次いだ。仕入原価は合わせて6％、委託している物流費も10％上がる。売値を据え置けば、営業利益は0.66億円の赤字に転じる（表1）。</p>
+      <p>営業部長の佐伯は電卓をたたいた。増える費用は1.56億円。売上30億円で割ると5.2％になる。平均5.2％の値上げなら、販売量が変わらない限り利益の額は守れる。</p>
+      <p>難しいのは顧客である（表2）。売上の4割を占めるスーパー内ベーカリー3社は、毎年相見積もりを取る。個人のパン店約180店は付き合いが長いが、店の利益も薄い。ホテル・カフェ40社は品質を重んじ、予算を年度で組む。</p>
+      <p>「全社一律5.2％で通知を出せば済みます」と言う若手に、佐伯は首を振った。<span class="q">「同じ5.2％でも、相手によって聞こえ方が違うんだ」</span></p>
+    </div>
+
+    <div class="exhibits">
+      <div>
+        <div class="ex-cap">表1　今期の収支見通し<span>億円</span></div>
+        <table class="ex">
+          <thead><tr><th></th><th>前期</th><th>据え置き</th><th>5.2％値上げ</th></tr></thead>
+          <tbody>
+            <tr><td>売上高</td><td class="num">30.00</td><td class="num">30.00</td><td class="num">31.56</td></tr>
+            <tr><td>売上原価</td><td class="num">24.00</td><td class="num">25.44</td><td class="num">25.44</td></tr>
+            <tr><td>販管費（物流費を含む）</td><td class="num">5.10</td><td class="num">5.22</td><td class="num">5.22</td></tr>
+            <tr class="tot"><td>営業利益</td><td class="num">0.90</td><td class="num neg">−0.66</td><td class="num">0.90</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="ex-cap">表2　顧客の3タイプ<span>年間売上</span></div>
+        <table class="ex">
+          <tbody>
+            <tr><td>A　スーパー内ベーカリー</td><td class="num">3社</td><td class="num">12億円</td><td class="num">40％</td></tr>
+            <tr><td class="desc" colspan="4">毎年相見積もり。乗り換え先がある</td></tr>
+            <tr><td>B　個人のパン店</td><td class="num">約180店</td><td class="num">9億円</td><td class="num">30％</td></tr>
+            <tr><td class="desc" colspan="4">1店平均500万円。付き合いが長く、店の利益は薄い</td></tr>
+            <tr><td>C　ホテル・カフェ</td><td class="num">40社</td><td class="num">9億円</td><td class="num">30％</td></tr>
+            <tr><td class="desc" colspan="4">品質重視。予算は年度単位で決まる</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src wide">表1の増加分：原価＋1.44（24.00×6％）、物流費＋0.12（1.20×10％）。販売量は前期と同じと仮定。</p>
+    </div>
+
+    <section class="qblock" data-q="q1">
+      <div class="qhead"><p class="qno">問1<small>目安3分</small></p>
+        <p class="qtext">全顧客に一律5.2％で通知してよいか。A・B・Cそれぞれに、何を・いつ伝えるかを考えよ。</p></div>
+      <div class="think">
+        <div class="think-bar"><span class="lbl">まず自分で考える<span>解説を見る前にメモする</span></span>
+          <span class="clock" aria-live="polite">3:00</span>
+          <button class="btn js-timer" data-sec="180" type="button">3分はかる</button>
+          <button class="btn primary js-reveal" type="button">考えた</button></div>
+        <textarea class="ruled" data-key="q1-note" aria-label="問1のメモ" placeholder="例：Aは…、Bは…、Cは…"></textarea>
+      </div>
+      <div class="ans">
+        <div class="ans-body">
+          <p class="ans-tag">解説 1 <button class="btn js-hide" type="button">解説を閉じる</button></p>
+          <p class="ans-lead">理由は全員に同じものを示し、伝え方と時期はタイプごとに変える。</p>
+          <dl class="pts">
+            <dt>A　最も早く</dt><dd>1社を失えば粗利で約0.8億円が消え、A全体から5.2％で得る<b>0.62億円</b>を上回る。仕入価格の推移を開示し、個別に交渉する。</dd>
+            <dt>B　訪ねて話す</dt><dd>担当者が訪ね、％ではなく月額で伝える（問2）。</dd>
+            <dt>C　予算の前に</dt><dd>次年度の予算が固まる前に通知し、品質を保つための値上げだと添える。</dd>
+          </dl>
+          <p class="ans-note"><b>落とし穴</b>　Aだけ3％に抑えると、残り1.20億円をB・Cの18億円で埋めることになり、B・Cは6.7％の値上げが要る。</p>
+        </div>
+        <div class="ans-cover"><p class="big">解説はまだ閉じています</p><p>メモを書いてから「考えた」を押すと開きます</p></div>
+      </div>
+    </section>
+  </div>
+  <p class="folio">2<small>CASE 03　ケースと問1</small></p>
+</section>
+
+<!-- ============ PAGE 3 ============ -->
+<section class="page recto" data-chapter="03">
+  <header class="rh"><span class="pub"><b>港町ビジネス出版</b>営業研修ケースブック（架空の教材）</span><span class="chap"><span class="n">CASE 03</span>価格改定の伝え方</span></header>
+  <div class="tab"><span class="n">03</span>価格改定</div>
+
+  <div class="body">
+    <section class="qblock" data-q="q2" style="margin-top:0">
+      <div class="qhead"><p class="qno">問2<small>目安3分</small></p>
+        <p class="qtext">年間500万円を仕入れる個人パン店の店主に、5.2％の値上げを伝える。<br>①月あたりの負担増はいくらか。②何から順に話すか。</p></div>
+      <div class="think">
+        <div class="think-bar"><span class="lbl">まず自分で考える<span>計算と話す順をメモする</span></span>
+          <span class="clock" aria-live="polite">3:00</span>
+          <button class="btn js-timer" data-sec="180" type="button">3分はかる</button>
+          <button class="btn primary js-reveal" type="button">考えた</button></div>
+        <textarea class="ruled" data-key="q2-note" aria-label="問2のメモ" placeholder="①月　　　円　②1.　→2.　→3."></textarea>
+      </div>
+      <div class="ans">
+        <div class="ans-body">
+          <p class="ans-tag">解説 2 <button class="btn js-hide" type="button">解説を閉じる</button></p>
+          <p class="calc">① 500万円 × 5.2％ ＝ 年26万円。12か月で割ると<b>月約2.2万円</b>（21,667円）。</p>
+          <p class="ans-lead">② 店主が自分の売上と比べられる数字で、結論から話す。</p>
+          <ol class="steps">
+            <li>結論：いつから、どれだけ上がるか</li>
+            <li>理由：仕入原価＋6％、物流費＋10％</li>
+            <li>幅の根拠：上がった費用の範囲内</li>
+            <li>影響：月約2.2万円の負担増</li>
+            <li>選択肢：発注のまとめ方、代替品</li>
+            <li>期日：返事の期限と相談の窓口</li>
+          </ol>
+        </div>
+        <div class="ans-cover"><p class="big">解説はまだ閉じています</p><p>メモを書いてから「考えた」を押すと開きます</p></div>
+      </div>
+    </section>
+
+    <section class="fw">
+      <p class="kicker">Framework<span>伝え方の2×2</span></p>
+      <h2>乗り換えやすく価格に敏感な相手ほど、<br>早く、根拠を開いて伝える</h2>
+      <p class="lead">顧客を「他社への乗り換えやすさ」と「価格への敏感さ」で置くと、伝える順番と方法が決まる。</p>
+      <div id="d-matrix-2x2"><svg aria-label="乗り換えやすさ×価格への敏感さのマトリクス"></svg></div>
+      <p class="src">位置は佐伯による5段階の評価。円の面積は年間売上。</p>
+    </section>
+
+    <section class="work">
+      <div class="work-head"><h2>自分の職場に当てはめる</h2><span>10分</span>
+        <p class="saved" aria-live="polite">この端末に保存されます</p>
+        <button class="btn js-clear" type="button">消去</button></div>
+      <div class="wrow"><label for="w1">顧客を2〜3タイプに分ける<small>タイプ名と売上の割合</small></label>
+        <textarea id="w1" class="ruled" data-key="w1" placeholder="例：大口の法人 50％、…"></textarea></div>
+      <div class="wrow"><label for="w2">最初に伝える相手と理由<small>2×2のどこに置いたか</small></label>
+        <textarea id="w2" class="ruled" data-key="w2"></textarea></div>
+      <div class="wrow"><label for="w3">相手の言葉での影響額<small>月額、1個あたり など</small></label>
+        <textarea id="w3" class="ruled" data-key="w3"></textarea></div>
+    </section>
+  </div>
+  <p class="folio">3<small>CASE 03　問2・枠組み・ワーク</small></p>
+</section>
+
+<!-- ============ PAGE 4: DISCUSSION AND REFLECTION ============ -->
+<section class="page verso" data-chapter="03">
+  <header class="rh"><span class="chap"><span class="n">CASE 03</span>価格改定の伝え方</span><span class="pub">営業研修ケースブック（架空の教材）</span></header>
+  <div class="tab"><span class="n">03</span>価格改定</div>
+
+  <div class="body">
+    <p class="kicker">Discussion<span>ディスカッションと振り返り　集合研修30分</span></p>
+    <h1 class="title sm">譲る幅は、失うものと比べて決める</h1>
+    <p class="lead2">4〜5人のグループで、問1・問2のメモを持ち寄る。数字は表1・表2に戻って確かめる。</p>
+
+    <section class="disc">
+      <div class="disc-head"><h2>グループ討議の進め方<span>4〜5人・司会と記録を1人ずつ決める</span></h2>
+        <span class="clock" aria-live="polite">30:00</span>
+        <button class="btn js-timer" data-sec="1800" type="button">30分はかる</button></div>
+      <ol class="flow"><li><span class="m"><i>1</i>メモを共有<small>5分</small></span><span class="l">1人1分で問1・問2の答えを話す</span></li><li class="on"><span class="m"><i>2</i>討議1<small>10分</small></span><span class="l">応じ方を2案に絞り、失う額を比べる</span></li><li class="on"><span class="m"><i>3</i>討議2<small>8分</small></span><span class="l">待つ店と待たない店の線を引く</span></li><li><span class="m"><i>4</i>結論<small>2分</small></span><span class="l">記録係が1文にまとめる</span></li><li><span class="m"><i>5</i>全体で共有<small>5分</small></span><span class="l">1グループ1分で発表</span></li></ol>
+      <div class="topic"><p class="qno">討議1<small>10分</small></p>
+        <p class="qtext">年4億円を仕入れるA社の1社から「5.2％なら来期は相見積もりにかける。3％なら続ける」と言われた。どう応じるか。</p></div>
+      <div class="topic"><p class="qno">討議2<small>8分</small></p>
+        <p class="qtext">個人のパン店の店主に「うちも苦しい。値上げを半年待ってほしい」と頼まれた。全店に同じ対応をしてよいか。</p></div>
+      <p class="ruled-lbl">グループの結論（1文で）</p>
+      <textarea class="ruled" data-key="group" aria-label="グループの結論" placeholder="例：譲るなら、発注量と期間を条件にする"></textarea>
+    </section>
+
+    <section class="qblock tn" data-q="tn">
+      <div class="tn-bar"><span class="lbl">講師用の論点<span>討議2が終わってから開く</span></span>
+        <button class="btn primary js-reveal" type="button">講師用を開く</button></div>
+      <div class="ans">
+        <div class="ans-body">
+          <p class="ans-tag">押さえる論点 <button class="btn js-hide" type="button">閉じる</button></p>
+          <p class="ans-lead">譲る額は失う粗利と比べ、譲るなら条件と引き換えにする。</p>
+          <dl class="pts">
+            <dt>討議1</dt><dd>1社だけ3％にすると年<b>880万円</b>の減（4億円×2.2ポイント）。失えば粗利で約0.8億円。譲るなら発注量か契約期間を条件にする。差額をB・Cに回すとB・Cは5.69％になる。</dd>
+            <dt>討議2</dt><dd>B全体で半年待つと<b>2,340万円</b>の減（年0.468億円の半分）、1店では13万円。待つ店を絞り、発注のまとめ方で負担を下げる案を引き出す。</dd>
+            <dt>出やすい意見</dt><dd>「Bは据え置き」には、A・Cに7.4％が要るか、営業利益が0.43億円に下がることを計算させる。</dd>
+          </dl>
+        </div>
+        <div class="ans-cover"><p class="big scr">講師用の論点は閉じています</p><p class="scr">討議の前に開くと、答え合わせになってしまいます</p><p class="big prt">講師用の論点は講師版にだけ入ります</p><p class="prt">講師は、画面で「講師用を開く」を押してから印刷する</p></div>
+      </div>
+    </section>
+
+    <section class="work rec">
+      <div class="work-head"><h2>学びの記録</h2><span>4分</span>
+        <p class="saved" aria-live="polite">この端末に保存されます</p>
+        <button class="btn js-clear" type="button">消去</button></div>
+      <div class="wrow"><span class="label-cell"><b>理解度を選ぶ</b><small>学ぶこと1〜3</small></span>
+        <div class="conf">
+          <div class="conf-row"><span><b>1</b>値上げ幅を費用から説明する</span>
+            <fieldset class="scale" data-key="conf-1" aria-label="学ぶこと1の理解度"><label><input type="radio" name="conf-1" value="1"><span>1</span></label><label><input type="radio" name="conf-1" value="2"><span>2</span></label><label><input type="radio" name="conf-1" value="3"><span>3</span></label><label><input type="radio" name="conf-1" value="4"><span>4</span></label></fieldset></div>
+          <div class="conf-row"><span><b>2</b>タイプで順番と時期を変える</span>
+            <fieldset class="scale" data-key="conf-2" aria-label="学ぶこと2の理解度"><label><input type="radio" name="conf-2" value="1"><span>1</span></label><label><input type="radio" name="conf-2" value="2"><span>2</span></label><label><input type="radio" name="conf-2" value="3"><span>3</span></label><label><input type="radio" name="conf-2" value="4"><span>4</span></label></fieldset></div>
+          <div class="conf-row"><span><b>3</b>％を相手の言葉に直す</span>
+            <fieldset class="scale" data-key="conf-3" aria-label="学ぶこと3の理解度"><label><input type="radio" name="conf-3" value="1"><span>1</span></label><label><input type="radio" name="conf-3" value="2"><span>2</span></label><label><input type="radio" name="conf-3" value="3"><span>3</span></label><label><input type="radio" name="conf-3" value="4"><span>4</span></label></fieldset></div>
+          <p class="conf-key">1 まだ　2 解説を見ればできる　3 一人でできる　4 人に説明できる</p>
+        </div></div>
+      <div class="wrow"><label for="r1">いちばんの学び<small>1文で</small></label>
+        <textarea id="r1" class="ruled" data-key="r1"></textarea></div>
+      <div class="wrow"><label for="r2">次に試すこと<small>いつ・誰に・何を</small></label>
+        <textarea id="r2" class="ruled" data-key="r2" placeholder="例：来週の定例訪問で、担当の5店に月額で伝える"></textarea></div>
+    </section>
+  </div>
+  <p class="folio">4<small>CASE 03　討議と振り返り</small></p>
+</section>
+
+</main>
+<script>
+/* FIT */
+const stage = document.getElementById('docStage');
+/* visualViewport: mobile Chrome widens the layout viewport to the 1240px column before the zoom applies */
+const vv = window.visualViewport;
+const viewW = () => Math.min(window.innerWidth, vv ? vv.width * vv.scale : window.innerWidth);   /* × scale: pinch-zoom does not shrink the pages */
+const fit = () => { stage.style.zoom = Math.min(1, (viewW() - 32) / 1240); };
+fit(); window.addEventListener('resize', fit); vv?.addEventListener('resize', fit);
+
+/* storage: private mode or blocked storage must not break the page */
+const NS = 'case03:';
+const store = {
+  get(k) { try { return localStorage.getItem(NS + k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(NS + k, v); return true; } catch (e) { return false; } },
+  del(k) { try { localStorage.removeItem(NS + k); } catch (e) {} }
+};
+
+/* notes, worksheets and self-ratings: every [data-key] field saves itself; each .work has its own status and clear */
+const say = (el, ok) => { const s = el.closest('.work')?.querySelector('.saved'); if (s) s.textContent = ok ? '保存しました' : 'この端末には保存できません'; };
+document.querySelectorAll('textarea[data-key]').forEach(ta => {
+  const v = store.get(ta.dataset.key); if (v) ta.value = v;
+  ta.addEventListener('input', () => say(ta, store.set(ta.dataset.key, ta.value)));
+});
+document.querySelectorAll('fieldset.scale[data-key]').forEach(fs => {
+  const v = store.get(fs.dataset.key);
+  fs.querySelectorAll('input').forEach(r => { if (r.value === v) r.checked = true; r.addEventListener('change', () => say(fs, store.set(fs.dataset.key, r.value))); });
+});
+document.querySelectorAll('.work').forEach(w => w.querySelector('.js-clear').addEventListener('click', () => {
+  w.querySelectorAll('textarea[data-key]').forEach(ta => { ta.value = ''; store.del(ta.dataset.key); });
+  w.querySelectorAll('fieldset.scale[data-key]').forEach(fs => { fs.querySelectorAll('input').forEach(r => { r.checked = false; }); store.del(fs.dataset.key); });
+  w.querySelector('.saved').textContent = '消去しました';
+}));
+
+/* reveal */
+document.querySelectorAll('.qblock').forEach(q => {
+  const key = q.dataset.q + '-open';
+  const set = open => { q.classList.toggle('is-open', open); open ? store.set(key, '1') : store.del(key); };
+  if (store.get(key) === '1') q.classList.add('is-open');
+  q.querySelector('.js-reveal').addEventListener('click', () => { set(true); q.querySelector('.ans-body').focus?.(); });
+  q.querySelector('.js-hide').addEventListener('click', () => set(false));
+});
+
+/* think-first timer */
+const fmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+document.querySelectorAll('.js-timer').forEach(btn => {
+  const clock = btn.parentElement.querySelector('.clock');
+  const total = Number(btn.dataset.sec); let left = total, id = null;
+  const stop = () => { clearInterval(id); id = null; };
+  btn.addEventListener('click', () => {
+    if (id) { stop(); btn.textContent = '再開'; return; }
+    if (left <= 0) { left = total; clock.classList.remove('done'); }
+    btn.textContent = '止める';
+    id = setInterval(() => {
+      left -= 1; clock.textContent = fmt(left);
+      if (left <= 0) { stop(); clock.textContent = '時間です'; clock.classList.add('done'); btn.textContent = 'もう一度'; }
+    }, 1000);
+  });
+});
+
+/* d-matrix-2x2, adapted: score axes (1–5), bubble area = annual sales */
+function drawMatrix(svg, d) {
+  const W = svg.clientWidth || 1048, H = svg.clientHeight || 470;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const E = (t, a, txt) => { const e = document.createElementNS('http://www.w3.org/2000/svg', t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+  const T = 12, L = 72, R = W - 8;
+  const lTitle = E('text', { x: 0, y: 0, class: 't20 sub' }, '円の面積＝年間売上');
+  const lNums = d.legend.map(c => E('text', { x: 0, y: 0, class: 'n sub t20' }, `${c}億円`));
+  const lPick = E('text', { x: 0, y: 0, class: 't20' }, '最初に交渉する相手');
+  const numW = lNums.map(t => t.getComputedTextLength());
+  const rMax = Math.min(30, (H - 64 - T) / 9);
+  const legH = rMax * 2 + 12, B = H - 56 - legH;
+  const maxV = Math.max(...d.items.map(i => i.v), ...d.legend);
+  const r = c => Math.max(10, rMax * Math.sqrt(c / maxV));
+  const sx = v => L + (v - d.x.min) / (d.x.max - d.x.min) * (R - L);
+  const sy = v => B - (v - d.y.min) / (d.y.max - d.y.min) * (B - T);
+  E('rect', { x: sx(d.x.mid), y: T, width: R - sx(d.x.mid), height: sy(d.y.mid) - T, class: 'zone' });
+  E('line', { x1: L, x2: R, y1: B, y2: B, class: 'grid base' });
+  E('line', { x1: sx(d.x.mid), x2: sx(d.x.mid), y1: T, y2: B, class: 'mid' });
+  E('line', { x1: L, x2: R, y1: sy(d.y.mid), y2: sy(d.y.mid), class: 'mid' });
+  E('line', { x1: L, x2: L, y1: T, y2: B, class: 'axis' });
+  const q = d.quadrants;
+  E('text', { x: R - 16, y: T + 34, 'text-anchor': 'end', class: 't22 acc' }, q.tr);
+  E('text', { x: L + 16, y: T + 34, class: 't22' }, q.tl);
+  E('text', { x: R - 16, y: B - 18, 'text-anchor': 'end', class: 't22' }, q.br);
+  E('text', { x: L + 16, y: B - 18, class: 't22 sub' }, q.bl);
+  E('text', { x: L, y: B + 34, class: 't20 sub' }, d.x.lowLabel);
+  E('text', { x: R, y: B + 34, 'text-anchor': 'end', class: 't20 sub' }, d.x.highLabel);
+  E('text', { x: (L + R) / 2, y: B + 34, 'text-anchor': 'middle', class: 't22' }, d.x.label);
+  E('text', { x: 26, y: (T + B) / 2, 'text-anchor': 'middle', class: 't22', transform: `rotate(-90 26 ${(T + B) / 2})` }, d.y.label);
+  E('text', { x: L - 12, y: T + 20, 'text-anchor': 'end', class: 't20 sub' }, d.y.highLabel);
+  E('text', { x: L - 12, y: B - 4, 'text-anchor': 'end', class: 't20 sub' }, d.y.lowLabel);
+  const items = [...d.items].sort((a, b) => b.v - a.v).map(it => ({ it, cx: sx(it.x), cy: sy(it.y), rr: r(it.v) }));
+  items.forEach(({ it, cx, cy, rr }) => E('circle', { cx, cy, r: rr, class: 'bub' + (it.pick ? ' is-pick' : '') }));
+  const placed = [], hit = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
+  items.forEach(({ it, cx, cy, rr }) => {
+    const name = E('text', { x: 0, y: 0, class: 't24' + (it.pick ? ' acc' : '') }, it.name);
+    const sub = E('text', { x: 0, y: 0, class: 't19 sub' }, it.sub);
+    const w = Math.max(name.getComputedTextLength(), sub.getComputedTextLength());
+    const at = side => side === 'r' ? { tx: cx + rr + 14, ty: cy - 4, a: 'start', l: cx + rr + 14, r: cx + rr + 14 + w }
+      : side === 'l' ? { tx: cx - rr - 14, ty: cy - 4, a: 'end', l: cx - rr - 14 - w, r: cx - rr - 14 }
+      : side === 'u' ? { tx: cx, ty: cy - rr - 40, a: 'middle', l: cx - w / 2, r: cx + w / 2 }
+      : { tx: cx, ty: cy + rr + 28, a: 'middle', l: cx - w / 2, r: cx + w / 2 };
+    const order = it.side ? [it.side, ...['r', 'l', 'u', 'd'].filter(s => s !== it.side)] : ['r', 'l', 'u', 'd'];
+    const box = s => { const p = at(s); return { ...p, t: p.ty - 22, b: p.ty + 34 }; };
+    const free = bx => !(bx.l < L || bx.r > R || bx.t < T || bx.b > B || placed.some(p => hit(p, bx))
+      || items.some(o => (o.cx !== cx || o.cy !== cy) && o.cx + o.rr > bx.l && o.cx - o.rr < bx.r && o.cy + o.rr > bx.t && o.cy - o.rr < bx.b));
+    let pick = order.map(box).find(free);
+    if (!pick) { pick = box(order[0]); console.warn(`d-matrix-2x2: no free spot for the label "${it.name}"`); }
+    placed.push(pick);
+    name.setAttribute('x', pick.tx); name.setAttribute('y', pick.ty); name.setAttribute('text-anchor', pick.a);
+    sub.setAttribute('x', pick.tx); sub.setAttribute('y', pick.ty + 30); sub.setAttribute('text-anchor', pick.a);
+  });
+  const cy = H - legH / 2;
+  let x = L;
+  lTitle.setAttribute('x', x); lTitle.setAttribute('y', cy + 7); x += lTitle.getComputedTextLength() + 28;
+  d.legend.forEach((c, i) => {
+    const rr = r(c);
+    E('circle', { cx: x + rr, cy, r: rr, class: 'bub' });
+    lNums[i].setAttribute('x', x + rr * 2 + 10); lNums[i].setAttribute('y', cy + 7);
+    x += rr * 2 + 10 + numW[i] + 28;
+  });
+  E('circle', { cx: x + 14, cy, r: 14, class: 'dot' });
+  lPick.setAttribute('x', x + 38); lPick.setAttribute('y', cy + 7);
+  if (x + 38 + lPick.getComputedTextLength() > W) console.warn('d-matrix-2x2: legend row is wider than the box');
+}
+{
+  const svg = document.querySelector('#d-matrix-2x2 svg');
+  const data = {
+    x: { label: '他社への乗り換えやすさ', lowLabel: '乗り換えにくい', highLabel: '乗り換えやすい', min: 0.5, max: 5.5, mid: 3 },
+    y: { label: '価格への敏感さ', lowLabel: '低', highLabel: '高', min: 0.5, max: 5.5, mid: 3 },
+    quadrants: { tr: '根拠を開き、最初に交渉', tl: '訪ねて、月額で話す', br: '品質と時期で納得を得る', bl: '書面の通知で足りる' },
+    legend: [3, 9],
+    items: [
+      { name: 'A スーパー内ベーカリー', sub: '12億円・3社', x: 5.0, y: 4.2, v: 12, pick: true, side: 'l' },
+      { name: 'B 個人のパン店', sub: '9億円・約180店', x: 1.6, y: 3.9, v: 9 },
+      { name: 'C ホテル・カフェ', sub: '9億円・40社', x: 4.0, y: 2.0, v: 9 }
+    ]
+  };
+  const draw = () => { svg.replaceChildren(); drawMatrix(svg, data); };
+  draw(); document.fonts.ready.then(draw);
+}
+</script>
+</body>
+</html>

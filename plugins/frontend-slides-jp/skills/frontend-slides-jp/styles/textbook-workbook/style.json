@@ -1,0 +1,32 @@
+{
+  "slug": "textbook-workbook",
+  "name": "Textbook Workbook",
+  "name_ja": "書き込み式ワークブック",
+  "tagline": "A Cornell-note workbook: cue questions in a tinted left column you can cover, fill-in notes on the right, lined writing space everywhere, and a one-week review page of the cues alone.",
+  "summary_ja": "コーネル式の書き込み教材。左の淡い問い欄が思い出す手がかりで、ノートを隠して答え、行ごとに開いて確かめる。単元扉の事前診断、穴埋めと罫線の書き込み欄、解答例を後から開く練習、問いだけを並べた1週間後の復習で1単元を回す。",
+  "group": "learning",
+  "mood": ["calm", "practical", "studious"],
+  "formality": "medium",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "社会人研修・新任管理職研修のワークブック、資格・検定の学習ノート、高校〜大学の授業プリント（概念を覚えて言える・書けるようにする科目）",
+  "avoid_for": "読むだけの報告書や会社案内、投影するプレゼン、計算や図の操作が中心の数学・理科の演習、低学年の子ども向け教材",
+  "formats": ["doc-a4"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "IBM Plex Sans JP",
+    "body": "IBM Plex Sans JP",
+    "latin": ["IBM Plex Sans"],
+    "extra": ["Klee One"]
+  },
+  "colors": {
+    "ink": "#1F2427",
+    "accent": "#1D5F73",
+    "accent-tint": "#EEF4F6",
+    "rule": "#D3D8DB",
+    "ng": "#A8442F",
+    "paper": "#FFFFFF"
+  },
+  "refs": ["コーネル式ノート（Walter Pauk, How to Study in College）", "書き込み式の研修ワークブック・授業プリント"]
+}

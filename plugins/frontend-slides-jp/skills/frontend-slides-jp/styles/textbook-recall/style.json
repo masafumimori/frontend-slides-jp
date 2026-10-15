@@ -1,0 +1,20 @@
+{
+  "slug": "textbook-recall",
+  "name": "Textbook Recall",
+  "name_ja": "赤シート暗記の参考書",
+  "tagline": "A red-sheet study book: key terms in a vermilion that vanishes under the sheet, one-question-one-answer rows, source passages with blanks and a mixed review test.",
+  "summary_ja": "墨と、赤シートで消える朱赤の2色。本文の重要語・一問一答の答え・史料の穴埋めをすべて朱赤で組み、画面では赤シート切替とタップで1語ずつ確かめる。前の単元を混ぜた総まとめテストと、3回の復習記録で覚え込む。",
+  "group": "learning",
+  "mood": ["studious", "dense", "practical"],
+  "formality": "medium",
+  "density": "high",
+  "scheme": "light",
+  "best_for": "用語を覚える中高生・受験生向けの日本史・世界史・地理・生物・公民の参考書、一問一答集、資格試験の暗記ノート、社内研修の用語確認テスト",
+  "avoid_for": "計算や作図の手順を学ぶ数学・物理の教材、小学校低学年向け、読み物や物語中心の教材、投影するプレゼン",
+  "formats": ["doc-a4"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": { "heading": "Noto Sans JP", "body": "BIZ UDPMincho", "latin": ["IBM Plex Sans"] },
+  "colors": { "ink": "#1E1B19", "sub": "#55504B", "red": "#F04A2C", "paper": "#FFFFFF", "desk": "#DEDBD5" },
+  "refs": ["大学受験用の赤シート対応参考書（チェックシート式）", "日本史の一問一答集の版面（問題左・答え右の2欄）", "史料集の書き下しと現代語訳の見開き"]
+}
