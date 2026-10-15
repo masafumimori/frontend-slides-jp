@@ -970,7 +970,7 @@ addEventListener('resize', fit);
 // children, links are elbows from the parent's right edge. Public Standard draws nodes as
 // rules plus text, not boxes: 4px blue for the goal (read first), 2px ink for a policy,
 // 1px rules between measures. The bar column becomes the indicator column.
-// Size from data-w/data-h, because clientWidth under the page zoom is not the layout size.
+// Size from data-w/data-h, pinned to the figure box.
 function drawPolicyTree(svg, d) {
   const W = +svg.dataset.w || 1048, H = +svg.dataset.h || 780;
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);

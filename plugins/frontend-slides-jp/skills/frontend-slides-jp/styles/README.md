@@ -13,7 +13,7 @@ One folder per style: `styles/<slug>/`. A brand imported from a company design s
 After adding or editing a style:
 
 1. `node scripts/shoot.mjs styles/<slug>/reference.html --out styles/<slug>/thumbs --width 640 --jpg --first 4` writes the four thumbnails. For `doc-a4`, shoot `reference-a4.html` into `thumbs-a4` the same way (`--width 400 --first 4`).
-2. `node scripts/check-styles.mjs` validates every folder and rewrites `selection-index.json`.
+2. `node scripts/check-styles.mjs` validates every folder and rewrites `selection-index.json`. For `doc-a4`, also run `node scripts/check-pages.mjs styles/<slug>/reference-a4.html`.
 3. `node scripts/build-gallery.mjs` rewrites `gallery.html`.
 
 ## `style.json`

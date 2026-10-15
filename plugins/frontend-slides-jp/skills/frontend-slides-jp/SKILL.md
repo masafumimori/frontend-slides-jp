@@ -175,7 +175,7 @@ If the user names a style and asks only for that style, skip the index: read tha
 
 If the user brings a company design system, logo, brand guide or URL, follow [references/brand-import.md](references/brand-import.md) first. The resulting brand style is always one of the three previews.
 
-Read [styles/selection-index.json](styles/selection-index.json). Do not read any `design.md` or `reference.html` yet.
+Read [styles/selection-index.json](styles/selection-index.json), and `~/.frontend-slides-jp/brands/selection-index.json` when it exists: the user's imported brands. Offer a brand that matches the user's company first, in the restrained slot. Do not read any `design.md` or `reference.html` yet.
 
 If the user wants to browse every style before choosing, open [styles/gallery.html](styles/gallery.html) for them.
 
@@ -244,7 +244,7 @@ If the user selected a listed style or a brand, read that one style's `design.md
 - `reference.html` omits inline editing; add it from [html-template.md](html-template.md), including the early return for `e.target.isContentEditable` in the style's keyboard handler.
 - When the user gave only a topic, mark invented names, numbers and sources as fictional: one line in the cover meta and a short note in each data slide's source line (for example 「数値は架空」).
 - The density choice changes how much goes on each slide and how many slides there are, never the style's type scale.
-- Before delivery, screenshot every slide (or every page of a `doc-a4` document) with `node scripts/shoot.mjs <file.html> --out <dir>` and once with `--phone`, then walk the style's slop-signs checklist and the Design Rules against them. Look for overlap by eye: `scrollHeight` and bounding-box checks miss panels that cover each other.
+- Before delivery, screenshot every slide (or every page of a `doc-a4` document) with `node scripts/shoot.mjs <file.html> --out <dir>` and once with `--phone`, then walk the style's slop-signs checklist and the Design Rules against them. For `doc-a4`, also run `node scripts/check-pages.mjs <file.html>` and fix every error: it checks page size, the running head and folio on every page after the cover, text that leaves its page or is clipped, a diagram id on `.page`, and text below note size. Look for overlap by eye: `scrollHeight` and bounding-box checks miss panels that cover each other.
 
 If the user selected a self-generated custom wildcard, treat that preview's CSS and layout as the design recipe:
 
@@ -400,6 +400,8 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 | [styles/gallery.html](styles/gallery.html) | Browsable page of every style for the user | Phase 2, when the user wants to browse |
 | [references/diagrams.md](references/diagrams.md), [diagrams.html](references/diagrams.html) | 50 diagram and chart patterns: which to pick per relationship, and working code; run `node scripts/check-diagrams.mjs` after edits | Phase 3, for every diagram or chart slide |
 | [scripts/shoot.mjs](scripts/shoot.mjs) | Screenshot every slide, at 1920×1080 or `--phone` | Phase 3 verification |
+| [scripts/read-site.sh](scripts/read-site.sh) | Run `scripts/extract-site.mjs` in an isolated Docker container: colors, type, radii, logos and screenshots of a website | Brand import, when the user gives a URL |
+| [scripts/check-pages.mjs](scripts/check-pages.mjs) | Check the page frame and text sizes of a `doc-a4` document | Phase 3 verification, for documents |
 | [viewport-base.css](viewport-base.css)             | Mandatory fixed-stage CSS — copy into every presentation             | Phase 3 (generation)      |
 | [page-base.css](page-base.css), [references/document-pages.md](references/document-pages.md) | Mandatory CSS and page rules for `doc-a4` documents | Phase 3, for an A4 document |
 | [formats.json](formats.json) | Stage size, base file and reference file per format | Phase 1–3, when the format matters |

@@ -135,7 +135,7 @@ cat > "$TEMP_SCRIPT" << 'EXPORT_SCRIPT'
 // 4. Screenshots each slide one by one
 // 5. Generates a PDF with all slides as landscape pages
 
-import { chromium } from 'playwright';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
 import { createServer } from 'http';
 import { readFileSync, existsSync, mkdirSync, unlinkSync, writeFileSync, realpathSync } from 'fs';
 import { join, extname, resolve, sep } from 'path';
@@ -373,32 +373,35 @@ EXPORT_SCRIPT
 # We install Playwright locally in the temp dir so the Node script can import it.
 # This avoids polluting global packages and ensures the script is self-contained.
 
-info "Setting up Playwright (headless browser for screenshots)..."
-info "This may take a moment on first run..."
-echo ""
+# PLAYWRIGHT_MODULE (the path to an installed playwright/index.mjs) skips the install.
+if [[ -z "${PLAYWRIGHT_MODULE:-}" ]]; then
+    info "Setting up Playwright (headless browser for screenshots)..."
+    info "This may take a moment on first run..."
+    echo ""
 
-cd "$TEMP_DIR"
+    cd "$TEMP_DIR"
 
-# Create a minimal package.json so npm install works
-cat > "$TEMP_DIR/package.json" << 'PKG'
+    # Create a minimal package.json so npm install works
+    cat > "$TEMP_DIR/package.json" << 'PKG'
 { "name": "slide-export", "private": true, "type": "module" }
 PKG
 
-# Install Playwright into the temp directory
-npm install playwright &>/dev/null || {
-    err "Failed to install Playwright."
-    err "Try running: npm install playwright"
-    rm -rf "$TEMP_DIR"
-    exit 1
-}
+    # Install Playwright into the temp directory
+    npm install playwright &>/dev/null || {
+        err "Failed to install Playwright."
+        err "Try running: npm install playwright"
+        rm -rf "$TEMP_DIR"
+        exit 1
+    }
 
-# Ensure Chromium browser binary is downloaded
-npx playwright install chromium 2>/dev/null || {
-    err "Failed to install Chromium browser for Playwright."
-    err "Try running manually: npx playwright install chromium"
-    rm -rf "$TEMP_DIR"
-    exit 1
-}
+    # Ensure Chromium browser binary is downloaded
+    npx playwright install chromium 2>/dev/null || {
+        err "Failed to install Chromium browser for Playwright."
+        err "Try running manually: npx playwright install chromium"
+        rm -rf "$TEMP_DIR"
+        exit 1
+    }
+fi
 ok "Playwright ready"
 echo ""
 
@@ -438,9 +441,9 @@ echo "  Note: Animations are not preserved (it's a static export)."
 echo -e "${BOLD}════════════════════════════════════════${NC}"
 echo ""
 
-# Open the PDF automatically
-if command -v open &>/dev/null; then
+# Open the PDF when a person runs this in a terminal
+if [[ -t 1 ]] && command -v open &>/dev/null; then
     open "$OUTPUT_PDF"
-elif command -v xdg-open &>/dev/null; then
+elif [[ -t 1 ]] && command -v xdg-open &>/dev/null; then
     xdg-open "$OUTPUT_PDF"
 fi

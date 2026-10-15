@@ -144,7 +144,7 @@ Margins are 128px left and right. Headline at `top: 148px`. Content starts aroun
 
 ## 7. Document pages
 
-`reference-a4.html` is a 6-page brand book for a fictional miso brewery: cover, statement, business page with a product grid, a story page on `d-flow-v`, a numbers page, and a back cover with shops and contact. Sizes are px at the 1240×1754 page. The tokens are the same as in section 2, except `--m-x: 96px`, and the document sets `--desk-bg: #1b1512` and `--page-bg: var(--cream)` for `page-base.css`. Fonts use the query in section 2, because the catalog's Fraunces query has no `opsz` or `SOFT` axis.
+`reference-a4.html` is a 6-page brand book for a fictional miso brewery: cover, statement, business page with a product grid, a story page on `d-flow-v`, a numbers page, and a back cover with shops and contact. Sizes are px at the 1240×1754 page. The tokens are the same as in section 2, except `--m-x: 96px`, and the document sets `--desk-bg: #1b1512` and `--page-bg: var(--cream)` for `page-base.css`. Fonts use the query in section 2.
 
 ### 7.1 Page frame
 - **Running head** (`.rh`): `top: 64px; left: 96px; right: 200px`. The left side is a `.cap` with the document name in ink-sub. The right side is the chapter, a Fraunces tomato number plus a 20px 500 name. It ends at `right: 200px` on every page, including pages that have no corner circle, so it sits in the same place on each page.
