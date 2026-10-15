@@ -13,7 +13,8 @@
 #   2. Uses Playwright to screenshot each slide at 1920x1080
 #   3. Combines all screenshots into a single PDF
 #      (a doc-a4 document is printed directly as A4 pages instead)
-#   4. Cleans up the server and temp files
+#   4. Compresses the PDF with Ghostscript (gs) when it is installed
+#   5. Cleans up the server and temp files
 #
 # The PDF preserves colors, fonts, and layout — but not animations.
 # Perfect for email attachments, printing, or embedding in documents.
@@ -423,7 +424,32 @@ node "$TEMP_SCRIPT" "$SERVE_DIR" "$HTML_FILENAME" "$OUTPUT_PDF" "$SCREENSHOT_DIR
     exit 1
 }
 
-# ─── Step 5: Cleanup and success ──────────────────────────
+# ─── Step 5: Compress with Ghostscript ────────────────────
+# Chrome embeds every Google Fonts subset slice as a separate font, so an
+# 18-page A4 document prints at ~12MB. Ghostscript's pdfwrite merges them and
+# keeps the text selectable (that document went from 11.6MB to 1.5MB);
+# re-rendering the pages as images would shrink it less and lose the text.
+
+if command -v gs &>/dev/null; then
+    info "Compressing with Ghostscript..."
+    GS_PDF="$TEMP_DIR/compressed.pdf"
+    BEFORE_BYTES=$(wc -c < "$OUTPUT_PDF" | xargs)
+    if gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dPDFSETTINGS=/printer \
+        -dCompatibilityLevel=1.7 -dDetectDuplicateImages=true \
+        -sOutputFile="$GS_PDF" "$OUTPUT_PDF" \
+        && [[ $(wc -c < "$GS_PDF" | xargs) -lt $BEFORE_BYTES ]]; then
+        BEFORE_SIZE=$(du -h "$OUTPUT_PDF" | cut -f1 | xargs)
+        mv "$GS_PDF" "$OUTPUT_PDF"
+        ok "Compressed with Ghostscript: $BEFORE_SIZE → $(du -h "$OUTPUT_PDF" | cut -f1 | xargs)"
+    else
+        warn "Ghostscript did not make the PDF smaller; kept the uncompressed PDF."
+    fi
+else
+    warn "Ghostscript not found, so the PDF is uncompressed."
+    warn "Install it and export again: brew install ghostscript (macOS) / sudo apt install ghostscript (Linux)"
+fi
+
+# ─── Step 6: Cleanup and success ──────────────────────────
 
 rm -rf "$TEMP_DIR"
 

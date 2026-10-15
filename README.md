@@ -101,7 +101,7 @@ bash plugins/frontend-slides-jp/skills/frontend-slides-jp/scripts/deploy.sh ./my
 bash plugins/frontend-slides-jp/skills/frontend-slides-jp/scripts/export-pdf.sh ./my-deck.html
 ```
 
-URL の発行には Vercel のアカウント、PDF の書き出しには Node.js が必要です（Playwright は自動で入ります）。
+URL の発行には Vercel のアカウント、PDF の書き出しには Node.js が必要です（Playwright は自動で入ります）。書き出した PDF は Ghostscript で圧縮するので、`brew install ghostscript` で入れておいてください。入っていないと圧縮されず、警告が出ます。
 
 ## スタイルを足す・直す
 
