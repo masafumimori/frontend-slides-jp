@@ -1,0 +1,42 @@
+{
+  "slug": "learning-layered",
+  "name": "Learning Layered",
+  "name_ja": "全体から細部へ読む学習書",
+  "tagline": "A calm editorial study book for working adults: a whole-topic map first, then every topic in three depths (30 seconds, 3 minutes, deep dive) with one switch, and a mini-map of where you are in the margin.",
+  "summary_ja": "生成り地に朱1色。1頁目は全テーマの地図。各テーマは「30秒（結論と図）」「3分（理由と手順）」「深掘り（例外・条件・出典）」の3段で、深さの切替1つで全頁が開閉する。余白のミニ地図で現在地を示し、押すとその頁へ移動。印刷はすべての深さを収める。",
+  "group": "learning",
+  "mood": [
+    "editorial",
+    "calm",
+    "professional"
+  ],
+  "formality": "high",
+  "density": "low",
+  "scheme": "light",
+  "best_for": "社会人・管理職向けの研修冊子、社内の手引き、判断の進め方の解説書（全体をつかんでから必要な判断の頁だけを読み、仕事中に引き直して判断する人向け）",
+  "avoid_for": "問題を解いて手を動かす演習中心の教材、小中高の教科書・問題集、暗記用の教材、投影する講演スライド",
+  "formats": [
+    "doc-a4"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Serif JP",
+    "body": "BIZ UDPGothic",
+    "latin": [
+      "Schibsted Grotesk"
+    ]
+  },
+  "colors": {
+    "ink": "#1D1F22",
+    "sub": "#575B60",
+    "rule": "#D8D3C8",
+    "accent": "#B2381F",
+    "tint": "#F2EFE7",
+    "paper": "#FBFAF6"
+  },
+  "refs": [
+    "ハーバード・ビジネス・レビュー日本版（結論先行の誌面）",
+    "コンサルティング会社の社内研修資料（全体像と段階的な詳細）"
+  ]
+}

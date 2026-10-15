@@ -1,0 +1,1001 @@
+<!-- Learning Playbook (実務の手引き) reference: a job aid for a team leader running a 4-week generative-AI pilot: the procedure at a glance, index tabs, step pages with copyable templates, persistent done checks and a quick-jump search. -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成AI 試行の手引き（4週間・1チーム）｜（架空の教材）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700;800;900&family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* =====================================================================
+   DESIGN NOTES — why this is a job aid, not a textbook
+   - Job aids / performance support (Rossett & Schafer, "Job Aids and
+     Performance Support", 2007): the reader is doing the work, not studying
+     for a test. Information is stored outside the head and looked up at the
+     moment of need, so page 1 is the whole procedure on one sheet and every
+     later page is reachable in one move (index tabs, quick-jump search).
+   - Checklists (Gawande, "The Checklist Manifesto", 2009): short, imperative
+     lines, one action each, 4 per step (inside his 5–9 limit), with a pause
+     point at the end of each step (the 終えた box) and only the "killer
+     items" on page 1 (必ず守る3点) as a DO-CONFIRM list.
+   - Worked templates (the worked-example effect, Sweller & Cooper 1985):
+     the reader gets the finished form of each artefact — prompt, record
+     sheet, report — to copy and fill, and one worked tally (step 5) that
+     shows the arithmetic with the same fictional team on every page.
+   - Editorial, not school: one accent (deep blue), serif headings, a UD
+     gothic body, ruled tables. The six tab colours are six shades of the one
+     accent, lightest to darkest in step order, so they read as one series.
+   ===================================================================== */
+:root {
+    --paper: #FBFAF6;
+    --ink: #1B1F23;
+    --sub: #50575D;
+    --rule: #D3CFC6;
+    --tint: #F1EFE8;
+    --acc: #1D5873;
+    --white: #FFFFFF;
+    --t1: color-mix(in srgb, var(--acc) 18%, var(--paper));
+    --t2: color-mix(in srgb, var(--acc) 32%, var(--paper));
+    --t3: color-mix(in srgb, var(--acc) 48%, var(--paper));
+    --t4: color-mix(in srgb, var(--acc) 64%, var(--paper));
+    --t5: color-mix(in srgb, var(--acc) 84%, var(--paper));
+    --t6: var(--acc);
+    --jp-head: "Noto Serif JP", serif;
+    --jp-body: "BIZ UDPGothic", sans-serif;
+    --num: "IBM Plex Sans", "BIZ UDPGothic", sans-serif;
+    --desk-bg: #E4E2DC;
+    --page-bg: var(--paper);
+}
+.t1 { --c: var(--t1); --on: var(--ink); }
+.t2 { --c: var(--t2); --on: var(--ink); }
+.t3 { --c: var(--t3); --on: var(--ink); }
+.t4 { --c: var(--t4); --on: var(--ink); }
+.t5 { --c: var(--t5); --on: var(--white); }
+.t6 { --c: var(--t6); --on: var(--white); }
+
+body { font-family: var(--jp-body); color: var(--ink); }
+.page { font-family: var(--jp-body); color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page a { color: inherit; text-decoration: none; }
+.num { font-family: var(--num); font-feature-settings: "tnum"; }
+
+/* === TOOLBAR: outside .page, in the document flow (never fixed) === */
+.toolbar {
+    position: relative;
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    max-width: 1240px;
+    margin: 20px auto 0;
+    padding: 12px 16px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+    font-size: 16px;
+}
+.tb-title { font-weight: 700; }
+.tb-title small { font-weight: 400; color: var(--sub); margin-left: .4em; }
+.tb-search { display: flex; align-items: center; gap: 8px; flex: 1 1 320px; min-width: 0; flex-wrap: wrap; }
+.tb-search input { flex: 1 1 160px; }
+@media (max-width: 560px) { .tb-search label { flex-basis: 100%; } .tb-search kbd { display: none; } .toolbar { padding: 10px 12px; } }
+.tb-search label { white-space: nowrap; color: var(--sub); }
+.tb-search input {
+    min-width: 0; font: inherit; font-size: 16px; padding: 7px 10px;
+    border: 1.5px solid var(--ink); background: var(--white); border-radius: 0;
+}
+.tb-search input:focus-visible { outline: 3px solid var(--t3); outline-offset: 1px; }
+.tb-search kbd { font-family: var(--num); font-size: 13px; border: 1px solid var(--rule); padding: 1px 6px; color: var(--sub); }
+.tb-prog { font-family: var(--num); white-space: nowrap; }
+.toolbar button {
+    font: inherit; font-size: 15px; padding: 6px 12px; cursor: pointer;
+    background: transparent; border: 1px solid var(--sub); color: var(--ink);
+}
+.toolbar button:hover { background: var(--tint); }
+.tb-res { flex-basis: 100%; list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); max-height: min(420px, 60vh); overflow: auto; }
+.tb-res[hidden] { display: none; }
+.tb-res li { border-bottom: 1px solid var(--rule); }
+.tb-res button {
+    width: 100%; text-align: left; border: 0 !important; display: flex; gap: 12px; align-items: baseline; padding: 9px 4px !important;
+}
+.tb-res button[aria-selected="true"] { background: var(--tint); }
+.tb-res .r-kind { font-size: 13px; padding: 1px 7px; border: 1px solid var(--sub); white-space: nowrap; }
+.tb-res .r-kind.k-tpl { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.tb-res .r-ttl { flex: 1; }
+.tb-res .r-pg { font-family: var(--num); color: var(--sub); font-size: 14px; }
+.tb-res .r-none { padding: 10px 4px; color: var(--sub); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* === PAGE FRAME: running head, folio, publisher line, index tabs === */
+.rh {
+    position: absolute; top: 64px; left: 96px; right: 96px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 18px; color: var(--sub); padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+}
+.rh b { color: var(--ink); font-weight: 700; }
+.folio { position: absolute; bottom: 56px; right: 96px; font: 600 20px var(--num); color: var(--ink); }
+.pub { position: absolute; bottom: 58px; left: 96px; font-size: 17px; color: var(--sub); }
+
+/* Thumb-index tabs: every page carries all six at the same height, so a
+   printed copy can be thumbed; the steps on the page stand out solid. */
+.tabs { position: absolute; right: 0; top: 260px; width: 66px; display: flex; flex-direction: column; gap: 8px; }
+.tab {
+    position: relative; box-sizing: border-box; height: 176px; width: 48px; margin-left: auto;
+    display: flex; flex-direction: column; align-items: center; padding-top: 12px; gap: 8px;
+    background: color-mix(in srgb, var(--c) 40%, var(--paper)); color: var(--ink);
+    border-left: 1px solid color-mix(in srgb, var(--c) 70%, var(--paper));
+}
+.tab.is-here, .p1 .tab { width: 66px; background: var(--c); color: var(--on); border-left: 0; }
+.tab-no { font: 600 24px/1 var(--num); }
+.tab-l { writing-mode: vertical-rl; font-size: 19px; font-weight: 700; letter-spacing: .04em; line-height: 1; font-feature-settings: "vpal"; }
+.tab-done { position: absolute; bottom: 10px; width: 16px; height: 9px; border-left: 3px solid currentColor; border-bottom: 3px solid currentColor; transform: rotate(-45deg); display: none; }
+.tab.is-done .tab-done { display: block; }
+.tab:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
+
+/* === shared page content === */
+.inner { position: absolute; top: 140px; left: 96px; width: 1048px; }
+.kicker { font: 500 20px var(--num); letter-spacing: .14em; color: var(--acc); text-transform: uppercase; margin: 0 0 14px; }
+.notes { position: absolute; left: 96px; width: 1048px; bottom: 112px; font-size: 17px; color: var(--sub); line-height: 1.6; border-top: 1px solid var(--rule); padding-top: 12px; }
+.notes p { margin: 0; text-align: left; letter-spacing: 0; line-height: 1.6; }
+.sec { display: flex; align-items: baseline; gap: 18px; margin: 0 0 12px; font-size: 24px; font-weight: 700; }
+.sec small { font-size: 18px; font-weight: 400; color: var(--sub); }
+
+/* --- page 1: the procedure at a glance --- */
+.p1 h1 { font: 600 62px/1.36 var(--jp-head); margin: 0 0 22px; }
+.p1 .lead { font-size: 26px; line-height: 1.75; margin: 0 0 40px; max-width: 1000px; text-align: left; }
+.ov { width: 1048px; border-collapse: collapse; table-layout: fixed; }
+.ov th, .ov td { box-sizing: border-box; }
+.ov th { font-size: 18px; font-weight: 400; color: var(--sub); text-align: left; padding: 0 8px 10px; border-bottom: 2px solid var(--ink); }
+.ov td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: middle; font-size: 20px; line-height: 1.5; letter-spacing: 0; word-break: auto-phrase; }
+.ov .c-no { width: 60px; } .ov .c-step { width: 336px; } .ov .c-wk { width: 180px; }
+.ov .c-dur { width: 76px; } .ov .c-who { width: 176px; } .ov .c-out { width: 160px; } .ov .c-pg { width: 60px; }
+.ov th.c-wk { padding-bottom: 6px; }
+.wk-head { display: grid; grid-template-columns: repeat(4, 1fr); font-family: var(--num); font-size: 18px; }
+.wk-head span { padding-left: 4px; border-left: 1px solid var(--rule); }
+.ov-no { padding-left: 0 !important; }
+.ov-chip { display: grid; place-items: center; width: 48px; height: 48px; background: var(--c); color: var(--on) !important; font: 600 24px var(--num); }
+.ov-ttl { display: block; font-size: 24px; font-weight: 700; line-height: 1.4; }
+.ov-desc { display: block; font-size: 18px; color: var(--sub); line-height: 1.5; }
+.ov-wk { position: relative; height: 64px; padding: 0 !important; }
+.wk-g { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+.wk-g i { border-left: 1px solid var(--rule); }
+.wk-bar { position: absolute; top: 24px; height: 16px; background: var(--c); outline: 1px solid color-mix(in srgb, var(--c) 60%, var(--ink)); }
+.wk-when { position: absolute; left: 6px; bottom: 6px; font-size: 18px; color: var(--sub); line-height: 1; }
+.ov-dur { font-weight: 700; }
+.ov-pg { text-align: right; font-family: var(--num); color: var(--sub); font-size: 18px !important; }
+.ov-check { display: none; width: 16px; height: 9px; border-left: 3px solid var(--acc); border-bottom: 3px solid var(--acc); transform: rotate(-45deg); margin: 0 8px 4px 0; }
+tr.is-done .ov-check { display: inline-block; }
+tr.is-done .ov-ttl { color: var(--sub); }
+.ex-line { margin: 18px 0 0; font-size: 20px; line-height: 1.6; text-align: left; padding: 12px 16px; background: var(--tint); }
+.ex-line b { font-family: var(--num); font-size: 26px; color: var(--acc); }
+.ex-line a { color: var(--acc); border-bottom: 1px solid currentColor; }
+.p1-foot { display: grid; grid-template-columns: 600px 400px; gap: 48px; margin-top: 40px; }
+.must { list-style: none; margin: 0; padding: 0; counter-reset: m; }
+.must li { counter-increment: m; position: relative; padding: 0 0 0 48px; margin: 0 0 14px; font-size: 22px; line-height: 1.6; }
+.must li::before { content: counter(m); position: absolute; left: 0; top: 4px; width: 30px; height: 30px; display: grid; place-items: center; background: var(--ink); color: var(--white); font: 600 18px var(--num); }
+.must b { font-weight: 700; }
+.howto { margin: 0; padding: 0; list-style: none; counter-reset: h; }
+.howto li { counter-increment: h; position: relative; padding-left: 34px; margin: 0 0 10px; font-size: 20px; line-height: 1.6; }
+.howto li::before { content: counter(h); position: absolute; left: 0; top: 0; font: 600 20px/1.6 var(--num); color: var(--acc); }
+
+/* --- step pages --- */
+.ps h2 { font: 600 52px/1.36 var(--jp-head); margin: 0 0 18px; }
+.step { padding: 18px 0 18px; border-top: 1px solid var(--rule); scroll-margin-top: 24px; }
+.step:first-of-type { border-top: 2px solid var(--ink); }
+.st-head { display: grid; grid-template-columns: 64px 1fr 150px; gap: 0 22px; align-items: start; margin-bottom: 10px; }
+.st-no { display: grid; place-items: center; width: 64px; height: 64px; background: var(--c); color: var(--on); font: 600 34px var(--num); }
+.st-ttl { font: 600 34px/1.3 var(--jp-head); margin: 0 0 4px; }
+.st-meta { margin: 0; font-size: 18px; color: var(--sub); line-height: 1.55; text-align: left; letter-spacing: 0; display: flex; flex-wrap: wrap; gap: 0 22px; }
+.st-meta b { font-weight: 700; color: var(--ink); margin-right: .5em; }
+.done { display: flex; align-items: center; gap: 10px; justify-self: end; cursor: pointer; font-size: 20px; padding: 8px 10px 8px 6px; }
+.done input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.done-box { position: relative; width: 32px; height: 32px; border: 2px solid var(--ink); background: var(--white); flex: none; }
+.done input:checked + .done-box { background: var(--acc); border-color: var(--acc); }
+.done input:checked + .done-box::after { content: ""; position: absolute; left: 8px; top: 4px; width: 9px; height: 16px; border-right: 3px solid #fff; border-bottom: 3px solid #fff; transform: rotate(45deg); }
+.done input:focus-visible + .done-box { outline: 3px solid var(--t3); outline-offset: 2px; }
+.st-body { display: grid; grid-template-columns: 540px 460px; gap: 0 48px; }
+.lbl { font-size: 18px; font-weight: 700; color: var(--acc); letter-spacing: .06em; margin: 0 0 6px; }
+.lbl + * { margin-top: 0; }
+.proc { list-style: none; margin: 0 0 14px; padding: 0; counter-reset: p; }
+.proc li { counter-increment: p; position: relative; padding-left: 42px; margin: 0 0 6px; font-size: 22px; line-height: 1.6; letter-spacing: .01em; word-break: auto-phrase; }
+.proc li::before { content: counter(p); position: absolute; left: 0; top: 3px; width: 28px; height: 28px; display: grid; place-items: center; border: 1.5px solid var(--ink); border-radius: 50%; font: 600 17px var(--num); }
+.need { list-style: none; margin: 0 0 14px; padding: 0; }
+.need li { position: relative; padding-left: 22px; font-size: 19px; line-height: 1.6; margin: 0 0 2px; word-break: auto-phrase; }
+.need li::before { content: ""; position: absolute; left: 2px; top: 12px; width: 9px; height: 9px; background: var(--acc); }
+.trip { border-left: 4px solid var(--acc); padding: 2px 0 2px 16px; }
+.trip p { margin: 0; font-size: 19px; line-height: 1.6; text-align: left; word-break: auto-phrase; letter-spacing: 0; }
+.trip .q { font-weight: 700; font-size: 20px; margin-bottom: 4px; }
+.trip .fix b { display: inline-block; font-size: 17px; font-weight: 700; color: var(--white); background: var(--acc); padding: 0 6px; margin-right: 8px; line-height: 1.5; }
+.st-body.no-tpl .col-r .lbl:not(:first-child) { margin-top: 4px; }
+
+/* worked templates */
+.tpl { border: 1.5px solid var(--ink); background: var(--white); scroll-margin-top: 24px; }
+.tpl-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 14px; background: var(--ink); color: var(--white); }
+.tpl-h h4 { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.4; }
+.tpl-h h4 small { font-weight: 400; font-size: 17px; margin-left: .5em; opacity: .9; }
+.copy { font: 700 17px var(--jp-body); padding: 5px 12px; cursor: pointer; background: var(--white); color: var(--ink); border: 0; white-space: nowrap; }
+.copy:hover { background: var(--t1); }
+.copy:focus-visible { outline: 3px solid var(--t3); outline-offset: 2px; }
+.copy.ok { background: var(--t2); }
+.tpl-b { margin: 0; padding: 12px 14px 14px; font: 18.5px/1.6 var(--jp-body); white-space: pre-wrap; word-break: normal; letter-spacing: 0; color: var(--ink); }
+.tpl-b .ph { color: var(--acc); }
+.sheet { width: 100%; border-collapse: collapse; }
+.sheet th, .sheet td { border-bottom: 1px solid var(--rule); padding: 7px 12px; text-align: left; vertical-align: top; font-size: 18.5px; line-height: 1.45; letter-spacing: 0; }
+.sheet th { width: 152px; font-weight: 700; background: var(--tint); }
+.sheet td { color: var(--sub); }
+.sheet tr:last-child th, .sheet tr:last-child td { border-bottom: 0; }
+.tpl-note { margin: 6px 0 0; font-size: 17px; color: var(--sub); line-height: 1.5; text-align: left; letter-spacing: 0; }
+
+/* worked tally (step 5) */
+.calc { width: 100%; border-collapse: collapse; font-size: 18.5px; }
+.calc caption { caption-side: top; text-align: left; font-size: 18px; font-weight: 700; padding: 0 0 6px; }
+.calc caption small { font-weight: 400; color: var(--sub); }
+.calc th, .calc td { padding: 6px 6px; border-bottom: 1px solid var(--rule); line-height: 1.4; letter-spacing: 0; }
+.calc thead th { font-weight: 400; color: var(--sub); border-bottom: 2px solid var(--ink); text-align: right; font-size: 18px; }
+.calc thead th:first-child { text-align: left; }
+.calc thead small { display: block; font-size: 17px; }
+.calc tbody th, .calc tfoot th { text-align: left; font-weight: 400; word-break: auto-phrase; }
+.calc td { text-align: right; font-family: var(--num); font-feature-settings: "tnum"; }
+.calc .hl { color: var(--acc); font-weight: 600; }
+.calc tfoot th, .calc tfoot td { font-weight: 700; border-bottom: 2px solid var(--ink); }
+.calc-note { margin: 8px 0 0; font-size: 17px; color: var(--sub); line-height: 1.55; text-align: left; letter-spacing: 0; }
+.calc-note b { color: var(--ink); }
+
+/* search / tab jump target highlight */
+.flash { animation: flash 1.6s ease-out 1; }
+@keyframes flash { 0%, 40% { outline: 4px solid var(--t4); outline-offset: 6px; } 100% { outline: 4px solid transparent; outline-offset: 6px; } }
+
+/* === AIRY PASS: room by pages, never by smaller type ===
+   One idea per page; 64px between blocks, 112px between sections;
+   body 23–24px at line-height 1.85; table rows >= 56px; no rule or box
+   where a heading and space do the job. The tabs are the only thing in the
+   outer margin. */
+.rh { border-bottom: 0; }
+.p1 h1 { margin-bottom: 32px; }
+.p1 .lead { line-height: 1.85; margin-bottom: 112px; }
+.p1 .sec { margin-bottom: 24px; }
+.ov td { padding: 18px 8px; }
+.ov-desc { line-height: 1.6; }
+.p1-foot { display: block; margin-top: 112px; }
+.howto li { font-size: 22px; line-height: 1.85; margin-bottom: 6px; }
+.howto li::before { font-size: 22px; line-height: 1.85; }
+.ps .inner { top: 196px; }
+.ps .ph2 { font: 600 52px/1.4 var(--jp-head); margin: 0 0 96px; }
+.step { padding: 0; border-top: 0 !important; }
+.step + .step, .step + .must-sec, .step + .kpi { margin-top: 112px; }
+.st-head { margin-bottom: 48px; }
+.st-meta { line-height: 1.85; }
+.lbl { margin-bottom: 14px; }
+.proc { margin-bottom: 64px; }
+.col-l > :last-child, .col-r > :last-child { margin-bottom: 0; }
+.proc li { font-size: 24px; line-height: 1.85; margin-bottom: 10px; }
+.proc li::before { top: 8px; }
+.need { margin-bottom: 64px; }
+.need li { font-size: 21px; line-height: 1.85; }
+.need li::before { top: 15px; }
+.trip p { font-size: 21px; line-height: 1.85; }
+.trip .q { font-size: 22px; margin-bottom: 6px; }
+.tpl-b { font-size: 19px; line-height: 1.85; padding: 18px 18px 20px; }
+.sheet th, .sheet td { padding: 15px 14px; font-size: 19px; }
+.tpl-note { margin-top: 16px; font-size: 18px; line-height: 1.7; }
+.calc { font-size: 20px; }
+.calc th, .calc td { padding: 16px 6px; }
+.calc-note { margin-top: 20px; font-size: 18px; line-height: 1.75; }
+.must li { font-size: 23px; line-height: 1.85; margin-bottom: 24px; }
+.must li::before { top: 8px; }
+.must-sec .sec { margin-bottom: 32px; }
+.kpi { font-size: 24px; line-height: 1.85; margin: 0; text-align: left; max-width: 900px; }
+.kpi b { font: 600 44px/1 var(--num); color: var(--acc); margin: 0 4px; }
+.ov td { padding: 15px 8px; }
+.p1 h1 { margin-bottom: 28px; }
+.howto { display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: column; grid-template-rows: repeat(3, auto); gap: 0 48px; }
+.st-body { grid-template-columns: 600px 400px; }
+.ps .inner { top: 180px; }
+.ps .ph2 { margin-bottom: 88px; }
+.ps h2.sec { font: 700 26px var(--jp-body); margin: 0 0 32px; }
+.wide { display: grid; grid-template-columns: 720px 280px; gap: 0 48px; align-items: start; margin-top: 64px; }
+.wide .tpl-note, .wide .calc-note { margin-top: 0; }
+.wide .calc { grid-row: 1; }
+.kpi-k { margin: 0 0 8px; font-size: 21px; color: var(--sub); text-align: left; line-height: 1.85; }
+.kpi-v { margin: 0; font-size: 26px; text-align: left; line-height: 1.6; }
+.kpi-v b { font: 600 52px/1 var(--num); color: var(--acc); margin: 0 4px; }
+.notes { border-top: 0; }
+.ov td { padding: 13px 8px; }
+
+@media print {
+    .toolbar, .copy { display: none !important; }
+    .flash { animation: none; outline: 0; }
+    .done { padding-right: 0; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar" id="toolbar" role="region" aria-label="手引きの操作">
+    <span class="tb-title">生成AI 試行の手引き<small>（架空の教材）</small></span>
+    <div class="tb-search">
+        <label for="q">手順・ひな形を探す</label>
+        <input id="q" type="search" placeholder="例：要約、記録、報告" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="qres" aria-autocomplete="list">
+        <kbd title="/ キーで検索">/</kbd>
+    </div>
+    <span class="tb-prog" id="prog" aria-live="polite">終えた手順 0/6</span>
+    <button type="button" id="resetBtn">チェックを消す</button>
+    <ul class="tb-res" id="qres" role="listbox" aria-label="検索結果" hidden></ul>
+    <span class="sr" id="qcount" aria-live="polite"></span>
+</div>
+
+<main class="doc-stage" id="docStage">
+
+<!-- ============ PAGE 1: the procedure at a glance (d-flow-v, adapted to a table with week bars) ============ -->
+<section class="page p1" data-page="1" aria-label="1ページ 全体の流れ">
+    <header class="rh"><span><b>ソラノ商事</b>　生成AI 試行の手引き</span><span>全体の流れ　手順1–6</span></header>
+    <nav class="tabs" aria-label="手順のつめ">
+<a class="tab t1" href="#step-1" data-step="1"><span class="tab-no">1</span><span class="tab-l">対象文書</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t2" href="#step-2" data-step="2"><span class="tab-no">2</span><span class="tab-l">利用ルール</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t3" href="#step-3" data-step="3"><span class="tab-no">3</span><span class="tab-l">前を測る</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t4" href="#step-4" data-step="4"><span class="tab-no">4</span><span class="tab-l">試す</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t5" href="#step-5" data-step="5"><span class="tab-no">5</span><span class="tab-l">確かめる</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t6" href="#step-6" data-step="6"><span class="tab-no">6</span><span class="tab-l">報告</span><span class="tab-done" aria-hidden="true"></span></a>
+</nav>
+    <div class="inner">
+        <p class="kicker">Pilot guide · 4 weeks · 1 team</p>
+        <h1>生成AIの試行は、6つの手順を<br>4週間で進める</h1>
+        <p class="lead">2026年12月8日の経営会議で承認された「社内文書の要約」を、1チームで4週間試します。使う前と後の作業時間を同じ方法で測り、結論をA4 1枚で報告します。</p>
+
+        <h2 class="sec">手順・時期・担当・成果物<small>手順名か右端のつめで、各手順のページへ</small></h2>
+        <table class="ov">
+            <thead><tr>
+                <th class="c-no" scope="col" aria-label="番号"></th>
+                <th class="c-step" scope="col">手順</th>
+                <th class="c-wk" scope="col"><div class="wk-head"><span>1週</span><span>2週</span><span>3週</span><span>4週</span></div></th>
+                <th class="c-dur" scope="col">所要</th>
+                <th class="c-who" scope="col">担当</th>
+                <th class="c-out" scope="col">成果物</th>
+                <th class="c-pg" scope="col" style="text-align:right">頁</th>
+            </tr></thead>
+            <tbody>
+<tr data-step="1">
+<td class="ov-no"><a class="ov-chip t1" href="#step-1">1</a></td>
+<td class="ov-step"><a href="#step-1" class="ov-ttl">対象の文書を決める</a><span class="ov-desc">社内文書から要約する3種類を選ぶ</span></td>
+<td class="ov-wk"><span class="wk-g" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="wk-bar t1" role="img" aria-label="第1週" style="left:0.00%;width:3.50%"></span></td>
+<td class="ov-dur">半日</td>
+<td class="ov-who">試行リーダー</td>
+<td class="ov-out">対象文書の一覧（3種類まで）</td>
+<td class="ov-pg"><span class="ov-check" aria-hidden="true"></span><span class="ov-p">p.02</span></td>
+</tr>
+<tr data-step="2">
+<td class="ov-no"><a class="ov-chip t2" href="#step-2">2</a></td>
+<td class="ov-step"><a href="#step-2" class="ov-ttl">利用ルールを確かめる</a><span class="ov-desc">承認済みツールと入力範囲を決める</span></td>
+<td class="ov-wk"><span class="wk-g" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="wk-bar t2" role="img" aria-label="第1週" style="left:2.50%;width:3.50%"></span></td>
+<td class="ov-dur">半日</td>
+<td class="ov-who">リーダー・情報システム部</td>
+<td class="ov-out">入力してよい情報の一覧</td>
+<td class="ov-pg"><span class="ov-check" aria-hidden="true"></span><span class="ov-p">p.02</span></td>
+</tr>
+<tr data-step="3">
+<td class="ov-no"><a class="ov-chip t3" href="#step-3">3</a></td>
+<td class="ov-step"><a href="#step-3" class="ov-ttl">試行前の作業時間を測る</a><span class="ov-desc">AIなしの作業時間を1件ずつ記録する</span></td>
+<td class="ov-wk"><span class="wk-g" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="wk-bar t3" role="img" aria-label="第1週" style="left:5.00%;width:20.00%"></span></td>
+<td class="ov-dur">4日間</td>
+<td class="ov-who">チーム全員</td>
+<td class="ov-out">記録シート（試行前）</td>
+<td class="ov-pg"><span class="ov-check" aria-hidden="true"></span><span class="ov-p">p.03</span></td>
+</tr>
+<tr data-step="4">
+<td class="ov-no"><a class="ov-chip t4" href="#step-4">4</a></td>
+<td class="ov-step"><a href="#step-4" class="ov-ttl">業務で試す</a><span class="ov-desc">下書きはAI、事実の確認は人が行う</span></td>
+<td class="ov-wk"><span class="wk-g" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="wk-bar t4" role="img" aria-label="第2–3週" style="left:25.00%;width:50.00%"></span></td>
+<td class="ov-dur">2週間</td>
+<td class="ov-who">チーム全員</td>
+<td class="ov-out">記録シート（試行中）</td>
+<td class="ov-pg"><span class="ov-check" aria-hidden="true"></span><span class="ov-p">p.04</span></td>
+</tr>
+<tr data-step="5">
+<td class="ov-no"><a class="ov-chip t5" href="#step-5">5</a></td>
+<td class="ov-step"><a href="#step-5" class="ov-ttl">結果を確かめる</a><span class="ov-desc">確認の時間を含めて前後を比べる</span></td>
+<td class="ov-wk"><span class="wk-g" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="wk-bar t5" role="img" aria-label="第4週" style="left:75.00%;width:5.00%"></span></td>
+<td class="ov-dur">1日</td>
+<td class="ov-who">試行リーダー</td>
+<td class="ov-out">集計表</td>
+<td class="ov-pg"><span class="ov-check" aria-hidden="true"></span><span class="ov-p">p.05</span></td>
+</tr>
+<tr data-step="6">
+<td class="ov-no"><a class="ov-chip t6" href="#step-6">6</a></td>
+<td class="ov-step"><a href="#step-6" class="ov-ttl">結果を報告する</a><span class="ov-desc">続けるかどうかを結論から報告する</span></td>
+<td class="ov-wk"><span class="wk-g" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="wk-bar t6" role="img" aria-label="第4週" style="left:80.00%;width:3.50%"></span></td>
+<td class="ov-dur">半日</td>
+<td class="ov-who">試行リーダー</td>
+<td class="ov-out">A4 1枚の報告書</td>
+<td class="ov-pg"><span class="ov-check" aria-hidden="true"></span><span class="ov-p">p.06</span></td>
+</tr>
+            </tbody>
+        </table>
+
+        <div class="p1-foot">
+            <div>
+                <h2 class="sec">この手引きの使い方</h2>
+                <ol class="howto">
+                    <li>この表で全体と自分の担当を確かめる</li>
+                    <li>作業の前に、つめか検索で手順を開く</li>
+                    <li>ひな形はコピーして、そのまま使う</li>
+                    <li>終えた手順に「終えた」の印を入れる</li>
+                    <li>AIを使う前に、p.04の「必ず守る3点」を読む</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="notes">
+        <p>参考：総務省・経済産業省「AI事業者ガイドライン（第1.0版）」（2024年4月）。社内規程がある場合は規程を優先。株式会社ソラノ商事（架空）、チーム・数値もすべて架空です。</p>
+    </div>
+    <span class="pub">ソラノ研修ライブラリ（架空の教材）　実務の手引き</span>
+    <span class="folio">01</span>
+</section>
+
+<!-- ============ PAGE 2 ============ -->
+<section class="page ps p2" data-page="2" aria-label="2ページ 手順1–2">
+    <header class="rh"><span><b>ソラノ商事</b>　生成AI 試行の手引き</span><span>第1週　手順1–2</span></header>
+    <nav class="tabs" aria-label="手順のつめ">
+<a class="tab t1 is-here" href="#step-1" data-step="1"><span class="tab-no">1</span><span class="tab-l">対象文書</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t2 is-here" href="#step-2" data-step="2"><span class="tab-no">2</span><span class="tab-l">利用ルール</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t3" href="#step-3" data-step="3"><span class="tab-no">3</span><span class="tab-l">前を測る</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t4" href="#step-4" data-step="4"><span class="tab-no">4</span><span class="tab-l">試す</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t5" href="#step-5" data-step="5"><span class="tab-no">5</span><span class="tab-l">確かめる</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t6" href="#step-6" data-step="6"><span class="tab-no">6</span><span class="tab-l">報告</span><span class="tab-done" aria-hidden="true"></span></a>
+</nav>
+    <div class="inner">
+        <p class="kicker">Week 1 · Steps 1–2</p>
+        <h2 class="ph2">まず、対象の文書と利用ルールを決める</h2>
+
+        <article class="step" id="step-1" data-step="1">
+            <header class="st-head">
+<span class="st-no t1">1</span>
+<div class="st-tw"><h3 class="st-ttl">対象の文書を決める</h3>
+<p class="st-meta"><span><b>時期</b>第1週</span><span><b>所要</b>半日</span><span><b>担当</b>試行リーダー</span><span><b>成果物</b>対象文書の一覧（3種類まで）</span></p></div>
+<label class="done"><input type="checkbox" data-step="1"><span class="done-box" aria-hidden="true"></span><span class="done-l">終えた</span></label>
+</header>
+            <div class="st-body no-tpl">
+                <div class="col-l">
+                    <p class="lbl">手順</p>
+                    <ol class="proc">
+                        <li>チームが要約している社内文書を書き出す</li>
+                        <li>社外に出る前に、人が直せる文書に絞る</li>
+                        <li>個人情報・顧客情報を含む文書は外す</li>
+                        <li>3種類までに決めて、チームに伝える</li>
+                    </ol>
+                </div>
+                <div class="col-r">
+                    <p class="lbl">用意するもの</p>
+                    <ul class="need"><li>チームの1週間分の業務一覧</li><li>社内の情報区分のルール</li></ul>
+                    <p class="lbl">つまずきやすい点</p>
+                    <div class="trip">
+                        <p class="q">効果の大きい他の業務も入れたくなる</p>
+                        <p class="fix"><b>立て直し</b>承認された社内文書の要約に戻す。他の業務は次の試行で扱う。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class="step" id="step-2" data-step="2">
+            <header class="st-head">
+<span class="st-no t2">2</span>
+<div class="st-tw"><h3 class="st-ttl">利用ルールを確かめる</h3>
+<p class="st-meta"><span><b>時期</b>第1週</span><span><b>所要</b>半日</span><span><b>担当</b>リーダー・情報システム部</span><span><b>成果物</b>入力してよい情報の一覧</span></p></div>
+<label class="done"><input type="checkbox" data-step="2"><span class="done-box" aria-hidden="true"></span><span class="done-l">終えた</span></label>
+</header>
+            <div class="st-body no-tpl">
+                <div class="col-l">
+                    <p class="lbl">手順</p>
+                    <ol class="proc">
+                        <li>使うツールが会社の承認済みかを確かめる</li>
+                        <li>入力内容が学習に使われない設定かを確かめる</li>
+                        <li>入力してよい情報と、いけない情報を一覧にする</li>
+                        <li>出力は人が確かめてから使う、と全員で合意する</li>
+                    </ol>
+                </div>
+                <div class="col-r">
+                    <p class="lbl">用意するもの</p>
+                    <ul class="need"><li>承認済みの生成AIツールの名前</li><li>社内の利用規程（ない場合は1ページの参考資料）</li></ul>
+                    <p class="lbl">つまずきやすい点</p>
+                    <div class="trip">
+                        <p class="q">規程が見つからない、判断に迷う</p>
+                        <p class="fix"><b>立て直し</b>公開済みの情報だけを入力する条件で始め、判断は情報システム部に文書で確かめる。</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+    <span class="pub">ソラノ研修ライブラリ（架空の教材）</span>
+    <span class="folio">02</span>
+</section>
+
+<!-- ============ PAGE 3 ============ -->
+<section class="page ps p3" data-page="3" aria-label="3ページ 手順3">
+    <header class="rh"><span><b>ソラノ商事</b>　生成AI 試行の手引き</span><span>第1週　手順3</span></header>
+    <nav class="tabs" aria-label="手順のつめ">
+<a class="tab t1" href="#step-1" data-step="1"><span class="tab-no">1</span><span class="tab-l">対象文書</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t2" href="#step-2" data-step="2"><span class="tab-no">2</span><span class="tab-l">利用ルール</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t3 is-here" href="#step-3" data-step="3"><span class="tab-no">3</span><span class="tab-l">前を測る</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t4" href="#step-4" data-step="4"><span class="tab-no">4</span><span class="tab-l">試す</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t5" href="#step-5" data-step="5"><span class="tab-no">5</span><span class="tab-l">確かめる</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t6" href="#step-6" data-step="6"><span class="tab-no">6</span><span class="tab-l">報告</span><span class="tab-done" aria-hidden="true"></span></a>
+</nav>
+    <div class="inner">
+        <p class="kicker">Week 1 · Step 3</p>
+        <h2 class="ph2">試す前に、普段の作業時間を1件ずつ測る</h2>
+
+        <article class="step" id="step-3" data-step="3">
+            <header class="st-head">
+<span class="st-no t3">3</span>
+<div class="st-tw"><h3 class="st-ttl">試行前の作業時間を測る</h3>
+<p class="st-meta"><span><b>時期</b>第1週</span><span><b>所要</b>4日間</span><span><b>担当</b>チーム全員</span><span><b>成果物</b>記録シート（試行前）</span></p></div>
+<label class="done"><input type="checkbox" data-step="3"><span class="done-box" aria-hidden="true"></span><span class="done-l">終えた</span></label>
+</header>
+            <div class="st-body">
+                <div class="col-l">
+                    <p class="lbl">手順</p>
+                    <ol class="proc">
+                        <li>AIを使わずに、対象の作業を普段どおり行う</li>
+                        <li>1件ごとに、かかった分数を記録シートに書く</li>
+                        <li>確認や手直しの時間も含めて記録する</li>
+                        <li>週末に、作業ごとの1件あたり平均を出す</li>
+                    </ol>
+                </div>
+                <div class="col-r">
+                    <p class="lbl">つまずきやすい点</p>
+                    <div class="trip">
+                        <p class="q">記録を忘れた日がある</p>
+                        <p class="fix"><b>立て直し</b>推測で埋めず空欄のまま残す。5件未満の作業は比較に使わない。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="wide">
+                    <div class="tpl" id="tpl-sheet" data-copy="sheet">
+                        <div class="tpl-h"><h4>試行の記録シート<small>1件1行・灰色は記入例</small></h4><button type="button" class="copy" aria-label="試行の記録シートの見出しをコピー">コピー</button></div>
+                        <table class="sheet">
+                            <tr><th>日付</th><td>1/13</td></tr>
+                            <tr><th>作業名</th><td>会議資料の要約</td></tr>
+                            <tr><th>AIの使用</th><td>使った ／ 使わない</td></tr>
+                            <tr><th>作業時間</th><td>分（確認と手直しを含む）</td></tr>
+                            <tr><th>直した点</th><td>事実 ／ 数字 ／ 抜け ／ 表現</td></tr>
+                            <tr><th>入力した情報</th><td>公開 ／ 社内一般</td></tr>
+                            <tr><th>気づいたこと</th><td>効いた指示文など</td></tr>
+                        </table>
+                    </div>
+                    <p class="tpl-note">コピーすると7項目が列見出しになり、表計算ソフトにそのまま貼れます。手順4でも同じシートを使います。</p>
+                </div>
+        </article>
+    </div>
+    <span class="pub">ソラノ研修ライブラリ（架空の教材）</span>
+    <span class="folio">03</span>
+</section>
+
+<!-- ============ PAGE 4 ============ -->
+<section class="page ps p4" data-page="4" aria-label="4ページ 手順4">
+    <header class="rh"><span><b>ソラノ商事</b>　生成AI 試行の手引き</span><span>第2–3週　手順4</span></header>
+    <nav class="tabs" aria-label="手順のつめ">
+<a class="tab t1" href="#step-1" data-step="1"><span class="tab-no">1</span><span class="tab-l">対象文書</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t2" href="#step-2" data-step="2"><span class="tab-no">2</span><span class="tab-l">利用ルール</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t3" href="#step-3" data-step="3"><span class="tab-no">3</span><span class="tab-l">前を測る</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t4 is-here" href="#step-4" data-step="4"><span class="tab-no">4</span><span class="tab-l">試す</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t5" href="#step-5" data-step="5"><span class="tab-no">5</span><span class="tab-l">確かめる</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t6" href="#step-6" data-step="6"><span class="tab-no">6</span><span class="tab-l">報告</span><span class="tab-done" aria-hidden="true"></span></a>
+</nav>
+    <div class="inner">
+        <p class="kicker">Weeks 2–3 · Step 4</p>
+        <h2 class="ph2">下書きはAIに任せ、<br>事実と数字は人が確かめる</h2>
+
+        <article class="step" id="step-4" data-step="4">
+            <header class="st-head">
+<span class="st-no t4">4</span>
+<div class="st-tw"><h3 class="st-ttl">業務で試す</h3>
+<p class="st-meta"><span><b>時期</b>第2–3週</span><span><b>所要</b>2週間</span><span><b>担当</b>チーム全員</span><span><b>成果物</b>記録シート（試行中）</span></p></div>
+<label class="done"><input type="checkbox" data-step="4"><span class="done-box" aria-hidden="true"></span><span class="done-l">終えた</span></label>
+</header>
+            <div class="st-body">
+                <div class="col-l">
+                    <p class="lbl">手順</p>
+                    <ol class="proc">
+                        <li>対象の作業で、AIに下書きを作らせる</li>
+                        <li>数字・固有名詞・日付を元の資料と照らす</li>
+                        <li>直した点と分数を記録シートに書く</li>
+                        <li>週1回15分、効いた指示文を共有する</li>
+                    </ol>
+                    <p class="lbl">つまずきやすい点</p>
+                    <div class="trip">
+                        <p class="q">もっともらしい誤り（ハルシネーション）を見落とす</p>
+                        <p class="fix"><b>立て直し</b>見つけた誤りを記録して共有し、指示文に「資料にない内容は書かない」を加える。</p>
+                    </div>
+                </div>
+                <div class="col-r">
+                    <div class="tpl" id="tpl-prompt" data-copy="text">
+                        <div class="tpl-h"><h4>社内文書の要約プロンプト</h4><button type="button" class="copy" aria-label="社内文書の要約プロンプトをコピー">コピー</button></div>
+<pre class="tpl-b">あなたは社内文書の要約担当です。
+次の文書を要約してください。
+条件：
+・結論／根拠／期限と担当に分ける
+・文書にない内容は書かない
+・分からない点は「不明」と書く
+・300字以内の箇条書きにする
+文書：
+<span class="ph">（社外秘・個人名を含む部分は除いて貼る）</span></pre>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <section class="must-sec" aria-labelledby="must-h">
+            <h2 class="sec" id="must-h">必ず守る3点<small>AIを使うたびに確かめる</small></h2>
+            <ul class="must">
+                <li><b>個人情報・顧客情報・機密情報は入力しない。</b>迷う情報も入力しない。</li>
+                <li><b>出力の事実・数字・固有名詞は、人が元の資料で確かめる。</b>そのまま社外に出さない。</li>
+                <li><b>社外に出す文章や画像は、他者の著作物に似すぎていないか確かめる。</b></li>
+            </ul>
+        </section>
+    </div>
+    <span class="pub">ソラノ研修ライブラリ（架空の教材）</span>
+    <span class="folio">04</span>
+</section>
+
+<!-- ============ PAGE 5 ============ -->
+<section class="page ps p5" data-page="5" aria-label="5ページ 手順5">
+    <header class="rh"><span><b>ソラノ商事</b>　生成AI 試行の手引き</span><span>第4週　手順5</span></header>
+    <nav class="tabs" aria-label="手順のつめ">
+<a class="tab t1" href="#step-1" data-step="1"><span class="tab-no">1</span><span class="tab-l">対象文書</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t2" href="#step-2" data-step="2"><span class="tab-no">2</span><span class="tab-l">利用ルール</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t3" href="#step-3" data-step="3"><span class="tab-no">3</span><span class="tab-l">前を測る</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t4" href="#step-4" data-step="4"><span class="tab-no">4</span><span class="tab-l">試す</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t5 is-here" href="#step-5" data-step="5"><span class="tab-no">5</span><span class="tab-l">確かめる</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t6" href="#step-6" data-step="6"><span class="tab-no">6</span><span class="tab-l">報告</span><span class="tab-done" aria-hidden="true"></span></a>
+</nav>
+    <div class="inner">
+        <p class="kicker">Week 4 · Step 5</p>
+        <h2 class="ph2">確認と手直しの時間も含めて、<br>前後を比べる</h2>
+
+        <article class="step" id="step-5" data-step="5">
+            <header class="st-head">
+<span class="st-no t5">5</span>
+<div class="st-tw"><h3 class="st-ttl">結果を確かめる</h3>
+<p class="st-meta"><span><b>時期</b>第4週</span><span><b>所要</b>1日</span><span><b>担当</b>試行リーダー</span><span><b>成果物</b>集計表</span></p></div>
+<label class="done"><input type="checkbox" data-step="5"><span class="done-box" aria-hidden="true"></span><span class="done-l">終えた</span></label>
+</header>
+            <div class="st-body">
+                <div class="col-l">
+                    <p class="lbl">手順</p>
+                    <ol class="proc">
+                        <li>作業ごとに、前後の1件あたり分数を比べる</li>
+                        <li>直した件数と、誤りの種類を数える</li>
+                        <li>入力してはいけない情報の入力がないか確かめる</li>
+                        <li>続ける・範囲を変える・やめる、を決める</li>
+                    </ol>
+                </div>
+                <div class="col-r">
+                    <p class="lbl">つまずきやすい点</p>
+                    <div class="trip">
+                        <p class="q">時間は減ったが、手直しが増えている</p>
+                        <p class="fix"><b>立て直し</b>手直し込みで比べ直し、減らない作業は外す。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="wide">
+<table class="calc">
+<thead><tr><th scope="col">作業</th><th scope="col">試行前</th><th scope="col">試行中</th><th scope="col">件数</th><th scope="col">修正</th><th scope="col">削減</th></tr></thead>
+<tbody><tr><th scope="row">会議資料の要約</th><td>30</td><td>18</td><td>20</td><td>6</td><td class="hl">240</td></tr>
+<tr><th scope="row">報告書の要約</th><td>24</td><td>15</td><td>16</td><td>4</td><td class="hl">144</td></tr>
+<tr><th scope="row">通達・規程の要約</th><td>20</td><td>12</td><td>12</td><td>2</td><td class="hl">96</td></tr></tbody>
+<tfoot><tr><th scope="row">合計</th><td></td><td></td><td>48</td><td>12</td><td class="hl">480</td></tr></tfoot>
+</table>
+                    <p class="calc-note">集計の例（営業企画課・架空のデータ）。試行前＝第1週、試行中＝第2–3週の1件あたり平均（分）。削減（分）＝（試行前−試行中）×件数。例：会議資料の要約は1件 30分→18分（−40%）。合計 <b>480分 ≒ 8.0時間</b>。</p>
+                </div>
+        </article>
+        <div class="kpi">
+            <p class="kpi-k">試行の例（架空のデータ）　営業企画課8名・3種類の文書・2週間</p>
+            <p class="kpi-v">計 <b>8.0</b> 時間を削減　1人あたり週 <b>30</b> 分</p>
+        </div>
+    </div>
+    <span class="pub">ソラノ研修ライブラリ（架空の教材）</span>
+    <span class="folio">05</span>
+</section>
+
+<!-- ============ PAGE 6 ============ -->
+<section class="page ps p6" data-page="6" aria-label="6ページ 手順6">
+    <header class="rh"><span><b>ソラノ商事</b>　生成AI 試行の手引き</span><span>第4週　手順6</span></header>
+    <nav class="tabs" aria-label="手順のつめ">
+<a class="tab t1" href="#step-1" data-step="1"><span class="tab-no">1</span><span class="tab-l">対象文書</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t2" href="#step-2" data-step="2"><span class="tab-no">2</span><span class="tab-l">利用ルール</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t3" href="#step-3" data-step="3"><span class="tab-no">3</span><span class="tab-l">前を測る</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t4" href="#step-4" data-step="4"><span class="tab-no">4</span><span class="tab-l">試す</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t5" href="#step-5" data-step="5"><span class="tab-no">5</span><span class="tab-l">確かめる</span><span class="tab-done" aria-hidden="true"></span></a>
+<a class="tab t6 is-here" href="#step-6" data-step="6"><span class="tab-no">6</span><span class="tab-l">報告</span><span class="tab-done" aria-hidden="true"></span></a>
+</nav>
+    <div class="inner">
+        <p class="kicker">Week 4 · Step 6</p>
+        <h2 class="ph2">結論から、A4 1枚で報告する</h2>
+
+        <article class="step" id="step-6" data-step="6">
+            <header class="st-head">
+<span class="st-no t6">6</span>
+<div class="st-tw"><h3 class="st-ttl">結果を報告する</h3>
+<p class="st-meta"><span><b>時期</b>第4週</span><span><b>所要</b>半日</span><span><b>担当</b>試行リーダー</span><span><b>成果物</b>A4 1枚の報告書</span></p></div>
+<label class="done"><input type="checkbox" data-step="6"><span class="done-box" aria-hidden="true"></span><span class="done-l">終えた</span></label>
+</header>
+            <div class="st-body">
+                <div class="col-l">
+                    <p class="lbl">手順</p>
+                    <ol class="proc">
+                        <li>ひな形に沿って、結論から書く</li>
+                        <li>数字は集計表から写し、確認時間込みと書く</li>
+                        <li>誤りの例と、その防ぎ方を1つ載せる</li>
+                        <li>次の試行の対象と期間を提案する</li>
+                    </ol>
+                </div>
+                <div class="col-r">
+                    <p class="lbl">つまずきやすい点</p>
+                    <div class="trip">
+                        <p class="q">良い結果だけを書きたくなる</p>
+                        <p class="fix"><b>立て直し</b>効果のない作業も、やめる判断も成果として載せる。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="wide">
+                    <div class="tpl" id="tpl-report" data-copy="text">
+                        <div class="tpl-h"><h4>報告のひな形<small>A4 1枚</small></h4><button type="button" class="copy" aria-label="報告のひな形をコピー">コピー</button></div>
+<pre class="tpl-b">件名：生成AI試行の結果報告（<span class="ph">〇〇課</span>・4週間）
+1 結論：続ける ／ 範囲を変える ／ やめる
+2 対象：文書の種類（3種類まで）、期間、人数
+3 時間：1件 <span class="ph">〇</span>分 → <span class="ph">〇</span>分（確認時間を含む）
+4 品質：<span class="ph">〇</span>件中 <span class="ph">〇</span>件を修正。主な誤り：
+5 ルール：入力禁止の情報の入力 <span class="ph">〇</span>件
+6 次の提案：対象、期間、必要な支援</pre>
+                    </div>
+                </div>
+        </article>
+    </div>
+    <span class="pub">ソラノ研修ライブラリ（架空の教材）</span>
+    <span class="folio">06</span>
+</section>
+</main>
+
+<script>
+(() => {
+    /* FIT: scale the 1240px column to the visual viewport width; print resets it */
+    const stage = document.getElementById('docStage');
+    const fit = () => {
+        const w = window.visualViewport ? visualViewport.width : innerWidth;
+        stage.style.zoom = Math.min(1, (w - 32) / 1240);
+    };
+    fit();
+    addEventListener('resize', fit);
+    if (window.visualViewport) visualViewport.addEventListener('resize', fit);
+
+    /* STORAGE: every access wrapped, so blocked storage only loses persistence */
+    const KEY = 'learning-playbook:' + location.pathname;
+    const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } };
+    const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* storage blocked */ } };
+
+    /* DONE CHECKS: one box per step; mirrored on the tabs and the page-1 table */
+    const boxes = [...document.querySelectorAll('.done input')];
+    const prog = document.getElementById('prog');
+    const render = done => {
+        boxes.forEach(b => { b.checked = done.includes(+b.dataset.step); });
+        document.querySelectorAll('.tab, .ov tr[data-step]').forEach(el => el.classList.toggle('is-done', done.includes(+el.dataset.step)));
+        prog.textContent = `終えた手順 ${done.length}/6`;
+    };
+    let done = load().filter(n => n >= 1 && n <= 6);
+    render(done);
+    boxes.forEach(b => b.addEventListener('change', () => {
+        const n = +b.dataset.step;
+        done = b.checked ? [...new Set([...done, n])].sort() : done.filter(x => x !== n);
+        save(done); render(done);
+    }));
+    document.getElementById('resetBtn').addEventListener('click', () => { done = []; save(done); render(done); });
+
+    /* JUMP: tabs, page-1 links and search results all land here */
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const jump = id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+        history.replaceState(null, '', '#' + id);
+    };
+    document.querySelectorAll('.page a[href^="#"]').forEach(a => a.addEventListener('click', ev => { ev.preventDefault(); jump(a.getAttribute('href').slice(1)); }));
+
+    /* COPY: plain text for prompts and reports; the record sheet copies as a tab-separated header row */
+    const copyText = async text => {
+        try { await navigator.clipboard.writeText(text); return true; } catch (e) { /* fall back */ }
+        try {
+            const ta = document.createElement('textarea');
+            ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+            document.body.appendChild(ta); ta.select();
+            const ok = document.execCommand('copy'); ta.remove(); return ok;
+        } catch (e) { return false; }
+    };
+    document.querySelectorAll('.tpl .copy').forEach(btn => btn.addEventListener('click', async () => {
+        const tpl = btn.closest('.tpl');
+        const text = tpl.dataset.copy === 'sheet'
+            ? [...tpl.querySelectorAll('.sheet th')].map(th => th.textContent.trim()).join('\t') + '\n'
+            : tpl.querySelector('.tpl-b').textContent + '\n';
+        tpl.dataset.copied = text;
+        const ok = await copyText(text);
+        btn.textContent = ok ? 'コピーしました' : '選択してコピーしてください';
+        btn.classList.toggle('ok', ok);
+        if (!ok) { const r = document.createRange(); r.selectNodeContents(tpl.querySelector('.tpl-b, .sheet')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+        clearTimeout(btn._t); btn._t = setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('ok'); }, 2200);
+    }));
+
+    /* SEARCH / QUICK JUMP: filters the six steps and three templates by their text */
+    const INDEX = [{"kind": "手順", "id": "step-1", "no": 1, "title": "対象の文書を決める", "page": 2, "kw": "対象文書 社内文書から要約する3種類を選ぶ 試行リーダー 対象文書の一覧（3種類まで） 第1週"}, {"kind": "手順", "id": "step-2", "no": 2, "title": "利用ルールを確かめる", "page": 2, "kw": "利用ルール 承認済みツールと入力範囲を決める リーダー・情報システム部 入力してよい情報の一覧 第1週"}, {"kind": "手順", "id": "step-3", "no": 3, "title": "試行前の作業時間を測る", "page": 3, "kw": "前を測る AIなしの作業時間を1件ずつ記録する チーム全員 記録シート（試行前） 第1週"}, {"kind": "手順", "id": "step-4", "no": 4, "title": "業務で試す", "page": 4, "kw": "試す 下書きはAI、事実の確認は人が行う チーム全員 記録シート（試行中） 第2–3週"}, {"kind": "手順", "id": "step-5", "no": 5, "title": "結果を確かめる", "page": 5, "kw": "確かめる 確認の時間を含めて前後を比べる 試行リーダー 集計表 第4週"}, {"kind": "手順", "id": "step-6", "no": 6, "title": "結果を報告する", "page": 6, "kw": "報告 続けるかどうかを結論から報告する 試行リーダー A4 1枚の報告書 第4週"}, {"kind": "ひな形", "id": "tpl-sheet", "no": 3, "title": "試行の記録シート", "page": 3, "kw": "記録 シート 時間 分 測る 表計算"}, {"kind": "ひな形", "id": "tpl-prompt", "no": 4, "title": "社内文書の要約プロンプト", "page": 4, "kw": "プロンプト 指示文 社内文書 要約 会議資料 報告書"}, {"kind": "ひな形", "id": "tpl-report", "no": 6, "title": "報告のひな形", "page": 6, "kw": "報告 報告書 結論 上司"}];
+    INDEX.forEach(it => { const el = document.getElementById(it.id); it.text = (it.title + ' ' + it.kw + ' ' + (el ? el.textContent : '')).replace(/\s+/g, ' '); });
+    const q = document.getElementById('q'), res = document.getElementById('qres'), count = document.getElementById('qcount');
+    let hits = [], sel = 0;
+    const norm = s => s.normalize('NFKC').toLowerCase();
+    const draw = () => {
+        const terms = norm(q.value).split(/[\s　、,]+/).filter(Boolean);
+        hits = INDEX.filter(it => terms.every(t => norm(it.text).includes(t)));
+        sel = Math.min(sel, Math.max(hits.length - 1, 0));
+        res.innerHTML = '';
+        if (!hits.length) { const li = document.createElement('li'); li.className = 'r-none'; li.textContent = '該当する手順・ひな形はありません'; res.appendChild(li); }
+        hits.forEach((it, i) => {
+            const li = document.createElement('li');
+            const b = document.createElement('button');
+            b.type = 'button'; b.setAttribute('role', 'option'); b.id = 'opt-' + it.id;
+            b.setAttribute('aria-selected', String(i === sel));
+            b.innerHTML = `<span class="r-kind${it.kind === 'ひな形' ? ' k-tpl' : ''}"></span><span class="r-ttl"></span><span class="r-pg"></span>`;
+            b.querySelector('.r-kind').textContent = it.kind === '手順' ? `手順 ${it.no}` : `ひな形・手順${it.no}`;
+            b.querySelector('.r-ttl').textContent = it.title;
+            b.querySelector('.r-pg').textContent = 'p.' + String(it.page).padStart(2, '0');
+            b.addEventListener('mousedown', ev => ev.preventDefault());
+            b.addEventListener('click', () => go(it));
+            li.appendChild(b); res.appendChild(li);
+        });
+        if (hits[sel]) q.setAttribute('aria-activedescendant', 'opt-' + hits[sel].id); else q.removeAttribute('aria-activedescendant');
+        count.textContent = `${hits.length}件`;
+    };
+    const open = () => { res.hidden = false; q.setAttribute('aria-expanded', 'true'); draw(); };
+    const close = () => { res.hidden = true; q.setAttribute('aria-expanded', 'false'); };
+    const go = it => { close(); q.blur(); jump(it.id); };
+    q.addEventListener('focus', open);
+    q.addEventListener('input', () => { sel = 0; open(); });
+    q.addEventListener('blur', () => setTimeout(close, 120));
+    q.addEventListener('keydown', ev => {
+        if (ev.key === 'ArrowDown') { ev.preventDefault(); sel = Math.min(sel + 1, hits.length - 1); draw(); }
+        else if (ev.key === 'ArrowUp') { ev.preventDefault(); sel = Math.max(sel - 1, 0); draw(); }
+        else if (ev.key === 'Enter') { ev.preventDefault(); if (hits[sel]) go(hits[sel]); }
+        else if (ev.key === 'Escape') { q.value = ''; close(); q.blur(); }
+    });
+    addEventListener('keydown', ev => {
+        if (ev.key === '/' && document.activeElement !== q && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+            ev.preventDefault(); q.scrollIntoView({ block: 'nearest' }); q.focus();
+        }
+    });
+    if (location.hash.length > 1) setTimeout(() => jump(location.hash.slice(1)), 50);
+})();
+</script>
+</body>
+</html>

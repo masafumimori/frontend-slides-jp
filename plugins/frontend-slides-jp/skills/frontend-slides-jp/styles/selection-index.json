@@ -325,6 +325,159 @@
       }
     },
     {
+      "slug": "learning-decision",
+      "name": "Learning Decision",
+      "name_ja": "判断ガイド",
+      "tagline": "A decision guide for managers: the recommendation first, a scored comparison, a yes/no decision tree, worked failure cases, a worksheet that walks the reader's own task through the tree, and a pre-launch checklist.",
+      "summary_ja": "淡い紙色の地に弁柄1色。1ページ目で論点・期限・推奨・条件を先に示し、比較表、4つの問いの分岐図、失敗例、自分の業務を同じ問いで判定するワークシート、始める前の確認へと進む。1ページに1つの話題、広い余白。",
+      "group": "learning",
+      "mood": [
+        "editorial",
+        "calm",
+        "trustworthy"
+      ],
+      "formality": "high",
+      "density": "low",
+      "scheme": "light",
+      "best_for": "社会人・管理職が判断するための研修資料や社内ガイド（導入する用途の選定、承認の条件決め、ツールや施策の採否）。全体をつかんでから、自分の案件で判断する短時間学習向け",
+      "avoid_for": "学校の教科書・問題集、手順を手で練習する演習教材、暗記中心の資格対策、投影する授業スライド",
+      "formats": [
+        "doc-a4"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Serif JP",
+        "body": "IBM Plex Sans JP",
+        "latin": [
+          "Fraunces"
+        ]
+      },
+      "palette": [
+        "#1D2027",
+        "#575B63",
+        "#DCD8CF",
+        "#F1EDE5",
+        "#A8402B",
+        "#FBFAF7"
+      ],
+      "preview_md": "styles/learning-decision/preview.md",
+      "design_md": "styles/learning-decision/design.md",
+      "references": {
+        "doc-a4": {
+          "html": "styles/learning-decision/reference-a4.html",
+          "thumbs": [
+            "styles/learning-decision/thumbs-a4/01.jpg",
+            "styles/learning-decision/thumbs-a4/02.jpg",
+            "styles/learning-decision/thumbs-a4/03.jpg",
+            "styles/learning-decision/thumbs-a4/04.jpg"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "learning-layered",
+      "name": "Learning Layered",
+      "name_ja": "全体から細部へ読む学習書",
+      "tagline": "A calm editorial study book for working adults: a whole-topic map first, then every topic in three depths (30 seconds, 3 minutes, deep dive) with one switch, and a mini-map of where you are in the margin.",
+      "summary_ja": "生成り地に朱1色。1頁目は全テーマの地図。各テーマは「30秒（結論と図）」「3分（理由と手順）」「深掘り（例外・条件・出典）」の3段で、深さの切替1つで全頁が開閉する。余白のミニ地図で現在地を示し、押すとその頁へ移動。印刷はすべての深さを収める。",
+      "group": "learning",
+      "mood": [
+        "editorial",
+        "calm",
+        "professional"
+      ],
+      "formality": "high",
+      "density": "low",
+      "scheme": "light",
+      "best_for": "社会人・管理職向けの研修冊子、社内の手引き、判断の進め方の解説書（全体をつかんでから必要な判断の頁だけを読み、仕事中に引き直して判断する人向け）",
+      "avoid_for": "問題を解いて手を動かす演習中心の教材、小中高の教科書・問題集、暗記用の教材、投影する講演スライド",
+      "formats": [
+        "doc-a4"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Serif JP",
+        "body": "BIZ UDPGothic",
+        "latin": [
+          "Schibsted Grotesk"
+        ]
+      },
+      "palette": [
+        "#1D1F22",
+        "#575B60",
+        "#D8D3C8",
+        "#B2381F",
+        "#F2EFE7",
+        "#FBFAF6"
+      ],
+      "preview_md": "styles/learning-layered/preview.md",
+      "design_md": "styles/learning-layered/design.md",
+      "references": {
+        "doc-a4": {
+          "html": "styles/learning-layered/reference-a4.html",
+          "thumbs": [
+            "styles/learning-layered/thumbs-a4/01.jpg",
+            "styles/learning-layered/thumbs-a4/02.jpg",
+            "styles/learning-layered/thumbs-a4/03.jpg",
+            "styles/learning-layered/thumbs-a4/04.jpg"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "learning-playbook",
+      "name": "Learning Playbook",
+      "name_ja": "実務の手引き",
+      "tagline": "A job aid for adults who have to do the work: the whole procedure on page 1, thumb-index tabs in six shades of one accent, one step per page with copyable templates, done checks that persist and a quick-jump search.",
+      "summary_ja": "1ページ目に手順・時期・担当・成果物の一覧表、右端に1色の濃淡で6段のつめ。手順ページは「手順／用意するもの／つまずきやすい点と立て直し」と、コピーしてそのまま使えるひな形。終えた印は保存され、ツールバーの検索で手順とひな形へ飛べる。",
+      "group": "learning",
+      "mood": [
+        "calm",
+        "practical",
+        "editorial"
+      ],
+      "formality": "high",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "社会人・管理職が業務で手を動かすための手引き（試行・導入・申請・立ち上げの手順書、研修後に職場で使う実務マニュアル、ひな形つきの進め方ガイド）。全体をつかんでから、必要な手順だけを作業中に引く読み方",
+      "avoid_for": "判断や比較が主題の資料（判断ガイド型を使う）、物語や事例を読ませる教材、問題演習・暗記中心の学習書、子ども向け教材、投影するスライド",
+      "formats": [
+        "doc-a4"
+      ],
+      "writing": "horizontal",
+      "needs": [],
+      "fonts": {
+        "heading": "Noto Serif JP",
+        "body": "BIZ UDPGothic",
+        "latin": [
+          "IBM Plex Sans"
+        ]
+      },
+      "palette": [
+        "#1D5873",
+        "#1B1F23",
+        "#50575D",
+        "#D3CFC6",
+        "#F1EFE8",
+        "#FBFAF6"
+      ],
+      "preview_md": "styles/learning-playbook/preview.md",
+      "design_md": "styles/learning-playbook/design.md",
+      "references": {
+        "doc-a4": {
+          "html": "styles/learning-playbook/reference-a4.html",
+          "thumbs": [
+            "styles/learning-playbook/thumbs-a4/01.jpg",
+            "styles/learning-playbook/thumbs-a4/02.jpg",
+            "styles/learning-playbook/thumbs-a4/03.jpg",
+            "styles/learning-playbook/thumbs-a4/04.jpg"
+          ]
+        }
+      }
+    },
+    {
       "slug": "office-report",
       "name": "Office Report",
       "name_ja": "社内報告書",

@@ -1,6 +1,6 @@
 ---
 name: frontend-slides-jp
-description: Create Japanese-first HTML presentations and A4 portrait documents, from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks and reports or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, create slides for a talk or pitch, or make a document to read such as an integrated report, company brochure (会社案内), government plan, internal report, recruiting brochure, infographic booklet or whitepaper. Helps non-designers pick a look by seeing it.
+description: Create Japanese-first HTML presentations and A4 portrait documents, from scratch or by converting PowerPoint files, in styles drawn from well-regarded Japanese decks and reports or the user's own design system. Use when the user wants to build a presentation, convert a PPT/PPTX to web, create slides for a talk or pitch, or make a document to read such as an integrated report, company brochure (会社案内), government plan, internal report, recruiting brochure, infographic booklet, whitepaper, textbook, workbook or training material. Helps non-designers pick a look by seeing it.
 ---
 
 # Frontend Slides JP

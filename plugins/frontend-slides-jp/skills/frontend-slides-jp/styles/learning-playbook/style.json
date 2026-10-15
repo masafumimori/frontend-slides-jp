@@ -1,0 +1,43 @@
+{
+  "slug": "learning-playbook",
+  "name": "Learning Playbook",
+  "name_ja": "実務の手引き",
+  "tagline": "A job aid for adults who have to do the work: the whole procedure on page 1, thumb-index tabs in six shades of one accent, one step per page with copyable templates, done checks that persist and a quick-jump search.",
+  "summary_ja": "1ページ目に手順・時期・担当・成果物の一覧表、右端に1色の濃淡で6段のつめ。手順ページは「手順／用意するもの／つまずきやすい点と立て直し」と、コピーしてそのまま使えるひな形。終えた印は保存され、ツールバーの検索で手順とひな形へ飛べる。",
+  "group": "learning",
+  "mood": [
+    "calm",
+    "practical",
+    "editorial"
+  ],
+  "formality": "high",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "社会人・管理職が業務で手を動かすための手引き（試行・導入・申請・立ち上げの手順書、研修後に職場で使う実務マニュアル、ひな形つきの進め方ガイド）。全体をつかんでから、必要な手順だけを作業中に引く読み方",
+  "avoid_for": "判断や比較が主題の資料（判断ガイド型を使う）、物語や事例を読ませる教材、問題演習・暗記中心の学習書、子ども向け教材、投影するスライド",
+  "formats": [
+    "doc-a4"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Serif JP",
+    "body": "BIZ UDPGothic",
+    "latin": [
+      "IBM Plex Sans"
+    ]
+  },
+  "colors": {
+    "accent": "#1D5873",
+    "ink": "#1B1F23",
+    "sub": "#50575D",
+    "rule": "#D3CFC6",
+    "tint": "#F1EFE8",
+    "paper": "#FBFAF6"
+  },
+  "refs": [
+    "Rossett & Schafer, Job Aids and Performance Support (2007)",
+    "Gawande, The Checklist Manifesto (2009)",
+    "社内研修の実務マニュアル・導入手順書（手順・担当・成果物の一覧表とひな形集）"
+  ]
+}

@@ -1,0 +1,871 @@
+<!-- proposal: I 判断ガイド型 — 決める人のための6ページ。論点と推奨を先に示し、比較表、4つの問いの分岐図、失敗例で判断の手がかりを渡し、最後に自分の候補業務を同じ問いで判定させ、始める前の確認で締める。 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成AIを業務に入れるときの判断と進め方｜I 判断ガイド（架空の教材）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=IBM+Plex+Sans+JP:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap" rel="stylesheet">
+<!--
+  Design notes (learning research behind the layout)
+  - Decision support: the guide answers "what should I approve" before it explains why.
+    Page 1 is a decision brief (論点・決める人・期限・推奨・条件), the shape managers already
+    read in 稟議 and board papers, so the big picture comes first; the scored comparison sits
+    on its own page for when the detail is needed.
+  - Recognition-primed decision (Klein, Sources of Power, 1998): experienced people decide by
+    recognising a situation from a few cues and checking one workable course of action, not by
+    weighing every option. The tree on page 3 hands the reader those cues as four yes/no
+    questions, ordered so the risks that cannot be mitigated (data, then unchecked errors) are
+    asked before the ones that can (review, cost).
+  - Worked failure cases / learning from errors (error management training, e.g. Keith & Frese,
+    2008 meta-analysis): short, concrete failures tied to the question that would have caught
+    them make the cue memorable and show what a "yes" looks like in practice (page 4).
+  - Generation and transfer: page 5 makes the reader apply the same questions to their own
+    task. The outcome and the conditions to attach appear only after they answer.
+  - Look-up use: one idea per page, running head, a chapter tab that steps down the outer
+    edge page by page, and Q1–Q4 labels shared by the tree, the cases and the worksheet.
+  - Airy layout: blocks are 64px apart, sections 112px; body 23px at line-height 1.85.
+-->
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+
+/* === TOKENS === */
+:root {
+    --desk-bg: #e6e3dc;
+    --page-bg: #fbfaf7;
+    --ink: #1d2027;
+    --sub: #575b63;
+    --mute: #8a8d93;
+    --rule: #dcd8cf;
+    --rule-strong: #1d2027;
+    --tint: #f1ede5;
+    --accent: #a8402b;
+    --accent-tint: #f6e8e2;
+    --serif: "Noto Serif JP", serif;
+    --sans: "IBM Plex Sans JP", sans-serif;
+    --lat: "Fraunces", "Noto Serif JP", serif;
+    --gap-block: 64px;
+    --gap-section: 112px;
+}
+
+body { font-family: var(--sans); color: var(--ink); }
+
+/* === TOOLBAR (outside the pages, in normal flow) === */
+.toolbar {
+    max-width: 1240px; margin: 0 auto; padding: 16px 16px 0;
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    font-family: var(--sans); font-size: clamp(13px, 1.6vw, 15px); color: var(--sub);
+}
+.toolbar .tt { margin-right: auto; }
+.toolbar button {
+    font: inherit; color: var(--ink); background: #fff;
+    border: 1px solid #b9b4a9; border-radius: 3px; padding: 6px 12px; cursor: pointer;
+}
+.toolbar button:hover { border-color: var(--ink); }
+.toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* === PAGE FRAME === */
+.page { font-family: var(--sans); color: var(--ink); }
+.rh {
+    position: absolute; top: 64px; left: 96px; right: 96px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 19px; color: var(--sub);
+}
+.rh b { font-weight: 600; color: var(--ink); }
+.rh .lat { font-family: var(--lat); font-weight: 600; color: var(--ink); margin-right: 10px; }
+/* The outer margin holds one thing only: the chapter tab, stepping down page by page. */
+.tab {
+    position: absolute; right: 0; width: 46px; height: 220px;
+    background: var(--ink); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl; font-feature-settings: "vpal";
+    font-size: 19px; letter-spacing: 0.06em;
+}
+.tab .n { font-family: var(--lat); text-combine-upright: all; margin-bottom: 10px; }
+.p1 .tab { top: 200px; }
+.p2 .tab { top: 430px; }
+.p3 .tab { top: 660px; }
+.p4 .tab { top: 890px; }
+.p5 .tab { top: 1120px; }
+.p6 .tab { top: 1350px; }
+.pf {
+    position: absolute; left: 96px; right: 96px; bottom: 56px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 18px; color: var(--sub);
+}
+.folio { font-family: var(--lat); font-size: 20px; color: var(--ink); }
+.folio small { font-size: 18px; color: var(--sub); }
+
+.body {
+    position: absolute; top: 140px; left: 96px; right: 96px; bottom: 120px;
+    display: flex; flex-direction: column;
+    padding-top: 72px; box-sizing: border-box;
+}
+.body > * { flex: none; }
+.body > .note { margin-top: auto; }
+
+/* === TYPE === */
+.kick {
+    margin: 0; font-size: 20px; color: var(--sub); letter-spacing: 0.02em;
+    display: flex; align-items: baseline; gap: 14px;
+}
+.kick .lat {
+    font-family: var(--lat); font-size: 22px; font-weight: 600; color: var(--accent);
+    letter-spacing: 0.08em; text-transform: uppercase;
+}
+h1, h2 {
+    font-family: var(--serif); font-weight: 600; margin: 18px 0 0;
+    font-size: 60px; line-height: 1.4; letter-spacing: 0;
+}
+.lead {
+    margin: 32px 0 0; font-size: 26px; line-height: 1.8; color: var(--ink);
+    text-align: left; word-break: auto-phrase; max-width: 960px;
+}
+.n { font-family: var(--lat); font-weight: 600; }
+p { font-size: 23px; margin: 0; }
+:where(.page) :where(p, li, td, dd) { line-height: 1.85; }
+.h3 {
+    font-family: var(--serif); font-weight: 600; font-size: 30px; margin: 0;
+    display: flex; align-items: baseline; gap: 14px;
+}
+.h3 .lat { font-family: var(--lat); font-size: 19px; color: var(--sub); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.sec { margin-top: var(--gap-section); }
+.blk { margin-top: var(--gap-block); }
+.note {
+    padding-top: 18px; border-top: 1px solid var(--rule);
+    font-size: 17px; line-height: 1.75; color: var(--sub); text-align: left;
+}
+.note b { color: var(--ink); font-weight: 600; }
+
+/* === PAGE 1: decision frame === */
+.frame { display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px; row-gap: 0; margin: var(--gap-section) 0 0; }
+.frame div { display: grid; grid-template-columns: 112px 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.frame dt { font-size: 18px; color: var(--sub); font-weight: 600; }
+.frame dd { margin: 0; font-size: 23px; line-height: 1.6; word-break: auto-phrase; }
+.why { display: grid; grid-template-columns: 492px 492px; column-gap: 64px; }
+.why .h4 { font-family: var(--serif); font-size: 26px; font-weight: 600; margin: 0 0 20px; }
+.why ul { margin: 0; padding: 0; list-style: none; }
+.why li { font-size: 23px; line-height: 1.7; padding: 0 0 0 28px; position: relative; word-break: normal; }
+.why li + li { margin-top: 20px; }
+.why li::before { content: ""; position: absolute; left: 2px; top: 16px; width: 10px; height: 10px; background: var(--ink); }
+.pointer { font-size: 20px; color: var(--sub); line-height: 1.8; }
+.pointer .n { color: var(--ink); }
+
+/* === PAGE 2: comparison table (from d-priority-table: options × criteria, pick row highlighted) === */
+.cmp-cap { display: flex; justify-content: space-between; align-items: baseline; }
+.cmp-cap .leg { font-size: 18px; color: var(--sub); }
+table.cmp { width: 100%; border-collapse: collapse; margin-top: 24px; table-layout: fixed; }
+.cmp col.c-opt { width: 320px; }
+.cmp col.c-tot { width: 104px; }
+.cmp thead th {
+    font-size: 19px; font-weight: 600; text-align: left; color: var(--ink);
+    padding: 12px 6px 16px 14px; border-bottom: 2px solid var(--rule-strong); vertical-align: bottom; line-height: 1.4;
+}
+.cmp thead th + th { padding-left: 0; }
+.cmp thead th .w { display: block; font-family: var(--lat); font-weight: 500; font-size: 18px; color: var(--sub); }
+.cmp tbody th, .cmp tbody td {
+    padding: 24px 6px 24px 0; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; word-break: normal;
+}
+.cmp tbody th { font-weight: 400; padding-left: 14px; }
+.cmp .opt { display: flex; align-items: baseline; gap: 10px; font-size: 24px; font-weight: 600; line-height: 1.4; }
+.cmp .ok { font-family: var(--lat); font-size: 20px; color: var(--sub); width: 18px; flex: none; }
+.cmp .who, .cmp .vd { display: block; font-size: 18px; color: var(--sub); line-height: 1.6; padding-left: 28px; }
+.cmp .who { margin-top: 6px; }
+.cmp .vd { color: var(--ink); }
+.cmp .tag { font-size: 18px; font-weight: 600; color: #fff; background: var(--accent); padding: 1px 8px; border-radius: 2px; line-height: 1.5; white-space: nowrap; }
+.cell-score { white-space: nowrap; display: block; }
+.pips { width: 96px; height: 16px; vertical-align: middle; display: inline-block; max-width: none; max-height: none; }
+.pips rect { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.pips rect.on { fill: var(--ink); }
+.sc { font-family: var(--lat); font-weight: 600; font-size: 22px; margin-left: 10px; vertical-align: middle; }
+.cmp .fact { display: block; white-space: nowrap; font-size: 18px; color: var(--sub); margin-top: 10px; line-height: 1.45; }
+.cmp .tot { text-align: right; padding-right: 4px; }
+.cmp .tv { display: block; font-family: var(--lat); font-weight: 600; font-size: 36px; line-height: 1.1; }
+.cmp .rk { display: block; font-size: 18px; color: var(--sub); margin-top: 6px; }
+.cmp tr.pick th, .cmp tr.pick td { background: var(--accent-tint); }
+.cmp tr.pick th { box-shadow: inset 5px 0 0 var(--accent); }
+.cmp tr.pick .pips rect { stroke: var(--accent); }
+.cmp tr.pick .pips rect.on { fill: var(--accent); }
+.cmp tr.pick .tv, .cmp tr.pick .opt .ok { color: var(--accent); }
+.method { display: grid; grid-template-columns: 492px 492px; column-gap: 64px; }
+.method .h4 { font-family: var(--serif); font-size: 24px; font-weight: 600; margin: 0 0 14px; }
+.method p { font-size: 23px; }
+
+/* === PAGE 3: decision tree (custom: no yes/no tree pattern in diagrams.md) === */
+.tree { position: relative; width: 1048px; height: 636px; }
+.tree svg { position: absolute; inset: 0; width: 1048px; height: 636px; max-width: none; max-height: none; overflow: visible; }
+.tree svg .ln { stroke: var(--ink); stroke-width: 2; fill: none; }
+.tree svg .ln.hot { stroke: var(--accent); stroke-width: 5; }
+.tree svg .ah { fill: var(--ink); }
+.tree svg .ah.hot { fill: var(--accent); }
+.q, .end { position: absolute; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; }
+.q { background: #fff; border: 2px solid var(--ink); padding: 10px 18px; }
+.q .ql { font-size: 18px; font-weight: 600; color: var(--sub); display: flex; gap: 10px; align-items: baseline; }
+.q .ql .qn { font-family: var(--lat); font-size: 22px; color: var(--ink); }
+.q .qt { font-size: 23px; line-height: 1.5; margin-top: 2px; word-break: auto-phrase; }
+.q.hot { border-color: var(--accent); border-width: 3px; }
+.end { padding: 8px 16px; background: var(--tint); border-left: 6px solid var(--ink); }
+.end .et { font-family: var(--serif); font-size: 26px; font-weight: 700; line-height: 1.3; }
+.end .es { font-size: 18px; color: var(--sub); line-height: 1.45; margin-top: 4px; }
+.end.go { background: var(--accent-tint); border-left-color: var(--accent); }
+.end.go .et { color: var(--accent); }
+.end.stop { background: #fff; border: 1.5px dashed var(--mute); border-left: 6px solid var(--mute); }
+.yn { position: absolute; font-size: 19px; font-weight: 600; color: var(--ink); line-height: 1; background: var(--page-bg); padding: 2px 4px; }
+.yn.hot { color: var(--accent); }
+.fig-cap { margin-top: 24px; font-size: 18px; color: var(--sub); display: flex; gap: 28px; align-items: center; }
+.fig-cap .k { display: inline-flex; align-items: center; gap: 8px; }
+.fig-cap .k::before { content: ""; width: 36px; height: 5px; background: var(--accent); display: inline-block; }
+
+/* === PAGE 4: failure cases === */
+.case { display: grid; grid-template-columns: 112px 1fr 340px; column-gap: 40px; }
+.case + .case { margin-top: var(--gap-block); }
+.case .cn { font-size: 18px; color: var(--sub); line-height: 1.5; }
+.case .cn .lat { display: block; font-family: var(--lat); font-weight: 600; font-size: 40px; color: var(--ink); line-height: 1.1; margin-bottom: 6px; }
+.case .ct { font-family: var(--serif); font-size: 26px; font-weight: 600; line-height: 1.45; margin: 0 0 10px; }
+.case p { font-size: 23px; }
+.case .catch { padding-top: 6px; }
+.case .catch .cq { font-size: 18px; font-weight: 600; color: var(--sub); }
+.case .catch .cq .qn { font-family: var(--lat); font-size: 22px; color: var(--ink); margin-right: 6px; }
+.case .catch p { margin-top: 8px; text-align: left; word-break: auto-phrase; }
+
+/* === PAGE 5: worksheet === */
+.task { display: grid; grid-template-columns: 170px 1fr; align-items: center; gap: 16px; }
+.task label { font-size: 20px; font-weight: 600; }
+.task input {
+    font: inherit; font-size: 23px; color: var(--ink);
+    border: none; border-bottom: 2px solid var(--ink); background: transparent;
+    padding: 8px 4px; width: 100%; box-sizing: border-box;
+}
+.task input:focus { outline: none; border-bottom-color: var(--accent); }
+.task input::placeholder { color: var(--mute); }
+.wq { display: grid; grid-template-columns: 112px 1fr 268px; column-gap: 24px; align-items: center; padding: 18px 0; }
+.wq + .wq { border-top: 1px solid var(--rule); }
+.wq .qn { font-family: var(--lat); font-size: 28px; font-weight: 600; line-height: 1; }
+.wq .qn small { display: block; font-family: var(--sans); font-size: 18px; color: var(--sub); font-weight: 600; margin-top: 6px; }
+.wq .qt { font-size: 23px; line-height: 1.6; word-break: auto-phrase; }
+.wq .skipnote { display: none; font-size: 18px; color: var(--sub); margin-top: 2px; }
+.wq.skipped .qt, .wq.skipped .qn { color: var(--sub); }
+.wq.skipped .skipnote { display: block; }
+.wq.skipped .seg { opacity: 0.35; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid var(--ink); }
+.seg label { position: relative; cursor: pointer; }
+.seg label + label { border-left: 2px solid var(--ink); }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg span { display: flex; align-items: center; justify-content: center; gap: 10px; height: 56px; font-size: 22px; font-weight: 600; background: #fff; }
+.seg span::before { content: ""; width: 18px; height: 18px; border: 2px solid currentColor; border-radius: 50%; box-sizing: border-box; }
+.seg input:checked + span { background: var(--ink); color: #fff; }
+.seg input:checked + span::before { background: radial-gradient(circle, #fff 0 4px, transparent 5px); }
+.seg input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: -5px; }
+.seg input:disabled + span { cursor: default; }
+
+.result { display: grid; grid-template-columns: 330px 1fr; column-gap: 48px; border-left: 6px solid var(--ink); padding: 4px 0 4px 32px; }
+.result[data-r="go"] { border-left-color: var(--accent); }
+.result .rl { font-size: 18px; color: var(--sub); font-weight: 600; }
+.result .rv { font-family: var(--serif); font-size: 46px; font-weight: 700; line-height: 1.3; margin-top: 8px; }
+.result .rw { font-size: 20px; line-height: 1.7; color: var(--sub); margin-top: 12px; word-break: auto-phrase; }
+.result[data-r="go"] .rv { color: var(--accent); }
+.result ol { margin: 12px 0 0; padding: 0; list-style: none; counter-reset: c; }
+.result li { font-size: 23px; line-height: 1.6; padding: 4px 0 4px 36px; position: relative; word-break: normal; counter-increment: c; }
+.result li::before { content: counter(c); position: absolute; left: 0; top: 7px; font-family: var(--lat); font-weight: 600; font-size: 20px; width: 24px; text-align: center; border-bottom: 2px solid var(--ink); line-height: 1.2; }
+.result .empty { font-size: 20px; color: var(--sub); margin-top: 12px; line-height: 1.7; }
+.print-only { display: none; }
+.lead .screen-only { display: inline; }
+.lead .print-only { display: none; }
+
+/* === PAGE 6: checklist === */
+.chk .head { display: flex; justify-content: flex-end; align-items: baseline; }
+.chk .prog { font-size: 20px; color: var(--sub); }
+.chk .prog .n { font-size: 28px; color: var(--ink); }
+.chk ul { list-style: none; margin: 24px 0 0; padding: 0; }
+.chk li + li { border-top: 1px solid var(--rule); }
+.chk label { display: grid; grid-template-columns: 34px 64px 1fr; gap: 12px; align-items: center; padding: 18px 0; cursor: pointer; }
+.chk input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chk .box { width: 28px; height: 28px; border: 2px solid var(--ink); box-sizing: border-box; position: relative; background: #fff; }
+.chk input:checked + .box { background: var(--ink); }
+.chk input:checked + .box::after { content: ""; position: absolute; left: 8px; top: 3px; width: 7px; height: 13px; border: solid #fff; border-width: 0 3px 3px 0; transform: rotate(45deg); }
+.chk input:focus-visible + .box { outline: 3px solid var(--accent); outline-offset: 2px; }
+.chk .no { font-family: var(--lat); font-weight: 600; font-size: 20px; color: var(--sub); }
+.chk .tx { font-size: 23px; line-height: 1.6; word-break: auto-phrase; }
+.chk input:checked ~ .tx { color: var(--sub); }
+
+/* === PRINT === */
+@media print {
+    .toolbar { display: none !important; }
+    .screen-only { display: none !important; }
+    .print-only { display: block; }
+    .lead .print-only { display: inline; }
+    .task input { color: transparent; }
+    .task input::placeholder { color: transparent; }
+    .wq.skipped .qt, .wq.skipped .qn { color: var(--ink); }
+    .wq .skipnote, .wq.skipped .skipnote { display: none; }
+    .wq.skipped .seg { opacity: 1; }
+    .seg input:checked + span { background: #fff; color: var(--ink); }
+    .seg input:checked + span::before { background: none; }
+    .chk input:checked + .box { background: #fff; }
+    .chk input:checked + .box::after { display: none; }
+    .chk input:checked ~ .tx { color: var(--ink); }
+    .chk .prog { display: none; }
+    .result, .result[data-r="go"] { border-left-color: var(--ink); }
+    .result[data-r="go"] .rv { color: var(--ink); }
+    .pr-boxes { display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
+    .pr-boxes span { font-size: 23px; font-weight: 600; display: inline-flex; align-items: center; gap: 12px; }
+    .pr-boxes span::before { content: ""; width: 26px; height: 26px; border: 2px solid var(--ink); box-sizing: border-box; display: inline-block; }
+    .pr-lines div { border-bottom: 1px solid var(--ink); height: 56px; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar" role="toolbar" aria-label="操作">
+    <span class="tt">5・6ページの回答とチェックは、この端末のブラウザにだけ保存されます。</span>
+    <button type="button" id="btnReset">回答とチェックを消す</button>
+    <button type="button" id="btnPrint">印刷する（記入用）</button>
+</div>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ PAGE 1: the decision framed ============ -->
+<section class="page p1">
+    <header class="rh"><span><span class="lat">I</span><b>生成AIを業務に入れるときの判断と進め方</b>　判断ガイド</span><span>1　決める論点</span></header>
+    <div class="tab"><span class="n">1</span>決める論点</div>
+    <div class="body">
+        <p class="kick"><span class="lat">Decision Brief</span>株式会社ソラノ商事（架空）　業務改革室</p>
+        <h1>最初に承認する用途は、<br>「社内文書の要約」がよい</h1>
+        <p class="lead">4つの候補を効果・リスク・始めやすさ・費用で比べると、社内文書の要約が総合<span class="n">4.40</span>点で最も高い。入力に個人情報を含まず、誤りは社内で止まり、今の契約のまま始められる。</p>
+
+        <dl class="frame sec">
+            <div><dt>決めること</dt><dd>最初に全社で試す用途を1つ選ぶ</dd></div>
+            <div><dt>決める人</dt><dd>業務改革担当の執行役員</dd></div>
+            <div><dt>期限</dt><dd><span class="n">2026</span>年<span class="n">12</span>月<span class="n">8</span>日の経営会議</dd></div>
+            <div><dt>対象外</dt><dd>顧客への自動送信と人事の判断</dd></div>
+        </dl>
+
+        <div class="why sec">
+            <div>
+                <p class="h4">要約を先にする理由</p>
+                <p>要約を読む人は元の文書を持っているので、誤りに気づきやすい。対象の<span class="n">180</span>人が週<span class="n">30</span>分ずつ短くなれば、年<span class="n">4,140</span>時間になる（試算）。問い合わせ回答は、顧客情報の扱いを決めてから試す。</p>
+            </div>
+            <div>
+                <p class="h4">承認につける条件</p>
+                <ul>
+                    <li>対象は「社内一般」区分の文書に限る</li>
+                    <li>会社が契約したサービスだけを使う</li>
+                    <li><span class="n">4</span>週間の試行の前後で、作業時間を測る</li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="pointer blk">比較の詳細は <span class="n">p.2</span>、判定の分岐図は <span class="n">p.3</span>、自分の業務の判定は <span class="n">p.5</span>。</p>
+
+        <p class="note"><b>注</b>　社名・人数・時間・金額はすべて架空のデータ。</p>
+    </div>
+    <footer class="pf"><span>（架空の教材）ソラノ研修ライブラリ　管理職のための生成AI入門</span><span class="folio">01 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ PAGE 2: the comparison ============ -->
+<section class="page p2">
+    <header class="rh"><span><span class="lat">I</span><b>生成AIを業務に入れるときの判断と進め方</b>　判断ガイド</span><span>2　候補の比較</span></header>
+    <div class="tab"><span class="n">2</span>候補の比較</div>
+    <div class="body">
+        <p class="kick"><span class="lat">Options</span>4つの候補の比較</p>
+        <h2>効果は問い合わせ回答が最大だが、<br>総合では要約が1位になる</h2>
+        <p class="lead">リスクと始めやすさの重みを効果と同じかそれに近く置いたため、顧客情報を扱う候補は順位を下げる。</p>
+
+        <div class="sec">
+            <table class="cmp" style="margin-top:0">
+                <colgroup><col class="c-opt"><col><col><col><col><col class="c-tot"></colgroup>
+                <thead><tr>
+                    <th scope="col">候補（対象）</th>
+                    <th scope="col">効果<span class="w">30%</span></th>
+                    <th scope="col">リスクの低さ<span class="w">30%</span></th>
+                    <th scope="col">始めやすさ<span class="w">25%</span></th>
+                    <th scope="col">費用<span class="w">15%</span></th>
+                    <th scope="col" style="text-align:right">総合<span class="w">加重平均</span></th>
+                </tr></thead>
+                <tbody>
+<tr class="pick">
+<th scope="row"><span class="opt"><span class="ok">A</span>社内文書の要約<span class="tag">推奨</span></span><span class="who">全部署・180人</span><span class="vd">分岐図の判定：すぐ試す</span></th>
+<td><span class="cell-score"><svg class="pips e" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中4点">4</span></span><span class="fact">4,140時間/年</span></td>
+<td><span class="cell-score"><svg class="pips r" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中4点">4</span></span><span class="fact">個人情報なし</span></td>
+<td><span class="cell-score"><svg class="pips s" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5" class="on"/></svg><span class="sc" aria-label="5点中5点">5</span></span><span class="fact">今の契約で可</span></td>
+<td><span class="cell-score"><svg class="pips c" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5" class="on"/></svg><span class="sc" aria-label="5点中5点">5</span></span><span class="fact">追加なし</span></td>
+<td class="tot"><span class="tv">4.40</span><span class="rk">1位</span></td>
+</tr>
+<tr>
+<th scope="row"><span class="opt"><span class="ok">B</span>問い合わせ回答の下書き</span><span class="who">サポート部・24人</span><span class="vd">分岐図の判定：見送る</span></th>
+<td><span class="cell-score"><svg class="pips e" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5" class="on"/></svg><span class="sc" aria-label="5点中5点">5</span></span><span class="fact">4,416時間/年</span></td>
+<td><span class="cell-score"><svg class="pips r" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5"/><rect x="40.75" y="0.75" width="14.5" height="14.5"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中1点">1</span></span><span class="fact">顧客情報を扱う</span></td>
+<td><span class="cell-score"><svg class="pips s" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中2点">2</span></span><span class="fact">連携開発が要る</span></td>
+<td><span class="cell-score"><svg class="pips c" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中2点">2</span></span><span class="fact">360万円/年</span></td>
+<td class="tot"><span class="tv">2.60</span><span class="rk">4位</span></td>
+</tr>
+<tr>
+<th scope="row"><span class="opt"><span class="ok">C</span>議事録の作成</span><span class="who">管理職・企画・120人</span><span class="vd">分岐図の判定：見送る</span></th>
+<td><span class="cell-score"><svg class="pips e" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中4点">4</span></span><span class="fact">3,680時間/年</span></td>
+<td><span class="cell-score"><svg class="pips r" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中2点">2</span></span><span class="fact">発言者名を含む</span></td>
+<td><span class="cell-score"><svg class="pips s" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中4点">4</span></span><span class="fact">録音の同意が要る</span></td>
+<td><span class="cell-score"><svg class="pips c" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中3点">3</span></span><span class="fact">144万円/年</span></td>
+<td class="tot"><span class="tv">3.25</span><span class="rk">2位</span></td>
+</tr>
+<tr>
+<th scope="row"><span class="opt"><span class="ok">D</span>コード補助</span><span class="who">情報システム部・30人</span><span class="vd">分岐図の判定：条件付きで試す</span></th>
+<td><span class="cell-score"><svg class="pips e" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中3点">3</span></span><span class="fact">2,760時間/年</span></td>
+<td><span class="cell-score"><svg class="pips r" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中3点">3</span></span><span class="fact">本番障害のおそれ</span></td>
+<td><span class="cell-score"><svg class="pips s" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中3点">3</span></span><span class="fact">開発環境の設定</span></td>
+<td><span class="cell-score"><svg class="pips c" viewBox="0 0 96 16" aria-hidden="true"><rect x="0.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="20.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="40.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="60.75" y="0.75" width="14.5" height="14.5" class="on"/><rect x="80.75" y="0.75" width="14.5" height="14.5"/></svg><span class="sc" aria-label="5点中4点">4</span></span><span class="fact">108万円/年</span></td>
+<td class="tot"><span class="tv">3.15</span><span class="rk">3位</span></td>
+</tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="method blk">
+            <div>
+                <p>総合は、効果×30%、リスクの低さ×30%、始めやすさ×25%、費用×15%の和。次点は議事録の作成（3.25点）。</p>
+            </div>
+            <div>
+                <p>効果の時間は、対象人数×週の削減分×46週。「分岐図の判定」は <span class="n">p.3</span> の4つの問いによる。</p>
+            </div>
+        </div>
+
+        <p class="note"><b>注</b>　各基準5点満点で、リスク・費用は低いほど高い点。人数・時間・金額・点数はすべて架空のデータ。</p>
+    </div>
+    <footer class="pf"><span>（架空の教材）ソラノ研修ライブラリ　管理職のための生成AI入門</span><span class="folio">02 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ PAGE 3: decision tree ============ -->
+<section class="page p3">
+    <header class="rh"><span><span class="lat">I</span><b>生成AIを業務に入れるときの判断と進め方</b>　判断ガイド</span><span>3　判定の分岐図</span></header>
+    <div class="tab"><span class="n">3</span>分岐図</div>
+    <div class="body">
+        <p class="kick"><span class="lat">Decision Tree</span>4つの問い</p>
+        <h2>4つの問いに順に答えると、<br>試し方が3つのどれかに決まる</h2>
+        <p class="lead">対策で補えないリスクから先に聞く。情報の漏えい、確かめられない誤り（ハルシネーション）、人の確認、費用の順だ。太線は社内文書の要約がたどる経路。</p>
+
+        <div class="tree sec" id="tree" role="img" aria-label="判断の分岐図。Q1 データに個人情報や顧客の情報が入るなら見送る。入らなければQ2。Q2 誤りが社外や経営の判断に届きうるならQ3、届かないならQ4。Q3 全件を確認できるなら条件付きで試す、できないなら見送る。Q4 今の契約か試行予算で始められるならすぐ試す、そうでなければ条件付きで試す。">
+            <svg viewBox="0 0 1048 636" aria-hidden="true">
+                <defs>
+                    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+                    <marker id="ahh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path class="ah hot" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <path class="ln" d="M380,58 H836" marker-end="url(#ah)"/>
+                <path class="ln hot" d="M190,116 V176" marker-end="url(#ahh)"/>
+                <path class="ln hot" d="M380,238 H456" marker-end="url(#ahh)"/>
+                <path class="ln" d="M190,296 V356" marker-end="url(#ah)"/>
+                <path class="ln hot" d="M790,260 H836" marker-end="url(#ahh)"/>
+                <path class="ln" d="M380,418 H836" marker-end="url(#ah)"/>
+                <path class="ln" d="M625,340 V418"/>
+                <path class="ln" d="M190,476 V536" marker-end="url(#ah)"/>
+            </svg>
+
+            <div class="q" style="left:0;top:0;width:380px;height:116px"><span class="ql"><span class="qn">Q1</span>データ</span><span class="qt">入力に、個人情報や顧客から<br>預かった情報が入るか</span></div>
+            <div class="q hot" style="left:0;top:180px;width:380px;height:116px"><span class="ql"><span class="qn">Q2</span>正確さ</span><span class="qt">誤りが、社外の相手や<br>経営の判断に届きうるか</span></div>
+            <div class="q" style="left:0;top:360px;width:380px;height:116px"><span class="ql"><span class="qn">Q3</span>人の確認</span><span class="qt">使う前に担当者が、全件を<br>原文と照らして確認できるか</span></div>
+            <div class="q hot" style="left:460px;top:180px;width:330px;height:160px"><span class="ql"><span class="qn">Q4</span>費用</span><span class="qt">今の契約か、<br>月<span class="n">10</span>万円以内の試行予算で<br>始められるか</span></div>
+
+            <div class="end stop" style="left:840px;top:2px;width:208px;height:112px"><span class="et">見送る</span><span class="es">情報を外した形に<br>組み替えて再判定</span></div>
+            <div class="end go" style="left:840px;top:204px;width:208px;height:112px"><span class="et">すぐ試す</span><span class="es"><span class="n">4</span>週間、抜き取りで<br>内容を確認</span></div>
+            <div class="end" style="left:840px;top:353px;width:208px;height:130px"><span class="et">条件付きで<br>試す</span><span class="es">条件を書面で承認</span></div>
+            <div class="end stop" style="left:0;top:540px;width:380px;height:96px"><span class="et">見送る</span><span class="es">確認する人と手順を決めてから再判定</span></div>
+
+            <span class="yn" style="left:396px;top:26px">はい</span>
+            <span class="yn hot" style="left:204px;top:136px">いいえ</span>
+            <span class="yn hot" style="left:392px;top:206px">いいえ</span>
+            <span class="yn" style="left:204px;top:316px">はい</span>
+            <span class="yn hot" style="left:794px;top:228px">はい</span>
+            <span class="yn" style="left:396px;top:386px">はい</span>
+            <span class="yn" style="left:639px;top:370px">いいえ</span>
+            <span class="yn" style="left:204px;top:496px">いいえ</span>
+        </div>
+        <p class="fig-cap"><span>図　候補業務の判定の分岐</span><span class="k">社内文書の要約の経路（Q1いいえ→Q2いいえ→Q4はい）</span></p>
+
+        <p class="note"><b>注</b>　考え方の参考：総務省・経済産業省「AI事業者ガイドライン（第1.0版）」（2024年4月）。生成AIは、もっともらしい誤りを出すことがある。社外に出す文書や判断の根拠にする文書は、人が原文と照らして確認する。</p>
+    </div>
+    <footer class="pf"><span>（架空の教材）ソラノ研修ライブラリ　管理職のための生成AI入門</span><span class="folio">03 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ PAGE 4: failure cases ============ -->
+<section class="page p4">
+    <header class="rh"><span><span class="lat">I</span><b>生成AIを業務に入れるときの判断と進め方</b>　判断ガイド</span><span>4　失敗例</span></header>
+    <div class="tab"><span class="n">4</span>失敗例</div>
+    <div class="body">
+        <p class="kick"><span class="lat">Failure Cases</span>失敗例と、止められた問い</p>
+        <h2>3つの失敗は、どれも<br>分岐図の問い1つで止められた</h2>
+        <p class="lead">よくある失敗を、前ページの問いに当てはめて読む。右の欄が、その場で答えていれば止まった問い。</p>
+
+        <div class="cases sec">
+            <div class="case">
+                <div class="cn"><span class="lat">01</span>問い合わせ<br>回答</div>
+                <div><p class="ct">顧客のメールを<br>個人のAIサービスに貼った</p><p>サポート担当が、氏名と注文番号入りの顧客メールを個人契約の無料サービスに貼った。規程違反として報告対象に。</p></div>
+                <div class="catch"><span class="cq"><span class="qn">Q1</span>データで止まる</span><p>「はい」で見送り。顧客情報を伏せる手順を整えてから再判定。</p></div>
+            </div>
+            <div class="case">
+                <div class="cn"><span class="lat">02</span>手順書の<br>作成</div>
+                <div><p class="ct">確認する人を決めずに<br>手順書を公開した</p><p>AIで下書きした経費申請の手順書を、確認せず社内ポータルに載せた。廃止済みの様式が混ざり、差し戻しが続いた。</p></div>
+                <div class="catch"><span class="cq"><span class="qn">Q3</span>人の確認で止まる</span><p>Q2は「はい」。公開前に原文と照らす人を決めていれば防げた。</p></div>
+            </div>
+            <div class="case">
+                <div class="cn"><span class="lat">03</span>文書の<br>要約</div>
+                <div><p class="ct">部署ごとに<br>別のサービスを契約した</p><p>要約を試す3部署が、別々の有料サービスを申し込んだ。同じ用途の契約が重なり、費用は見込みの<span style="white-space:nowrap">3倍</span>になった。</p></div>
+                <div class="catch"><span class="cq"><span class="qn">Q4</span>費用で止まる</span><p>今の契約で始められるかを先に確かめれば、重複は起きなかった。</p></div>
+            </div>
+        </div>
+
+        <p class="note"><b>注</b>　事例は説明のために作った架空のもの。</p>
+    </div>
+    <footer class="pf"><span>（架空の教材）ソラノ研修ライブラリ　管理職のための生成AI入門</span><span class="folio">04 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ PAGE 5: worksheet ============ -->
+<section class="page p5">
+    <header class="rh"><span><span class="lat">I</span><b>生成AIを業務に入れるときの判断と進め方</b>　判断ガイド</span><span>5　自分の状況で決める</span></header>
+    <div class="tab"><span class="n">5</span>自分で決める</div>
+    <div class="body">
+        <p class="kick"><span class="lat">Worksheet</span>自分の状況で決める</p>
+        <h2>自分の候補業務を、<br>同じ4つの問いで判定する</h2>
+        <p class="lead"><span class="screen-only">候補を1つ書き、上から順に答える。判定と、承認を求めるときに添える条件が出る。</span><span class="print-only">候補を1つ書き、p.3の分岐図をたどって答える。判定に印をつけ、添える条件を書く。</span></p>
+
+        <div class="task sec">
+            <label for="taskName">候補の業務</label>
+            <input id="taskName" type="text" autocomplete="off" placeholder="例：営業日報から週報の下書きを作る" maxlength="40">
+        </div>
+
+        <div class="ws blk" id="ws">
+            <div class="wq" data-q="q1">
+                <div class="qn">Q1<small>データ</small></div>
+                <div><div class="qt">入力に、個人情報や顧客から預かった情報が入るか</div><div class="skipnote"></div></div>
+                <div class="seg" role="radiogroup" aria-label="Q1 データ"><label><input type="radio" name="q1" value="yes"><span>はい</span></label><label><input type="radio" name="q1" value="no"><span>いいえ</span></label></div>
+            </div>
+            <div class="wq" data-q="q2">
+                <div class="qn">Q2<small>正確さ</small></div>
+                <div><div class="qt">誤りが、社外の相手や経営の判断に届きうるか</div><div class="skipnote"></div></div>
+                <div class="seg" role="radiogroup" aria-label="Q2 正確さ"><label><input type="radio" name="q2" value="yes"><span>はい</span></label><label><input type="radio" name="q2" value="no"><span>いいえ</span></label></div>
+            </div>
+            <div class="wq" data-q="q3">
+                <div class="qn">Q3<small>人の確認</small></div>
+                <div><div class="qt">使う前に担当者が、全件を原文と照らして確認できるか</div><div class="skipnote"></div></div>
+                <div class="seg" role="radiogroup" aria-label="Q3 人の確認"><label><input type="radio" name="q3" value="yes"><span>はい</span></label><label><input type="radio" name="q3" value="no"><span>いいえ</span></label></div>
+            </div>
+            <div class="wq" data-q="q4">
+                <div class="qn">Q4<small>費用</small></div>
+                <div><div class="qt">今の契約か、月<span class="n">10</span>万円以内の試行予算で始められるか</div><div class="skipnote"></div></div>
+                <div class="seg" role="radiogroup" aria-label="Q4 費用"><label><input type="radio" name="q4" value="yes"><span>はい</span></label><label><input type="radio" name="q4" value="no"><span>いいえ</span></label></div>
+            </div>
+        </div>
+
+        <div class="result blk" id="result" aria-live="polite">
+            <div>
+                <div class="rl">判定</div>
+                <div class="rv screen-only" id="rv">未回答</div>
+                <div class="rw screen-only" id="rw">Q1から順に答えると、ここに判定が出る。</div>
+                <div class="print-only">
+                    <div class="pr-boxes"><span>すぐ試す</span><span>条件付きで試す</span><span>見送る</span></div>
+                </div>
+            </div>
+            <div class="conds">
+                <div class="rl">承認を求めるときに添える条件</div>
+                <ol class="screen-only" id="conds"></ol>
+                <p class="empty screen-only" id="condsEmpty">判定が出ると、経路に応じた条件が並ぶ。</p>
+                <div class="print-only pr-lines"><div></div><div></div><div></div></div>
+            </div>
+        </div>
+
+        <p class="note"><b>注</b>　回答はこの端末のブラウザにだけ保存され、送信されない。印刷すると記入用（空欄）になる。</p>
+    </div>
+    <footer class="pf"><span>（架空の教材）ソラノ研修ライブラリ　管理職のための生成AI入門</span><span class="folio">05 <small>/ 06</small></span></footer>
+</section>
+
+<!-- ============ PAGE 6: checklist ============ -->
+<section class="page p6">
+    <header class="rh"><span><span class="lat">I</span><b>生成AIを業務に入れるときの判断と進め方</b>　判断ガイド</span><span>6　始める前の確認</span></header>
+    <div class="tab"><span class="n">6</span>始める前に</div>
+    <div class="body">
+        <p class="kick"><span class="lat">Checklist</span>始める前の確認</p>
+        <h2>試行を始める前に、<br>8つの準備を済ませる</h2>
+        <p class="lead">判定が「すぐ試す」でも「条件付き」でも、承認を求める前にそろえておく。チェックはこの端末に保存される。</p>
+
+        <div class="chk sec">
+            <div class="head">
+                <span class="prog" id="prog"><span class="n" id="progN">0</span> / 8 完了</span>
+            </div>
+            <ul id="chkList">
+                <li><label><input type="checkbox" data-k="c1"><span class="box"></span><span class="no">01</span><span class="tx">対象の業務と、使う人の範囲を決めた</span></label></li>
+                <li><label><input type="checkbox" data-k="c2"><span class="box"></span><span class="no">02</span><span class="tx">入力してよい情報の範囲を、文書で示した</span></label></li>
+                <li><label><input type="checkbox" data-k="c3"><span class="box"></span><span class="no">03</span><span class="tx">会社が承認したサービスと設定だけを使う</span></label></li>
+                <li><label><input type="checkbox" data-k="c4"><span class="box"></span><span class="no">04</span><span class="tx">出力を確認する人と、確認のしかたを決めた</span></label></li>
+                <li><label><input type="checkbox" data-k="c5"><span class="box"></span><span class="no">05</span><span class="tx">他社の資料や画像を、権利を確かめずに使わないと伝えた</span></label></li>
+                <li><label><input type="checkbox" data-k="c6"><span class="box"></span><span class="no">06</span><span class="tx">試行の期間と、費用の上限を決めた</span></label></li>
+                <li><label><input type="checkbox" data-k="c7"><span class="box"></span><span class="no">07</span><span class="tx">1件あたりの作業時間を、試行の前に測った</span></label></li>
+                <li><label><input type="checkbox" data-k="c8"><span class="box"></span><span class="no">08</span><span class="tx">問題が起きたときの報告先と、止める手順を決めた</span></label></li>
+            </ul>
+        </div>
+
+        <p class="note"><b>注</b>　条件の例は試行段階のもの。本格導入では情報システム部・法務と規程を確認する。</p>
+    </div>
+    <footer class="pf"><span>（架空の教材）ソラノ研修ライブラリ　管理職のための生成AI入門</span><span class="folio">06 <small>/ 06</small></span></footer>
+</section>
+
+</main>
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+(() => {
+    const stage = document.getElementById('docStage');
+    const vw = () => (window.visualViewport ? visualViewport.width : innerWidth);
+    const fit = () => { stage.style.zoom = Math.min(1, (vw() - 32) / 1240); };
+    fit();
+    addEventListener('resize', fit);
+    if (window.visualViewport) visualViewport.addEventListener('resize', fit);
+})();
+
+/* === WORKSHEET: follows the tree on page 3, persists answers and checks === */
+(() => {
+    const KEY = 'learning-decision:' + location.pathname;
+    const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } };
+    const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* storage unavailable: keep working in memory */ } };
+    let state = Object.assign({ task: '', a: {}, c: {} }, load());
+    if (typeof state.a !== 'object' || !state.a) state.a = {};
+    if (typeof state.c !== 'object' || !state.c) state.c = {};
+
+    const BASE = [
+        '入力してよい情報の範囲を文書で示し、使う人に周知する',
+        '会社が承認したサービスと設定だけを使う'
+    ];
+    const MEASURE = '試行の前後で、1件あたりの作業時間を測る';
+
+    // Walk the tree. Returns the outcome, the questions on the path and the skip reasons.
+    function judge(a) {
+        const path = ['q1'], skip = {};
+        if (!a.q1) return { r: null, path, skip, next: 'q1' };
+        if (a.q1 === 'yes') {
+            ['q2', 'q3', 'q4'].forEach(q => (skip[q] = 'Q1が「はい」で見送りが決まったため、答えなくてよい'));
+            return { r: 'stop', via: 'q1', path, skip };
+        }
+        path.push('q2');
+        if (!a.q2) { skip.q3 = skip.q4 = ''; return { r: null, path, skip, next: 'q2' }; }
+        if (a.q2 === 'yes') {
+            path.push('q3');
+            skip.q4 = 'Q2が「はい」なので、費用の前にQ3で決まる';
+            if (!a.q3) return { r: null, path, skip, next: 'q3' };
+            return a.q3 === 'yes' ? { r: 'cond', via: 'q3', path, skip } : { r: 'stop', via: 'q3', path, skip };
+        }
+        skip.q3 = 'Q2が「いいえ」なので、全件の確認は求めない';
+        path.push('q4');
+        if (!a.q4) return { r: null, path, skip, next: 'q4' };
+        return a.q4 === 'yes' ? { r: 'go', via: 'q4', path, skip } : { r: 'cond', via: 'q4', path, skip };
+    }
+
+    const LABEL = { go: 'すぐ試す', cond: '条件付きで試す', stop: '見送る' };
+    function explain(j) {
+        if (j.r === 'stop' && j.via === 'q1') return {
+            why: '個人情報や顧客の情報が入るため、今回の試行では扱わない。',
+            conds: ['個人情報・顧客情報を外した形に業務を組み替え、Q1から判定し直す', '扱う必要があるなら、情報システム部・法務と環境と規程を先に決める']
+        };
+        if (j.r === 'stop') return {
+            why: '誤りが外に届きうるのに、使う前に確かめる人がいない。',
+            conds: ['確認する担当者と、原文と照らす手順を決めてから判定し直す', '確認できる量に絞る（対象の件数や部署を減らす）']
+        };
+        if (j.r === 'cond' && j.via === 'q3') return {
+            why: '誤りが外に届きうるため、人の確認を条件にして試す。',
+            conds: ['使う前に担当者が全件を原文と照らし、確認者の名前を残す', ...BASE, MEASURE]
+        };
+        if (j.r === 'cond') return {
+            why: '内容の危険は小さいが、新しい費用がかかる。',
+            conds: ['費用の上限と終了日を決め、予算の承認を取る', '利用者を1部署に絞って始める', ...BASE, MEASURE]
+        };
+        return {
+            why: '危険が小さく、今の契約で始められる。小さく試して測る。',
+            conds: ['4週間・1部署で試し、週1回は抜き取りで内容を確認する', ...BASE, MEASURE]
+        };
+    }
+
+    const $ = id => document.getElementById(id);
+    const rows = [...document.querySelectorAll('.wq')];
+    const radios = [...document.querySelectorAll('.seg input')];
+    const checks = [...document.querySelectorAll('#chkList input')];
+    const task = $('taskName');
+
+    function render() {
+        // inputs from state
+        radios.forEach(r => (r.checked = state.a[r.name] === r.value));
+        checks.forEach(c => (c.checked = !!state.c[c.dataset.k]));
+        const done = checks.filter(c => c.checked).length;
+        $('progN').textContent = done;
+
+        const j = judge(state.a);
+        rows.forEach(row => {
+            const q = row.dataset.q;
+            const skipped = !j.path.includes(q) && j.skip[q] !== undefined && j.skip[q] !== '' ;
+            const waiting = !j.path.includes(q) && !skipped;
+            row.classList.toggle('skipped', skipped || waiting);
+            row.querySelector('.skipnote').textContent = skipped ? j.skip[q] : (waiting ? '前の問いに答えると開く' : '');
+            row.querySelectorAll('input').forEach(i => (i.disabled = skipped || waiting));
+        });
+
+        const res = $('result'), rv = $('rv'), rw = $('rw'), ol = $('conds'), empty = $('condsEmpty');
+        ol.replaceChildren();
+        if (!j.r) {
+            res.dataset.r = '';
+            rv.textContent = '未回答';
+            rw.textContent = j.next === 'q1' ? 'Q1から順に答えると、ここに判定が出る。' : `次は${j.next.toUpperCase()}に答える。`;
+            empty.style.display = '';
+            return;
+        }
+        const e = explain(j);
+        res.dataset.r = j.r;
+        rv.textContent = LABEL[j.r];
+        rw.textContent = (state.task ? `「${state.task}」は、` : '') + e.why;
+        e.conds.forEach(t => { const li = document.createElement('li'); li.textContent = t; ol.appendChild(li); });
+        empty.style.display = 'none';
+    }
+
+    radios.forEach(r => r.addEventListener('change', () => {
+        state.a[r.name] = r.value;
+        // answers below a changed branch no longer apply
+        const j = judge(state.a);
+        ['q2', 'q3', 'q4'].forEach(q => { if (!j.path.includes(q)) delete state.a[q]; });
+        save(state); render();
+    }));
+    checks.forEach(c => c.addEventListener('change', () => { state.c[c.dataset.k] = c.checked; save(state); render(); }));
+    task.addEventListener('input', () => { state.task = task.value.trim(); save(state); render(); });
+    $('btnReset').addEventListener('click', () => {
+        state = { task: '', a: {}, c: {} };
+        try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+        task.value = '';
+        render();
+    });
+    $('btnPrint').addEventListener('click', () => window.print());
+    task.value = state.task || '';
+    render();
+})();
+</script>
+</body>
+</html>
