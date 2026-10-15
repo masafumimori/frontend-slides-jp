@@ -1,0 +1,27 @@
+{
+  "slug": "textbook-case",
+  "name": "Textbook Case",
+  "name_ja": "ケースで学ぶ研修テキスト",
+  "tagline": "A business-school case book on warm paper: a serif case in two columns with exhibits, then questions that hide their commentary until the learner has thought, one framework, a workplace worksheet and a group discussion.",
+  "summary_ja": "生成りの紙に明朝の2段組みでケースと表を載せ、問いごとに「まず自分で考える」タイマーとメモ欄、考えるまで開かない解説を置く。枠組みは2×2を1枚だけ。職場ワーク、グループ討議の進め方、講師用の論点、学びの記録までを弁柄1色で組む。",
+  "group": "learning",
+  "mood": ["thoughtful", "trustworthy", "practical"],
+  "formality": "medium",
+  "density": "high",
+  "scheme": "light",
+  "best_for": "社会人・管理職向けの研修テキスト、営業・マネジメント・事業判断のケース教材、集合研修のワークブック",
+  "avoid_for": "小中学生向けの教科書、暗記中心のドリル、計算練習が主の数学教材、投影して見せるプレゼン",
+  "formats": ["doc-a4"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": { "heading": "Noto Serif JP", "body": "IBM Plex Sans JP", "latin": ["EB Garamond"] },
+  "colors": {
+    "accent": "#8E2B1E",
+    "ink": "#1E1C19",
+    "sub": "#5E5950",
+    "rule": "#CFC8BB",
+    "tint": "#F3E4DF",
+    "paper": "#FBF9F4"
+  },
+  "refs": ["ビジネススクールのケースブック（ケース・設問・ティーチングノート）", "企業内研修のワークブック"]
+}

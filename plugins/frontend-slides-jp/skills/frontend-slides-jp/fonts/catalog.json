@@ -671,6 +671,22 @@
         700
       ],
       "css": "family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700"
+    },
+    {
+      "family": "STIX Two Text",
+      "script": "latin",
+      "class": "serif",
+      "mood": [
+        "scientific",
+        "precise"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "css": "family=STIX+Two+Text:ital,wght@0,400..700;1,400..700"
     }
   ],
   "measured": {

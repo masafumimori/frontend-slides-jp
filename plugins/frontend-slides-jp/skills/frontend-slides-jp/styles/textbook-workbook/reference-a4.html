@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1on1で使えるフィードバックの伝え方（SBIモデル）｜新任マネージャー研修ワークブック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === WORKBOOK TOKENS === */
+:root {
+    --ink: #1F2427;
+    --accent: #1D5F73;
+    --accent-tint: #EEF4F6;
+    --rule: #D3D8DB;
+    --ng: #A8442F;
+    --paper: #FFFFFF;
+
+    --ink-2: #4B5459;
+    --ink-3: #6D767B;
+    --rule-2: #AAB2B7;
+    --ok: var(--accent);
+    --jp: "IBM Plex Sans JP", "Hiragino Sans", sans-serif;
+    --lat: "IBM Plex Sans", "IBM Plex Sans JP", sans-serif;
+    --hand: "Klee One", "IBM Plex Sans JP", serif;
+    --line-44: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='44'><rect y='43' width='8' height='1' fill='%23c9cfd3'/></svg>");
+
+    --desk-bg: #E6E4DF;
+    --page-bg: var(--paper);
+}
+
+.page {
+    font-family: var(--jp);
+    color: var(--ink);
+    font-size: 22px;
+}
+
+/* === PAGE FRAME: running head, folio, chapter tab === */
+.rh {
+    position: absolute; top: 64px; left: 96px; right: 96px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 18px; color: var(--ink-3);
+    padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+}
+.rh b { font-weight: 600; color: var(--ink-2); }
+.rh .lat { font-family: var(--lat); letter-spacing: 0.04em; }
+.folio {
+    position: absolute; bottom: 56px;
+    font-family: var(--lat); font-size: 20px; font-weight: 600; color: var(--ink-2);
+    display: flex; gap: 16px; align-items: baseline;
+}
+.folio small { font-family: var(--jp); font-size: 18px; font-weight: 400; color: var(--ink-3); }
+.p-odd .folio { right: 96px; }
+.p-even .folio { left: 96px; }
+.tab {
+    position: absolute; top: 240px; width: 52px; height: 420px;
+    background: var(--accent); color: #fff;
+    writing-mode: vertical-rl; font-feature-settings: "vpal";
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; font-weight: 600; letter-spacing: 0.08em;
+}
+.tab .n { font-family: var(--lat); text-combine-upright: all; margin-bottom: 12px; }
+.p-odd .tab { right: 0; }
+.p-even .tab { left: 0; }
+
+/* Content box inside the margins */
+.sheet { position: absolute; top: 140px; left: 96px; right: 96px; bottom: 120px; }
+
+/* === HEADINGS === */
+.kicker {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--lat); font-size: 20px; font-weight: 600;
+    letter-spacing: 0.14em; color: var(--accent); min-height: 40px;
+}
+.kicker .meta {
+    font-family: var(--jp); letter-spacing: 0.02em; font-weight: 400;
+    color: var(--ink-2); font-size: 19px; display: flex; align-items: baseline; gap: 10px;
+}
+h1 { margin: 14px 0 0; font-size: 54px; font-weight: 700; line-height: 1.36; }
+.lead { margin: 16px 0 0; font-size: 26px; color: var(--ink-2); line-height: 1.7; text-align: left; max-width: 1000px; }
+.sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+.sec-head h2 { margin: 0; font-size: 28px; font-weight: 700; }
+.sec-head .hint { font-size: 19px; color: var(--ink-3); }
+
+/* === WRITABLE FIELDS === */
+.blank {
+    font-family: var(--hand); font-size: 24px; font-weight: 600; color: var(--accent);
+    border: 0; border-bottom: 2px solid var(--ink-2); background: transparent;
+    padding: 0 4px; margin: 0 4px; text-align: center; height: 36px;
+    vertical-align: baseline; outline: none; border-radius: 0;
+}
+.blank:focus { border-bottom-color: var(--accent); background: var(--accent-tint); }
+.bn { font-family: var(--lat); font-size: 17px; font-weight: 500; color: var(--ink-3); vertical-align: super; line-height: 0; }
+.blank.ok { border-bottom-color: var(--ok); }
+.blank.ng { border-bottom-color: var(--ng); color: var(--ng); }
+.mark {
+    display: none; font-size: 18px; font-weight: 600; margin-left: 2px;
+    line-height: 1; padding: 3px 8px; border-radius: 2px; vertical-align: 3px;
+}
+.checked .mark { display: inline-block; }
+.mark.ok { color: var(--ok); border: 1px solid var(--ok); }
+.mark.ng { color: #fff; background: var(--ng); }
+
+.write {
+    font-family: var(--hand); font-size: 22px; color: var(--ink);
+    line-height: 44px; background-image: var(--line-44); background-size: 8px 44px;
+    background-attachment: local; outline: none; overflow: hidden;
+    word-break: normal; overflow-wrap: anywhere; white-space: pre-wrap;
+    padding: 0 6px;
+}
+.write:focus { background-color: #FAFCFC; }
+.write:empty::before { content: attr(data-ph); color: #A3ABB0; font-family: var(--jp); font-size: 19px; }
+.write.l1 { height: 44px; } .write.l2 { height: 88px; } .write.l3 { height: 132px; } .write.l4 { height: 176px; }
+
+/* checkbox */
+.tick { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: 19px; color: var(--ink-2); }
+.tick input {
+    appearance: none; -webkit-appearance: none; margin: 0;
+    width: 26px; height: 26px; border: 2px solid var(--rule-2); background: #fff;
+    display: grid; place-content: center; cursor: pointer; flex: none;
+}
+.tick input:checked { border-color: var(--accent); background: var(--accent); }
+.tick input:checked::after {
+    content: ""; width: 12px; height: 7px; border-left: 3px solid #fff; border-bottom: 3px solid #fff;
+    transform: translateY(-2px) rotate(-45deg);
+}
+
+/* choice (radio drawn as a printable circle) */
+.opt { display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 22px; line-height: 1.5; }
+.opt input {
+    appearance: none; -webkit-appearance: none; margin: 0; flex: none;
+    width: 28px; height: 28px; border: 2px solid var(--rule-2); border-radius: 50%; background: #fff;
+    display: grid; place-content: center; cursor: pointer;
+}
+.opt input:checked { border-color: var(--accent); }
+.opt input:checked::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+.opt .k { font-family: var(--lat); font-weight: 600; color: var(--ink-3); width: 18px; flex: none; }
+
+/* in-page buttons (not printed) */
+.btn {
+    font-family: var(--jp); font-size: 18px; font-weight: 600; cursor: pointer;
+    color: var(--accent); background: #fff; border: 1.5px solid var(--accent);
+    padding: 8px 16px; border-radius: 3px; line-height: 1.3;
+}
+.btn:hover { background: var(--accent-tint); }
+.btn[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.btn.lite { border-color: var(--rule-2); color: var(--ink-2); font-weight: 500; }
+
+.foot {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    border-top: 1px solid var(--rule); padding-top: 10px;
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 32px;
+}
+.foot p { margin: 0; text-align: left; font-size: 17px; line-height: 1.6; color: var(--ink-3); }
+.foot .inv { white-space: nowrap; transform: rotate(180deg); font-size: 18px; color: var(--ink-2); }
+
+/* === CUE: the recall question, used on the note and the review page === */
+.cue-q { font-size: 24px; font-weight: 700; line-height: 1.55; letter-spacing: 0.01em; }
+.cue-q::before {
+    content: "Q" attr(data-n); display: block; font-family: var(--lat); font-size: 18px;
+    font-weight: 600; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 4px;
+}
+
+/* === P.24 UNIT OPENER === */
+.opener h1 { font-size: 60px; margin-top: 10px; }
+.opener .lead { margin-top: 18px; }
+.goals { margin-top: 36px; border-top: 3px solid var(--accent); padding-top: 18px; }
+.goals ol { list-style: none; margin: 10px 0 0; padding: 0; }
+.goals li {
+    display: grid; grid-template-columns: 56px 1fr 150px; align-items: baseline;
+    padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 24px; line-height: 1.6;
+}
+.goals li .no { font-family: var(--lat); font-weight: 600; font-size: 28px; color: var(--accent); }
+.goals li .ref { font-size: 18px; color: var(--ink-3); text-align: right; }
+
+.flow { margin-top: 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--rule-2); }
+.flow > div { padding: 16px 22px 18px; }
+.flow > div + div { border-left: 1px solid var(--rule-2); }
+.flow .pg { font-family: var(--lat); font-weight: 600; font-size: 18px; color: var(--accent); letter-spacing: 0.06em; }
+.flow h3 { margin: 4px 0 0; font-size: 24px; font-weight: 700; }
+.flow p { margin: 4px 0 0; font-size: 19px; color: var(--ink-2); line-height: 1.6; text-align: left; }
+
+.pre { margin-top: 32px; border-top: 3px solid var(--accent); padding-top: 18px; }
+.pre-item { padding: 14px 0 14px; border-bottom: 1px solid var(--rule); }
+.pre-item .pq { display: flex; justify-content: space-between; align-items: baseline; font-size: 24px; font-weight: 700; line-height: 1.55; margin: 0 0 8px; text-align: left; }
+.pre-item .pq b { font-family: var(--lat); color: var(--accent); margin-right: 12px; font-weight: 600; }
+.pre-item .ref { font-size: 18px; color: var(--ink-3); font-weight: 400; }
+.pre-item .opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 28px; }
+.pre-item .opt { align-items: flex-start; gap: 10px; }
+.pre-item .opt input { margin-top: 2px; }
+.pre-item .opt .t { word-break: auto-phrase; }
+.pre-item .pq .res { margin-left: auto; margin-right: 20px; font-size: 18px; font-weight: 600; }
+.pre-item .res:empty { display: none; }
+.pre-item .res.ok { color: var(--ok); }
+.pre-item .res.ng { color: var(--ng); }
+.pre.checked .opt.correct .t { color: var(--accent); font-weight: 600; text-decoration: underline 2px; text-underline-offset: 6px; }
+.pre.checked .opt.wrong .t { color: var(--ng); }
+.pre.checked .opt.wrong input { border-color: var(--ng); }
+.pre.checked .opt.wrong input:checked::after { background: var(--ng); }
+.pre-act { display: flex; align-items: center; gap: 18px; margin-top: 16px; }
+.pre-act .score { font-size: 19px; color: var(--ink-2); }
+
+/* === P.25 CORNELL NOTE === */
+.cornell { margin-top: 20px; border-top: 3px solid var(--accent); }
+.c-head {
+    display: grid; grid-template-columns: 340px 1fr; align-items: center;
+    font-size: 19px; color: var(--ink-2); border-bottom: 1px solid var(--rule-2); height: 58px;
+}
+.c-head > div { padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.c-head > div:first-child { padding-left: 20px; }
+.c-head b { color: var(--ink); font-size: 20px; margin-right: 12px; }
+.c-head .on-review { display: none; color: var(--accent); }
+.reviewing .c-head .on-review { display: inline; }
+.reviewing .c-head .off-review { display: none; }
+.c-row { position: relative; display: grid; grid-template-columns: 340px 1fr; border-bottom: 1px solid var(--rule); }
+.c-row.flash { animation: flash 1.6s ease-out; }
+@keyframes flash { 0%, 40% { box-shadow: inset 0 0 0 3px var(--accent); } 100% { box-shadow: inset 0 0 0 3px transparent; } }
+.cue {
+    background: var(--accent-tint); border-right: 2px solid var(--accent);
+    padding: 16px 22px 14px 20px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+}
+.note { padding: 16px 0 12px 26px; }
+.note p { margin: 0; font-size: 22px; line-height: 1.9; text-align: left; word-break: normal; }
+.note .memo { margin-top: 6px; }
+.note .x { color: var(--ink-3); font-weight: 600; }
+.note .o { color: var(--accent); font-weight: 600; }
+.bk { white-space: nowrap; }
+
+.sbi { width: 100%; border-collapse: collapse; margin-top: 2px; }
+.sbi td { padding: 6px 10px; font-size: 22px; vertical-align: middle; line-height: 1.6; border-bottom: 1px solid var(--rule); word-break: normal; }
+.sbi tr:last-child td { border-bottom: 0; }
+.sbi .l { width: 50px; text-align: center; font-family: var(--lat); font-weight: 600; font-size: 28px; color: var(--accent); border-right: 2px solid var(--accent); }
+.sbi .en { width: 236px; font-family: var(--lat); font-size: 19px; color: var(--ink-2); white-space: nowrap; }
+.sbi .d { color: var(--ink-2); font-size: 20px; }
+
+/* review mode: every note is covered; each row opens on its own */
+.row-cover {
+    position: absolute; top: 0; bottom: 0; left: 342px; right: 0;
+    background-color: #FBFBFA; background-image: var(--line-44); background-size: 8px 44px;
+    display: none; align-items: center; justify-content: flex-start; padding-left: 26px;
+}
+.reviewing .row-cover { display: flex; }
+.reviewing .c-row.peek .row-cover { display: none; }
+.peek-close { display: none; position: absolute; left: 254px; top: 12px; padding: 4px 12px; }
+.reviewing .c-row.peek .peek-close { display: block; }
+
+.summary { margin-top: 18px; border: 2px solid var(--ink-2); padding: 16px 26px 18px; }
+.summary .write { margin-top: 6px; }
+
+/* === P.26 PRACTICE WORKSHEET === */
+.p2 h1 { font-size: 52px; }
+.p2 .lead { font-size: 24px; }
+.ex { margin-top: 14px; }
+.ex-head { display: grid; grid-template-columns: 112px 1fr; align-items: stretch; border-top: 3px solid var(--accent); }
+.ex-no {
+    background: var(--accent); color: #fff; font-family: var(--lat); font-weight: 600;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 18px; letter-spacing: 0.1em; line-height: 1.1;
+}
+.ex-no b { font-size: 40px; letter-spacing: 0; }
+.ex-say { padding: 8px 0 8px 22px; }
+.ex-say .vague { font-size: 28px; font-weight: 700; line-height: 1.5; }
+.ex-say .vague span { font-size: 18px; font-weight: 500; color: var(--ink-3); margin-right: 12px; letter-spacing: 0.04em; vertical-align: 3px; }
+.ex-say .ctx { margin: 2px 0 0; font-size: 19px; color: var(--ink-2); line-height: 1.6; text-align: left; }
+.ex-body { display: grid; grid-template-columns: 1fr 440px; gap: 24px; margin-top: 6px; }
+.rw { display: grid; grid-template-columns: 52px 1fr; align-content: start; }
+.rw .lab {
+    font-family: var(--lat); font-weight: 600; font-size: 24px; color: var(--accent);
+    display: flex; align-items: flex-start; justify-content: center; padding-top: 6px;
+    border-right: 2px solid var(--accent);
+}
+
+.model { position: relative; overflow: hidden; border: 1px solid var(--rule); border-left: 3px solid var(--accent); background: #fff; }
+.model .ans { display: none; padding: 12px 16px 10px; }
+.model.open .ans { display: block; }
+.model .ans h3 { margin: 0 0 4px; font-size: 18px; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; }
+.model .ans dl { margin: 0; display: grid; grid-template-columns: 28px 1fr; column-gap: 8px; row-gap: 4px; }
+.model .ans dt { font-family: var(--lat); font-weight: 600; color: var(--accent); font-size: 19px; line-height: 1.5; }
+.model .ans dd { margin: 0; font-family: var(--hand); font-size: 20px; line-height: 1.5; word-break: normal; letter-spacing: 0.01em; }
+.model .ans dd.ask { color: var(--ink-2); }
+.model .shut { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; }
+.model.open .shut { display: none; }
+.model .shut p { margin: 0; font-size: 18px; color: var(--ink-3); text-align: center; line-height: 1.6; }
+.model .hide-ans { position: absolute; right: 10px; bottom: 8px; padding: 4px 10px; display: none; }
+.model.open .hide-ans { display: block; }
+.model .print-note { display: none; }
+
+.commit { margin-top: 20px; border: 2px solid var(--ink-2); padding: 14px 24px 16px; display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
+.commit h2 { margin: 0 0 6px; font-size: 26px; font-weight: 700; }
+.commit .f { display: flex; align-items: baseline; gap: 10px; font-size: 19px; color: var(--ink-2); margin-top: 4px; }
+.commit .f .blank { text-align: left; flex: 1; font-size: 22px; }
+.commit .wl { font-size: 18px; color: var(--ink-3); margin-top: 8px; }
+.commit .checks { border-left: 1px solid var(--rule); padding-left: 28px; display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+.commit .checks h3 { margin: 0; font-size: 19px; font-weight: 600; color: var(--ink-2); }
+.commit .checks .tick { line-height: 1.5; align-items: flex-start; }
+.commit .checks .tick input { margin-top: 2px; }
+
+/* === P.27 ONE-WEEK REVIEW === */
+.rv { margin-top: 34px; border-top: 3px solid var(--accent); }
+.rv-item { display: grid; grid-template-columns: 340px 1fr; border-bottom: 1px solid var(--rule); }
+.rv-item .cue { justify-content: flex-start; }
+.rv-ans { padding: 14px 0 12px 26px; }
+.rv-ans .rw { grid-template-columns: 44px 1fr; }
+.rv-foot { display: flex; align-items: center; gap: 22px; margin-top: 10px; }
+.rv-foot .grade { display: flex; gap: 18px; margin-right: auto; }
+.rv-foot .opt { font-size: 19px; color: var(--ink-2); gap: 8px; white-space: nowrap; }
+.rv-foot .btn { white-space: nowrap; }
+.rv-foot .opt input { width: 24px; height: 24px; }
+.rv-foot .opt input:checked::after { width: 12px; height: 12px; }
+.rv-foot .src { display: none; font-size: 18px; color: var(--ink-3); }
+
+.next { margin-top: 26px; border: 2px solid var(--ink-2); padding: 16px 26px 18px; }
+.next .f { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; font-size: 22px; margin-top: 8px; }
+.next .f .blank { width: 170px; }
+.next .nx { margin: 4px 0 0; font-size: 20px; color: var(--ink-2); line-height: 1.7; text-align: left; }
+.next .tally { font-size: 19px; color: var(--ink-2); margin-top: 8px; }
+.next .tally:empty { display: none; }
+
+/* === TOOLBAR (outside the pages, never zoomed) === */
+.desk-bar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 12px;
+    padding: 10px 16px; background: rgba(230, 228, 223, 0.94);
+    border-bottom: 1px solid #CFCCC5;
+    font-family: "IBM Plex Sans JP", sans-serif; color: #4B5459;
+}
+.desk-bar .lab { font-size: 15px; }
+.desk-bar .btn { font-size: 15px; padding: 8px 14px; min-height: 40px; }
+.desk-bar .btn.quiet { color: var(--ng); border-color: #D5B2A9; }
+.desk-bar .tick { font-size: 15px; min-height: 40px; }
+.desk-bar .tick input { width: 22px; height: 22px; }
+.desk-bar .score { font-size: 15px; color: var(--ink-2); }
+.desk-bar .score:empty { display: none; }
+
+/* === PRINT: paper workbook === */
+@media print {
+    .btn, .no-print, .desk-bar { display: none !important; }
+    .write:empty::before { content: none; }
+    .blank::placeholder { color: transparent; }
+    .blank { background: transparent !important; }
+    .row-cover { display: none !important; }
+    .mark, .res { display: none !important; }
+    .pre.checked .opt .t { color: inherit !important; font-weight: 400 !important; text-decoration: none !important; }
+    .blank.ng { color: var(--accent); border-bottom-color: var(--ink-2); }
+    .write, .cue, .tab, .ex-no, .tick input:checked, .opt input:checked::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .rv-foot .src { display: inline; }
+    /* default: model answers stay hidden; the box becomes a lined space for notes */
+    .model .shut, .model .ans { display: none; }
+    .model .print-note { display: block; position: absolute; inset: 0; padding: 10px 16px; background: #fff; }
+    .model .print-note h3 { margin: 0; font-size: 18px; color: var(--ink-2); font-weight: 600; line-height: 34px; }
+    .model .print-note .lines { position: absolute; left: 16px; right: 16px; top: 48px; bottom: 8px; background-image: var(--line-44); background-size: 8px 44px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print-answers .model .print-note { display: none; }
+    body.print-answers .model .ans { display: block; }
+}
+</style>
+</head>
+<body>
+<div class="desk-bar" role="toolbar" aria-label="ワークブックの操作">
+    <span class="lab">記入はこのブラウザに自動保存</span>
+    <span class="score" id="score" aria-live="polite"></span>
+    <button class="btn" id="reviewBar" type="button" aria-pressed="false">ノートを隠して復習</button>
+    <button class="btn" id="checkBtn" type="button">穴埋めの答え合わせ</button>
+    <label class="tick"><input type="checkbox" id="printAns">解答例も印刷</label>
+    <button class="btn" id="printBtn" type="button">印刷する</button>
+    <button class="btn quiet" id="clearBtn" type="button">記入を消す</button>
+</div>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ PAGE 1 (p.24): unit opener — goals, flow, pretest ============ -->
+<section class="page p-even opener" id="p0">
+    <header class="rh"><span><span class="lat">UNIT 3</span>　1on1で使えるフィードバックの伝え方</span><span><b>新任マネージャー研修</b>　ワークブック</span></header>
+    <div class="tab"><span class="n">03</span>フィードバック</div>
+
+    <div class="sheet">
+        <div class="kicker"><span>UNIT 3 — INTRODUCTION</span><span class="meta">目安 5分</span></div>
+        <h1>1on1で使える<br>フィードバックの伝え方</h1>
+        <p class="lead">評価のことばを、観察した事実に置きかえる。<br>SBI モデルで、相手が次に動ける一言を組み立てます。</p>
+
+        <div class="goals">
+            <div class="sec-head"><h2>この単元のゴール</h2><span class="hint">単元を終えたとき、こう言えるように</span></div>
+            <ol>
+                <li><span class="no">1</span><span>評価のことばと、観察した事実を見分けられる</span><span class="ref">p.25 Q1・Q3</span></li>
+                <li><span class="no">2</span><span>状況・行動・影響の順に、一言を組み立てられる</span><span class="ref">p.25 Q2・p.26</span></li>
+                <li><span class="no">3</span><span>伝えたあと、相手の見方を尋ねて次の一手を決められる</span><span class="ref">p.25 Q4</span></li>
+            </ol>
+        </div>
+
+        <div class="flow">
+            <div><div class="pg">p.25　20分</div><h3>レッスンノート</h3><p>空欄を埋め、問いに答える</p></div>
+            <div><div class="pg">p.26　15分</div><h3>練習</h3><p>3つの一言を SBI で書き直す</p></div>
+            <div><div class="pg">p.27　10分</div><h3>1週間後の復習</h3><p>問いだけに答え、ノートで照合</p></div>
+        </div>
+
+        <div class="pre" id="pre">
+            <div class="sec-head"><h2>事前の自己診断</h2><span class="hint">まだ習っていなくてかまいません。直感で選ぶ</span></div>
+            <div class="pre-item" data-correct="c">
+                <p class="pq"><span><b>1</b>「行動」を伝えているのはどれ？</span><span class="res" aria-live="polite"></span><span class="ref">解説 p.25 Q3</span></p>
+                <div class="opts">
+                    <label class="opt"><input type="radio" name="pre1" value="a" data-key="pre1"><span class="k">a</span><span class="t">「最近、やる気がないように見える」</span></label>
+                    <label class="opt"><input type="radio" name="pre1" value="b" data-key="pre1"><span class="k">b</span><span class="t">「もう少し責任感を持ってほしい」</span></label>
+                    <label class="opt"><input type="radio" name="pre1" value="c" data-key="pre1"><span class="k">c</span><span class="t">「今週の定例の資料で、数字が先月のままだった」</span></label>
+                </div>
+            </div>
+            <div class="pre-item" data-correct="a">
+                <p class="pq"><span><b>2</b>SBI の「I」に入れるのは？</span><span class="res" aria-live="polite"></span><span class="ref">解説 p.25 Q2</span></p>
+                <div class="opts">
+                    <label class="opt"><input type="radio" name="pre2" value="a" data-key="pre2"><span class="k">a</span><span class="t">その行動で、自分・チーム・成果に起きたこと</span></label>
+                    <label class="opt"><input type="radio" name="pre2" value="b" data-key="pre2"><span class="k">b</span><span class="t">相手の性格で、直してほしいところ</span></label>
+                    <label class="opt"><input type="radio" name="pre2" value="c" data-key="pre2"><span class="k">c</span><span class="t">次の1on1までにやってほしいこと</span></label>
+                </div>
+            </div>
+            <div class="pre-item" data-correct="b">
+                <p class="pq"><span><b>3</b>SBI で伝えたあと、まずすることは？</span><span class="res" aria-live="polite"></span><span class="ref">解説 p.25 Q4</span></p>
+                <div class="opts">
+                    <label class="opt"><input type="radio" name="pre3" value="a" data-key="pre3"><span class="k">a</span><span class="t">改善策を、こちらから具体的に指示する</span></label>
+                    <label class="opt"><input type="radio" name="pre3" value="b" data-key="pre3"><span class="k">b</span><span class="t">相手からはどう見えていたかを尋ねる</span></label>
+                    <label class="opt"><input type="radio" name="pre3" value="c" data-key="pre3"><span class="k">c</span><span class="t">同じことが起きた回数を伝える</span></label>
+                </div>
+            </div>
+            <div class="pre-act no-print"><button class="btn" id="preBtn" type="button">学習のあとで答え合わせ</button><span class="score" id="preScore" aria-live="polite"></span></div>
+        </div>
+
+        <div class="foot">
+            <p>発行：みなと人材開発研究所（架空の教材）<br>自己診断は成績に入りません。外れても、先に考えた問いは学習のあとで覚えやすくなります。</p>
+            <p class="inv">自己診断の答え　1 c　2 a　3 b</p>
+        </div>
+    </div>
+
+    <div class="folio">24<small>UNIT 3　フィードバックの伝え方</small></div>
+</section>
+
+<!-- ============ PAGE 2 (p.25): Cornell lesson note ============ -->
+<section class="page p-odd" id="p1">
+    <header class="rh"><span><b>新任マネージャー研修</b>　ワークブック</span><span><span class="lat">UNIT 3</span>　1on1で使えるフィードバックの伝え方</span></header>
+    <div class="tab"><span class="n">03</span>フィードバック</div>
+
+    <div class="sheet">
+        <div class="kicker"><span>UNIT 3 — LESSON NOTE</span><span class="meta">学習時間 20分　記入日<input class="blank" data-key="date" style="width:150px" aria-label="記入日"></span></div>
+        <h1>あいまいな一言を、<br>相手が動ける伝え方に変える</h1>
+        <p class="lead">「いつも雑だね」と言われても、相手は何を直せばよいか分かりません。<br>SBI モデルは、観察した事実だけでフィードバックを組み立てる型です。</p>
+
+        <div class="cornell" id="cornell">
+            <div class="c-head">
+                <div><span><b>問い</b>ノートを隠して答える</span></div>
+                <div><span class="off-review"><b>ノート</b>空欄を埋めながら読む</span><span class="on-review">問いに声で答えてから、行ごとに開いて確かめる</span><button class="btn" id="reviewBtn" aria-pressed="false" type="button">ノートを隠して復習</button></div>
+            </div>
+            <div class="c-body">
+                <div class="c-row" data-q="1" id="q1">
+                    <div class="cue"><div class="cue-q" data-n="1">「いつも雑だね」は、<br>なぜ伝わらない？</div><label class="tick"><input type="checkbox" data-key="cue1">言えた</label></div>
+                    <div class="note">
+                        <p>「雑」「主体性がない」のような評価は、人柄への判断として受け取られやすく、何を変えればよいかが残りません。伝えるのは評価ではなく、見聞きした<span class="bk"><span class="bn">(1)</span><input class="blank" data-key="b1" data-answer="事実|観察した事実|観察事実" style="width:120px" aria-label="空欄1"></span>です。</p>
+                        <div class="write memo l1" contenteditable="true" data-key="m1" data-ph="メモ：自分が最近使った「評価のことば」は？"></div>
+                    </div>
+                    <div class="row-cover no-print"><button class="btn lite peek" type="button">Q1 のノートを開く</button></div>
+                    <button class="btn lite peek-close no-print" type="button">隠す</button>
+                </div>
+                <div class="c-row" data-q="2" id="q2">
+                    <div class="cue"><div class="cue-q" data-n="2">SBI の3つの要素と、<br>それぞれに入れることは？</div><label class="tick"><input type="checkbox" data-key="cue2">言えた</label></div>
+                    <div class="note">
+                        <table class="sbi">
+                            <tr><td class="l">S</td><td class="en">Situation<span class="bk"><span class="bn">(2)</span><input class="blank" data-key="b2" data-answer="状況|場面" style="width:96px" aria-label="空欄2"></span></td><td class="d">いつ・どこで。「10月8日の定例で」</td></tr>
+                            <tr><td class="l">B</td><td class="en">Behavior<span class="bk"><span class="bn">(3)</span><input class="blank" data-key="b3" data-answer="行動|言動|ふるまい" style="width:96px" aria-label="空欄3"></span></td><td class="d">見えた・聞こえた言動そのもの</td></tr>
+                            <tr><td class="l">I</td><td class="en">Impact<span class="bk"><span class="bn">(4)</span><input class="blank" data-key="b4" data-answer="影響" style="width:96px" aria-label="空欄4"></span></td><td class="d">それで自分・チーム・成果に起きたこと</td></tr>
+                        </table>
+                    </div>
+                    <div class="row-cover no-print"><button class="btn lite peek" type="button">Q2 のノートを開く</button></div>
+                    <button class="btn lite peek-close no-print" type="button">隠す</button>
+                </div>
+                <div class="c-row" data-q="3" id="q3">
+                    <div class="cue"><div class="cue-q" data-n="3">「行動」と「解釈」は、<br>どう見分ける？</div><label class="tick"><input type="checkbox" data-key="cue3">言えた</label></div>
+                    <div class="note">
+                        <p>その場を録画したら<span class="bk"><span class="bn">(5)</span><input class="blank" data-key="b5" data-answer="映る|映っている|映ること|記録される|写る" style="width:96px" aria-label="空欄5"></span>か、で判断します。<br><span class="x">× 解釈</span>「やる気がない」<br><span class="o">○ 行動</span>「30分の会議で、一度も発言がなかった」</p>
+                        <div class="write memo l1" contenteditable="true" data-key="m3" data-ph="メモ：自分の例を「行動」で書き直すと？"></div>
+                    </div>
+                    <div class="row-cover no-print"><button class="btn lite peek" type="button">Q3 のノートを開く</button></div>
+                    <button class="btn lite peek-close no-print" type="button">隠す</button>
+                </div>
+                <div class="c-row" data-q="4" id="q4">
+                    <div class="cue"><div class="cue-q" data-n="4">SBI を伝えたあと、<br>何をする？</div><label class="tick"><input type="checkbox" data-key="cue4">言えた</label></div>
+                    <div class="note">
+                        <p>一方的に言って終わらせず、「あなたからはどう見えていた？」と相手の<span class="bk"><span class="bn">(6)</span><input class="blank" data-key="b6" data-answer="意図|考え|見方|言い分" style="width:96px" aria-label="空欄6"></span>を尋ね、次の一手を一緒に決めます。よい行動を認めるときも、同じ型で具体的に伝えます。</p>
+                    </div>
+                    <div class="row-cover no-print"><button class="btn lite peek" type="button">Q4 のノートを開く</button></div>
+                    <button class="btn lite peek-close no-print" type="button">隠す</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="sec-head"><h2>自分の言葉でまとめる</h2><span class="hint">ノートを見ずに、後輩に説明するつもりで</span></div>
+            <div class="write l3" contenteditable="true" data-key="sum" data-ph="SBI とは……"></div>
+        </div>
+
+        <div class="foot">
+            <p>SBI（Situation-Behavior-Impact）は米国 Center for Creative Leadership（CCL）が開発した型。例はすべて架空。</p>
+        </div>
+    </div>
+
+    <div class="folio"><small>UNIT 3　フィードバックの伝え方</small>25</div>
+</section>
+
+<!-- ============ PAGE 3 (p.26): practice worksheet ============ -->
+<section class="page p-even p2" id="p2">
+    <header class="rh"><span><span class="lat">UNIT 3</span>　1on1で使えるフィードバックの伝え方</span><span><b>新任マネージャー研修</b>　ワークブック</span></header>
+    <div class="tab"><span class="n">03</span>フィードバック</div>
+
+    <div class="sheet">
+        <div class="kicker"><span>UNIT 3 — PRACTICE</span><span class="meta">目安 15分</span></div>
+        <h1>あいまいな3つの一言を、SBI で言い直す</h1>
+        <p class="lead">状況メモをもとに S・B・I を書き、書き終えてから解答例と見比べます。</p>
+
+        <div class="ex">
+            <div class="ex-head">
+                <div class="ex-no">練習<b>1</b></div>
+                <div class="ex-say"><div class="vague"><span>言い直す前</span>「最近、報告が遅いよね」</div><p class="ctx">状況メモ：10月8日（木）の週次定例で、A社見積もりの回答期限（7日）切れが初めて分かった。</p></div>
+            </div>
+            <div class="ex-body">
+                <div class="rw">
+                    <div class="lab">S</div><div class="write l1" contenteditable="true" data-key="e1s" data-ph="いつ・どこで"></div>
+                    <div class="lab">B</div><div class="write l2" contenteditable="true" data-key="e1b" data-ph="録画に映る言動"></div>
+                    <div class="lab">I</div><div class="write l2" contenteditable="true" data-key="e1i" data-ph="自分・チーム・成果への影響"></div>
+                </div>
+                <div class="model" id="model1">
+                    <div class="shut no-print"><button class="btn reveal" type="button" aria-expanded="false" aria-controls="ans1">解答例を見る</button><p>書き終えてから開く</p></div>
+                    <div class="ans" id="ans1"><dl>
+                        <dt>S</dt><dd>8日の週次定例で、A社見積もりの確認中に</dd>
+                        <dt>B</dt><dd>期限が前日だったと、その場で初めて聞いた</dd>
+                        <dt>I</dt><dd>私は先方への説明が遅れ、チームの代替案づくりも翌週にずれた</dd>
+                        <dt>問</dt><dd class="ask">「何があったか、聞かせてくれる？」</dd>
+                    </dl></div>
+                    <button class="btn lite hide-ans" type="button" aria-label="解答例を隠す">隠す</button>
+                    <div class="print-note"><h3>解答例と比べて気づいたこと</h3><div class="lines"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ex">
+            <div class="ex-head">
+                <div class="ex-no">練習<b>2</b></div>
+                <div class="ex-say"><div class="vague"><span>言い直す前（よい行動を認める）</span>「いつもありがとう、助かってるよ」</div><p class="ctx">状況メモ：10月14日（水）の新人向け研修。受講者の質問を、その場で手順書に書き足していた。</p></div>
+            </div>
+            <div class="ex-body">
+                <div class="rw">
+                    <div class="lab">S</div><div class="write l1" contenteditable="true" data-key="e2s"></div>
+                    <div class="lab">B</div><div class="write l2" contenteditable="true" data-key="e2b"></div>
+                    <div class="lab">I</div><div class="write l2" contenteditable="true" data-key="e2i"></div>
+                </div>
+                <div class="model" id="model2">
+                    <div class="shut no-print"><button class="btn reveal" type="button" aria-expanded="false" aria-controls="ans2">解答例を見る</button><p>書き終えてから開く</p></div>
+                    <div class="ans" id="ans2"><dl>
+                        <dt>S</dt><dd>14日の新人向け研修で</dd>
+                        <dt>B</dt><dd>質問を、その場で手順書に書き足してくれた</dd>
+                        <dt>I</dt><dd>手順書が次の受講者にもそのまま使える形になり、私も講師として心強かった</dd>
+                        <dt>問</dt><dd class="ask">「次回もこの進め方を頼める？」</dd>
+                    </dl></div>
+                    <button class="btn lite hide-ans" type="button" aria-label="解答例を隠す">隠す</button>
+                    <div class="print-note"><h3>解答例と比べて気づいたこと</h3><div class="lines"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ex">
+            <div class="ex-head">
+                <div class="ex-no">練習<b>3</b></div>
+                <div class="ex-say"><div class="vague"><span>言い直す前</span>「もっと主体的に動いてほしい」</div><p class="ctx">状況メモ：10月12日（月）の障害対応会議（30分）。現場に最も詳しいが、発言せず議事録係に徹した。</p></div>
+            </div>
+            <div class="ex-body">
+                <div class="rw">
+                    <div class="lab">S</div><div class="write l1" contenteditable="true" data-key="e3s"></div>
+                    <div class="lab">B</div><div class="write l2" contenteditable="true" data-key="e3b"></div>
+                    <div class="lab">I</div><div class="write l2" contenteditable="true" data-key="e3i"></div>
+                </div>
+                <div class="model" id="model3">
+                    <div class="shut no-print"><button class="btn reveal" type="button" aria-expanded="false" aria-controls="ans3">解答例を見る</button><p>書き終えてから開く</p></div>
+                    <div class="ans" id="ans3"><dl>
+                        <dt>S</dt><dd>12日の障害対応会議で、原因を議論中に</dd>
+                        <dt>B</dt><dd>30分間、一度も発言がなく、議事録をとっていた</dd>
+                        <dt>I</dt><dd>現場の情報が議論に入らず、私は対策案に自信を持てなかった</dd>
+                        <dt>問</dt><dd class="ask">「発言しにくい事情があった？」</dd>
+                    </dl></div>
+                    <button class="btn lite hide-ans" type="button" aria-label="解答例を隠す">隠す</button>
+                    <div class="print-note"><h3>解答例と比べて気づいたこと</h3><div class="lines"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="commit">
+            <div>
+                <h2>明日の1on1で試すこと</h2>
+                <div class="f">相手<input class="blank" data-key="c-who" style="width:180px;flex:none" aria-label="相手">場面<input class="blank" data-key="c-when" aria-label="場面"></div>
+                <div class="wl">伝える一文（S → B → I の順に）</div>
+                <div class="write l2" contenteditable="true" data-key="c-line"></div>
+            </div>
+            <div class="checks">
+                <h3>1on1のあとに振り返る</h3>
+                <label class="tick"><input type="checkbox" data-key="k1">B は録画に映る事実だった</label>
+                <label class="tick"><input type="checkbox" data-key="k2">I を「私は」「チームは」で語った</label>
+                <label class="tick"><input type="checkbox" data-key="k3">最後に相手の見方を尋ねた</label>
+            </div>
+        </div>
+
+        <div class="foot">
+            <p>解答例は一例。評価語のない S・B・I なら可。</p>
+            <p class="inv">p.25 穴埋めの答え　(1) 事実　(2) 状況　(3) 行動　(4) 影響　(5) 映る　(6) 意図</p>
+        </div>
+    </div>
+
+    <div class="folio">26<small>UNIT 3　フィードバックの伝え方</small></div>
+</section>
+
+<!-- ============ PAGE 4 (p.27): one-week review — cues only ============ -->
+<section class="page p-odd" id="p3">
+    <header class="rh"><span><b>新任マネージャー研修</b>　ワークブック</span><span><span class="lat">UNIT 3</span>　1on1で使えるフィードバックの伝え方</span></header>
+    <div class="tab"><span class="n">03</span>フィードバック</div>
+
+    <div class="sheet">
+        <div class="kicker"><span>UNIT 3 — REVIEW</span><span class="meta">学習の1週間後に 10分　復習日<input class="blank" data-key="rv-date" style="width:150px" aria-label="復習日"></span></div>
+        <h1>ノートを閉じて、<br>4つの問いに答える</h1>
+        <p class="lead">p.25 の問いだけを並べました。思い出して書いてから、<br>p.25 のノートと照らして「言えた・あいまい・出てこない」に印をつけます。</p>
+
+        <div class="rv" id="rv">
+            <div class="rv-item" data-q="1">
+                <div class="cue"><div class="cue-q" data-n="1">「いつも雑だね」は、<br>なぜ伝わらない？</div></div>
+                <div class="rv-ans">
+                    <div class="write l3" contenteditable="true" data-key="r1"></div>
+                    <div class="rv-foot">
+                        <div class="grade"><label class="opt"><input type="radio" name="g1" value="o" data-key="g1">言えた</label><label class="opt"><input type="radio" name="g1" value="d" data-key="g1">あいまい</label><label class="opt"><input type="radio" name="g1" value="x" data-key="g1">出てこない</label></div>
+                        <button class="btn lite goto no-print" type="button" data-goto="1">p.25 のノートで確かめる</button><span class="src">照合 p.25 Q1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="rv-item" data-q="2">
+                <div class="cue"><div class="cue-q" data-n="2">SBI の3つの要素と、<br>それぞれに入れることは？</div></div>
+                <div class="rv-ans">
+                    <div class="rw">
+                        <div class="lab">S</div><div class="write l1" contenteditable="true" data-key="r2s"></div>
+                        <div class="lab">B</div><div class="write l1" contenteditable="true" data-key="r2b"></div>
+                        <div class="lab">I</div><div class="write l1" contenteditable="true" data-key="r2i"></div>
+                    </div>
+                    <div class="rv-foot">
+                        <div class="grade"><label class="opt"><input type="radio" name="g2" value="o" data-key="g2">言えた</label><label class="opt"><input type="radio" name="g2" value="d" data-key="g2">あいまい</label><label class="opt"><input type="radio" name="g2" value="x" data-key="g2">出てこない</label></div>
+                        <button class="btn lite goto no-print" type="button" data-goto="2">p.25 のノートで確かめる</button><span class="src">照合 p.25 Q2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="rv-item" data-q="3">
+                <div class="cue"><div class="cue-q" data-n="3">「行動」と「解釈」は、<br>どう見分ける？</div></div>
+                <div class="rv-ans">
+                    <div class="write l3" contenteditable="true" data-key="r3"></div>
+                    <div class="rv-foot">
+                        <div class="grade"><label class="opt"><input type="radio" name="g3" value="o" data-key="g3">言えた</label><label class="opt"><input type="radio" name="g3" value="d" data-key="g3">あいまい</label><label class="opt"><input type="radio" name="g3" value="x" data-key="g3">出てこない</label></div>
+                        <button class="btn lite goto no-print" type="button" data-goto="3">p.25 のノートで確かめる</button><span class="src">照合 p.25 Q3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="rv-item" data-q="4">
+                <div class="cue"><div class="cue-q" data-n="4">SBI を伝えたあと、<br>何をする？</div></div>
+                <div class="rv-ans">
+                    <div class="write l3" contenteditable="true" data-key="r4"></div>
+                    <div class="rv-foot">
+                        <div class="grade"><label class="opt"><input type="radio" name="g4" value="o" data-key="g4">言えた</label><label class="opt"><input type="radio" name="g4" value="d" data-key="g4">あいまい</label><label class="opt"><input type="radio" name="g4" value="x" data-key="g4">出てこない</label></div>
+                        <button class="btn lite goto no-print" type="button" data-goto="4">p.25 のノートで確かめる</button><span class="src">照合 p.25 Q4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="next">
+            <div class="sec-head"><h2>次の復習</h2><span class="hint">間をあけて思い出すほど、長く残る</span></div>
+            <div class="f">あいまい・出てこない問いを、<input class="blank" data-key="next-date" aria-label="次の復習日">にもう一度。</div>
+            <p class="nx">p.25 のノートを読み直してから、このページの問いに答え直す。全部言えたら、次は1か月後に。</p>
+            <div class="tally no-print" id="tally" aria-live="polite"></div>
+        </div>
+
+        <div class="foot">
+            <p>答えは p.25 のノートで確かめる。発行：みなと人材開発研究所（架空の教材）</p>
+        </div>
+    </div>
+
+    <div class="folio"><small>UNIT 3　フィードバックの伝え方</small>27</div>
+</section>
+</main>
+
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+/* visualViewport: mobile Chrome widens the layout viewport to the 1240px column before the zoom applies */
+const vv = window.visualViewport;
+const viewW = () => Math.min(window.innerWidth, vv ? vv.width * vv.scale : window.innerWidth);   /* × scale: pinch-zoom does not shrink the pages */
+const fit = () => { stage.style.zoom = Math.min(1, (viewW() - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+
+/* === STORAGE: every blank, writing area, checkbox and choice persists (fails quietly) === */
+const KEY = 'minato-mgr-workbook:unit3:v1';
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } };
+const store = (data) => { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { /* private mode or blocked: keep working */ } };
+const state = load();
+const fields = [...document.querySelectorAll('[data-key]')];
+const onChange = [];
+
+fields.forEach(el => {
+    const k = el.dataset.key;
+    if (el.type === 'checkbox') {
+        el.checked = !!state[k];
+        el.addEventListener('change', () => { state[k] = el.checked; store(state); onChange.forEach(f => f()); });
+    } else if (el.type === 'radio') {
+        el.checked = state[k] === el.value;
+        el.addEventListener('change', () => { if (el.checked) { state[k] = el.value; store(state); onChange.forEach(f => f()); } });
+    } else if (el.tagName === 'INPUT') {
+        el.value = state[k] || '';
+        el.addEventListener('input', () => { state[k] = el.value; store(state); clearMark(el); });
+    } else {
+        el.textContent = state[k] || '';
+        el.addEventListener('input', () => {
+            if (!el.textContent.trim()) el.textContent = '';
+            state[k] = el.innerText.replace(/\n$/, ''); store(state);
+        });
+        el.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const t = (e.clipboardData || window.clipboardData).getData('text/plain');
+            document.execCommand('insertText', false, t);
+        });
+    }
+});
+
+/* === BLANKS: check against accepted answers === */
+const norm = s => (s || '').normalize('NFKC').replace(/[\s「」（）()。、]/g, '');
+const blanks = [...document.querySelectorAll('.blank[data-answer]')];
+blanks.forEach(el => { const m = document.createElement('span'); m.className = 'mark no-print'; el.after(m); });
+const score = document.getElementById('score');
+function clearMark(el) {
+    if (!el.dataset.answer) return;
+    el.classList.remove('ok', 'ng');
+    el.parentElement.classList.remove('checked');
+}
+document.getElementById('checkBtn').addEventListener('click', () => {
+    let ok = 0;
+    blanks.forEach(el => {
+        const answers = el.dataset.answer.split('|');
+        const hit = answers.some(a => norm(a) === norm(el.value));
+        const m = el.nextElementSibling;
+        el.classList.toggle('ok', hit);
+        el.classList.toggle('ng', !hit);
+        m.className = 'mark no-print ' + (hit ? 'ok' : 'ng');
+        m.textContent = hit ? '正解' : '答え：' + answers[0];
+        el.parentElement.classList.add('checked');
+        if (hit) ok++;
+    });
+    score.textContent = `穴埋め ${blanks.length}問中 ${ok}問 正解`;
+    document.getElementById('p1').scrollIntoView({ block: 'start' });
+});
+
+/* === CORNELL REVIEW: cover every note, answer the cue aloud, open one row to check === */
+const cornell = document.getElementById('cornell');
+const reviewBtns = [document.getElementById('reviewBtn'), document.getElementById('reviewBar')];
+const setReview = (on) => {
+    cornell.classList.toggle('reviewing', on);
+    cornell.querySelectorAll('.c-row').forEach(r => r.classList.remove('peek'));
+    reviewBtns.forEach(b => { b.setAttribute('aria-pressed', String(on)); b.textContent = on ? 'ノートを開く' : 'ノートを隠して復習'; });
+};
+reviewBtns.forEach(b => b.addEventListener('click', () => {
+    setReview(!cornell.classList.contains('reviewing'));
+    if (b.id === 'reviewBar') cornell.scrollIntoView({ block: 'start' });
+}));
+cornell.querySelectorAll('.c-row').forEach(row => {
+    row.querySelector('.peek').addEventListener('click', () => row.classList.add('peek'));
+    row.querySelector('.peek-close').addEventListener('click', () => row.classList.remove('peek'));
+});
+
+/* === MODEL ANSWERS: reveal / hide === */
+document.querySelectorAll('.model').forEach(box => {
+    const open = (on) => { box.classList.toggle('open', on); box.querySelector('.reveal').setAttribute('aria-expanded', String(on)); };
+    box.querySelector('.reveal').addEventListener('click', () => open(true));
+    box.querySelector('.hide-ans').addEventListener('click', () => open(false));
+});
+
+/* === PRETEST: answered before the lesson, checked after it === */
+const pre = document.getElementById('pre');
+document.getElementById('preBtn').addEventListener('click', () => {
+    let ok = 0;
+    pre.querySelectorAll('.pre-item').forEach(item => {
+        const right = item.dataset.correct;
+        const picked = item.querySelector('input:checked');
+        item.querySelectorAll('.opt').forEach(o => {
+            const inp = o.querySelector('input');
+            o.classList.toggle('correct', inp.value === right);
+            o.classList.toggle('wrong', inp.checked && inp.value !== right);
+        });
+        const res = item.querySelector('.res');
+        const hit = picked && picked.value === right;
+        res.className = 'res ' + (hit ? 'ok' : 'ng');
+        res.textContent = hit ? '正解' : (picked ? `答え ${right}（選んだのは ${picked.value}）` : `答え ${right}（未回答）`);
+        if (hit) ok++;
+    });
+    pre.classList.add('checked');
+    document.getElementById('preScore').textContent = `3問中 ${ok}問 正解。外れた問いは、右上の p.25 の問いで確かめる`;
+});
+const clearPre = () => { pre.classList.remove('checked'); pre.querySelectorAll('.res').forEach(r => { r.textContent = ''; r.className = 'res'; }); document.getElementById('preScore').textContent = ''; };
+pre.querySelectorAll('input').forEach(i => i.addEventListener('change', clearPre));
+
+/* === ONE-WEEK REVIEW: jump to the matching note row; tally the grades === */
+document.querySelectorAll('.goto').forEach(btn => btn.addEventListener('click', () => {
+    const row = document.getElementById('q' + btn.dataset.goto);
+    row.classList.add('peek');
+    row.scrollIntoView({ block: 'center' });
+    row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash');
+}));
+const tally = document.getElementById('tally');
+const updateTally = () => {
+    const g = [1, 2, 3, 4].map(n => state['g' + n]).filter(Boolean);
+    if (!g.length) { tally.textContent = ''; return; }
+    const c = v => g.filter(x => x === v).length;
+    const again = [1, 2, 3, 4].filter(n => state['g' + n] && state['g' + n] !== 'o').map(n => 'Q' + n);
+    tally.textContent = `言えた ${c('o')}　あいまい ${c('d')}　出てこない ${c('x')}` + (again.length ? `　もう一度：${again.join('・')}` : '');
+};
+onChange.push(updateTally);
+updateTally();
+
+/* === PRINT OPTIONS === */
+const printAns = document.getElementById('printAns');
+printAns.checked = !!state.__printAns;
+document.body.classList.toggle('print-answers', printAns.checked);
+printAns.addEventListener('change', () => {
+    document.body.classList.toggle('print-answers', printAns.checked);
+    state.__printAns = printAns.checked; store(state);
+});
+document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+/* === CLEAR === */
+document.getElementById('clearBtn').addEventListener('click', () => {
+    if (!confirm('このワークブックの記入内容をすべて消します。よろしいですか？')) return;
+    fields.forEach(el => {
+        if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+        else if (el.tagName === 'INPUT') el.value = '';
+        else el.textContent = '';
+        clearMark(el);
+    });
+    score.textContent = '';
+    clearPre();
+    Object.keys(state).forEach(k => { if (k !== '__printAns') delete state[k]; });
+    store(state);
+    updateTally();
+});
+</script>
+</body>
+</html>

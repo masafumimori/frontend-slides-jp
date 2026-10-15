@@ -1,6 +1,6 @@
 # Frontend Slides JP
 
-日本語のプレゼン資料と A4 縦の冊子を、1枚の HTML ファイルとして作る AI エージェント用のスキルです。日本で評価の高い会社紹介・採用ピッチ・決算資料・統合報告書を調べて作った 15 のスタイルから選べます。自社のデザインシステムを渡して、その見た目で作ることもできます。
+日本語のプレゼン資料と A4 縦の冊子を、1枚の HTML ファイルとして作る AI エージェント用のスキルです。日本で評価の高い会社紹介・採用ピッチ・決算資料・統合報告書を調べて作った 23 のスタイルから選べます。自社のデザインシステムを渡して、その見た目で作ることもできます。
 
 [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) のフォークです。元のスキルと区別するため、リポジトリ・プラグイン・スキルの名前はすべて `frontend-slides-jp` にしています。元のスキルと同時に入れても名前はぶつかりません。元のスキルの考え方（AI が作りがちな凡庸なデザインを避ける、選ぶ前に見せる、1920×1080 の固定ステージ）はそのまま引き継いでいます。
 
@@ -31,8 +31,16 @@
 | <img src="docs/images/office-report.jpg" width="120"> | **社内報告書** `office-report` | 社内報告、稟議の添付、提案書（A4 冊子のみ） |
 | <img src="docs/images/recruit-guide.jpg" width="120"> | **採用案内** `recruit-guide` | 新卒・中途の採用案内（写真が必要、A4 冊子のみ） |
 | <img src="docs/images/infographic.jpg" width="120"> | **インフォグラフィック** `infographic` | 図解の会社案内、広報誌、「数字で見る」冊子（A4 冊子のみ） |
+| <img src="docs/images/textbook-drill.jpg" width="120"> | **例題と練習の参考書** `textbook-drill` | 数学・理科の参考書、資格の計算問題（A4 冊子のみ） |
+| <img src="docs/images/textbook-visual.jpg" width="120"> | **図で理解する教科書** `textbook-visual` | しくみ・順序を図で学ぶ理科・社会の教材（A4 冊子のみ） |
+| <img src="docs/images/textbook-recall.jpg" width="120"> | **赤シート暗記の参考書** `textbook-recall` | 用語を覚える歴史・資格の暗記もの（A4 冊子のみ） |
+| <img src="docs/images/textbook-workbook.jpg" width="120"> | **書き込み式ワークブック** `textbook-workbook` | 研修や授業の書き込み式ノート（A4 冊子のみ） |
+| <img src="docs/images/textbook-case.jpg" width="120"> | **ケースで学ぶ研修テキスト** `textbook-case` | 事例で考える営業・管理職研修（A4 冊子のみ） |
+| <img src="docs/images/learning-layered.jpg" width="120"> | **全体から細部へ読む学習書** `learning-layered` | 社会人が全体をつかみ、必要な所だけ深く読む冊子（A4 冊子のみ） |
+| <img src="docs/images/learning-decision.jpg" width="120"> | **判断ガイド** `learning-decision` | 用途の選定や承認の条件を決めるための資料（A4 冊子のみ） |
+| <img src="docs/images/learning-playbook.jpg" width="120"> | **実務の手引き** `learning-playbook` | 試行・導入・申請の手順書とひな形（A4 冊子のみ） |
 
-A4 縦の冊子は、明るい地の 10 スタイルで作れます。
+A4 縦の冊子は、明るい地の 18 スタイルで作れます。
 
 - 統合報告書：`corporate-mono`・`photo-editorial`
 - 会社案内：`color-index`・`warm-editorial`・`tategumi-editorial`（縦組み）・`infographic`
@@ -40,6 +48,10 @@ A4 縦の冊子は、明るい地の 10 スタイルで作れます。
 - 社内報告：`office-report`
 - 採用案内：`recruit-guide`
 - 調査レポート：`whitepaper`
+- 教科書・教材（学生向け）：`textbook-drill`（例題と練習）・`textbook-visual`（図で理解）・`textbook-recall`（赤シート暗記）・`textbook-workbook`（書き込み式）
+- 研修・社会人の学習：`textbook-case`（ケース）・`learning-layered`（全体から細部へ）・`learning-decision`（判断）・`learning-playbook`（手順）
+
+教科書・教材のスタイルは、学習のための仕掛けを画面で動かせます。答えの表示、赤シートで消える語、書き込みの保存、深さの切り替え、判定の書き込み欄などです。印刷すると、答えは巻末や欄外へ、記入欄は罫線へと、紙で使う形に切り替わります。
 
 `dark-keynote`・`gate-gradient`・`geometric-blue`・`talk-one-message`・`swiss-grid` は投影向けのため、16:9 だけです。
 

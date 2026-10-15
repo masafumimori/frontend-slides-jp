@@ -1,7 +1,7 @@
 // Checks a doc-a4 document against the page rules in references/document-pages.md
 // by rendering it: page size, the page frame, text that leaves its page or is clipped,
 // a diagram id on .page, and text set below note or body size.
-//   node scripts/check-pages.mjs <file.html> [<file.html> …]
+//   node scripts/check-pages.mjs <file.html> [<file.html> …] [--phone]
 // Errors break a rule; warnings need a look at the screenshot. Exits 1 on any error.
 // Needs Playwright: PLAYWRIGHT_MODULE=/path/to/node_modules/playwright/index.mjs
 
@@ -11,7 +11,10 @@ import { fileURLToPath } from 'node:url';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const files = process.argv.slice(2).filter(a => !a.startsWith('--'));
-if (!files.length) throw new Error('usage: check-pages.mjs <file.html> [<file.html> …]');
+if (!files.length) throw new Error('usage: check-pages.mjs <file.html> [<file.html> …] [--phone]');
+// --phone renders as a phone (Pixel 7), where the column is zoomed to about 0.3 and Chrome
+// rounds line boxes; text that only overflows there shows up as an error too.
+const phone = process.argv.includes('--phone');
 
 const formats = JSON.parse(readFileSync(fileURLToPath(new URL('../formats.json', import.meta.url)), 'utf8'));
 const { width: W, height: H } = formats['doc-a4'].stage;
@@ -21,13 +24,14 @@ let failed = false;
 
 for (const file of files) {
   // W + 32 keeps the column fit at zoom 1, so every rect is in page px.
-  const page = await browser.newPage({ viewport: { width: W + 32, height: 1000 }, reducedMotion: 'reduce' });
+  const { devices } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
+  const page = await browser.newPage(phone ? { ...devices['Pixel 7'], reducedMotion: 'reduce' } : { viewport: { width: W + 32, height: 1000 }, reducedMotion: 'reduce' });
   const errors = [];
   page.on('pageerror', e => errors.push(`script error: ${e}`));
   await page.goto('file://' + resolve(file), { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
 
-  const result = await page.evaluate(({ W, H }) => {
+  const result = await page.evaluate(({ W, H, phone }) => {
     const errors = [], warnings = [];
     const pages = [...document.querySelectorAll('.page')];
     if (pages.length < 1) errors.push('no .page sections');
@@ -44,14 +48,16 @@ for (const file of files) {
     pages.forEach((pg, i) => {
       const n = i + 1;
       const box = pg.getBoundingClientRect();
-      if (Math.round(box.width) !== W || Math.round(box.height) !== H) {
+      // On a phone the page is drawn smaller; k turns screen px back into page px.
+      const k = phone ? box.width / W : 1;
+      if (!phone && (Math.round(box.width) !== W || Math.round(box.height) !== H)) {
         errors.push(`page ${n}: ${Math.round(box.width)}×${Math.round(box.height)}, not ${W}×${H}`);
       }
       if (/^d-/.test(pg.id)) errors.push(`page ${n}: id="${pg.id}" sits on .page; put it on a wrapper around the figure`);
 
       const texts = [...pg.querySelectorAll('*')].filter(ownText).map(el => {
         const r = el.getBoundingClientRect();
-        return { el, r, x: r.left - box.left, y: r.top - box.top, right: r.right - box.left, bottom: r.bottom - box.top };
+        return { el, r, x: (r.left - box.left) / k, y: (r.top - box.top) / k, right: (r.right - box.left) / k, bottom: (r.bottom - box.top) / k };
       }).filter(t => visible(t.el, t.r));
 
       for (const t of texts) {
@@ -89,7 +95,7 @@ for (const file of files) {
       }
     });
     return { pages: pages.length, errors, warnings };
-  }, { W, H });
+  }, { W, H, phone });
 
   result.errors.unshift(...errors);
   if (result.errors.length) failed = true;

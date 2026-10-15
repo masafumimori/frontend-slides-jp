@@ -1,0 +1,31 @@
+{
+  "slug": "textbook-visual",
+  "name": "Textbook Visual",
+  "name_ja": "図で理解する教科書",
+  "tagline": "One theme per page: a large numbered figure on top, numbered explanation rows below that light up together, then summary and a tap-to-reveal quiz.",
+  "summary_ja": "1ページ1テーマ。上半分に①②③の番号つきの大きな図、下半分に同じ番号の解説行。番号にふれると図の該当箇所が蛍光ペンでなぞられる。まとめ・確認問題（タップで答え、印刷では逆さの答え）・「できた」の保存つき。",
+  "group": "learning",
+  "mood": ["clear", "friendly", "structured"],
+  "formality": "medium",
+  "density": "medium",
+  "scheme": "light",
+  "best_for": "中学生・高校生向けの理科・社会・技術の教材、しくみ・順序・構造を図で説明する単元、自習用プリント、授業の配布資料",
+  "avoid_for": "図にしにくい読解中心の国語、大人向けの業務資料・営業資料、小学校低学年（文字量が多い）、写真で魅せる冊子",
+  "formats": ["doc-a4"],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Sans JP",
+    "body": "Zen Maru Gothic",
+    "latin": ["Jost"]
+  },
+  "colors": {
+    "green": "#22785B",
+    "red": "#C23A2E",
+    "blue": "#2C55A0",
+    "marker": "#F6CF3F",
+    "ink": "#1E2A32",
+    "paper": "#FFFDF7"
+  },
+  "refs": ["中学校理科の検定教科書（心臓と血液の循環の見開き）", "図解型の参考書・学習ノート"]
+}

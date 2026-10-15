@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<!-- style: learning-layered (Learning Layered / 全体から細部へ読む学習書). 全体地図で始め、各テーマを30秒／3分／深掘りの3段で開閉し、余白のミニ地図で現在地を示す。 -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ソラノ研修ライブラリ（架空の教材） 生成AIを業務に入れるときの判断と進め方 — 地図と3段の深さ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=BIZ+UDPGothic:wght@400;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+
+/* === STYLE TOKENS ===
+   Calm editorial ground (business-review / in-house training), one accent: vermilion.
+   Emphasis methods: color, weight, size (3). */
+:root {
+    --ink: #1D1F22;
+    --sub: #575B60;
+    --mute: #8B8E91;
+    --rule: #D8D3C8;
+    --paper: #FBFAF6;
+    --tint: #F2EFE7;
+    --acc: #B2381F;
+    --acc-tint: color-mix(in srgb, var(--acc) 9%, var(--paper));
+    --acc-line: color-mix(in srgb, var(--acc) 45%, var(--paper));
+    --jp-head: "Noto Serif JP", serif;
+    --jp-body: "BIZ UDPGothic", sans-serif;
+    --num: "Schibsted Grotesk", sans-serif;
+    --desk-bg: #E3E0D8;
+    --page-bg: var(--paper);
+}
+body { color: var(--ink); font-family: var(--jp-body); }
+.page { font-family: var(--jp-body); color: var(--ink); }
+.page * { box-sizing: border-box; margin: 0; padding: 0; }
+.n { font-family: var(--num); font-feature-settings: "tnum" 1, "lnum" 1; }
+.page a { color: inherit; text-decoration: none; }
+.page button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.print-only { display: none; }
+
+/* === PAGE FRAME === running head, folio, chapter tab (stepped by chapter like a binder index) */
+.rh { position: absolute; top: 60px; left: 96px; right: 96px; display: flex; justify-content: space-between; align-items: baseline; font-size: 18px; color: var(--sub); border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
+.rh-r { color: var(--ink); font-weight: 700; display: flex; gap: 12px; align-items: baseline; }
+.rh-r .n { color: var(--acc); font-weight: 600; font-size: 19px; }
+.folio { position: absolute; bottom: 56px; right: 96px; font-size: 20px; font-weight: 600; letter-spacing: .04em; }
+.foot { position: absolute; left: 96px; right: 200px; bottom: 54px; font-size: 17px; line-height: 1.6; color: var(--sub); text-align: left; }
+.tab { position: absolute; right: 0; width: 42px; height: 230px; background: var(--ink); color: var(--paper); writing-mode: vertical-rl; font-feature-settings: "vpal"; font-family: var(--jp-body); font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; padding-top: 18px; letter-spacing: .04em; }
+.tab .n { text-combine-upright: all; font-size: 17px; color: color-mix(in srgb, var(--paper) 70%, var(--ink)); }
+.tab.t00 { top: 150px; } .tab.t02 { top: 400px; } .tab.t03 { top: 650px; }
+
+/* === SHARED TYPE === */
+.hl { font-family: var(--jp-head); font-weight: 700; font-size: 54px; line-height: 1.38; letter-spacing: 0; }
+.src { font-size: 17px; line-height: 1.6; color: var(--sub); text-align: left; }
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots i { width: 11px; height: 11px; background: var(--acc); display: block; }
+
+/* =====================================================================
+   PAGE 1: the whole-topic map. Advance organizer (Ausubel 1960): a
+   higher-level frame given before the detail, so each later page has a
+   place to attach to. Every node carries its own 30-second conclusion, so
+   the map alone already teaches the series' main line.
+   ===================================================================== */
+.ov { position: absolute; left: 96px; right: 96px; top: 140px; }
+.kicker { font-size: 19px; font-weight: 700; color: var(--acc); display: flex; gap: 14px; align-items: baseline; }
+.kicker .n { letter-spacing: .16em; font-size: 18px; }
+.ov-hl { margin-top: 24px; font-size: 58px; }
+.lead { margin-top: 32px; font-size: 26px; line-height: 1.85; width: 980px; text-align: left; word-break: auto-phrase; }
+
+.bigmap { position: relative; margin-top: 72px; height: 676px; }
+.mlinks { position: absolute; left: 0; top: 0; }
+.mlinks .ln { stroke: var(--ink); stroke-width: 2; }
+.mlinks .ah { fill: none; stroke: var(--ink); stroke-width: 2; }
+.mlinks .loop { fill: none; stroke: var(--acc); stroke-width: 2; stroke-dasharray: 6 5; }
+.mlinks .loop-ah { fill: none; stroke: var(--acc); stroke-width: 2; }
+.mlinks .br { stroke: var(--acc-line); stroke-width: 2; }
+.mgrid { position: absolute; left: 120px; top: 0; width: 928px; display: grid; grid-template-columns: 722px 178px; column-gap: 28px; grid-template-rows: repeat(5, 116px); row-gap: 24px; }
+.mrow { grid-column: 1; display: grid; grid-template-columns: 56px 188px 1fr 92px; align-items: center; column-gap: 18px; padding: 0 22px 0 0; border: 1.5px solid var(--ink); background: var(--paper); position: relative; }
+a.mrow:hover, a.mband:hover { background: var(--tint); }
+.mrow .mno { width: 56px; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--ink); color: var(--paper); font-size: 22px; font-weight: 600; }
+.mrow .mname { font-family: var(--jp-head); font-size: 30px; font-weight: 700; line-height: 1.3; }
+.mrow .mline { font-size: 21px; line-height: 1.6; }
+.mrow .pg { justify-self: end; font-size: 20px; font-weight: 600; color: var(--acc); }
+.mrow .pg.miss { font-family: var(--jp-body); font-size: 17px; font-weight: 400; color: var(--mute); }
+.mrow.is-here { border-color: var(--acc); background: var(--acc-tint); }
+.mrow.is-here .mno { background: var(--acc); }
+.mrow.is-missing { border-style: dashed; border-color: var(--mute); }
+.mrow.is-missing .mno { background: var(--paper); color: var(--mute); border-right: 1.5px dashed var(--mute); }
+.mrow.is-missing .mname { color: var(--sub); }
+.mband { grid-column: 2; grid-row: 2 / span 4; border: 1.5px solid var(--acc); background: var(--acc-tint); display: flex; flex-direction: column; align-items: center; padding: 18px 10px 16px; gap: 14px; }
+.mband .mno { font-size: 22px; font-weight: 600; color: var(--paper); background: var(--acc); padding: 4px 12px; }
+.mband .mname { font-family: var(--jp-head); font-size: 34px; font-weight: 700; flex: 1; }
+.mband-note { font-size: 18px; line-height: 1.5; text-align: center; color: var(--acc); font-weight: 700; }
+.mband .pg { font-size: 20px; font-weight: 600; color: var(--acc); }
+.loop-label { position: absolute; left: 22px; width: 40px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: var(--acc); line-height: 1.4; }
+.map-src { margin-top: 14px; }
+
+.howto { margin-top: 112px; }
+.howto-h { font-family: var(--jp-head); font-size: 30px; font-weight: 700; }
+.howto-row { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
+.hw { border-left: 1.5px solid var(--rule); padding-left: 20px; }
+.hw-t { font-family: var(--num); font-size: 30px; font-weight: 700; line-height: 1.3; margin-top: 10px; text-align: left; }
+.hw:nth-child(3) .hw-t { font-family: var(--jp-head); font-size: 28px; }
+.hw-t span { font-family: var(--jp-body); font-size: 19px; font-weight: 700; color: var(--acc); margin-left: 12px; }
+.hw-d { font-size: 20px; line-height: 1.7; margin-top: 6px; text-align: left; word-break: auto-phrase; }
+.howto-note { margin-top: 18px; font-size: 19px; color: var(--sub); text-align: left; }
+
+/* =====================================================================
+   TOPIC PAGES. Three depths per topic = progressive disclosure (Nielsen):
+   the 30-second band is always on; 3-minute and deep bands open on demand.
+   Signaling (Mayer's signaling principle): every band carries the same
+   depth mark (1–3 squares) and label in the same place, so the reader can
+   see how deep a passage is before reading it.
+   ===================================================================== */
+.rail { position: absolute; left: 96px; top: 140px; width: 170px; }
+.main { position: absolute; left: 300px; right: 96px; top: 140px; width: 844px; }
+.rail-h { font-size: 17px; font-weight: 700; color: var(--sub); letter-spacing: .04em; margin-bottom: 12px; text-align: left; }
+
+/* mini-map: the page-1 map at rail size, current node in the accent */
+.mm { position: relative; display: grid; grid-template-columns: 124px 34px; column-gap: 10px; grid-template-rows: repeat(5, 72px); row-gap: 12px; }
+.mm-spine { position: absolute; left: 14px; top: 40px; bottom: 40px; border-left: 2px solid var(--ink); z-index: 0; }
+.mm-node { grid-column: 1; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; text-align: left; padding: 4px 8px 4px 34px; border: 1.5px solid var(--ink); background: var(--paper) !important; font-size: 17px; font-weight: 700; line-height: 1.3; }
+.mm-node .n { position: absolute; left: 0; top: 0; bottom: 0; width: 28px; display: flex; align-items: center; justify-content: center; background: var(--ink); color: var(--paper); font-size: 15px; }
+.mm-node i { font-style: normal; font-weight: 400; font-size: 15px; color: var(--sub); }
+.mm-node.is-cur { border-color: var(--acc); background: var(--acc) !important; color: var(--paper); }
+.mm-node.is-cur .n { background: color-mix(in srgb, var(--ink) 30%, var(--acc)); }
+.mm-node.is-cur i { color: var(--paper); }
+.mm-node.is-missing { border-style: dashed; border-color: var(--mute); color: var(--sub); }
+.mm-node.is-missing .n { background: var(--paper); color: var(--mute); border-right: 1.5px dashed var(--mute); }
+button.mm-node:hover { background: var(--tint) !important; }
+button.mm-node.is-cur:hover { background: var(--acc) !important; }
+.mm-band { grid-column: 2; grid-row: 2 / span 4; border: 1.5px solid var(--acc) !important; background: var(--acc-tint) !important; display: flex; flex-direction: column; align-items: center; padding: 8px 0 !important; gap: 8px; color: var(--acc) !important; font-size: 17px; font-weight: 700; }
+.mm-band .n { font-size: 15px; }
+.mm-band.is-cur { background: var(--acc) !important; color: var(--paper) !important; }
+.mm-key { margin-top: 14px; font-size: 17px; color: var(--sub); display: flex; align-items: center; gap: 8px; text-align: left; }
+.mm-key .sw { width: 16px; height: 16px; background: var(--acc); display: inline-block; }
+
+.rail-switch { margin-top: 44px; display: flex; flex-direction: column; gap: 8px; }
+.rail-switch button { display: flex; align-items: center; gap: 10px; padding: 10px 10px; border: 1.5px solid var(--rule) !important; font-size: 18px !important; font-weight: 700; text-align: left; color: var(--sub) !important; }
+.rail-switch button .dots { width: 44px; }
+.rail-switch button .dots i { background: var(--mute); }
+.rail-switch button[aria-pressed="true"] { border-color: var(--ink) !important; color: var(--ink) !important; background: var(--tint) !important; }
+.rail-switch button[aria-pressed="true"] .dots i { background: var(--acc); }
+.rail-print { margin-top: 44px; font-size: 17px; color: var(--sub); line-height: 1.6; text-align: left; }
+
+/* bands */
+.band { position: relative; }
+.band + .band { margin-top: 112px; }
+.band-h { display: flex; align-items: center; gap: 14px; border-top: 2px solid var(--ink); padding-top: 12px; min-height: 44px; }
+.band-lb { font-family: var(--num); font-size: 24px; font-weight: 700; }
+.b3 .band-lb { font-family: var(--jp-body); font-size: 22px; }
+.band-sub { font-size: 18px; color: var(--sub); font-weight: 700; }
+.teaser { display: none; font-size: 18px; color: var(--sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
+.exp { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; font-size: 18px !important; font-weight: 700; color: var(--acc) !important; padding: 4px 2px 4px 12px !important; flex: none; }
+.exp-i { width: 20px; height: 20px; position: relative; display: inline-block; border: 1.5px solid var(--acc); }
+.exp-i::before, .exp-i::after { content: ""; position: absolute; left: 4px; right: 4px; top: 8px; height: 1.5px; background: var(--acc); }
+.exp-i::after { transform: rotate(90deg); transition: transform .2s; }
+.exp[aria-expanded="true"] .exp-i::after { transform: rotate(0deg); }
+
+.q { margin-top: 40px; font-size: 20px; font-weight: 700; color: var(--acc); }
+.b1 .hl { margin-top: 14px; font-size: 54px; }
+.fig { margin-top: 72px; }
+.fig figcaption { margin-top: 28px !important; }
+.next { margin-top: 64px; font-size: 18px; color: var(--sub); text-align: left; }
+.next::before { content: "→ "; color: var(--acc); }
+.recall { margin-top: 0; }
+.recall .q { margin-top: 0; display: flex; gap: 20px; align-items: baseline; }
+.q-k { font-size: 17px; color: var(--sub); font-weight: 700; }
+.recall-h { margin-top: 14px; font-family: var(--jp-head); font-size: 34px; font-weight: 700; line-height: 1.5; color: var(--sub); }
+.cont .b2 { margin-top: 112px; }
+.fig figcaption { margin-top: 10px; font-size: 19px; line-height: 1.65; text-align: left; }
+.b1 .src { margin-top: 4px; }
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 56px; margin-top: 48px; }
+.col3 h3 { font-family: var(--jp-head); font-size: 26px; font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
+.col3 h3 { margin-bottom: 20px !important; }
+.col3 p { font-size: 23px; line-height: 1.85; }
+.col3 b { color: var(--acc); font-family: var(--num); }
+.deep { margin-top: 40px; }
+.cold h4 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+.cold ul { list-style: none; }
+.cold li { font-size: 18px; line-height: 1.8; padding-left: 1em; text-indent: -1em; word-break: normal; text-align: justify; }
+.cold li::before { content: "・"; }
+.cold li + li { margin-top: 4px; }
+
+/* collapsed bands (screen only): level above the chosen depth, unless opened */
+@media screen {
+    body[data-depth="1"] .band[data-level="2"]:not(.open) .band-body,
+    body[data-depth="1"] .band[data-level="3"]:not(.open) .band-body,
+    body[data-depth="2"] .band[data-level="3"]:not(.open) .band-body,
+    .band.shut .band-body { display: none; }
+    body[data-depth="1"] .band[data-level="2"]:not(.open) .teaser,
+    body[data-depth="1"] .band[data-level="3"]:not(.open) .teaser,
+    body[data-depth="2"] .band[data-level="3"]:not(.open) .teaser,
+    .band.shut .teaser { display: block; }
+    .band-body { animation: unfold .28s ease-out; }
+}
+@keyframes unfold { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* matrix */
+.mx .zone { fill: var(--acc-tint); }
+.mx .zone-lb { font-family: var(--jp-body); font-size: 20px; font-weight: 700; fill: var(--acc); }
+.mx .zone-sub { font-family: var(--jp-body); font-size: 17px; fill: var(--acc); }
+.mx .grid { stroke: var(--rule); stroke-width: 1; }
+.mx .cut { stroke: var(--acc); stroke-width: 1.5; stroke-dasharray: 5 5; }
+.mx .tick { font-size: 18px; fill: var(--sub); }
+.mx .axis { font-family: var(--jp-body); font-size: 17px; fill: var(--sub); }
+.mx .pt { fill: var(--mute); }
+.mx .pt.elig { fill: var(--paper); stroke: var(--acc); stroke-width: 2.5; }
+.mx .pt.pick { fill: var(--acc); }
+.mx .lb { font-family: var(--jp-body); font-size: 18px; fill: var(--ink); }
+.mx .lb.pick { font-weight: 700; }
+.mx .lb .n { font-size: 17px; fill: var(--sub); font-weight: 500; }
+
+/* gates on the flow */
+.gates { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 32px; }
+.gs-head { position: relative; display: flex; align-items: baseline; gap: 10px; font-family: var(--jp-head); font-size: 26px; font-weight: 700; padding: 0 0 12px; border-bottom: 2px solid var(--ink); }
+.gs-head .n { font-family: var(--num); font-size: 20px; color: var(--sub); }
+.chev { position: absolute; right: -22px; top: 50%; width: 14px; height: 14px; border-top: 2px solid var(--ink); border-right: 2px solid var(--ink); transform: translateY(-50%) rotate(45deg); }
+.gate { margin-top: 28px; border: 2px solid var(--acc); padding: 18px 16px 18px; min-height: 210px; }
+.gate.none { border: 1.5px dashed var(--mute); }
+.gate-k { display: block; font-size: 17px; color: var(--sub); font-weight: 700; }
+.gate b { display: block; font-family: var(--jp-head); font-size: 30px; color: var(--acc); line-height: 1.35; margin-top: 2px; }
+.gate b.dim { color: var(--sub); font-size: 26px; }
+.gate-r { display: block; margin-top: 8px; font-size: 18px; line-height: 1.55; font-weight: 700; }
+.gate-r em { display: block; font-style: normal; font-weight: 400; color: var(--sub); font-size: 17px; }
+.gs-note { margin-top: 20px; font-size: 19px; line-height: 1.7; text-align: left; word-break: auto-phrase; }
+.gstat { margin-top: 80px; }
+.gstat-k { font-size: 18px; font-weight: 700; text-align: left; }
+.fict { font-weight: 400; color: var(--sub); font-size: 17px; margin-left: 6px; }
+.gstat-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 24px; margin-top: 4px; }
+.kpi { display: flex; align-items: baseline; gap: 4px; }
+.kpi .big { font-size: 56px; font-weight: 700; color: var(--acc); line-height: 1.1; }
+.kpi .u { font-size: 20px; font-weight: 700; }
+.kpi .of { font-size: 19px; color: var(--sub); margin-left: 12px; }
+.gbar { height: 18px; background: var(--tint); position: relative; }
+.gbar span { position: absolute; left: 0; top: 0; bottom: 0; background: var(--acc); }
+.kpi-r { font-size: 22px; font-weight: 700; }
+.kpi-r .n { font-size: 34px; }
+.gstat-sub { font-size: 18px; line-height: 1.6; color: var(--ink); text-align: left; margin-top: 2px; }
+
+/* === TOOLBAR (outside the pages, in the document flow; never covers a page) === */
+.doc-toolbar { max-width: 1240px; margin: 0 auto; padding: 18px 16px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; font-family: "BIZ UDPGothic", sans-serif; color: #1D1F22; }
+.doc-toolbar .tb-title { font-size: 15px; font-weight: 700; }
+.doc-toolbar .tb-title span { color: #575B60; font-weight: 400; margin-left: 8px; }
+.seg { display: inline-flex; border: 1.5px solid #1D1F22; background: #FBFAF6; }
+.seg button { font: inherit; font-size: 15px; font-weight: 700; padding: 8px 14px; border: 0; background: none; color: #575B60; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.seg button + button { border-left: 1.5px solid #1D1F22; }
+.seg button[aria-pressed="true"] { background: #1D1F22; color: #FBFAF6; }
+.seg .dots i { width: 8px; height: 8px; background: currentColor; }
+.seg button[aria-pressed="true"] .dots i { background: #E2735C; }
+.tb-label { font-size: 14px; color: #575B60; }
+@media screen { .doc-stage { padding-top: 20px; } }
+
+@media print {
+    .doc-toolbar, .screen-only { display: none !important; }
+    .print-only { display: inline; }
+    p.print-only { display: block; }
+    .band-body { display: grid !important; animation: none; }
+}
+
+</style>
+</head>
+<body data-depth="2">
+<div class="doc-toolbar" role="group" aria-label="読む深さの切替">
+  <span class="tb-title">生成AIを業務に入れるときの判断と進め方<span>ソラノ研修ライブラリ（架空の教材）</span></span>
+  <span class="tb-label">読む深さ</span>
+  <span class="seg">
+    <button type="button" data-depth="1"><b class="dots"><i></i></b>30秒だけ</button>
+    <button type="button" data-depth="2"><b class="dots"><i></i><i></i></b>3分まで</button>
+    <button type="button" data-depth="3"><b class="dots"><i></i><i></i><i></i></b>すべて</button>
+  </span>
+</div>
+<main class="doc-stage" id="docStage">
+<section class="page overview" id="p1" data-node="01">
+  <header class="rh"><span class="rh-l">ソラノ研修ライブラリ（架空の教材）</span><span class="rh-r"><span class="n">00</span>全体像</span></header>
+  <span class="tab t00"><span class="n">00</span>全体像</span>
+  <div class="ov">
+    <p class="kicker"><span class="n">MAP</span>この冊子の地図</p>
+    <h1 class="hl ov-hl">生成AIの導入は、小さく選び<br>確かめながら、測って広げる</h1>
+    <p class="lead">ソラノ商事（架空）は2026年12月8日の経営会議で、生成AIの最初の用途を決める。先に地図で全体をつかみ、必要な判断の頁だけを開く。</p>
+    <div class="bigmap" id="mapBig">
+  <svg class="mlinks" width="1048" height="676" viewBox="0 0 1048 676" aria-hidden="true"><line x1="148" y1="90" x2="148" y2="158" class="ln"/><path d="M141 154 L148 164 L155 154" class="ah"/><line x1="148" y1="230" x2="148" y2="298" class="ln"/><path d="M141 294 L148 304 L155 294" class="ah"/><line x1="148" y1="370" x2="148" y2="438" class="ln"/><path d="M141 434 L148 444 L155 434" class="ah"/><line x1="148" y1="510" x2="148" y2="578" class="ln"/><path d="M141 574 L148 584 L155 574" class="ah"/><path d="M118 478 H84 V198 H114" class="loop"/><path d="M106 190 L116 198 L106 206" class="loop-ah"/><line x1="842" y1="198" x2="870" y2="198" class="br"/><line x1="842" y1="338" x2="870" y2="338" class="br"/><line x1="842" y1="478" x2="870" y2="478" class="br"/><line x1="842" y1="618" x2="870" y2="618" class="br"/></svg>
+  <div class="mgrid"><div class="mrow is-here" style="grid-row:1">
+  <span class="mno n">01</span>
+  <span class="mname">目的</span>
+  <span class="mline">何の時間を減らし、浮いた時間を何に使うかを先に決める。</span>
+  <span class="pg n">p.1</span>
+</div><a class="mrow" style="grid-row:2" href="#p2" data-goto="p2">
+  <span class="mno n">02</span>
+  <span class="mname">業務の選び方</span>
+  <span class="mline">人が読み直せる社内の作業から。最初は社内文書の要約。</span>
+  <span class="pg n">p.2–3</span>
+</a><div class="mrow is-missing" style="grid-row:3">
+  <span class="mno n">04</span>
+  <span class="mname">試行</span>
+  <span class="mline">1業務・4週間・確認する人を決めて、小さく試す。</span>
+  <span class="pg miss">本デモ未収録</span>
+</div><div class="mrow is-missing" style="grid-row:4">
+  <span class="mno n">05</span>
+  <span class="mname">効果の測り方</span>
+  <span class="mline">削減時間と修正件数を、試行の前後で比べる。</span>
+  <span class="pg miss">本デモ未収録</span>
+</div><div class="mrow is-missing" style="grid-row:5">
+  <span class="mno n">06</span>
+  <span class="mname">全社展開</span>
+  <span class="mline">測れた業務から、ルールと一緒に広げる。</span>
+  <span class="pg miss">本デモ未収録</span>
+</div><a class="mband" href="#p4" data-goto="p4">
+  <span class="mno n">03</span>
+  <span class="mname tate">リスクと対策</span>
+  <span class="mband-note">すべての段階にかかる</span>
+  <span class="pg n">p.4–5</span>
+</a></div>
+  <span class="loop-label tate" style="top:238px;height:200px">測った結果で、次の業務を選び直す</span>
+</div>
+    <section class="howto">
+      <h2 class="howto-h">この冊子の読み方</h2>
+      <div class="howto-row">
+        <div class="hw"><b class="dots"><i></i></b><p class="hw-t">30秒<span>結論と図</span></p><p class="hw-d">見出しの一文と図だけ。会議の前に、全体の判断をつかむ。</p></div>
+        <div class="hw"><b class="dots"><i></i><i></i></b><p class="hw-t">3分<span>理由と手順</span></p><p class="hw-d">なぜそうするか、どう進めるか。担当になったときに読む。</p></div>
+        <div class="hw"><b class="dots"><i></i><i></i><i></i></b><p class="hw-t">深掘り<span>例外・条件・出典</span></p><p class="hw-d">判断に迷ったとき、根拠を確かめたいときに開く。</p></div>
+      </div>
+      <p class="howto-note"><span class="screen-only">画面では、上の「読む深さ」で全頁の深さを切り替えられる。</span><span class="print-only">印刷版には3つの深さをすべて収めている。深掘りは小さめの文字で組んだ。</span></p>
+    </section>
+  </div>
+  <p class="foot">発行：ソラノ研修ライブラリ（架空の教材）。社名と数値はすべて架空。04〜06は続刊の想定。</p>
+  <span class="folio n">1</span>
+</section>
+<section class="page topic" id="p2" data-node="02">
+  <header class="rh"><span class="rh-l">ソラノ研修ライブラリ（架空の教材）</span><span class="rh-r"><span class="n">02</span>業務の選び方</span></header>
+  <span class="tab t02"><span class="n">02</span>業務の選び方</span>
+  <aside class="rail"><nav class="mini" aria-label="全体の地図と現在地">
+  <p class="rail-h">現在地</p>
+  <div class="mm"><button type="button" class="mm-node" data-goto="p1" aria-label="01 目的（p.1）へ移動"><span class="n">01</span>目的<i class="pg">p.1</i></button><button type="button" class="mm-node is-cur" data-goto="p2" aria-label="02 業務の選び方（p.2–3）へ移動"><span class="n">02</span>業務の選び方<i class="pg">p.2–3</i></button><span class="mm-node is-missing"><span class="n">04</span>試行<i>未収録</i></span><span class="mm-node is-missing"><span class="n">05</span>効果の測り方<i>未収録</i></span><span class="mm-node is-missing"><span class="n">06</span>全社展開<i>未収録</i></span><button type="button" class="mm-band" data-goto="p4" aria-label="03 リスクと対策（p.4–5）へ移動"><span class="n">03</span><span class="tate">リスクと対策</span></button><span class="mm-spine" aria-hidden="true"></span></div>
+  <p class="mm-key"><span class="sw"></span>この頁</p>
+</nav></aside>
+  <div class="main">
+    <section class="band b1" data-level="1">
+      <header class="band-h"><b class="dots"><i></i></b><span class="band-lb">30秒</span><span class="band-sub">結論と図</span></header>
+      <p class="q">問い　どの業務から始めるか</p>
+      <h1 class="hl">最初の業務は、社内で完結し<br>人が読み直せる定型作業から選ぶ</h1>
+      <figure class="fig"><svg class="mx" width="848" height="560" viewBox="0 0 848 560" role="img" aria-label="候補8業務の年の削減見込みとリスク点"><rect x="152.6" y="253.0" width="671.4" height="233.0" class="zone"/><text x="812.0" y="474.0" class="zone-lb" text-anchor="end">まず試す範囲<tspan class="zone-sub" dx="10">リスク点1以下・年500時間以上</tspan></text><line x1="78" y1="486.0" x2="824" y2="486.0" class="grid"/><text x="60" y="434.8" class="tick n" text-anchor="end">0</text><line x1="78" y1="369.5" x2="824" y2="369.5" class="grid"/><text x="60" y="318.2" class="tick n" text-anchor="end">1</text><line x1="78" y1="253.0" x2="824" y2="253.0" class="grid"/><text x="60" y="201.8" class="tick n" text-anchor="end">2</text><line x1="78" y1="136.5" x2="824" y2="136.5" class="grid"/><text x="60" y="85.2" class="tick n" text-anchor="end">3</text><line x1="78" y1="20" x2="824" y2="20" class="grid"/><text x="78.0" y="516" class="tick n" text-anchor="middle">0</text><text x="227.2" y="516" class="tick n" text-anchor="middle">1,000</text><text x="376.4" y="516" class="tick n" text-anchor="middle">2,000</text><text x="525.6" y="516" class="tick n" text-anchor="middle">3,000</text><text x="674.8" y="516" class="tick n" text-anchor="middle">4,000</text><text x="824.0" y="516" class="tick n" text-anchor="end">5,000</text><line x1="152.6" y1="20" x2="152.6" y2="486" class="cut"/><text x="451.0" y="552" class="axis" text-anchor="middle">年の削減見込み（試算・時間）＝対象人数×週の削減分×46週</text><text x="18" y="253.0" class="axis" text-anchor="middle" transform="rotate(-90 18 253.0)">リスク点（「はい」の数）</text><circle cx="695.7" cy="427.8" r="10" class="pt pick"/><text x="677.7" y="433.8" text-anchor="end" class="lb pick">社内文書の要約<tspan class="n" dx="8">4,140</tspan></text><circle cx="736.9" cy="194.8" r="10" class="pt"/><text x="746.9" y="174.8" text-anchor="end" class="lb">問い合わせ回答の下書き<tspan class="n" dx="8">4,416</tspan></text><circle cx="627.1" cy="194.8" r="10" class="pt"/><text x="627.1" y="232.8" text-anchor="middle" class="lb">議事録の作成<tspan class="n" dx="8">3,680</tspan></text><circle cx="489.8" cy="194.8" r="10" class="pt"/><text x="471.8" y="200.8" text-anchor="end" class="lb">コード補助<tspan class="n" dx="8">2,760</tspan></text><circle cx="192.4" cy="427.8" r="10" class="pt elig"/><text x="210.4" y="433.8" text-anchor="start" class="lb">社内通達の下書き<tspan class="n" dx="8">767</tspan></text><circle cx="242.7" cy="311.2" r="10" class="pt elig"/><text x="260.7" y="317.2" text-anchor="start" class="lb">規程の問い合わせ回答案<tspan class="n" dx="8">1,104</tspan></text><circle cx="129.5" cy="194.8" r="10" class="pt"/><text x="147.5" y="200.8" text-anchor="start" class="lb">応募書類の評価<tspan class="n" dx="8">345</tspan></text><circle cx="146.6" cy="78.2" r="10" class="pt"/><text x="164.6" y="84.2" text-anchor="start" class="lb">契約書の条項確認<tspan class="n" dx="8">460</tspan></text></svg><figcaption>候補8業務のうち、色の付いた社内文書の要約（年4,140時間の見込み）を最初の用途とする。白丸は条件を満たすが、削減が小さいため次の候補とした業務。</figcaption></figure>
+      <p class="src">出典：ソラノ商事（架空）業務改革室の試算（架空のデータ）。数値は年の削減見込み時間。</p>
+      <p class="next screen-only">理由と手順、例外と出典は次の頁（p.3）</p>
+    </section>
+  </div>
+  <p class="foot">ソラノ商事（架空）：専門商社、従業員860名。最初の用途は2026年12月8日の経営会議で決める（架空のデータ）。</p>
+  <span class="folio n">2</span>
+</section>
+<section class="page topic cont" id="p3" data-node="02">
+  <header class="rh"><span class="rh-l">ソラノ研修ライブラリ（架空の教材）</span><span class="rh-r"><span class="n">02</span>業務の選び方</span></header>
+  <span class="tab t02"><span class="n">02</span>業務の選び方</span>
+  <aside class="rail"><nav class="mini" aria-label="全体の地図と現在地">
+  <p class="rail-h">現在地</p>
+  <div class="mm"><button type="button" class="mm-node" data-goto="p1" aria-label="01 目的（p.1）へ移動"><span class="n">01</span>目的<i class="pg">p.1</i></button><button type="button" class="mm-node is-cur" data-goto="p2" aria-label="02 業務の選び方（p.2–3）へ移動"><span class="n">02</span>業務の選び方<i class="pg">p.2–3</i></button><span class="mm-node is-missing"><span class="n">04</span>試行<i>未収録</i></span><span class="mm-node is-missing"><span class="n">05</span>効果の測り方<i>未収録</i></span><span class="mm-node is-missing"><span class="n">06</span>全社展開<i>未収録</i></span><button type="button" class="mm-band" data-goto="p4" aria-label="03 リスクと対策（p.4–5）へ移動"><span class="n">03</span><span class="tate">リスクと対策</span></button><span class="mm-spine" aria-hidden="true"></span></div>
+  <p class="mm-key"><span class="sw"></span>この頁</p>
+</nav></aside>
+  <div class="main">
+    <div class="recall">
+      <p class="q">問い　どの業務から始めるか<span class="q-k">p.2の結論</span></p>
+      <h2 class="recall-h">最初の業務は、社内で完結し<br>人が読み直せる定型作業から選ぶ</h2>
+    </div>
+    <section class="band b2" data-level="2">
+      <header class="band-h"><b class="dots"><i></i><i></i></b><span class="band-lb">3分</span><span class="band-sub">理由と手順</span><span class="teaser screen-only">3つの問いでリスク点をつける／点が低く、削減の大きいものから</span><button type="button" class="exp screen-only" aria-expanded="false"><span class="exp-t">開く</span><span class="exp-i" aria-hidden="true"></span></button></header>
+      <div class="band-body cols"><div class="col3"><h3>3つの問いでリスク点をつける</h3><p>候補の業務ごとに、3つの問いに「はい／いいえ」で答える。<b>①</b>出力が社外に出るか。<b>②</b>個人情報や機密を入力するか。<b>③</b>誤りを読み手が見つけにくいか。「はい」の数がリスク点になる。</p></div><div class="col3"><h3>点が低く、削減の大きいものから</h3><p>対象人数×週の削減分×46週で、年の削減時間を見積もる。リスク点1以下で年500時間以上を候補とし、最も大きい1つから始める。失敗しても社内で直せる。</p></div></div>
+    </section>
+    <section class="band b3" data-level="3">
+      <header class="band-h"><b class="dots"><i></i><i></i><i></i></b><span class="band-lb">深掘り</span><span class="band-sub">例外・条件・出典</span><span class="teaser screen-only">例外と条件／出典</span><button type="button" class="exp screen-only" aria-expanded="false"><span class="exp-t">開く</span><span class="exp-i" aria-hidden="true"></span></button></header>
+      <div class="band-body cols deep"><div class="cold"><h4>例外と条件</h4><ul><li>点が低くても、出力を人事評価など人に関する判断に直接使う業務は、最初の対象にしない。</li><li>削減見込みは対象部署だけの試算で、他部署への横展開の効果は含めていない。</li><li>試行の前に、入力してよい情報の範囲と、使うサービスの設定（入力が学習に使われないか）を決める。</li></ul></div><div class="cold"><h4>出典と注</h4><ul><li>総務省・経済産業省「AI事業者ガイドライン（第1.0版）」（2024年4月）。AIを業務に使う「AI利用者」の立場の留意点も整理している。</li><li>「3つの問い」と点のつけ方は本書の整理で、ガイドラインの基準ではない。</li><li>閾値（点と時間）は会社ごとに決める。本書の値は例。</li></ul></div></div>
+    </section>
+  </div>
+  <p class="foot">本頁の業務・点数・閾値は、すべて架空のデータと本書の例。</p>
+  <span class="folio n">3</span>
+</section>
+<section class="page topic" id="p4" data-node="03">
+  <header class="rh"><span class="rh-l">ソラノ研修ライブラリ（架空の教材）</span><span class="rh-r"><span class="n">03</span>リスクと対策</span></header>
+  <span class="tab t03"><span class="n">03</span>リスクと対策</span>
+  <aside class="rail"><nav class="mini" aria-label="全体の地図と現在地">
+  <p class="rail-h">現在地</p>
+  <div class="mm"><button type="button" class="mm-node" data-goto="p1" aria-label="01 目的（p.1）へ移動"><span class="n">01</span>目的<i class="pg">p.1</i></button><button type="button" class="mm-node" data-goto="p2" aria-label="02 業務の選び方（p.2–3）へ移動"><span class="n">02</span>業務の選び方<i class="pg">p.2–3</i></button><span class="mm-node is-missing"><span class="n">04</span>試行<i>未収録</i></span><span class="mm-node is-missing"><span class="n">05</span>効果の測り方<i>未収録</i></span><span class="mm-node is-missing"><span class="n">06</span>全社展開<i>未収録</i></span><button type="button" class="mm-band is-cur" data-goto="p4" aria-label="03 リスクと対策（p.4–5）へ移動"><span class="n">03</span><span class="tate">リスクと対策</span></button><span class="mm-spine" aria-hidden="true"></span></div>
+  <p class="mm-key"><span class="sw"></span>この頁</p>
+</nav></aside>
+  <div class="main">
+    <section class="band b1" data-level="1">
+      <header class="band-h"><b class="dots"><i></i></b><span class="band-lb">30秒</span><span class="band-sub">結論と図</span></header>
+      <p class="q">問い　リスクをどう抑えるか</p>
+      <h1 class="hl">リスクは「入れない・確かめる・<br>残す」の3つの決まりで抑える</h1>
+      <figure class="fig"><div class="gates"><div class="gstep">
+  <div class="gs-head"><span class="n">1</span>入力する<span class="chev" aria-hidden="true"></span></div>
+  <div class="gate"><span class="gate-k">決まり</span><b>入れない</b><span class="gate-r"><em>防ぐもの</em>情報漏えい<br>個人情報の扱い</span></div>
+  <p class="gs-note">社外秘と個人情報は、<br>会社が認めた<br>環境でだけ入力する</p>
+</div><div class="gstep">
+  <div class="gs-head"><span class="n">2</span>AIが作る<span class="chev" aria-hidden="true"></span></div>
+  <div class="gate none"><span class="gate-k">注意</span><b class="dim">AIの出力</b><span class="gate-r"><em>前提</em>正しいとは<br>限らない</span></div>
+  <p class="gs-note">もっともらしい誤り<br>（ハルシネーション）<br>が混じる</p>
+</div><div class="gstep">
+  <div class="gs-head"><span class="n">3</span>人が読む<span class="chev" aria-hidden="true"></span></div>
+  <div class="gate"><span class="gate-k">決まり</span><b>確かめる</b><span class="gate-r"><em>防ぐもの</em>誤った内容<br>他者の権利</span></div>
+  <p class="gs-note">数字・固有名詞・条番号は原典と照らす</p>
+</div><div class="gstep">
+  <div class="gs-head"><span class="n">4</span>使う</div>
+  <div class="gate"><span class="gate-k">決まり</span><b>残す</b><span class="gate-r"><em>防ぐもの</em>あとから追えない</span></div>
+  <p class="gs-note">誰が・どの業務で・どう直したかを記録する</p>
+</div></div><div class="gstat">
+  <p class="gstat-k">業務改革室の事前検証（2週間・社内文書の要約）で、人が直した件数<span class="fict">（架空のデータ）</span></p>
+  <div class="gstat-row">
+    <p class="kpi"><span class="n big">16</span><span class="u">件</span><span class="of">／生成 <span class="n">120</span>件</span></p>
+    <div class="gbar" aria-hidden="true"><span style="width:13.3%"></span></div>
+    <p class="kpi-r"><span class="n">13.3</span>%</p>
+  </div>
+  <p class="gstat-sub">うち数字・固有名詞などの事実の誤り <span class="n">10</span>件、表現や抜け <span class="n">6</span>件。</p>
+</div><figcaption>「確かめる」がなければ、この16件はそのまま使われていた。</figcaption></figure>
+      <p class="src">出典：ソラノ商事（架空）業務改革室の事前検証の記録、2週間・120件（架空のデータ）。</p>
+      <p class="next screen-only">理由と手順、例外と出典は次の頁（p.5）</p>
+    </section>
+  </div>
+  <p class="foot">修正率は、人が修正した件数÷生成した件数。本頁の件数はすべて架空のデータ。</p>
+  <span class="folio n">4</span>
+</section>
+<section class="page topic cont" id="p5" data-node="03">
+  <header class="rh"><span class="rh-l">ソラノ研修ライブラリ（架空の教材）</span><span class="rh-r"><span class="n">03</span>リスクと対策</span></header>
+  <span class="tab t03"><span class="n">03</span>リスクと対策</span>
+  <aside class="rail"><nav class="mini" aria-label="全体の地図と現在地">
+  <p class="rail-h">現在地</p>
+  <div class="mm"><button type="button" class="mm-node" data-goto="p1" aria-label="01 目的（p.1）へ移動"><span class="n">01</span>目的<i class="pg">p.1</i></button><button type="button" class="mm-node" data-goto="p2" aria-label="02 業務の選び方（p.2–3）へ移動"><span class="n">02</span>業務の選び方<i class="pg">p.2–3</i></button><span class="mm-node is-missing"><span class="n">04</span>試行<i>未収録</i></span><span class="mm-node is-missing"><span class="n">05</span>効果の測り方<i>未収録</i></span><span class="mm-node is-missing"><span class="n">06</span>全社展開<i>未収録</i></span><button type="button" class="mm-band is-cur" data-goto="p4" aria-label="03 リスクと対策（p.4–5）へ移動"><span class="n">03</span><span class="tate">リスクと対策</span></button><span class="mm-spine" aria-hidden="true"></span></div>
+  <p class="mm-key"><span class="sw"></span>この頁</p>
+</nav></aside>
+  <div class="main">
+    <div class="recall">
+      <p class="q">問い　リスクをどう抑えるか<span class="q-k">p.4の結論</span></p>
+      <h2 class="recall-h">リスクは「入れない・確かめる・<br>残す」の3つの決まりで抑える</h2>
+    </div>
+    <section class="band b2" data-level="2">
+      <header class="band-h"><b class="dots"><i></i><i></i></b><span class="band-lb">3分</span><span class="band-sub">理由と手順</span><span class="teaser screen-only">なぜ、この3か所か／残すと、次の手が打てる</span><button type="button" class="exp screen-only" aria-expanded="false"><span class="exp-t">開く</span><span class="exp-i" aria-hidden="true"></span></button></header>
+      <div class="band-body cols"><div class="col3"><h3>なぜ、この3か所か</h3><p>送った情報は取り戻せないので、漏えいは入力の前で止める。出力の誤りは、文書が人の手を離れる前に止める。社外に出す文書は、作成者以外の人も読む。</p></div><div class="col3"><h3>残すと、次の手が打てる</h3><p>誰が、どの業務で何を入れ、どう直したかを記録する。事前検証ではログから個人名を含む入力が1件見つかり、ルールに例を足した。直した件数は効果測定に使う。</p></div></div>
+    </section>
+    <section class="band b3" data-level="3">
+      <header class="band-h"><b class="dots"><i></i><i></i><i></i></b><span class="band-lb">深掘り</span><span class="band-sub">例外・条件・出典</span><span class="teaser screen-only">例外と条件／出典</span><button type="button" class="exp screen-only" aria-expanded="false"><span class="exp-t">開く</span><span class="exp-i" aria-hidden="true"></span></button></header>
+      <div class="band-body cols deep"><div class="cold"><h4>例外と条件</h4><ul><li>社内専用の環境でも、個人情報は原則として、本人に示した利用目的の範囲でしか使えない。</li><li>修正率は業務ごとに見る。最も高かった社内規程の要約（5／30件、16.7%）は、条番号を原文と照らす手順を足した。</li></ul></div><div class="cold"><h4>出典と注</h4><ul><li>生成物が既存の著作物に似ていて、それに依拠したと認められれば侵害となり得る。文化審議会著作権分科会法制度小委員会「AIと著作権に関する考え方について」（2024年3月）。</li><li>総務省・経済産業省「AI事業者ガイドライン（第1.0版）」（2024年4月）。</li></ul></div></div>
+    </section>
+  </div>
+  <p class="foot">本頁の件数・事例はすべて架空のデータ。</p>
+  <span class="folio n">5</span>
+</section>
+</main>
+<script>
+
+/* === FIT: zoom the 1240px column to the visual viewport width === */
+const stage = document.getElementById('docStage');
+const vw = () => (window.visualViewport ? visualViewport.width : innerWidth);
+const fit = () => { stage.style.zoom = Math.min(1, (vw() - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+if (window.visualViewport) visualViewport.addEventListener('resize', fit);
+
+/* === DEPTH: one switch for every topic, persisted === */
+const KEY = 'learning-layered:depth';
+const store = {
+    get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem(KEY, v); } catch (e) { /* private mode: keep in memory */ } },
+};
+const bands = [...document.querySelectorAll('.band[data-level]')];
+const shown = b => {
+    if (b.classList.contains('shut')) return false;
+    if (b.classList.contains('open')) return true;
+    return Number(b.dataset.level) <= Number(document.body.dataset.depth);
+};
+const syncExpanders = () => bands.forEach(b => {
+    const btn = b.querySelector('.exp');
+    if (!btn) return;
+    const on = shown(b);
+    btn.setAttribute('aria-expanded', String(on));
+    btn.querySelector('.exp-t').textContent = on ? '閉じる' : '開く';
+});
+const setDepth = (d, save = true) => {
+    if (!['1', '2', '3'].includes(d)) d = '2';
+    document.body.dataset.depth = d;
+    bands.forEach(b => b.classList.remove('open', 'shut'));
+    document.querySelectorAll('button[data-depth]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.depth === d)));
+    syncExpanders();
+    if (save) store.set(d);
+};
+document.querySelectorAll('button[data-depth]').forEach(b => b.addEventListener('click', () => setDepth(b.dataset.depth)));
+bands.forEach(b => {
+    const btn = b.querySelector('.exp');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        const on = shown(b);
+        b.classList.remove('open', 'shut');
+        const byDepth = Number(b.dataset.level) <= Number(document.body.dataset.depth);
+        if (on && byDepth) b.classList.add('shut');
+        if (!on && !byDepth) b.classList.add('open');
+        syncExpanders();
+    });
+});
+setDepth(store.get() || '2', false);
+
+/* === MAP: every node jumps to its page === */
+document.querySelectorAll('[data-goto]').forEach(el => el.addEventListener('click', e => {
+    const target = document.getElementById(el.dataset.goto);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+}));
+
+</script>
+</body>
+</html>

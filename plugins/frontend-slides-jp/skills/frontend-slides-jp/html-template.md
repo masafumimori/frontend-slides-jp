@@ -182,7 +182,11 @@ A `doc-a4` document is a column of fixed A4 pages read by scrolling. It pastes [
     <script>
         /* === FIT: scale the 1240px column to the window width; print resets it === */
         const stage = document.getElementById('docStage');
-        const fit = () => { stage.style.zoom = Math.min(1, (window.innerWidth - 32) / 1240); };
+        /* visualViewport: mobile Chrome widens the layout viewport to the 1240px column before the zoom applies;
+           × scale keeps pinch-zoom from shrinking the pages */
+        const vv = window.visualViewport;
+        const viewW = () => Math.min(window.innerWidth, vv ? vv.width * vv.scale : window.innerWidth);
+        const fit = () => { stage.style.zoom = Math.min(1, (viewW() - 32) / 1240); };
         fit();
         window.addEventListener('resize', fit);
     </script>

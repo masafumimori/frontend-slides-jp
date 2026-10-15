@@ -1,0 +1,1145 @@
+<!-- style: textbook-drill (例題と練習の参考書) — unit opener with a progress map and prerequisite check, faded worked examples, practice with reveal + self-check, a chapter test whose answers sit in one answer block -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学Ⅰ 例題と練習 第2章 二次関数 §5 定義域つきの最大・最小・章末テスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=BIZ+UDPMincho:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS: one ink, one accent (例題 numbering), one muted tint (side notes) === */
+:root {
+    --ink: #1A1D24;
+    --sub: #50555F;
+    --line: #B8BCC4;
+    --accent: #1D4E9E;
+    --tint: #EEF1F5;
+    --paper: #FFFFFF;
+    --accent-10: color-mix(in srgb, var(--accent) 10%, var(--paper));
+    --accent-20: color-mix(in srgb, var(--accent) 20%, var(--paper));
+
+    --head: "Noto Sans JP", sans-serif;
+    --body: "BIZ UDPMincho", serif;
+    --math: "STIX Two Text", "BIZ UDPMincho", serif;
+
+    --desk-bg: #DADDE2;
+    --page-bg: var(--paper);
+}
+
+body { color: var(--ink); font-family: var(--body); }
+.page { font-family: var(--body); font-size: 22px; color: var(--ink); }
+.page * { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+
+/* Math: STIX for Latin, italic variables, true minus */
+.m { font-family: var(--math); font-size: 1.08em; letter-spacing: 0; white-space: nowrap; font-feature-settings: "lnum" 1; }
+.m var { font-style: italic; }
+.m sup { font-size: 0.68em; line-height: 0; vertical-align: 0.5em; margin-left: 0.04em; }
+.num { font-family: var(--math); font-feature-settings: "lnum" 1, "tnum" 1; }
+
+/* === PAGE FRAME === */
+.rh { position: absolute; left: 96px; right: 96px; top: 56px; height: 36px; display: flex; justify-content: space-between; align-items: center; font-family: var(--head); font-size: 18px; color: var(--sub); }
+.rh .book b { color: var(--ink); font-weight: 700; margin-right: 14px; }
+.rh .chap { color: var(--ink); font-weight: 700; display: flex; gap: 14px; align-items: center; }
+.rh .chap .sec { font-weight: 500; color: var(--sub); }
+.hr-top { position: absolute; left: 96px; right: 96px; top: 104px; border-top: 2px solid var(--ink); }
+.hr-bot { position: absolute; left: 96px; right: 96px; top: 1654px; border-top: 1px solid var(--line); }
+.pf { position: absolute; left: 96px; right: 96px; top: 1672px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--head); font-size: 18px; color: var(--sub); }
+.folio { font-family: var(--math); font-size: 22px; font-weight: 600; color: var(--ink); }
+.tab { position: absolute; right: 0; top: 300px; width: 46px; height: 250px; background: var(--accent); color: var(--paper); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 18px; gap: 12px; font-family: var(--head); font-weight: 700; }
+.tab .tn { font-family: var(--math); font-size: 26px; font-weight: 600; line-height: 1; }
+.tab .tt { writing-mode: vertical-rl; font-feature-settings: "vpal"; font-size: 19px; letter-spacing: 0.08em; }
+
+/* Side-note column: a tinted band behind the right third */
+.band { position: absolute; left: 798px; width: 346px; top: 104px; height: 1550px; background: var(--tint); }
+.body { position: absolute; left: 96px; top: 136px; width: 1048px; }
+.row { display: grid; grid-template-columns: 682px 330px; column-gap: 36px; }
+.side { padding-right: 14px; font-size: 18px; line-height: 1.7; }
+.side p { line-height: 1.7; text-align: left; letter-spacing: 0.01em; }
+.side p + p { margin-top: 6px; }
+.note + .note { margin-top: 22px; }
+.nh { font-family: var(--head); font-weight: 700; font-size: 18px; color: var(--ink); display: flex; align-items: center; gap: 10px; margin-bottom: 6px; line-height: 1.4; }
+.nh::before { content: ""; width: 14px; height: 14px; background: var(--ink); flex: none; }
+.nh.warn::before { background: none; border: 2px solid var(--ink); transform: rotate(45deg); width: 11px; height: 11px; margin: 0 2px; }
+.terms { display: grid; grid-template-columns: 4.6em 1fr; column-gap: 10px; row-gap: 4px; }
+.terms dt { font-family: var(--head); font-weight: 700; font-size: 18px; line-height: 1.7; }
+.terms dd { font-size: 18px; line-height: 1.7; letter-spacing: 0.01em; word-break: normal; }
+.figcap { font-family: var(--head); font-size: 18px; color: var(--sub); line-height: 1.5; margin-top: 4px; }
+.figcap b { color: var(--ink); }
+svg.g { display: block; width: 316px; height: auto; background: var(--paper); }
+svg.g text { font-family: var(--math); font-size: 18px; fill: var(--ink); }
+svg.g text.jp { font-family: var(--head); font-size: 18px; font-weight: 700; }
+
+/* Section head */
+.kick { font-family: var(--head); font-size: 20px; font-weight: 700; color: var(--accent); display: flex; gap: 16px; align-items: baseline; }
+.kick .num { font-size: 22px; }
+h1.hl { font-family: var(--head); font-weight: 700; font-size: 50px; line-height: 1.38; margin-top: 10px; }
+h2.hl { font-family: var(--head); font-weight: 700; font-size: 44px; line-height: 1.4; margin-top: 8px; }
+.lead { font-size: 24px; line-height: 1.75; margin-top: 16px; }
+
+/* 基本事項: ruled table of the three axis positions */
+.kihon { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.kihon .kh { display: flex; align-items: baseline; gap: 14px; padding: 10px 0 8px; border-bottom: 1px solid var(--line); }
+.kihon .kh b { font-family: var(--head); font-size: 20px; font-weight: 700; color: var(--paper); background: var(--ink); padding: 1px 10px 2px; }
+.kihon .kh span { font-size: 22px; }
+.cases { display: grid; grid-template-columns: repeat(3, 1fr); }
+.cases > div { padding: 10px 12px 8px; border-left: 1px solid var(--line); }
+.cases > div:first-child { border-left: 0; padding-left: 0; }
+.cases .ct { font-family: var(--head); font-size: 18px; font-weight: 700; line-height: 1.4; }
+.cases svg { display: block; width: 100%; height: auto; margin: 4px 0 2px; }
+.cases svg text { font-family: var(--head); font-size: 18px; font-weight: 700; fill: var(--ink); }
+.cases .cr { font-size: 18px; line-height: 1.6; }
+.cases .cr b { font-family: var(--head); font-weight: 700; }
+.kihon .kf { font-size: 18px; line-height: 1.6; padding: 6px 0 8px; border-top: 1px solid var(--line); color: var(--ink); }
+
+/* 例題 */
+.ex-h { display: flex; align-items: stretch; gap: 0; border-bottom: 2px solid var(--accent); }
+.ex-h .lab { font-family: var(--head); font-weight: 900; font-size: 22px; color: var(--paper); background: var(--accent); padding: 4px 14px 3px; display: flex; align-items: center; gap: 8px; }
+.ex-h .lab .num { font-size: 26px; font-weight: 600; }
+.ex-h .ttl { font-family: var(--head); font-weight: 700; font-size: 22px; padding: 6px 14px 4px; display: flex; align-items: center; }
+.ex-h .lv { margin-left: auto; font-family: var(--head); font-size: 18px; color: var(--sub); display: flex; align-items: center; gap: 8px; }
+.ex-h .lv i { font-style: normal; display: inline-block; width: 12px; height: 12px; border: 1.5px solid var(--accent); }
+.ex-h .lv i.on { background: var(--accent); }
+.q { padding: 12px 0 10px; font-size: 22px; line-height: 1.8; }
+.q p { text-align: left; }
+.sol { border-top: 1px dashed var(--line); padding-top: 8px; }
+.st { display: grid; grid-template-columns: 116px 1fr; column-gap: 14px; align-items: baseline; padding: 4px 0; }
+.st .sl { font-family: var(--head); font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.5; border-left: 3px solid var(--accent); padding-left: 8px; }
+.st .sc { font-size: 22px; line-height: 1.8; letter-spacing: 0.02em; }
+.ans-line { display: flex; gap: 14px; align-items: baseline; margin-top: 6px; padding: 8px 0 0; border-top: 1px solid var(--ink); font-size: 22px; line-height: 1.7; }
+.ans-line .tag { font-family: var(--head); font-weight: 700; font-size: 18px; border: 1.5px solid var(--ink); padding: 0 8px; line-height: 1.5; flex: none; }
+.ans-line b { font-family: var(--head); font-weight: 700; }
+.ans-line .m { font-weight: 400; }
+
+/* Blanks in the faded example: fixed width, so opening one never reflows the page */
+.blank { display: inline-flex; align-items: center; justify-content: center; height: 1.6em; border: 1.5px solid var(--accent); background: var(--paper); margin: 0 4px; position: relative; vertical-align: -0.42em; }
+.blank .bt { font-family: var(--head); font-weight: 700; font-size: 18px; color: var(--accent); }
+.blank .bf { display: none; font-size: 22px; }
+.blank.open { background: var(--accent-10); }
+.blank.open .bt { position: absolute; left: -1px; top: -1px; transform: translateY(-100%); font-size: 18px; line-height: 1; padding: 2px 4px 1px; background: var(--accent); color: var(--paper); }
+.blank.open .bf { display: inline; }
+.bl-ref { font-family: var(--head); font-weight: 700; font-size: 18px; color: var(--accent); border: 1.5px solid var(--accent); padding: 0 6px; margin: 0 3px; }
+
+/* Screen controls */
+button.rv { font-family: var(--head); font-size: 18px; font-weight: 700; color: var(--accent); background: var(--paper); border: 1.5px solid var(--accent); padding: 3px 12px; cursor: pointer; line-height: 1.5; margin-left: 8px; vertical-align: baseline; }
+button.rv:hover { background: var(--accent-10); }
+button.rv[aria-expanded="true"] { color: var(--sub); border-color: var(--line); }
+button.rv:focus-visible, .sc-opt input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* === PAGE 2: 練習 === */
+.pr + .pr { margin-top: 26px; }
+.pr-h { display: flex; align-items: baseline; gap: 14px; border-bottom: 1px solid var(--ink); padding-bottom: 6px; }
+.pr-h .lab { font-family: var(--head); font-weight: 900; font-size: 22px; color: var(--accent); border: 2px solid var(--accent); padding: 1px 12px 0; }
+.pr-h .lab .num { font-size: 24px; font-weight: 600; }
+.pr-h .back { margin-left: auto; font-family: var(--head); font-size: 18px; color: var(--sub); }
+.pr .q { padding: 8px 0 8px; }
+.work { position: relative; height: 140px; border: 1px solid var(--line); }
+.work .rl { position: absolute; left: 0; right: 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, var(--paper)); }
+.work .wl { position: absolute; left: 12px; top: 6px; font-family: var(--head); font-size: 18px; color: var(--sub); }
+.work .wa { position: absolute; inset: 0; background: var(--paper); border-left: 4px solid var(--accent); padding: 8px 16px; font-size: 22px; line-height: 1.7; }
+.work .wa p { text-align: left; line-height: 1.7; }
+.work .wa b { font-family: var(--head); font-weight: 700; }
+.ctrl { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.ctrl button.rv { margin-left: 0; }
+.selfchk { display: flex; align-items: center; gap: 6px; font-family: var(--head); font-size: 18px; border: 0; }
+.selfchk legend { float: left; font-weight: 700; margin-right: 8px; color: var(--sub); }
+.sc-opt { position: relative; cursor: pointer; }
+.sc-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.sc-opt span { display: inline-flex; align-items: center; gap: 7px; padding: 3px 11px; border: 1.5px solid var(--line); color: var(--ink); line-height: 1.5; }
+.sc-opt span::before { content: ""; width: 14px; height: 14px; border: 1.5px solid var(--ink); flex: none; }
+.sc-opt input:checked + span { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.sc-opt input:checked + span::before { border-color: var(--paper); background: var(--paper); }
+
+/* Foot of page 2: the learning record on screen, the answer block in print */
+.foot2 { position: absolute; left: 96px; width: 682px; top: 1292px; height: 342px; }
+.rec { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); height: 100%; padding-top: 10px; }
+.rec-h, .ab-h { display: flex; align-items: baseline; justify-content: space-between; font-family: var(--head); font-size: 20px; font-weight: 700; }
+.rec-h small, .ab-h small { font-size: 18px; font-weight: 400; color: var(--sub); }
+.tally { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 10px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.tally > div { padding: 6px 12px; border-left: 1px solid var(--line); font-family: var(--head); font-size: 18px; color: var(--sub); }
+.tally > div:first-child { border-left: 0; padding-left: 0; }
+.tally .v { display: block; font-family: var(--math); font-size: 40px; font-weight: 600; color: var(--ink); line-height: 1.2; }
+.tally .v small { font-family: var(--head); font-size: 18px; font-weight: 500; margin-left: 4px; }
+.todo { margin-top: 10px; font-size: 20px; line-height: 1.7; }
+.todo li { list-style: none; padding-left: 1.2em; text-indent: -1.2em; letter-spacing: 0.01em; }
+.todo li::before { content: "→"; display: inline-block; width: 1.2em; text-indent: 0; font-family: var(--math); color: var(--accent); }
+.rec .reset, .next .reset { font-family: var(--head); font-size: 18px; color: var(--sub); background: none; border: 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.ansblock { display: none; }
+
+/* Page 2 side: summary of the three steps */
+.flow3 { counter-reset: s; }
+.flow3 li { list-style: none; display: grid; grid-template-columns: 34px 1fr; column-gap: 8px; font-size: 18px; line-height: 1.7; word-break: normal; }
+.flow3 li + li { margin-top: 6px; }
+.flow3 li::before { counter-increment: s; content: counter(s); font-family: var(--math); font-weight: 600; font-size: 20px; color: var(--paper); background: var(--accent); width: 28px; height: 28px; display: grid; place-items: center; margin-top: 2px; }
+.pub { font-family: var(--head); font-size: 18px; color: var(--sub); }
+
+@media print {
+    .rv, .rec .reset, .next .reset { display: none !important; }
+    .work .wa { display: none !important; }
+    .blank .bf { display: none !important; }
+    .blank.open { background: var(--paper); }
+    .blank.open .bt { position: static; transform: none; background: none; color: var(--accent); padding: 0; }
+    .g2-full { display: none !important; }
+    .g2-blank { display: block !important; }
+    .rec { display: none !important; }
+    .ansblock { display: block; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); height: 100%; padding-top: 10px; }
+    .sc-opt input:checked + span { background: var(--paper); color: var(--ink); }
+    .sc-opt input:checked + span::before { background: var(--ink); border-color: var(--ink); }
+}
+.ab-list { margin-top: 8px; display: grid; grid-template-columns: 1fr; row-gap: 2px; }
+.ab-list > div { display: grid; grid-template-columns: 84px 1fr; column-gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--line); font-size: 19px; line-height: 1.6; }
+.ab-list > div:last-child { border-bottom: 0; }
+.ab-list dt { font-family: var(--head); font-weight: 700; font-size: 18px; color: var(--accent); }
+.ab-list dd { word-break: normal; letter-spacing: 0.01em; }
+
+/* === UNIT OPENER: the problem list (progress map) and the prerequisite check === */
+.sec-h { display: flex; align-items: baseline; gap: 14px; font-family: var(--head); font-weight: 700; font-size: 26px; border-bottom: 2px solid var(--ink); padding-bottom: 6px; }
+.sec-h small { margin-left: auto; font-size: 18px; font-weight: 400; color: var(--sub); }
+.goals { width: 100%; border-collapse: collapse; border-bottom: 1px solid var(--ink); }
+.goals th { font-family: var(--head); font-size: 18px; font-weight: 700; color: var(--sub); text-align: left; padding: 8px 8px 6px; border-bottom: 1px solid var(--ink); line-height: 1.4; }
+.goals td { white-space: nowrap; padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 20px; line-height: 1.6; vertical-align: middle; word-break: normal; }
+.goals tr.gl td { border-bottom: 1px solid var(--ink); }
+.goals td.ty { white-space: normal; border-bottom: 1px solid var(--ink); width: 132px; padding: 6px 10px 6px 0; border-right: 1px solid var(--line); vertical-align: top; }
+.goals td.ty b { display: block; font-family: var(--head); font-size: 18px; font-weight: 700; line-height: 1.4; }
+.goals td.ty svg { display: block; width: 120px; height: auto; margin-top: 4px; }
+.goals td.pg { width: 48px; font-family: var(--math); font-size: 20px; color: var(--sub); text-align: right; padding-right: 12px; }
+.goals td.rc { width: 118px; padding-right: 0; }
+.src { font-family: var(--head); font-weight: 700; font-size: 18px; color: var(--accent); margin-right: 10px; }
+.src.ex { color: var(--paper); background: var(--accent); padding: 0 6px; }
+.src.pr { border: 1.5px solid var(--accent); padding: 0 6px; }
+.src.ts { border: 1.5px solid var(--ink); color: var(--ink); padding: 0 6px; }
+/* Record chip: fixed width, so a new state never reflows the row */
+.chip { display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 6.4em; font-family: var(--head); font-size: 18px; line-height: 1.5; border: 1.5px solid var(--line); color: var(--sub); }
+.chip::before { content: ""; width: 12px; height: 12px; border: 1.5px solid currentColor; flex: none; }
+.chip.s-ok { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.chip.s-ok::before { background: var(--paper); border-color: var(--paper); }
+.chip.s-unsure { border-color: var(--accent); color: var(--accent); }
+.chip.s-unsure::before { background: linear-gradient(135deg, var(--accent) 50%, transparent 50%); }
+.chip.s-ng { border-color: var(--ink); color: var(--ink); border-style: dashed; }
+.chip.s-ng::before { border-radius: 0; transform: rotate(45deg); width: 10px; height: 10px; }
+.chip.none { border: 0; color: var(--sub); }
+.chip.none::before { display: none; }
+.legend { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; row-gap: 6px; align-items: center; font-size: 18px; line-height: 1.5; }
+.legend .chip { width: 6.4em; }
+.legend dd { word-break: normal; line-height: 1.5; }
+
+.pre-i { padding: 10px 0 10px; border-bottom: 1px solid var(--line); }
+.pre-i .pq { display: flex; align-items: baseline; gap: 14px; font-size: 22px; line-height: 1.7; }
+.pre-i .pq .lab { font-family: var(--head); font-weight: 700; font-size: 18px; color: var(--accent); border: 1.5px solid var(--accent); padding: 0 8px; line-height: 1.5; flex: none; }
+.pre-i .pa { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+.pre-i .pa button.rv { white-space: nowrap; }
+.pre-i .blank .bf { white-space: nowrap; font-size: 20px; }
+.pre-i .blank.open .bt { display: none; }   /* the item label already names it; a raised tag would cover the question */
+.pre-i .pa .ans { font-size: 22px; display: flex; align-items: center; }
+.side .note.ret { border-left: 4px solid transparent; padding-left: 10px; margin-left: -14px; }
+.side .note.ret.miss { border-left-color: var(--accent); background: var(--paper); padding-top: 6px; padding-bottom: 8px; }
+.side .note.ret.miss .nh { color: var(--accent); }
+.side .note.ret.miss .nh::before { background: var(--accent); }
+
+/* Opener foot: the next step on screen, the answers in print */
+.foot1 { position: absolute; left: 96px; width: 682px; top: 1420px; height: 214px; }
+.next { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); height: 100%; padding-top: 10px; }
+.next .todo { margin-top: 8px; }
+
+/* === CHAPTER TEST === */
+
+.t-h { display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--ink); padding-bottom: 6px; }
+.t-h .lab { font-family: var(--head); font-weight: 900; font-size: 22px; color: var(--paper); background: var(--ink); padding: 1px 12px 0; }
+.t-h .lab .num { font-size: 24px; font-weight: 600; }
+.t-h .pts { font-family: var(--head); font-size: 18px; color: var(--sub); }
+.t-h .pts .num { font-size: 20px; color: var(--ink); font-weight: 600; }
+.t-h .selfchk { margin-left: auto; }
+.t-h .score-box { display: none; margin-left: auto; font-family: var(--head); font-size: 18px; color: var(--sub); border: 1.5px solid var(--ink); padding: 0 10px; line-height: 1.6; }
+.t-i .q { padding: 4px 0 4px; }
+.work.sm { height: 52px; }
+.work.sm .wl { top: 4px; }
+.foot4 { position: absolute; left: 96px; width: 682px; top: 1366px; height: 268px; }
+.foot4 .ansblock { display: block; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); height: 100%; padding-top: 10px; }
+.foot4 .ab-list { margin-top: 4px; }
+.foot4 .ab-list > div { grid-template-columns: 46px 1fr; font-size: 18px; line-height: 1.45; padding: 2px 0; row-gap: 0; }
+.foot4 .ab-list dd { white-space: nowrap; }
+.foot4 .ab-list dd { line-height: 1.45; }
+.foot4 .ab-list { row-gap: 0; }
+.gate { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); height: 100%; padding-top: 10px; display: flex; flex-direction: column; }
+.gate p { font-size: 20px; line-height: 1.7; margin-top: 8px; text-align: left; }
+.gate button.rv { margin: 14px 0 0; align-self: flex-start; font-size: 20px; padding: 6px 18px; }
+.score { margin-top: 6px; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 8px 0 10px; }
+.score .sv { font-family: var(--math); font-size: 64px; font-weight: 600; line-height: 1.1; }
+.score .sv small { font-family: var(--head); font-size: 20px; font-weight: 500; margin-left: 6px; color: var(--sub); }
+.score .sm2 { font-family: var(--head); font-size: 18px; color: var(--sub); line-height: 1.5; }
+.score .reset { font-family: var(--head); font-size: 18px; color: var(--sub); background: none; border: 0; border-bottom: 1px solid var(--line); cursor: pointer; margin-top: 6px; }
+.score .blankscore { display: none; }
+
+@media print {
+    .foot1 .next { display: none !important; }
+    .foot1 .ansblock { display: block; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); height: 100%; padding-top: 10px; }
+    .pre-i .pa .selfchk, .t-h .selfchk { display: none !important; }
+    .t-h .score-box { display: inline-block; }
+    .gate { display: none !important; }
+    .foot4 .ansblock[hidden] { display: block !important; }
+    .score .sv, .score .sm2, .score .reset { display: none !important; }
+    .score .blankscore { display: block; font-family: var(--head); font-size: 22px; padding: 14px 0 6px; }
+    .side .note.ret.miss { border-left-color: transparent; background: none; }
+}
+.foot4 .ab-h .reset { font-family: var(--head); font-size: 18px; color: var(--sub); background: none; border: 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+@media print { .foot4 .ab-h .reset { display: none !important; } }
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ PAGE 1: 単元の扉（解けるようになる問題の一覧・前提の確認） ============ -->
+<section class="page" data-chapter="2">
+    <header class="rh"><span class="book"><b>数学Ⅰ 例題と練習</b>汐見書房（架空の教材）</span><span class="chap"><span class="sec">§5 定義域つきの最大・最小</span>第2章 二次関数</span></header>
+    <div class="hr-top"></div>
+    <div class="band"></div>
+
+    <div class="body">
+        <div class="row">
+            <div>
+                <div class="kick"><span>第2章 二次関数</span><span>§<span class="num">5</span> この単元で学ぶこと</span></div>
+                <h1 class="hl">軸と定義域の位置で、<br>4つの型に分けて解く</h1>
+                <p class="lead">下に凸か上に凸か、軸が定義域の中か外か。この2つで型が決まり、型ごとに答えの候補が決まる。</p>
+            </div>
+            <aside class="side" style="padding-top:8px">
+                <div class="note">
+                    <div class="nh">この単元の流れ</div>
+                    <ol class="flow3">
+                        <li>前提の確認（このページ）</li>
+                        <li>基本事項・例題1・例題2　p.52</li>
+                        <li>練習1〜3　p.53</li>
+                        <li>§6 応用のあと、章末テスト　p.58</li>
+                    </ol>
+                </div>
+                <div class="note">
+                    <div class="nh">目安</div>
+                    <p>例題と練習で40分。</p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 解けるようになる問題: grouped by type, each with where it is and the learner's record -->
+        <div class="row" style="margin-top:20px">
+            <div>
+                <div class="sec-h">この単元で解けるようになる問題<small>記録は練習・章末テストから集まる</small></div>
+                <table class="goals">
+                    <thead><tr><th>型</th><th>問題</th><th style="text-align:right;padding-right:12px">掲載</th><th>記録</th></tr></thead>
+                    <tbody>
+                        <tr><td class="ty" rowspan="3"><b>下に凸・軸が中</b><svg id="m1" viewBox="0 0 138 64"></svg></td>
+                            <td><span class="src ex">例題1</span><span class="m"><var>y</var> = <var>x</var><sup>2</sup> − 4<var>x</var> + 1</span>（<span class="m">0 ≦ <var>x</var> ≦ 5</span>）</td><td class="pg">52</td><td class="rc"><span class="chip none">例題で学ぶ</span></td></tr>
+                        <tr><td><span class="src pr">練習1</span><span class="m"><var>y</var> = <var>x</var><sup>2</sup> + 2<var>x</var> − 1</span>（<span class="m">−3 ≦ <var>x</var> ≦ 1</span>）</td><td class="pg">53</td><td class="rc"><span class="chip" data-rec="sc1">未記録</span></td></tr>
+                        <tr class="gl"><td><span class="src ts">問4</span>章末テストの同じ型の問題</td><td class="pg">58</td><td class="rc"><span class="chip" data-rec="t4">未記録</span></td></tr>
+                        <tr class="gl"><td class="ty"><b>下に凸・軸が外</b><svg id="m2" viewBox="0 0 138 64"></svg></td>
+                            <td><span class="src pr">練習2</span><span class="m"><var>y</var> = 2<var>x</var><sup>2</sup> − 8<var>x</var> + 5</span>（<span class="m">3 ≦ <var>x</var> ≦ 4</span>）</td><td class="pg">53</td><td class="rc"><span class="chip" data-rec="sc2">未記録</span></td></tr>
+                        <tr><td class="ty" rowspan="2"><b>上に凸・軸が外</b><svg id="m3" viewBox="0 0 138 64"></svg></td>
+                            <td><span class="src ex">例題2</span><span class="m"><var>y</var> = −<var>x</var><sup>2</sup> + 2<var>x</var> + 3</span>（<span class="m">−2 ≦ <var>x</var> ≦ 0</span>）</td><td class="pg">52</td><td class="rc"><span class="chip none">例題で学ぶ</span></td></tr>
+                        <tr class="gl"><td><span class="src ts">問5</span>章末テストの同じ型の問題</td><td class="pg">58</td><td class="rc"><span class="chip" data-rec="t5">未記録</span></td></tr>
+                        <tr class="gl"><td class="ty"><b>上に凸・軸が中</b><svg id="m4" viewBox="0 0 138 64"></svg></td>
+                            <td><span class="src pr">練習3</span><span class="m"><var>y</var> = −<var>x</var><sup>2</sup> + 6<var>x</var></span>（<span class="m">1 ≦ <var>x</var> ≦ 4</span>）</td><td class="pg">53</td><td class="rc"><span class="chip" data-rec="sc3">未記録</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <aside class="side" style="padding-top:52px">
+                <div class="note">
+                    <div class="nh">記録の読み方</div>
+                    <dl class="legend">
+                        <dt><span class="chip s-ok">できた</span></dt><dd>次の型へ進む</dd>
+                        <dt><span class="chip s-unsure">あやしい</span></dt><dd>例題を読み直す</dd>
+                        <dt><span class="chip s-ng">できない</span></dt><dd>基本事項から読み直す</dd>
+                        <dt><span class="chip">未記録</span></dt><dd>まだ解いていない</dd>
+                    </dl>
+                </div>
+                <div class="note">
+                    <div class="nh">図の見方</div>
+                    <p>帯が定義域。丸が最大、四角が最小になる位置。</p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 前提の確認: three items from §1–§2; each answer opens in a fixed-width blank -->
+        <div class="row" style="margin-top:22px">
+            <div>
+                <div class="sec-h">前提の確認<small>できなければ、横の戻り先を先に読む</small></div>
+                <div class="pre-i">
+                    <div class="pq"><span class="lab">確認1</span><p><span class="m"><var>x</var><sup>2</sup> − 6<var>x</var> + 5</span> を平方完成せよ。</p></div>
+                    <div class="pa"><span class="ans"><span class="blank" id="bP1" style="width:7.2em"><span class="bt">確認1</span><span class="bf m">(<var>x</var> − 3)<sup>2</sup> − 4</span></span><button class="rv" type="button" data-blank="bP1" aria-expanded="false" aria-controls="bP1">確認1 を見る</button></span>
+                        <fieldset class="selfchk" data-key="pre1"><legend>結果</legend>
+                            <label class="sc-opt"><input type="radio" name="pre1" value="ok"><span>できた</span></label>
+                            <label class="sc-opt"><input type="radio" name="pre1" value="ng"><span>戻る</span></label>
+                        </fieldset></div>
+                </div>
+                <div class="pre-i">
+                    <div class="pq"><span class="lab">確認2</span><p><span class="m"><var>f</var>(<var>x</var>) = −<var>x</var><sup>2</sup> + 4<var>x</var></span> のとき、<span class="m"><var>f</var>(−1)</span> の値を求めよ。</p></div>
+                    <div class="pa"><span class="ans"><span class="blank" id="bP2" style="width:7.2em"><span class="bt">確認2</span><span class="bf m">−5</span></span><button class="rv" type="button" data-blank="bP2" aria-expanded="false" aria-controls="bP2">確認2 を見る</button></span>
+                        <fieldset class="selfchk" data-key="pre2"><legend>結果</legend>
+                            <label class="sc-opt"><input type="radio" name="pre2" value="ok"><span>できた</span></label>
+                            <label class="sc-opt"><input type="radio" name="pre2" value="ng"><span>戻る</span></label>
+                        </fieldset></div>
+                </div>
+                <div class="pre-i">
+                    <div class="pq"><span class="lab">確認3</span><p><span class="m"><var>y</var> = 2(<var>x</var> + 1)<sup>2</sup> − 3</span> のグラフの頂点と軸を答えよ。</p></div>
+                    <div class="pa"><span class="ans"><span class="blank" id="bP3" style="width:11em"><span class="bt">確認3</span><span class="bf">頂点 <span class="m">(−1, −3)</span>、軸 <span class="m"><var>x</var> = −1</span></span></span><button class="rv" type="button" data-blank="bP3" aria-expanded="false" aria-controls="bP3">確認3 を見る</button></span>
+                        <fieldset class="selfchk" data-key="pre3"><legend>結果</legend>
+                            <label class="sc-opt"><input type="radio" name="pre3" value="ok"><span>できた</span></label>
+                            <label class="sc-opt"><input type="radio" name="pre3" value="ng"><span>戻る</span></label>
+                        </fieldset></div>
+                </div>
+            </div>
+            <aside class="side" style="padding-top:52px">
+                <div class="note ret" id="ret-pre1"><div class="nh">戻り先 確認1</div><p>§2 平方完成　p.41</p></div>
+                <div class="note ret" id="ret-pre2"><div class="nh">戻り先 確認2</div><p>§1 関数の値 <span class="m"><var>f</var>(<var>a</var>)</span>　p.37</p></div>
+                <div class="note ret" id="ret-pre3"><div class="nh">戻り先 確認3</div><p>§2 頂点と軸　p.42</p></div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="foot1">
+        <div class="next" id="next">
+            <div class="rec-h"><span>次に読むところ</span><small>この端末のブラウザに保存　<button class="reset" type="button" data-reset="pre">記録を消す</button></small></div>
+            <ul class="todo" id="todo1"></ul>
+        </div>
+        <div class="ansblock">
+            <div class="ab-h"><span>前提の確認の答え</span><small>できなければ戻り先へ</small></div>
+            <dl class="ab-list">
+                <div><dt>確認1</dt><dd><span class="m">(<var>x</var> − 3)<sup>2</sup> − 4</span></dd></div>
+                <div><dt>確認2</dt><dd><span class="m"><var>f</var>(−1) = −1 − 4 = −5</span></dd></div>
+                <div><dt>確認3</dt><dd>頂点 <span class="m">(−1, −3)</span>、軸 <span class="m"><var>x</var> = −1</span></dd></div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="tab"><span class="tn">2</span><span class="tt">二次関数</span></div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>第2章 二次関数　§5 定義域つきの最大・最小</span><span class="folio">51</span></footer>
+</section>
+
+<!-- ============ PAGE 2: 基本事項・例題1（全部の手順）・例題2（空欄つき） ============ -->
+<section class="page" data-chapter="2">
+    <header class="rh"><span class="book"><b>数学Ⅰ 例題と練習</b>汐見書房（架空の教材）</span><span class="chap"><span class="sec">§5 定義域つきの最大・最小</span>第2章 二次関数</span></header>
+    <div class="hr-top"></div>
+    <div class="band"></div>
+
+    <div class="body">
+        <div class="row">
+            <div>
+                <div class="kick"><span>第2章 二次関数</span><span>§<span class="num">5</span></span></div>
+                <h1 class="hl">定義域があるときは、<br>軸の位置で最大・最小が決まる</h1>
+                <p class="lead">頂点がいつも答えになるとは限らない。軸が定義域の中か外かを見て、頂点と両端の<span class="m"><var>y</var></span>の値を比べる。</p>
+            </div>
+            <aside class="side" style="padding-top:8px">
+                <div class="note">
+                    <div class="nh">用語</div>
+                    <dl class="terms">
+                        <dt>定義域</dt><dd><span class="m"><var>x</var></span>のとりうる値の範囲。</dd>
+                        <dt>軸</dt><dd>放物線の対称軸。<span class="m"><var>y</var> = <var>a</var>(<var>x</var> − <var>p</var>)<sup>2</sup> + <var>q</var></span>なら直線<span class="m"><var>x</var> = <var>p</var></span>。</dd>
+                        <dt>端点</dt><dd>定義域の両端。値を必ず計算する。</dd>
+                    </dl>
+                </div>
+            </aside>
+        </div>
+
+        <div class="row" style="margin-top:16px">
+            <div class="kihon">
+                <div class="kh"><b>基本事項</b><span>下に凸（<span class="m"><var>a</var> &gt; 0</span>）のグラフと定義域の位置</span></div>
+                <div class="cases">
+                    <div><div class="ct">軸が定義域の左の外</div><svg id="c1" viewBox="0 0 200 118"></svg><div class="cr"><b>最小</b> 左端　<b>最大</b> 右端</div></div>
+                    <div><div class="ct">軸が定義域の中</div><svg id="c2" viewBox="0 0 200 118"></svg><div class="cr"><b>最小</b> 頂点　<b>最大</b> 軸から遠い端</div></div>
+                    <div><div class="ct">軸が定義域の右の外</div><svg id="c3" viewBox="0 0 200 118"></svg><div class="cr"><b>最小</b> 右端　<b>最大</b> 左端</div></div>
+                </div>
+                <div class="kf">上に凸（<span class="m"><var>a</var> &lt; 0</span>）では、最大と最小が入れかわる。色の帯が定義域。</div>
+            </div>
+            <aside class="side">
+                <div class="note">
+                    <div class="nh">指針</div>
+                    <p>解答の左の見出しが、考える順番。平方完成 → 軸の位置 → 両端の値 → 比べる。</p>
+                </div>
+                <div class="note">
+                    <div class="nh warn">よくある間違い</div>
+                    <p>頂点の<span class="m"><var>y</var></span>座標をそのまま最大値や最小値にする。頂点が定義域に入っているかを先に確かめる。</p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 例題1: every step shown -->
+        <div class="row" style="margin-top:20px">
+            <div>
+                <div class="ex-h"><span class="lab">例題<span class="num">1</span></span><span class="ttl">軸が定義域の中にあるとき</span><span class="lv">重要度 <i class="on"></i><i class="on"></i><i></i></span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = <var>x</var><sup>2</sup> − 4<var>x</var> + 1</span>（<span class="m">0 ≦ <var>x</var> ≦ 5</span>）の最大値と最小値を求めよ。また、そのときの<span class="m"><var>x</var></span>の値を求めよ。</p></div>
+                <div class="sol">
+                    <div class="st"><span class="sl">平方完成</span><span class="sc"><span class="m"><var>y</var> = (<var>x</var> − 2)<sup>2</sup> − 3</span>　頂点 <span class="m">(2, −3)</span>、軸 <span class="m"><var>x</var> = 2</span></span></div>
+                    <div class="st"><span class="sl">軸の位置</span><span class="sc">下に凸で、軸<span class="m"><var>x</var> = 2</span>は定義域の中。頂点で最小になる。</span></div>
+                    <div class="st"><span class="sl">両端の値</span><span class="sc"><span class="m"><var>x</var> = 0</span>のとき<span class="m"><var>y</var> = 1</span>、<span class="m"><var>x</var> = 5</span>のとき<span class="m"><var>y</var> = 6</span></span></div>
+                    <div class="st"><span class="sl">比べる</span><span class="sc">軸からの距離は 左端2・右端3。遠い右端で最大。</span></div>
+                    <div class="ans-line"><span class="tag">答</span><span><b><span class="m"><var>x</var> = 5</span> で最大値 <span class="m">6</span></b>、<b><span class="m"><var>x</var> = 2</span> で最小値 <span class="m">−3</span></b></span></div>
+                </div>
+            </div>
+            <aside class="side">
+                <div class="note">
+                    <svg class="g" id="g1" viewBox="0 0 316 300" role="img" aria-label="例題1のグラフ"></svg>
+                    <div class="figcap"><b>図1</b>　帯が定義域。実線の部分だけが答えの候補。</div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 例題2: faded, two steps left blank -->
+        <div class="row" style="margin-top:20px">
+            <div>
+                <div class="ex-h"><span class="lab">例題<span class="num">2</span></span><span class="ttl">軸が定義域の外にあるとき</span><span class="lv">空欄 <span class="bl-ref" style="margin:0">ア</span><span class="bl-ref" style="margin:0">イ</span> を埋める</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = −<var>x</var><sup>2</sup> + 2<var>x</var> + 3</span>（<span class="m">−2 ≦ <var>x</var> ≦ 0</span>）の最大値と最小値を求めよ。</p></div>
+                <div class="sol">
+                    <div class="st"><span class="sl">平方完成</span><span class="sc"><span class="m"><var>y</var> =</span><span class="blank" id="bA" style="width:7.4em"><span class="bt">ア</span><span class="bf m">−(<var>x</var> − 1)<sup>2</sup> + 4</span></span><button class="rv" type="button" data-blank="bA" aria-expanded="false" aria-controls="bA">ア を見る</button></span></div>
+                    <div class="st"><span class="sl">軸の位置</span><span class="sc">上に凸で、軸は定義域の右の外。定義域では<span class="m"><var>x</var></span>が増えると<span class="m"><var>y</var></span>も増える。</span></div>
+                    <div class="st"><span class="sl">両端の値</span><span class="sc"><span class="m"><var>x</var> = −2</span>のとき<span class="m"><var>y</var> =</span><span class="blank" id="bI" style="width:3.2em"><span class="bt">イ</span><span class="bf m">−5</span></span><button class="rv" type="button" data-blank="bI" aria-expanded="false" aria-controls="bI">イ を見る</button>、<span class="m"><var>x</var> = 0</span>のとき<span class="m"><var>y</var> = 3</span></span></div>
+                    <div class="ans-line"><span class="tag">答</span><span><b><span class="m"><var>x</var> = 0</span> で最大値 <span class="m">3</span></b>、<b><span class="m"><var>x</var> = −2</span> で最小値<span class="bl-ref">イ</span></b></span></div>
+                </div>
+            </div>
+            <aside class="side">
+                <div class="note">
+                    <svg class="g g2-blank" id="g2b" viewBox="0 0 316 300" role="img" aria-label="例題2の座標と定義域"></svg>
+                    <svg class="g g2-full" id="g2" viewBox="0 0 316 300" role="img" aria-label="例題2のグラフ" hidden></svg>
+                    <div class="figcap" id="g2cap"><b>図2</b>　<span class="bl-ref">ア</span>を埋めて頂点をかき入れてから開く。</div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="tab"><span class="tn">2</span><span class="tt">二次関数</span></div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>第2章 二次関数　§5 定義域つきの最大・最小</span><span class="folio">52</span></footer>
+</section>
+
+<!-- ============ PAGE 3: 練習1–3・自己チェック・解答（印刷時） ============ -->
+<section class="page" data-chapter="2">
+    <header class="rh"><span class="book"><b>数学Ⅰ 例題と練習</b>汐見書房（架空の教材）</span><span class="chap"><span class="sec">§5 定義域つきの最大・最小</span>第2章 二次関数</span></header>
+    <div class="hr-top"></div>
+    <div class="band"></div>
+
+    <div class="body">
+        <div class="row">
+            <div>
+                <div class="kick"><span>第2章 二次関数</span><span>§<span class="num">5</span> 練習</span></div>
+                <h2 class="hl">3つの場合を、自分で判定する</h2>
+                <p class="lead">解いてから［解答を見る］で確かめ、手ごたえを記録する。</p>
+            </div>
+            <aside class="side" style="padding-top:8px">
+                <div class="note">
+                    <div class="nh">解き方の順番</div>
+                    <ol class="flow3">
+                        <li>平方完成して軸と頂点を出す</li>
+                        <li>軸が定義域の中か外かを見る</li>
+                        <li>頂点と両端の値を比べる</li>
+                    </ol>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 練習1 -->
+        <div class="row" style="margin-top:22px">
+            <div class="pr" id="pr1">
+                <div class="pr-h"><span class="lab">練習<span class="num">1</span></span><span class="back">類題 → 例題1</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = <var>x</var><sup>2</sup> + 2<var>x</var> − 1</span>（<span class="m">−3 ≦ <var>x</var> ≦ 1</span>）の最大値と最小値を求めよ。</p></div>
+                <div class="work"><i class="rl" style="top:46px"></i><i class="rl" style="top:92px"></i><span class="wl">計算</span>
+                    <div class="wa" id="a1" hidden><p><span class="m"><var>y</var> = (<var>x</var> + 1)<sup>2</sup> − 2</span>。軸<span class="m"><var>x</var> = −1</span>は定義域の中。<br><span class="m"><var>x</var> = −3</span>のとき<span class="m"><var>y</var> = 2</span>、<span class="m"><var>x</var> = 1</span>のとき<span class="m"><var>y</var> = 2</span>（軸から等距離）。<br><b><span class="m"><var>x</var> = −3, 1</span> で最大値 <span class="m">2</span>、<span class="m"><var>x</var> = −1</span> で最小値 <span class="m">−2</span></b></p></div>
+                </div>
+                <div class="ctrl"><button class="rv" type="button" data-answer="a1" aria-expanded="false" aria-controls="a1">解答を見る</button>
+                    <fieldset class="selfchk" data-key="sc1"><legend>手ごたえ</legend>
+                        <label class="sc-opt"><input type="radio" name="sc1" value="ok"><span>できた</span></label>
+                        <label class="sc-opt"><input type="radio" name="sc1" value="unsure"><span>あやしい</span></label>
+                        <label class="sc-opt"><input type="radio" name="sc1" value="ng"><span>できない</span></label>
+                    </fieldset></div>
+            </div>
+            <aside class="side" style="padding-top:44px">
+                <div class="note">
+                    <div class="nh">指針</div>
+                    <p>軸から両端までの距離を比べる。距離が等しいとき、最大になる<span class="m"><var>x</var></span>はいくつあるか。</p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 練習2 -->
+        <div class="row" style="margin-top:26px">
+            <div class="pr" id="pr2">
+                <div class="pr-h"><span class="lab">練習<span class="num">2</span></span><span class="back">類題 → 例題2</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = 2<var>x</var><sup>2</sup> − 8<var>x</var> + 5</span>（<span class="m">3 ≦ <var>x</var> ≦ 4</span>）の最大値と最小値を求めよ。</p></div>
+                <div class="work"><i class="rl" style="top:46px"></i><i class="rl" style="top:92px"></i><span class="wl">計算</span>
+                    <div class="wa" id="a2" hidden><p><span class="m"><var>y</var> = 2(<var>x</var> − 2)<sup>2</sup> − 3</span>。軸<span class="m"><var>x</var> = 2</span>は定義域の左の外。<br><span class="m"><var>x</var> = 3</span>のとき<span class="m"><var>y</var> = −1</span>、<span class="m"><var>x</var> = 4</span>のとき<span class="m"><var>y</var> = 5</span>。<br><b><span class="m"><var>x</var> = 4</span> で最大値 <span class="m">5</span>、<span class="m"><var>x</var> = 3</span> で最小値 <span class="m">−1</span></b></p></div>
+                </div>
+                <div class="ctrl"><button class="rv" type="button" data-answer="a2" aria-expanded="false" aria-controls="a2">解答を見る</button>
+                    <fieldset class="selfchk" data-key="sc2"><legend>手ごたえ</legend>
+                        <label class="sc-opt"><input type="radio" name="sc2" value="ok"><span>できた</span></label>
+                        <label class="sc-opt"><input type="radio" name="sc2" value="unsure"><span>あやしい</span></label>
+                        <label class="sc-opt"><input type="radio" name="sc2" value="ng"><span>できない</span></label>
+                    </fieldset></div>
+            </div>
+            <aside class="side" style="padding-top:44px">
+                <div class="note">
+                    <div class="nh warn">よくある間違い</div>
+                    <p><span class="m">2(<var>x</var><sup>2</sup> − 4<var>x</var>) + 5</span>から平方完成するとき、<span class="m">−4</span>に係数2を掛け忘れて<span class="m">2(<var>x</var> − 2)<sup>2</sup> + 1</span>とする。<span class="m"><var>x</var> = 0</span>を代入して元の式と同じ値か確かめる。</p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 練習3 -->
+        <div class="row" style="margin-top:26px">
+            <div class="pr" id="pr3">
+                <div class="pr-h"><span class="lab">練習<span class="num">3</span></span><span class="back">類題 → 例題1・基本事項</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = −<var>x</var><sup>2</sup> + 6<var>x</var></span>（<span class="m">1 ≦ <var>x</var> ≦ 4</span>）の最大値と最小値を求めよ。</p></div>
+                <div class="work"><i class="rl" style="top:46px"></i><i class="rl" style="top:92px"></i><span class="wl">計算</span>
+                    <div class="wa" id="a3" hidden><p><span class="m"><var>y</var> = −(<var>x</var> − 3)<sup>2</sup> + 9</span>。上に凸で、軸<span class="m"><var>x</var> = 3</span>は定義域の中。<br><span class="m"><var>x</var> = 1</span>のとき<span class="m"><var>y</var> = 5</span>、<span class="m"><var>x</var> = 4</span>のとき<span class="m"><var>y</var> = 8</span>。<br><b><span class="m"><var>x</var> = 3</span> で最大値 <span class="m">9</span>、<span class="m"><var>x</var> = 1</span> で最小値 <span class="m">5</span></b></p></div>
+                </div>
+                <div class="ctrl"><button class="rv" type="button" data-answer="a3" aria-expanded="false" aria-controls="a3">解答を見る</button>
+                    <fieldset class="selfchk" data-key="sc3"><legend>手ごたえ</legend>
+                        <label class="sc-opt"><input type="radio" name="sc3" value="ok"><span>できた</span></label>
+                        <label class="sc-opt"><input type="radio" name="sc3" value="unsure"><span>あやしい</span></label>
+                        <label class="sc-opt"><input type="radio" name="sc3" value="ng"><span>できない</span></label>
+                    </fieldset></div>
+            </div>
+            <aside class="side" style="padding-top:44px">
+                <div class="note">
+                    <div class="nh">指針</div>
+                    <p>上に凸なので、頂点が定義域の中なら頂点で最大。最小は軸から遠い端になる。</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="foot2">
+        <div class="rec" id="rec">
+            <div class="rec-h"><span>学習の記録</span><small>この端末のブラウザに保存　<button class="reset" type="button" data-reset="sc">記録を消す</button></small></div>
+            <div class="tally">
+                <div>できた<span class="v" id="t-ok">0<small>問</small></span></div>
+                <div>あやしい<span class="v" id="t-unsure">0<small>問</small></span></div>
+                <div>できない<span class="v" id="t-ng">0<small>問</small></span></div>
+                <div>未記録<span class="v" id="t-none">3<small>問</small></span></div>
+            </div>
+            <ul class="todo" id="todo"></ul>
+        </div>
+        <div class="ansblock">
+            <div class="ab-h"><span>解答</span><small>例題2の空欄と練習1〜3</small></div>
+            <dl class="ab-list">
+                <div><dt>例題2</dt><dd><span class="bl-ref">ア</span><span class="m">−(<var>x</var> − 1)<sup>2</sup> + 4</span>　<span class="bl-ref">イ</span><span class="m">−5</span></dd></div>
+                <div><dt>練習1</dt><dd><span class="m"><var>y</var> = (<var>x</var> + 1)<sup>2</sup> − 2</span>。<span class="m"><var>x</var> = −3, 1</span> で最大値 <span class="m">2</span>、<span class="m"><var>x</var> = −1</span> で最小値 <span class="m">−2</span></dd></div>
+                <div><dt>練習2</dt><dd><span class="m"><var>y</var> = 2(<var>x</var> − 2)<sup>2</sup> − 3</span>。<span class="m"><var>x</var> = 4</span> で最大値 <span class="m">5</span>、<span class="m"><var>x</var> = 3</span> で最小値 <span class="m">−1</span></dd></div>
+                <div><dt>練習3</dt><dd><span class="m"><var>y</var> = −(<var>x</var> − 3)<sup>2</sup> + 9</span>。<span class="m"><var>x</var> = 3</span> で最大値 <span class="m">9</span>、<span class="m"><var>x</var> = 1</span> で最小値 <span class="m">5</span></dd></div>
+            </dl>
+        </div>
+    </div>
+    <aside class="side" style="position:absolute; left:812px; width:330px; top:1292px">
+        <div class="note">
+            <div class="nh">確認</div>
+            <p>答えには、最大値・最小値と、そのときの<span class="m"><var>x</var></span>の値の両方を書く。</p>
+        </div>
+        <div class="note">
+            <div class="nh warn">よくある間違い</div>
+            <p>上に凸の関数で、頂点を最小と書く。<span class="m"><var>x</var><sup>2</sup></span>の係数の符号を最初に確かめる。</p>
+        </div>
+    </aside>
+
+    <div class="tab"><span class="tn">2</span><span class="tt">二次関数</span></div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>第2章 二次関数　§5 定義域つきの最大・最小</span><span class="folio">53</span></footer>
+</section>
+
+<!-- ============ PAGE 4: 章末テスト（解答は下の解答欄にまとめる） ============ -->
+<section class="page" data-chapter="2">
+    <header class="rh"><span class="book"><b>数学Ⅰ 例題と練習</b>汐見書房（架空の教材）</span><span class="chap"><span class="sec">章末テスト</span>第2章 二次関数</span></header>
+    <div class="hr-top"></div>
+    <div class="band"></div>
+
+    <div class="body">
+        <div class="row">
+            <div>
+                <div class="kick"><span>第2章 二次関数</span><span>章末テスト（§2〜§6）</span></div>
+                <h2 class="hl">30分で解き、まとめて採点する</h2>
+            </div>
+            <aside class="side" style="padding-top:8px">
+                <div class="note">
+                    <div class="nh">テストの条件</div>
+                    <dl class="terms">
+                        <dt>時間</dt><dd>30分。何も見ずに解く。</dd>
+                        <dt>配点</dt><dd>100点（70点で合格）</dd>
+                    </dl>
+                </div>
+            </aside>
+        </div>
+
+        <div class="row" style="margin-top:24px">
+            <div class="t-i" id="t1">
+                <div class="t-h"><span class="lab">問<span class="num">1</span></span><span class="src pr" style="margin:0">§2 平方完成</span><span class="pts"><span class="num">15</span> 点</span>
+                    <fieldset class="selfchk" data-key="t1"><legend>採点</legend>
+                        <label class="sc-opt"><input type="radio" name="t1" value="ok"><span>○</span></label>
+                        <label class="sc-opt"><input type="radio" name="t1" value="ng"><span>×</span></label>
+                    </fieldset><span class="score-box">得点　　／15</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = 2<var>x</var><sup>2</sup> + 12<var>x</var> + 13</span> のグラフの頂点と軸を求めよ。</p></div>
+                <div class="work sm"><span class="wl">解答</span></div>
+            </div>
+            <aside class="side" style="padding-top:2px">
+                <div class="note ret" id="ret-t1"><div class="nh">戻り先 問1</div><p>§2 例題 平方完成　p.41</p></div>
+            </aside>
+        </div>
+        <div class="row" style="margin-top:12px">
+            <div class="t-i" id="t2">
+                <div class="t-h"><span class="lab">問<span class="num">2</span></span><span class="src pr" style="margin:0">§3 平行移動</span><span class="pts"><span class="num">15</span> 点</span>
+                    <fieldset class="selfchk" data-key="t2"><legend>採点</legend>
+                        <label class="sc-opt"><input type="radio" name="t2" value="ok"><span>○</span></label>
+                        <label class="sc-opt"><input type="radio" name="t2" value="ng"><span>×</span></label>
+                    </fieldset><span class="score-box">得点　　／15</span></div>
+                <div class="q"><p>放物線 <span class="m"><var>y</var> = <var>x</var><sup>2</sup></span> を <span class="m"><var>x</var></span> 軸方向に <span class="m">2</span>、<span class="m"><var>y</var></span> 軸方向に <span class="m">−1</span> だけ平行移動した放物線の方程式を求めよ。</p></div>
+                <div class="work sm"><span class="wl">解答</span></div>
+            </div>
+            <aside class="side" style="padding-top:2px">
+                <div class="note ret" id="ret-t2"><div class="nh">戻り先 問2</div><p>§3 平行移動　p.45</p></div>
+            </aside>
+        </div>
+        <div class="row" style="margin-top:12px">
+            <div class="t-i" id="t3">
+                <div class="t-h"><span class="lab">問<span class="num">3</span></span><span class="src pr" style="margin:0">§4 最大・最小</span><span class="pts"><span class="num">15</span> 点</span>
+                    <fieldset class="selfchk" data-key="t3"><legend>採点</legend>
+                        <label class="sc-opt"><input type="radio" name="t3" value="ok"><span>○</span></label>
+                        <label class="sc-opt"><input type="radio" name="t3" value="ng"><span>×</span></label>
+                    </fieldset><span class="score-box">得点　　／15</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = −<var>x</var><sup>2</sup> + 4<var>x</var> + 1</span> の最大値と最小値を調べよ。</p></div>
+                <div class="work sm"><span class="wl">解答</span></div>
+            </div>
+            <aside class="side" style="padding-top:2px">
+                <div class="note ret" id="ret-t3"><div class="nh">戻り先 問3</div><p>§4 例題 最大・最小　p.49</p></div>
+            </aside>
+        </div>
+        <div class="row" style="margin-top:12px">
+            <div class="t-i" id="t4">
+                <div class="t-h"><span class="lab">問<span class="num">4</span></span><span class="src pr" style="margin:0">§5 定義域つき</span><span class="pts"><span class="num">20</span> 点</span>
+                    <fieldset class="selfchk" data-key="t4"><legend>採点</legend>
+                        <label class="sc-opt"><input type="radio" name="t4" value="ok"><span>○</span></label>
+                        <label class="sc-opt"><input type="radio" name="t4" value="ng"><span>×</span></label>
+                    </fieldset><span class="score-box">得点　　／20</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = <var>x</var><sup>2</sup> − 2<var>x</var> − 3</span>（<span class="m">−2 ≦ <var>x</var> ≦ 2</span>）の最大値と最小値を求めよ。</p></div>
+                <div class="work sm"><span class="wl">解答</span></div>
+            </div>
+            <aside class="side" style="padding-top:2px">
+                <div class="note ret" id="ret-t4"><div class="nh">戻り先 問4</div><p>§5 例題1　p.52<br>（下に凸・軸が中）</p></div>
+            </aside>
+        </div>
+        <div class="row" style="margin-top:12px">
+            <div class="t-i" id="t5">
+                <div class="t-h"><span class="lab">問<span class="num">5</span></span><span class="src pr" style="margin:0">§5 定義域つき</span><span class="pts"><span class="num">20</span> 点</span>
+                    <fieldset class="selfchk" data-key="t5"><legend>採点</legend>
+                        <label class="sc-opt"><input type="radio" name="t5" value="ok"><span>○</span></label>
+                        <label class="sc-opt"><input type="radio" name="t5" value="ng"><span>×</span></label>
+                    </fieldset><span class="score-box">得点　　／20</span></div>
+                <div class="q"><p>関数 <span class="m"><var>y</var> = −2<var>x</var><sup>2</sup> + 4<var>x</var> + 1</span>（<span class="m">2 ≦ <var>x</var> ≦ 3</span>）の最大値と最小値を求めよ。</p></div>
+                <div class="work sm"><span class="wl">解答</span></div>
+            </div>
+            <aside class="side" style="padding-top:2px">
+                <div class="note ret" id="ret-t5"><div class="nh">戻り先 問5</div><p>§5 例題2　p.52<br>（上に凸・軸が外）</p></div>
+            </aside>
+        </div>
+        <div class="row" style="margin-top:12px">
+            <div class="t-i" id="t6">
+                <div class="t-h"><span class="lab">問<span class="num">6</span></span><span class="src pr" style="margin:0">§6 応用</span><span class="pts"><span class="num">15</span> 点</span>
+                    <fieldset class="selfchk" data-key="t6"><legend>採点</legend>
+                        <label class="sc-opt"><input type="radio" name="t6" value="ok"><span>○</span></label>
+                        <label class="sc-opt"><input type="radio" name="t6" value="ng"><span>×</span></label>
+                    </fieldset><span class="score-box">得点　　／15</span></div>
+                <div class="q"><p>周の長さが <span class="m">20</span> cm の長方形で、縦の長さを <span class="m"><var>x</var></span> cm とする。面積が最大になる <span class="m"><var>x</var></span> の値と、面積の最大値を求めよ。</p></div>
+                <div class="work sm"><span class="wl">解答</span></div>
+            </div>
+            <aside class="side" style="padding-top:2px">
+                <div class="note ret" id="ret-t6"><div class="nh">戻り先 問6</div><p>§6 例題3 文章題　p.56</p></div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="foot4">
+        <div class="gate" id="gate">
+            <div class="rec-h"><span>解答</span><small>問1〜問6</small></div>
+            <p>6問とも解答欄に書いてから開く。開いたら各問の右上の［○］［×］で採点する。</p>
+            <button class="rv" type="button" id="openTest" aria-expanded="false" aria-controls="tAns">答え合わせをする</button>
+        </div>
+        <div class="ansblock" id="tAns" hidden>
+            <div class="ab-h"><span>解答</span><small>問1〜問6　<button class="reset rv-close" type="button" id="closeTest">解答を閉じる</button></small></div>
+            <dl class="ab-list">
+                <div><dt>問1</dt><dd><span class="m"><var>y</var> = 2(<var>x</var> + 3)<sup>2</sup> − 5</span>。頂点 <span class="m">(−3, −5)</span>、軸 <span class="m"><var>x</var> = −3</span></dd></div>
+                <div><dt>問2</dt><dd><span class="m"><var>y</var> = (<var>x</var> − 2)<sup>2</sup> − 1</span>（<span class="m"><var>y</var> = <var>x</var><sup>2</sup> − 4<var>x</var> + 3</span>）</dd></div>
+                <div><dt>問3</dt><dd><span class="m"><var>y</var> = −(<var>x</var> − 2)<sup>2</sup> + 5</span>。<span class="m"><var>x</var> = 2</span> で最大値 <span class="m">5</span>、最小値はない</dd></div>
+                <div><dt>問4</dt><dd><span class="m"><var>y</var> = (<var>x</var> − 1)<sup>2</sup> − 4</span>。<span class="m"><var>x</var> = −2</span> で最大値 <span class="m">5</span>、<span class="m"><var>x</var> = 1</span> で最小値 <span class="m">−4</span></dd></div>
+                <div><dt>問5</dt><dd><span class="m"><var>y</var> = −2(<var>x</var> − 1)<sup>2</sup> + 3</span>。<span class="m"><var>x</var> = 2</span> で最大値 <span class="m">1</span>、<span class="m"><var>x</var> = 3</span> で最小値 <span class="m">−5</span></dd></div>
+                <div><dt>問6</dt><dd><span class="m"><var>S</var> = <var>x</var>(10 − <var>x</var>) = −(<var>x</var> − 5)<sup>2</sup> + 25</span>（<span class="m">0 &lt; <var>x</var> &lt; 10</span>）。<span class="m"><var>x</var> = 5</span> で最大値 <span class="m">25</span> cm<sup>2</sup></dd></div>
+            </dl>
+        </div>
+    </div>
+    <aside class="side" style="position:absolute; left:812px; width:330px; top:1366px">
+        <div class="note">
+            <div class="nh">得点</div>
+            <div class="score">
+                <div class="sv"><span id="tScore">0</span><small>／100点</small></div>
+                <div class="sm2" id="tDone">採点 0／6問</div>
+                <div class="blankscore">得点　　　　　／100点</div>
+                <button class="reset" type="button" data-reset="t">採点を消す</button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="tab"><span class="tn">2</span><span class="tt">二次関数</span></div>
+    <div class="hr-bot"></div>
+    <footer class="pf"><span>第2章 二次関数　章末テスト</span><span class="folio">58</span></footer>
+</section>
+
+</main>
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+/* visualViewport: mobile Chrome widens the layout viewport to the 1240px column before the zoom applies */
+const vv = window.visualViewport;
+const viewW = () => Math.min(window.innerWidth, vv ? vv.width * vv.scale : window.innerWidth);   /* × scale: pinch-zoom does not shrink the pages */
+const fit = () => { stage.style.zoom = Math.min(1, (viewW() - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+
+/* === GRAPHS: drawn from the function itself === */
+const NS = 'http://www.w3.org/2000/svg';
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function el(svg, tag, attrs, text) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    svg.appendChild(e);
+    return e;
+}
+const fmt = v => (v < 0 ? '−' : '') + Math.abs(Math.round(v * 100) / 100);
+
+/* o: a,b,c (y = ax²+bx+c), lo..hi (domain), view x0..x1 / y0..y1, box w×h,
+   curve (draw the parabola), labels {max:[dx,dy,anchor], min:[…]}, mini (no numbers) */
+function plot(svg, o) {
+    const ink = css('--ink'), accent = css('--accent'), line = css('--line'), sub = css('--sub');
+    const f = x => o.a * x * x + o.b * x + o.c;
+    const p = -o.b / (2 * o.a), q = f(p);
+    const L = o.pad ?? 14, R = o.pad ?? 14, T = o.padT ?? 14, B = o.padB ?? 14;
+    const sx = x => L + (x - o.x0) / (o.x1 - o.x0) * (o.w - L - R);
+    const sy = y => T + (o.y1 - y) / (o.y1 - o.y0) * (o.h - T - B);
+    const id = svg.id + '-clip';
+    const defs = el(svg, 'defs', {});
+    const cp = document.createElementNS(NS, 'clipPath'); cp.id = id; defs.appendChild(cp);
+    el(cp, 'rect', { x: L, y: T, width: o.w - L - R, height: o.h - T - B });
+
+    // domain band
+    el(svg, 'rect', { x: sx(o.lo), y: T, width: sx(o.hi) - sx(o.lo), height: o.h - T - B, fill: css('--accent-20'), opacity: 0.55 });
+    // axes (the mini graphs have no coordinate axes, only a base line)
+    const X0 = o.mini ? sy(o.y0) : sy(0), Y0 = sx(0);
+    el(svg, 'line', { x1: L - 6, y1: X0, x2: o.w - R + 4, y2: X0, stroke: ink, 'stroke-width': 1.3 });
+    if (!o.mini) {
+        el(svg, 'line', { x1: Y0, y1: o.h - B + 4, x2: Y0, y2: T - 6, stroke: ink, 'stroke-width': 1.3 });
+        el(svg, 'path', { d: `M${o.w - R + 4} ${X0} l-8 -4 v8z`, fill: ink });
+        el(svg, 'path', { d: `M${Y0} ${T - 6} l-4 8 h8z`, fill: ink });
+        el(svg, 'text', { x: o.w - R - 2, y: X0 - 8, 'text-anchor': 'end', 'font-style': 'italic' }, 'x');
+        el(svg, 'text', { x: Y0 + 8, y: T + 12, 'font-style': 'italic' }, 'y');
+        el(svg, 'text', { x: Y0 - 6, y: X0 + 20, 'text-anchor': 'end', 'font-style': 'italic' }, 'O');
+    }
+    // domain end ticks
+    for (const x of [o.lo, o.hi]) {
+        if (!o.mini && x !== 0) el(svg, 'text', { x: sx(x), y: X0 + 20, 'text-anchor': 'middle' }, fmt(x));
+    }
+    if (!o.curve) return;
+
+    // axis of symmetry
+    if (p > o.x0 && p < o.x1) {
+        el(svg, 'line', { x1: sx(p), y1: T, x2: sx(p), y2: o.h - B, stroke: sub, 'stroke-width': 1, 'stroke-dasharray': '5 4' });
+    }
+    // parabola: thin outside the domain, thick inside
+    const path = (from, to) => {
+        let d = '';
+        for (let i = 0; i <= 120; i++) { const x = from + (to - from) * i / 120; d += (i ? 'L' : 'M') + sx(x).toFixed(1) + ' ' + sy(f(x)).toFixed(1); }
+        return d;
+    };
+    el(svg, 'path', { d: path(o.x0, o.x1), fill: 'none', stroke: line, 'stroke-width': 2, 'clip-path': `url(#${id})` });
+    el(svg, 'path', { d: path(o.lo, o.hi), fill: 'none', stroke: ink, 'stroke-width': 3.2, 'clip-path': `url(#${id})` });
+
+    // candidates: both ends, and the vertex when it is inside the domain
+    const cand = [o.lo, o.hi];
+    if (p > o.lo && p < o.hi) cand.push(p);
+    const vmax = Math.max(...cand.map(f)), vmin = Math.min(...cand.map(f));
+    const atMax = cand.filter(x => Math.abs(f(x) - vmax) < 1e-9), atMin = cand.filter(x => Math.abs(f(x) - vmin) < 1e-9);
+    svg.dataset.max = vmax; svg.dataset.min = vmin; svg.dataset.p = p; svg.dataset.q = q;
+
+    // vertex outside the domain: an open circle, named, so it is not taken for the answer
+    if (!(p >= o.lo && p <= o.hi) && !o.mini) {
+        el(svg, 'circle', { cx: sx(p), cy: sy(q), r: 5, fill: css('--paper'), stroke: ink, 'stroke-width': 1.5 });
+        const v = o.labels.vertex;
+        el(svg, 'text', { x: sx(p) + v[0], y: sy(q) + v[1], 'text-anchor': v[2], class: 'jp' }, '頂点');
+    }
+    const mark = (xs, val, key, word) => {
+        xs.forEach((x, i) => {
+            if (!o.mini) el(svg, 'line', { x1: sx(x), y1: sy(val), x2: sx(x), y2: X0, stroke: sub, 'stroke-width': 1, 'stroke-dasharray': '3 3' });
+            if (o.bare && key === 'min') el(svg, 'rect', { x: sx(x) - 5, y: sy(val) - 5, width: 10, height: 10, fill: ink });
+            else el(svg, 'circle', { cx: sx(x), cy: sy(val), r: o.mini ? 5 : 6, fill: accent });
+            const lb = o.labels[key][i] || o.labels[key][0];
+            if (o.bare) return;   /* opener table: no words, the dot alone (max filled circle, min filled square) */
+            const t = el(svg, 'text', { x: sx(x) + lb[0], y: sy(val) + lb[1], 'text-anchor': lb[2], class: 'jp' });
+            t.textContent = o.mini ? word : word + ' ' + fmt(val);
+        });
+        if (!o.mini) for (const x of xs) if (x !== o.lo && x !== o.hi && x !== 0) el(svg, 'text', { x: sx(x), y: X0 + 20, 'text-anchor': 'middle' }, fmt(x));
+    };
+    mark(atMax, vmax, 'max', '最大');
+    mark(atMin, vmin, 'min', '最小');
+}
+
+function draw() {
+    // 基本事項: y = (x − p)², domain 1 ≦ x ≦ 3, axis left / inside (nearer the left end) / right
+    const mini = p => ({ a: 1, b: -2 * p, c: p * p, lo: 1, hi: 3, x0: -0.6, x1: 4.6, y0: -2.4, y1: 8.6, w: 200, h: 118, pad: 6, padT: 8, padB: 4, mini: true, curve: true });
+    plot(document.getElementById('c1'), { ...mini(0.2), labels: { max: [[-8, 6, 'end']], min: [[8, 24, 'start']] } });
+    plot(document.getElementById('c2'), { ...mini(1.6), labels: { max: [[8, 6, 'start']], min: [[-10, 20, 'end']] } });
+    plot(document.getElementById('c3'), { ...mini(3.8), labels: { max: [[10, 6, 'start']], min: [[-8, 24, 'end']] } });
+
+    // 単元の扉の型: domain 1 ≦ x ≦ 3; a = ±1, axis inside or outside as in the problems of each row
+    const bare = (a, p) => ({ a, b: -2 * a * p, c: a * p * p, lo: 1, hi: 3, x0: -0.6, x1: 4.6, y0: a > 0 ? -1.4 : -9.6, y1: a > 0 ? 9.6 : 1.4, w: 138, h: 64, pad: 4, padT: 5, padB: 5, mini: true, curve: true, bare: true, labels: { max: [[0, 0, 'start']], min: [[0, 0, 'start']] } });
+    plot(document.getElementById('m1'), bare(1, 1.6));    // 下に凸・軸が中（例題1・練習1・問4）
+    plot(document.getElementById('m2'), bare(1, 0.2));    // 下に凸・軸が左の外（練習2）
+    plot(document.getElementById('m3'), bare(-1, 3.8));   // 上に凸・軸が右の外（例題2・問5）
+    plot(document.getElementById('m4'), bare(-1, 2.2));   // 上に凸・軸が中（練習3）
+
+    // 例題1: y = x² − 4x + 1 (0 ≦ x ≦ 5)
+    plot(document.getElementById('g1'), { a: 1, b: -4, c: 1, lo: 0, hi: 5, x0: -1.4, x1: 6.4, y0: -4.6, y1: 8.4, w: 316, h: 300, curve: true,
+        labels: { max: [[-10, 4, 'end']], min: [[0, 26, 'middle']] } });
+    // 例題2: y = −x² + 2x + 3 (−2 ≦ x ≦ 0). The blank version has the coordinate frame and domain only.
+    const g2 = { a: -1, b: 2, c: 3, lo: -2, hi: 0, x0: -3.2, x1: 2.6, y0: -6.4, y1: 5.6, w: 316, h: 300,
+        labels: { max: [[-10, -6, 'end']], min: [[12, 6, 'start']], vertex: [10, -6, 'start'] } };
+    plot(document.getElementById('g2b'), { ...g2, curve: false });
+    plot(document.getElementById('g2'), { ...g2, curve: true });
+}
+
+/* === STORAGE: wrapped, so private mode or blocked storage never breaks the page.
+   One object per document; keys: sc1–3 (練習の手ごたえ), pre1–3 (前提の確認), t1–6 (章末テストの採点) === */
+const KEY = 'textbook-drill:' + location.pathname;
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* not stored */ } };
+let state = load();
+
+/* === REVEAL: answers and blanks === */
+document.querySelectorAll('button[data-answer]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const a = document.getElementById(btn.dataset.answer);
+        const open = a.hidden;
+        a.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+        btn.textContent = open ? '解答を隠す' : '解答を見る';
+    });
+});
+document.querySelectorAll('button[data-blank]').forEach(btn => {
+    const tag = btn.textContent.trim().split(' ')[0];
+    btn.addEventListener('click', () => {
+        const b = document.getElementById(btn.dataset.blank);
+        const open = !b.classList.contains('open');
+        b.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        btn.textContent = open ? tag + ' を隠す' : tag + ' を見る';
+        if (btn.dataset.blank === 'bA') {
+            document.getElementById('g2').toggleAttribute('hidden', !open);
+            document.getElementById('g2b').toggleAttribute('hidden', open);
+            document.getElementById('g2cap').innerHTML = open
+                ? '<b>図2</b>　頂点（白丸）は定義域の外。帯の中の実線だけで比べる。'
+                : '<b>図2</b>　<span class="bl-ref">ア</span>を埋めて頂点をかき入れてから開く。';
+        }
+    });
+});
+
+/* === TEST ANSWER BLOCK: one gate for all six answers === */
+const openBtn = document.getElementById('openTest');
+const setTest = open => {
+    document.getElementById('tAns').hidden = !open;
+    document.getElementById('gate').hidden = open;
+    openBtn.setAttribute('aria-expanded', String(open));
+};
+openBtn.addEventListener('click', () => { setTest(true); document.getElementById('closeTest').focus(); });
+document.getElementById('closeTest').addEventListener('click', () => { setTest(false); openBtn.focus(); });
+
+/* === RECORDS: self-checks persist and drive every summary === */
+const LABEL = { ok: 'できた', unsure: 'あやしい', ng: 'できない' };
+const TLABEL = { ok: '正解', ng: '不正解' };
+const POINTS = { t1: 15, t2: 15, t3: 15, t4: 20, t5: 20, t6: 15 };
+const REVIEW = {
+    sc1: '練習1 → 例題1 を、両端の値が等しい場合に注意して読み直す',
+    sc2: '練習2 → 例題2 と、練習2の横の「よくある間違い」を読み直す',
+    sc3: '練習3 → 基本事項の「上に凸では入れかわる」を確認する',
+};
+const PRE = { pre1: '確認1 → §2 平方完成（p.41）を読んでから例題へ', pre2: '確認2 → §1 関数の値（p.37）を読んでから例題へ', pre3: '確認3 → §2 頂点と軸（p.42）を読んでから例題へ' };
+const list = (id, items) => {
+    const ul = document.getElementById(id); ul.innerHTML = '';
+    items.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+};
+function render() {
+    // 練習: tally and review list (p.53)
+    const c = { ok: 0, unsure: 0, ng: 0, none: 0 };
+    ['sc1', 'sc2', 'sc3'].forEach(k => c[state[k] || 'none']++);
+    for (const k in c) document.getElementById('t-' + k).firstChild.textContent = c[k];
+    const weak = ['sc1', 'sc2', 'sc3'].filter(k => state[k] === 'unsure' || state[k] === 'ng');
+    list('todo', weak.length ? weak.map(k => REVIEW[k])
+        : c.none ? ['3問とも解いて、手ごたえを記録すると、ここに復習先が出る'] : ['全問「できた」。次は §6 最大・最小の応用へ進む']);
+    // 前提の確認: next step (p.51)
+    const pre = ['pre1', 'pre2', 'pre3'];
+    const miss = pre.filter(k => state[k] === 'ng');
+    list('todo1', miss.length ? miss.map(k => PRE[k])
+        : pre.every(k => state[k] === 'ok') ? ['前提は大丈夫。p.52 の基本事項と例題1へ進む'] : ['3問を解いて［できた］か［戻る］を選ぶと、ここに読む先が出る']);
+    // 一覧の記録チップ (p.51)
+    document.querySelectorAll('.chip[data-rec]').forEach(ch => {
+        const v = state[ch.dataset.rec];
+        ch.className = 'chip' + (v ? ' s-' + v : '');
+        ch.textContent = v ? (ch.dataset.rec[0] === 't' ? TLABEL[v] : LABEL[v]) : '未記録';
+    });
+    // 章末テスト: score and highlighted return notes (p.58)
+    const ts = Object.keys(POINTS);
+    document.getElementById('tScore').textContent = ts.reduce((s, k) => s + (state[k] === 'ok' ? POINTS[k] : 0), 0);
+    document.getElementById('tDone').textContent = '採点 ' + ts.filter(k => state[k]).length + '／6問';
+    // 戻り先: lit when the matching item is marked ng
+    document.querySelectorAll('.note.ret').forEach(n => n.classList.toggle('miss', state[n.id.slice(4)] === 'ng'));
+}
+document.querySelectorAll('.selfchk').forEach(fs => {
+    const k = fs.dataset.key;
+    fs.querySelectorAll('input').forEach(inp => {
+        if (state[k] === inp.value) inp.checked = true;
+        inp.addEventListener('change', () => { state[k] = inp.value; save(state); render(); });
+    });
+});
+document.querySelectorAll('button[data-reset]').forEach(btn => btn.addEventListener('click', () => {
+    const pre = btn.dataset.reset;
+    for (const k of Object.keys(state)) if (k.startsWith(pre)) delete state[k];
+    save(state);
+    document.querySelectorAll('.selfchk').forEach(fs => { if (fs.dataset.key.startsWith(pre)) fs.querySelectorAll('input').forEach(i => { i.checked = false; }); });
+    render();
+}));
+
+draw();
+render();
+</script>
+</body>
+</html>

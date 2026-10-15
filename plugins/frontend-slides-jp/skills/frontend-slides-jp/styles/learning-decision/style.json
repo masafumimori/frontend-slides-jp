@@ -1,0 +1,42 @@
+{
+  "slug": "learning-decision",
+  "name": "Learning Decision",
+  "name_ja": "判断ガイド",
+  "tagline": "A decision guide for managers: the recommendation first, a scored comparison, a yes/no decision tree, worked failure cases, a worksheet that walks the reader's own task through the tree, and a pre-launch checklist.",
+  "summary_ja": "淡い紙色の地に弁柄1色。1ページ目で論点・期限・推奨・条件を先に示し、比較表、4つの問いの分岐図、失敗例、自分の業務を同じ問いで判定するワークシート、始める前の確認へと進む。1ページに1つの話題、広い余白。",
+  "group": "learning",
+  "mood": [
+    "editorial",
+    "calm",
+    "trustworthy"
+  ],
+  "formality": "high",
+  "density": "low",
+  "scheme": "light",
+  "best_for": "社会人・管理職が判断するための研修資料や社内ガイド（導入する用途の選定、承認の条件決め、ツールや施策の採否）。全体をつかんでから、自分の案件で判断する短時間学習向け",
+  "avoid_for": "学校の教科書・問題集、手順を手で練習する演習教材、暗記中心の資格対策、投影する授業スライド",
+  "formats": [
+    "doc-a4"
+  ],
+  "writing": "horizontal",
+  "needs": [],
+  "fonts": {
+    "heading": "Noto Serif JP",
+    "body": "IBM Plex Sans JP",
+    "latin": [
+      "Fraunces"
+    ]
+  },
+  "colors": {
+    "ink": "#1D2027",
+    "sub": "#575B63",
+    "rule": "#DCD8CF",
+    "tint": "#F1EDE5",
+    "accent": "#A8402B",
+    "paper": "#FBFAF7"
+  },
+  "refs": [
+    "稟議書・経営会議資料の要旨ページ（論点・決裁者・期限・推奨）",
+    "ビジネス誌・コンサルの社内研修資料（1ページ1論点、意思決定ツリー）"
+  ]
+}

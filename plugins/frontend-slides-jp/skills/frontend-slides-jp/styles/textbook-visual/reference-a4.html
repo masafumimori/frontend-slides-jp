@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>みどり理科2年 4 血液の循環（架空の教材） — Textbook Visual reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700&family=Jost:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* === PAGE BASE: page-base.css, pasted verbatim === */
+/* ===========================================
+   A4 PORTRAIT DOCUMENT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every doc-a4 document.
+   Pages are authored at 1240×1754 (A4 at 150 dpi), stacked top to
+   bottom and scaled as a whole to the window width. Print gives one
+   A4 page per .page.
+   =========================================== */
+
+/* 1. The desk behind the pages */
+html,
+body {
+    margin: 0;
+    background: var(--desk-bg, #e8e6e1);
+}
+
+/* 2. The column of pages. JavaScript sets zoom to fit the window width. */
+.doc-stage {
+    width: 1240px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+/* 3. One fixed A4 page. Content is laid out at 1240×1754, never reflowed. */
+.page {
+    position: relative;
+    width: 1240px;
+    height: 1754px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    background: var(--page-bg, #fff);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+}
+
+.page:last-child {
+    margin-bottom: 0;
+}
+
+/* 3b. Japanese typesetting. Zero specificity, so any document rule wins.
+   palt/vpal only tighten fonts that ship them: see fonts/catalog.json. */
+:where(.page) {
+    line-break: strict;
+    word-break: auto-phrase;
+    font-feature-settings: "palt";
+    font-kerning: normal;
+}
+
+:where(.page) :where(h1, h2, h3) {
+    letter-spacing: 0;
+    line-height: 1.4;
+}
+
+:where(.page) :where(p, li, td, dd) {
+    letter-spacing: 0.02em;
+    line-height: 1.8;
+}
+
+/* Body paragraphs in columns break by character and justify, as Japanese
+   print does; phrase breaks would leave ragged column edges. */
+:where(.page) :where(p) {
+    word-break: normal;
+    text-align: justify;
+}
+
+:where(.page) :where(.tate) {
+    writing-mode: vertical-rl;
+    font-feature-settings: "vpal";
+}
+
+/* 4. Keep media inside the page */
+.page img,
+.page video,
+.page canvas,
+.page svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 5. Chrome outside the document design system */
+.doc-controls {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+/* 6. Print: one A4 page per .page. 1240px × 0.64 = 793.6px = 210mm. */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    html,
+    body {
+        background: #fff;
+    }
+
+    .doc-stage {
+        zoom: 0.64 !important;
+        padding: 0;
+    }
+
+    .page {
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .doc-controls {
+        display: none !important;
+    }
+}
+
+/* 7. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === STYLE TOKENS === */
+:root {
+    --paper: #FFFDF7;
+    --ink: #1E2A32;
+    --mute: #56636B;
+    --rule: #CDD3D2;
+    --green: #22785B;          /* 生物の章色 */
+    --green-tint: #E3F1EA;
+    --red: #C23A2E;            /* 動脈血：酸素が多い */
+    --red-tint: #F8DCD6;
+    --blue: #2C55A0;           /* 静脈血：酸素が少ない */
+    --blue-tint: #DCE5F5;
+    --muscle: #EFD0C5;
+    --muscle-line: #A86A5C;
+    --marker: #F6CF3F;         /* 蛍光ペン */
+    --jp-head: "Noto Sans JP", sans-serif;
+    --jp-body: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+    --num: "Jost", "Noto Sans JP", sans-serif;
+    --desk-bg: #E4E1D8;
+    --page-bg: var(--paper);
+}
+
+body { color: var(--ink); }
+.page { font-family: var(--jp-body); font-weight: 500; color: var(--ink); }
+.page *, .page *::before, .page *::after { box-sizing: border-box; }
+.page :where(h1, h2, h3, p, ul, ol, li, figure, dl, dd, dt) { margin: 0; padding: 0; }
+.page :where(ul, ol) { list-style: none; }
+
+/* === PAGE FRAME: running head, folio, chapter tab (見開き 46–47) === */
+.rh { position: absolute; top: 64px; left: 96px; right: 96px; height: 34px; display: flex; justify-content: space-between; align-items: center;
+      font-size: 19px; color: var(--mute); border-bottom: 2px solid var(--green); padding-bottom: 10px; }
+.rh b { color: var(--green); font-weight: 700; }
+.folio { position: absolute; bottom: 56px; font-family: var(--num); font-size: 20px; font-weight: 600; color: var(--ink);
+         display: flex; align-items: center; gap: 10px; }
+.folio::before { content: ""; width: 14px; height: 14px; background: var(--green); border-radius: 3px; }
+.left .folio { left: 96px; }
+.right .folio { right: 96px; flex-direction: row-reverse; }
+.tab { position: absolute; top: 240px; width: 52px; height: 330px; background: var(--green); color: #fff;
+       writing-mode: vertical-rl; font-family: var(--jp-head); font-weight: 700; font-size: 20px; letter-spacing: 0.12em;
+       display: flex; align-items: center; justify-content: center; gap: 14px; }
+.left .tab { left: 0; border-radius: 0 12px 12px 0; }
+.right .tab { right: 0; border-radius: 12px 0 0 12px; }
+.tab .tcu { text-combine-upright: all; font-family: var(--num); font-size: 24px; background: #fff; color: var(--green);
+            width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; letter-spacing: 0; }
+
+/* === HEAD: lesson label, headline, goals === */
+.head { position: absolute; top: 140px; left: 96px; right: 96px; height: 172px; display: grid; grid-template-columns: 1fr 400px; gap: 32px; }
+.kicker { display: flex; align-items: center; gap: 14px; font-family: var(--jp-head); font-weight: 700; font-size: 22px; color: var(--green); margin-bottom: 10px; }
+.kicker .lesson { font-family: var(--num); font-size: 22px; background: var(--green); color: #fff; border-radius: 8px; padding: 2px 12px 3px; letter-spacing: 0.02em; }
+h1 { font-family: var(--jp-head); font-weight: 800; font-size: 50px; line-height: 1.36; letter-spacing: 0; }
+.goal { border: 2px solid var(--green); border-radius: 16px; padding: 14px 20px 14px; background: #fff; align-self: start; }
+.goal h2 { font-family: var(--jp-head); font-size: 19px; font-weight: 700; color: var(--green); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.goal h2::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+.goal li { font-size: 22px; line-height: 1.55; padding-left: 26px; position: relative; letter-spacing: 0.01em; word-break: auto-phrase; }
+.goal li::before { content: ""; position: absolute; left: 2px; top: 0.55em; width: 12px; height: 12px; border: 2px solid var(--green); border-radius: 3px; }
+
+/* === FIGURE === */
+.fig { position: absolute; top: 330px; left: 96px; width: 1048px; }
+.fig svg { display: block; width: 1048px; overflow: visible; }
+.fig svg text { font-family: var(--jp-body); fill: var(--ink); }
+.fig .lb { font-family: var(--jp-head); font-weight: 700; font-size: 23px; }
+.fig .sb { font-size: 19px; fill: var(--mute); font-weight: 500; }
+.fig .ch { font-family: var(--jp-head); font-weight: 800; font-size: 24px; text-anchor: middle; }
+.fig .tag { font-size: 18px; font-weight: 700; text-anchor: middle; }
+.fig .tag.r { fill: var(--red); }
+.fig .tag.b { fill: var(--blue); }
+.fig .loop { font-family: var(--jp-head); font-weight: 800; font-size: 26px; fill: var(--green); text-anchor: middle; }
+.fig .lead { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+.fig .flow { stroke: var(--ink); stroke-width: 4; fill: none; stroke-linecap: round; }
+.v-red { stroke: var(--red); fill: none; stroke-linecap: butt; }
+.v-blue { stroke: var(--blue); fill: none; stroke-linecap: butt; }
+.halo { stroke: var(--paper); fill: none; }
+.trace { stroke: var(--marker); stroke-width: 13; stroke-dasharray: 0.1 22; fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .25s; }
+.trace.on { opacity: 1; animation: flow 1.1s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -22.1; } }
+.mk { cursor: pointer; outline: none; }
+.mk circle { fill: #fff; stroke: var(--ink); stroke-width: 2.5; transition: fill .2s, r .2s; }
+.mk text { font-family: var(--num) !important; font-weight: 700; font-size: 24px; text-anchor: middle; dominant-baseline: central; fill: var(--ink); }
+.mk.on circle, .mk:focus-visible circle { fill: var(--green); stroke: var(--green); r: 25; }
+.mk.on text, .mk:focus-visible text { fill: #fff; }
+
+.cap { display: flex; align-items: center; gap: 14px; white-space: nowrap; margin-top: 6px; font-size: 18px; color: var(--mute); line-height: 1.4; }
+.cap .fno { font-family: var(--jp-head); font-weight: 700; color: var(--ink); }
+.cap .lg { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+.cap .sw { width: 34px; height: 12px; border-radius: 6px; }
+.sw.r { background: var(--red); }
+.sw.b { background: var(--blue); }
+.cap .grow { flex: 1; }
+.stepbtn { font-family: var(--jp-head); font-weight: 700; font-size: 18px; color: var(--green); background: #fff; border: 2px solid var(--green);
+           border-radius: 999px; padding: 5px 16px 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.stepbtn::before { content: ""; border-left: 11px solid var(--green); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.stepbtn:hover, .stepbtn:focus-visible { background: var(--green-tint); outline: none; }
+
+/* === NUMBERED SEGMENTS (図の番号と対応) === */
+.segs { position: absolute; left: 96px; width: 1048px; border-top: 2px solid var(--ink); }
+.seg { display: grid; grid-template-columns: 52px 262px 1fr; align-items: center; min-height: 52px; border-bottom: 1px solid var(--rule);
+       padding: 0 10px 0 4px; cursor: pointer; outline: none; position: relative; transition: background .2s; }
+.segs.wide .seg { grid-template-columns: 52px 336px 1fr; }
+.seg .no { width: 38px; height: 38px; border-radius: 50%; border: 2.5px solid var(--ink); font-family: var(--num); font-weight: 700; font-size: 22px;
+           display: flex; align-items: center; justify-content: center; transition: background .2s, color .2s; }
+.seg b { font-family: var(--jp-head); font-weight: 700; font-size: 22px; letter-spacing: 0; white-space: nowrap; }
+.seg span.t { font-size: 22px; letter-spacing: 0.01em; line-height: 1.5; }
+.seg.on, .seg:focus-visible { background: var(--green-tint); }
+.seg.on .no, .seg:focus-visible .no { background: var(--green); border-color: var(--green); color: #fff; }
+.seg.on::before, .seg:focus-visible::before { content: ""; position: absolute; left: -14px; top: 6px; bottom: 6px; width: 6px; border-radius: 3px; background: var(--green); }
+.k-r { color: var(--red); font-weight: 700; }
+.k-b { color: var(--blue); font-weight: 700; }
+.seg .grp { font-family: var(--jp-head); font-size: 18px; font-weight: 700; color: var(--green); border: 1.5px solid var(--green); border-radius: 6px; padding: 0 6px; margin-right: 8px; }
+
+/* === よくある間違い === */
+.miss { position: absolute; left: 96px; width: 1048px; display: grid; grid-template-columns: 128px 1fr; border: 2px solid var(--red); border-radius: 16px; overflow: hidden; background: #fff; }
+.miss .mh { background: var(--red); color: #fff; font-family: var(--jp-head); font-weight: 800; font-size: 24px; line-height: 1.35; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; }
+.miss .mb { padding: 12px 22px 12px; }
+.miss .wrong { font-size: 22px; line-height: 1.6; font-weight: 700; }
+.miss .wrong s { text-decoration: none; color: var(--mute); }
+.miss .wrong s::before { content: "×"; font-family: var(--jp-head); color: var(--red); font-weight: 800; margin-right: 6px; }
+.miss dl { display: grid; grid-template-columns: 160px 1fr; margin-top: 6px; border-top: 1px solid var(--rule); }
+.miss dt, .miss dd { font-size: 22px; line-height: 1.6; padding: 4px 0; border-bottom: 1px solid var(--rule); }
+.miss dt { font-family: var(--jp-head); font-weight: 700; }
+.miss dd { word-break: normal; }
+.miss dl > :nth-last-child(-n+2) { border-bottom: none; }
+
+/* === BAND: まとめ + 確認問題 === */
+.band { position: absolute; left: 96px; width: 1048px; bottom: 120px; display: grid; grid-template-columns: 430px 1fr; gap: 30px; align-items: stretch; }
+.matome { background: var(--green-tint); border-radius: 16px; padding: 18px 24px 18px; }
+.matome h2, .quiz h2 { font-family: var(--jp-head); font-weight: 800; font-size: 24px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.matome h2 { color: var(--green); }
+.matome li { font-size: 22px; line-height: 1.65; padding-left: 22px; position: relative; margin-bottom: 6px; word-break: normal; }
+.matome li::before { content: ""; position: absolute; left: 2px; top: 0.62em; width: 10px; height: 10px; background: var(--green); border-radius: 50%; }
+.matome em { font-style: normal; font-weight: 700; }
+.quiz { border-top: 2px solid var(--ink); padding-top: 12px; }
+.quiz h2 .hint { font-family: var(--jp-body); font-weight: 500; font-size: 18px; color: var(--mute); }
+.q { display: grid; grid-template-columns: 54px 1fr; row-gap: 6px; margin-bottom: 10px; }
+.q:last-child { margin-bottom: 0; }
+.q .qn { font-family: var(--jp-head); font-weight: 800; font-size: 21px; color: var(--green); line-height: 38px; }
+.q .qt { font-size: 22px; line-height: 38px; letter-spacing: 0.01em; white-space: nowrap; }
+.q .arow { grid-column: 2; display: flex; align-items: center; gap: 18px; }
+.ans { position: relative; width: 250px; height: 44px; }
+.ans-btn, .ans-text, .ans-blank { position: absolute; inset: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 21px; }
+.ans-btn { font-family: var(--jp-head); font-weight: 700; color: var(--green); background: #fff; border: 2px dashed var(--green); cursor: pointer; z-index: 2; font-size: 19px; }
+.ans-btn:hover, .ans-btn:focus-visible { background: var(--green-tint); outline: none; }
+.ans-text { background: #fff; border: 2px solid var(--green); font-family: var(--jp-head); font-weight: 700; font-size: 22px; color: var(--ink); visibility: hidden; }
+.ans.open .ans-btn { visibility: hidden; }
+.ans-text:focus { outline: none; }
+.ans-text:focus-visible { outline: 3px solid var(--marker); outline-offset: 2px; }
+.page button, .page .ans-text, .page .seg, .page .mk { -webkit-tap-highlight-color: transparent; }
+.ans.open .ans-text { visibility: visible; }
+.ans-blank { display: none; }
+.done { display: inline-flex; align-items: center; gap: 8px; font-size: 19px; color: var(--mute); cursor: pointer; user-select: none; }
+.done input { width: 22px; height: 22px; accent-color: var(--green); margin: 0; cursor: pointer; }
+
+/* 答え：画面ではヒント、印刷では逆さまの答え */
+.foot-ans { position: absolute; bottom: 54px; font-size: 18px; color: var(--mute); line-height: 1.4; }
+.left .foot-ans { right: 96px; text-align: right; }
+.right .foot-ans { left: 96px; }
+.foot-ans .print-only, .print-hint { display: none; }
+
+/* === UNIT OPENER (単元の扉)：単元の問い・学ぶことの地図 === */
+.op-head { position: absolute; top: 140px; left: 96px; right: 96px; height: 214px; display: grid; grid-template-columns: 1fr 440px; gap: 32px; }
+.op-title { display: flex; align-items: center; gap: 28px; margin-top: 8px; }
+.op-no { width: 132px; height: 132px; border-radius: 24px; background: var(--green); color: #fff; font-family: var(--num); font-weight: 700; font-size: 104px; line-height: 1;
+         display: flex; align-items: center; justify-content: center; padding-bottom: 6px; }
+.op-title h1 { font-size: 80px; line-height: 1.2; }
+.op-title .sub { display: block; font-family: var(--jp-body); font-weight: 500; font-size: 24px; color: var(--mute); margin-top: 10px; letter-spacing: 0.02em; }
+.prior { border: 2px solid var(--rule); border-radius: 16px; padding: 14px 20px 14px; background: #fff; align-self: start; }
+.prior h2 { font-family: var(--jp-head); font-size: 19px; font-weight: 700; color: var(--mute); margin-bottom: 6px; }
+.prior li { font-size: 19px; line-height: 1.5; padding-left: 22px; position: relative; margin-bottom: 2px; word-break: auto-phrase; }
+.prior li::before { content: ""; position: absolute; left: 2px; top: 0.6em; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--mute); }
+
+.toi { position: absolute; top: 396px; left: 96px; width: 1048px; display: grid; grid-template-columns: 128px 1fr; border: 3px solid var(--green); border-radius: 16px; overflow: hidden; background: #fff; }
+.toi .th { background: var(--green); color: #fff; font-family: var(--jp-head); font-weight: 800; font-size: 26px; line-height: 1.35; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; }
+.toi .tb { padding: 18px 26px 18px; }
+.toi .q-big { font-family: var(--jp-head); font-weight: 800; font-size: 38px; line-height: 1.42; }
+.toi .note-lb { display: flex; justify-content: space-between; font-size: 19px; color: var(--mute); margin: 12px 0 6px; }
+.note { display: block; width: 100%; height: 88px; resize: none; border: none; border-radius: 0; padding: 0 4px; margin: 0;
+        font-family: var(--jp-body); font-weight: 500; font-size: 22px; line-height: 44px; color: var(--ink); background-color: transparent;
+        background-image: repeating-linear-gradient(to bottom, transparent 0 43px, var(--rule) 43px 44px); outline: none; }
+.note:focus { background-color: var(--green-tint); }
+.note::placeholder { color: #9AA4A9; }
+
+.segs .pg { font-family: var(--num); font-weight: 600; font-size: 20px; color: var(--green); text-align: right; white-space: nowrap; }
+.segs.map .seg { grid-template-columns: 52px 300px 1fr 84px; }
+.seg.static { cursor: default; }
+.seg.static .no { border-style: dashed; border-color: var(--green); color: var(--green); font-size: 20px; }
+
+.howto { position: absolute; left: 96px; width: 1048px; bottom: 120px; background: var(--green-tint); border-radius: 16px; padding: 18px 24px 20px; }
+.howto h2 { font-family: var(--jp-head); font-weight: 800; font-size: 24px; color: var(--green); margin-bottom: 10px; }
+.howto ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.howto li { font-size: 19px; line-height: 1.6; display: grid; grid-template-columns: 36px 1fr; gap: 10px; word-break: normal; }
+.howto li .n { width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #fff; font-family: var(--num); font-weight: 700; font-size: 19px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+
+/* === UNIT TEST (単元のまとめ・確認テスト) === */
+.t-sec { position: absolute; left: 96px; width: 1048px; }
+.t-h { display: flex; align-items: center; gap: 14px; border-bottom: 2px solid var(--ink); padding-bottom: 6px; font-family: var(--jp-head); font-weight: 800; font-size: 26px; }
+.t-h .dn { font-family: var(--num); font-weight: 700; font-size: 22px; width: 38px; height: 38px; border-radius: 8px; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; }
+.t-h .hint { font-family: var(--jp-body); font-weight: 500; font-size: 18px; color: var(--mute); }
+.t-h .grow { flex: 1; }
+.tally { font-family: var(--jp-head); font-weight: 700; font-size: 20px; color: var(--green); border: 2px solid var(--green); border-radius: 999px; padding: 2px 16px 3px; }
+.tally b { font-family: var(--num); font-size: 22px; }
+.blood { fill: #FBF1C9; stroke: #8B979D; stroke-width: 2.5; }
+.rbc { fill: var(--red); }
+.rbc-c { fill: #E07D70; }
+.wbc { fill: #fff; stroke: var(--ink); stroke-width: 2; }
+.wbc-n { fill: var(--blue); opacity: .75; }
+.plt { fill: var(--muscle-line); }
+.fig .dot { fill: var(--ink); }
+.segs.qa .seg { grid-template-columns: 52px 1fr 250px 104px; min-height: 60px; column-gap: 12px; }
+.segs.qa .seg .no { font-size: 21px; }
+.segs.qa .done { justify-self: end; }
+.t-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.t-cols .q { margin-top: 12px; }
+.t-cols .ans { width: 300px; }
+.q .qt.wrap { white-space: normal; line-height: 1.6; word-break: auto-phrase; }
+
+.back { position: absolute; left: 96px; width: 1048px; bottom: 120px; display: grid; grid-template-columns: 128px 1fr; border: 3px solid var(--green); border-radius: 16px; overflow: hidden; background: #fff; }
+.back .th { background: var(--green); color: #fff; font-family: var(--jp-head); font-weight: 800; font-size: 24px; line-height: 1.35; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; }
+.back .tb { padding: 16px 24px 18px; }
+.back .q-mid { font-family: var(--jp-head); font-weight: 800; font-size: 26px; line-height: 1.45; margin-bottom: 10px; }
+.back .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.back h3 { font-family: var(--jp-head); font-weight: 700; font-size: 19px; color: var(--mute); margin-bottom: 6px; }
+.echo { min-height: 132px; font-size: 21px; line-height: 44px; padding: 0 4px; white-space: pre-wrap; word-break: normal;
+        background-image: repeating-linear-gradient(to bottom, transparent 0 43px, var(--rule) 43px 44px); }
+.echo.empty { color: #9AA4A9; }
+.ans.long { width: auto; height: auto; min-height: 132px; }
+.ans.long .ans-text { position: static; display: block; text-align: left; font-family: var(--jp-body); font-weight: 500; font-size: 21px; line-height: 1.6; padding: 8px 14px; word-break: normal; }
+.ans.long .ans-btn { font-size: 20px; }
+
+@media (hover: hover) {
+    .seg:hover { background: var(--green-tint); }
+    .seg.static:hover { background: none; }
+}
+
+@media print {
+    .page .screen-only, .ans-btn, .stepbtn { display: none !important; }
+    .ans-text { visibility: hidden !important; }
+    .ans-blank { display: flex; border: none; border-bottom: 2px solid var(--ink); border-radius: 0; color: var(--mute); justify-content: flex-start; font-size: 18px; }
+    .trace { opacity: 0 !important; }
+    .seg.on, .seg:focus-visible { background: none; }
+    .seg.on::before { display: none; }
+    .seg.on .no { background: none; color: var(--ink); border-color: var(--ink); }
+    .mk.on circle { fill: #fff; stroke: var(--ink); r: 21; }
+    .mk.on text { fill: var(--ink); }
+    .foot-ans .screen-hint { display: none; }
+    .print-hint { display: inline; }
+    .foot-ans .print-only { display: block; transform: rotate(180deg); color: var(--ink); }
+    .note { background-color: transparent !important; }
+    .note::placeholder { color: transparent; }
+    .echo.empty { color: transparent; }
+    .ans.long .ans-blank { border-bottom: none; align-items: flex-start; padding: 0 4px; line-height: 44px;
+                           background-image: repeating-linear-gradient(to bottom, transparent 0 43px, var(--ink) 43px 44px); }
+    .page, .page * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<main class="doc-stage" id="docStage">
+
+<!-- ============ PAGE 45：単元の扉（単元の問い・学ぶことの地図） ============ -->
+<section class="page right" data-fig="p0">
+    <header class="rh"><span>3章 動物のからだのつくりとはたらき</span><span><b>4 血液の循環</b></span></header>
+    <div class="tab"><span class="tcu">2</span><span>生物</span></div>
+
+    <div class="op-head">
+        <div>
+            <div class="kicker">単元2　生物のからだのつくりとはたらき</div>
+            <div class="op-title">
+                <span class="op-no">4</span>
+                <h1>血液の循環<span class="sub">心臓・血管・血液のはたらきを、図でたどる</span></h1>
+            </div>
+        </div>
+        <aside class="prior">
+            <h2>小学6年で学んだこと</h2>
+            <ul>
+                <li>心臓は、血液を全身に送り出している。</li>
+                <li>血液は、酸素や養分を運び、二酸化炭素などを運び出す。</li>
+                <li>心臓の拍動は、手首などで脈拍として感じられる。</li>
+            </ul>
+        </aside>
+    </div>
+
+    <section class="toi">
+        <div class="th">単元の<br>問い</div>
+        <div class="tb">
+            <p class="q-big">からだのすみずみの細胞まで、<br>酸素はどうやって届くのだろう？</p>
+            <div class="note-lb"><span>いまの考えを書いておこう</span><span>50ページで見直します</span></div>
+            <textarea class="note" data-store-text="u4-idea" rows="2" aria-label="単元の問いへのいまの考え" placeholder="例：血液が運ぶ。心臓が……"></textarea>
+        </div>
+    </section>
+
+    <figure class="fig" style="top: 696px">
+        <svg viewBox="0 0 1048 420" height="420" role="img" aria-labelledby="f0t">
+            <title id="f0t">この単元で学ぶことの地図。1 心臓のつくり、2 肺と全身をめぐる血液の道すじ、3 血液の成分、4 手首の脈拍。</title>
+            <defs>
+                <path id="chev3" d="M -6 -6 L 2 0 L -6 6" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </defs>
+            <!-- 肺・全身 -->
+            <rect x="330" y="8" width="390" height="84" rx="34" fill="#fff" stroke="#8B979D" stroke-width="2.5"/>
+            <text class="ch" x="525" y="44">肺</text>
+            <text class="sb" x="525" y="74" text-anchor="middle">酸素を受け取る</text>
+            <rect x="330" y="330" width="390" height="84" rx="34" fill="#fff" stroke="#8B979D" stroke-width="2.5"/>
+            <text class="ch" x="525" y="366">全身の細胞</text>
+            <text class="sb" x="525" y="396" text-anchor="middle">酸素をわたす</text>
+            <!-- 血管 -->
+            <path class="v-blue" stroke-width="20" d="M 470 152 L 470 90"/>
+            <path class="v-red" stroke-width="20" d="M 580 90 L 580 152"/>
+            <path class="v-red" stroke-width="20" stroke-linejoin="round" d="M 638 250 L 770 250 L 770 372 L 718 372"/>
+            <path class="v-blue" stroke-width="20" stroke-linejoin="round" d="M 332 372 L 280 372 L 280 190 L 412 190"/>
+            <use href="#chev3" transform="translate(470 122) rotate(-90)"/>
+            <use href="#chev3" transform="translate(580 120) rotate(90)"/>
+            <use href="#chev3" transform="translate(706 250)"/>
+            <use href="#chev3" transform="translate(770 318) rotate(90)"/>
+            <use href="#chev3" transform="translate(280 290) rotate(-90)"/>
+            <use href="#chev3" transform="translate(346 190)"/>
+            <!-- 心臓 -->
+            <rect x="410" y="150" width="230" height="140" rx="34" fill="#EFD0C5" stroke="#A86A5C" stroke-width="3"/>
+            <rect x="422" y="162" width="98" height="54" rx="12" fill="#DCE5F5"/>
+            <rect x="530" y="162" width="98" height="54" rx="12" fill="#F8DCD6"/>
+            <rect x="422" y="224" width="98" height="54" rx="12" fill="#DCE5F5"/>
+            <rect x="530" y="224" width="98" height="54" rx="12" fill="#F8DCD6"/>
+            <text class="ch" x="471" y="197" style="font-size:20px">右心房</text>
+            <text class="ch" x="579" y="197" style="font-size:20px">左心房</text>
+            <text class="ch" x="471" y="259" style="font-size:20px">右心室</text>
+            <text class="ch" x="579" y="259" style="font-size:20px">左心室</text>
+            <text class="loop" x="525" y="132" style="font-size:22px">肺循環</text>
+            <text class="loop" x="525" y="318" style="font-size:22px">体循環</text>
+            <!-- 血液の拡大 -->
+            <circle cx="770" cy="296" r="13" fill="none" stroke="#1E2A32" stroke-width="2"/>
+            <path class="lead" stroke-dasharray="5 5" d="M 781 289 L 812 250"/>
+            <circle cx="910" cy="200" r="104" class="blood"/>
+            <g>
+                <circle class="rbc" cx="860" cy="140" r="22"/><circle class="rbc-c" cx="860" cy="140" r="9"/>
+                <circle class="rbc" cx="925" cy="128" r="22"/><circle class="rbc-c" cx="925" cy="128" r="9"/>
+                <circle class="rbc" cx="855" cy="205" r="22"/><circle class="rbc-c" cx="855" cy="205" r="9"/>
+                <circle class="rbc" cx="985" cy="180" r="22"/><circle class="rbc-c" cx="985" cy="180" r="9"/>
+                <circle class="rbc" cx="870" cy="268" r="22"/><circle class="rbc-c" cx="870" cy="268" r="9"/>
+                <circle class="rbc" cx="925" cy="270" r="22"/><circle class="rbc-c" cx="925" cy="270" r="9"/>
+                <circle class="wbc" cx="935" cy="200" r="30"/>
+                <path class="wbc-n" d="M 920 196 c 0 -10 10 -12 14 -6 c 4 -8 16 -6 16 4 c 0 8 -8 10 -12 8 c -4 8 -18 6 -18 -6 z"/>
+                <circle class="plt" cx="895" cy="172" r="6"/><circle class="plt" cx="980" cy="240" r="6"/>
+            </g>
+            <text class="sb" x="910" y="334" text-anchor="middle">血液（拡大）</text>
+            <!-- 脈拍 -->
+            <rect x="20" y="150" width="200" height="110" rx="16" fill="#fff" stroke="#8B979D" stroke-width="2.5"/>
+            <path stroke="#C23A2E" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"
+                  d="M 36 220 L 70 220 L 80 205 L 90 220 L 100 220 L 108 172 L 118 238 L 126 220 L 150 220 L 158 205 L 168 220 L 178 220 L 186 172 L 196 238 L 204 220"/>
+            <text class="lb" x="120" y="292" text-anchor="middle">手首の脈拍</text>
+            <text class="sb" x="120" y="318" text-anchor="middle">1分間に数える</text>
+
+            <!-- なぞり -->
+            <path class="trace" data-key="p0-1" d="M 410 184 C 410 162 428 150 450 150 L 600 150 C 622 150 640 162 640 184 L 640 256 C 640 278 622 290 600 290 L 450 290 C 428 290 410 278 410 256 Z"/>
+            <path class="trace" data-key="p0-2" d="M 470 150 L 470 92 M 580 92 L 580 150 M 640 250 L 770 250 L 770 372 L 720 372 M 330 372 L 280 372 L 280 190 L 410 190"/>
+            <path class="trace" data-key="p0-3" d="M 806 200 A 104 104 0 1 1 1014 200 A 104 104 0 1 1 806 200"/>
+            <path class="trace" data-key="p0-4" d="M 36 220 L 70 220 L 80 205 L 90 220 L 100 220 L 108 172 L 118 238 L 126 220 L 150 220 L 158 205 L 168 220 L 178 220 L 186 172 L 196 238 L 204 220"/>
+
+            <!-- 番号マーカー -->
+            <g class="mk" data-key="p0-1" tabindex="0" role="button" aria-label="1 心臓のつくり"><circle cx="668" cy="140" r="21"/><text x="668" y="141">1</text></g>
+            <g class="mk" data-key="p0-2" tabindex="0" role="button" aria-label="2 体循環と肺循環"><circle cx="756" cy="52" r="21"/><text x="756" y="53">2</text></g>
+            <g class="mk" data-key="p0-3" tabindex="0" role="button" aria-label="3 血液の成分"><circle cx="1024" cy="104" r="21"/><text x="1024" y="105">3</text></g>
+            <g class="mk" data-key="p0-4" tabindex="0" role="button" aria-label="4 拍動と脈拍"><circle cx="40" cy="126" r="21"/><text x="40" y="127">4</text></g>
+        </svg>
+        <figcaption class="cap">
+            <span><span class="fno">図</span>　この単元で学ぶことの地図</span>
+            <span class="grow"></span>
+            <button class="stepbtn screen-only" type="button" data-fig="p0">①から順に</button>
+        </figcaption>
+    </figure>
+
+    <ol class="segs wide map" style="top: 1176px">
+        <li class="seg" data-key="p0-1" tabindex="0"><span class="no">1</span><b>4-1 心臓のつくり</b><span class="t">4つの部屋と弁で、血液を一方向に送る。</span><span class="pg">p.46</span></li>
+        <li class="seg" data-key="p0-2" tabindex="0"><span class="no">2</span><b>4-2 体循環と肺循環</b><span class="t">肺と全身をめぐる、血液の2つの道すじ。</span><span class="pg">p.47</span></li>
+        <li class="seg" data-key="p0-3" tabindex="0"><span class="no">3</span><b>4-3 血液の成分</b><span class="t">赤血球・白血球・血小板・血しょうのはたらき。</span><span class="pg">p.48</span></li>
+        <li class="seg" data-key="p0-4" tabindex="0"><span class="no">4</span><b>4-4 拍動と脈拍</b><span class="t">心臓の拍動が、手首で脈拍として感じられる。</span><span class="pg">p.49</span></li>
+        <li class="seg static"><span class="no">✓</span><b>まとめ・確認テスト</b><span class="t">単元の問いに、自分のことばで答える。</span><span class="pg">p.50</span></li>
+    </ol>
+
+    <section class="howto">
+        <h2>この教材の使い方</h2>
+        <ol>
+            <li><span class="n">1</span><span>図の番号や表の行にふれると、図の場所が光る。</span></li>
+            <li><span class="n">2</span><span>「答えを見る」で答え合わせし、「できた」に印。</span></li>
+            <li><span class="n">3</span><span>印刷すると、答えはページの下に逆さまで入る。</span></li>
+        </ol>
+    </section>
+    <span class="folio">45</span>
+</section>
+
+<!-- ============ PAGE 46：心臓のつくりと血液の流れ ============ -->
+<section class="page left" data-fig="p1">
+    <header class="rh"><span><b>みどり理科 2年</b>（架空の教材）</span><span>単元2 生物のからだのつくりとはたらき</span></header>
+    <div class="tab"><span class="tcu">2</span><span>生物</span></div>
+
+    <div class="head">
+        <div>
+            <div class="kicker"><span class="lesson">4-1</span>血液の循環　心臓のつくりと血液の流れ</div>
+            <h1>心臓は4つの部屋と弁で、<br>血液を一方向に送り出す</h1>
+        </div>
+        <aside class="goal">
+            <h2>このページで分かること</h2>
+            <ul>
+                <li>心臓の4つの部屋の名前と位置</li>
+                <li>心臓の中を血液が流れる順番</li>
+                <li>弁と、左心室の壁が厚いわけ</li>
+            </ul>
+        </aside>
+    </div>
+
+    <figure class="fig">
+        <svg viewBox="0 0 1048 560" height="560" role="img" aria-labelledby="f1t">
+            <title id="f1t">ヒトの心臓のつくり（からだの正面から見た模式図）。大静脈から右心房、右心室、肺動脈へ。肺静脈から左心房、左心室、大動脈へ。</title>
+            <defs>
+                <marker id="ah1" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 z" fill="#1E2A32"/>
+                </marker>
+                <path id="chev" d="M -7 -7 L 2 0 L -7 7" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </defs>
+
+            <!-- 向き -->
+            <text class="sb" x="0" y="548">← からだの右側</text>
+            <text class="sb" x="1048" y="548" text-anchor="end">からだの左側 →</text>
+
+            <!-- 肺動脈の右枝（大動脈・大静脈のうしろを通る） -->
+            <path class="v-blue" stroke-width="42" d="M 486 172 L 486 160 C 486 146 476 138 460 138 L 196 138"/>
+            <!-- 下大静脈（心臓のうしろから右心房へ） -->
+                        <!-- 肺動脈の幹と左枝（大動脈のうしろを通る） -->
+            <path class="halo" stroke-width="50" d="M 486 172 L 486 160 C 486 146 496 138 512 138 L 852 138"/>
+            <path class="v-blue" stroke-width="42" d="M 486 172 L 486 160 C 486 146 496 138 512 138 L 852 138"/>
+            <use href="#chev" transform="translate(250 138) rotate(180)"/>
+            <use href="#chev" transform="translate(800 138)"/>
+            <!-- 大動脈 -->
+            <path class="halo" stroke-width="54" d="M 566 200 L 566 100 C 566 50 612 34 660 40 C 700 45 728 64 742 88"/>
+            <path class="v-red" stroke-width="46" d="M 566 200 L 566 100 C 566 50 612 34 660 40 C 700 45 728 64 742 88"/>
+            <path d="M 724 104 L 778 120 L 764 66 z" fill="#C23A2E"/>
+            <use href="#chev" transform="translate(566 128) rotate(-90)"/>
+            <use href="#chev" transform="translate(664 41) rotate(8)"/>
+            <!-- 上大静脈 -->
+            <path class="halo" stroke-width="52" d="M 405 0 L 405 196"/>
+            <path class="v-blue" stroke-width="44" d="M 405 0 L 405 196"/>
+            <use href="#chev" transform="translate(405 66) rotate(90)"/>
+            <!-- 肺静脈 -->
+            <path class="v-red" stroke-width="30" d="M 866 222 L 730 222"/>
+            <path class="v-red" stroke-width="30" d="M 866 272 L 730 272"/>
+            <use href="#chev" transform="translate(810 222) rotate(180)"/>
+            <use href="#chev" transform="translate(810 272) rotate(180)"/>
+
+            <!-- 心臓（筋肉の壁） -->
+            <path d="M 345 235 C 340 190 375 170 420 170 L 660 170 C 715 170 740 200 738 250 C 735 350 690 450 600 520 C 578 538 552 540 530 526 C 430 460 355 360 345 235 Z"
+                  fill="#EFD0C5" stroke="#A86A5C" stroke-width="3"/>
+            <!-- 下大静脈（心臓の右側面を通って右心房へ） -->
+            <path class="halo" stroke-width="48" d="M 326 556 L 326 340 C 326 306 342 290 380 282"/>
+            <path class="v-blue" stroke-width="40" d="M 326 556 L 326 340 C 326 306 342 290 380 282"/>
+            <use href="#chev" transform="translate(326 470) rotate(-90)"/>
+            <!-- 部屋（血液の入る空間） -->
+            <g>
+                <ellipse cx="415" cy="248" rx="58" ry="52" fill="#DCE5F5"/>
+                <rect x="383" y="168" width="44" height="50" fill="#DCE5F5"/>
+                <rect x="420" y="270" width="60" height="64" rx="10" fill="#DCE5F5"/>
+                <path d="M 380 322 C 420 316 490 316 520 322 C 526 390 530 440 534 490 C 460 470 388 410 380 322 Z" fill="#DCE5F5"/>
+                <path d="M 486 330 L 486 176" stroke="#DCE5F5" stroke-width="36"/>
+                <ellipse cx="658" cy="244" rx="58" ry="48" fill="#F8DCD6"/>
+                <rect x="700" y="209" width="46" height="26" fill="#F8DCD6"/>
+                <rect x="700" y="259" width="46" height="26" fill="#F8DCD6"/>
+                <rect x="614" y="270" width="60" height="64" rx="10" fill="#F8DCD6"/>
+                <path d="M 580 322 C 612 316 662 316 692 324 C 690 400 650 455 584 492 C 577 430 576 370 580 322 Z" fill="#F8DCD6"/>
+                <path d="M 590 340 L 566 176" stroke="#F8DCD6" stroke-width="36"/>
+            </g>
+            <!-- 弁：心房と心室の間 -->
+            <g stroke="#A86A5C" stroke-width="7" stroke-linecap="round" fill="none">
+                <path d="M 422 302 L 442 340"/><path d="M 478 302 L 458 340"/>
+                <path d="M 616 302 L 636 340"/><path d="M 672 302 L 652 340"/>
+                <!-- 弁：心室の出口 -->
+                <path d="M 470 196 q 8 14 16 0 q 8 14 16 0" stroke-width="5"/>
+                <path d="M 550 196 q 8 14 16 0 q 8 14 16 0" stroke-width="5"/>
+            </g>
+
+            <!-- 蛍光ペンのなぞり（番号と連動） -->
+            <path class="trace" data-key="p1-1" d="M 405 18 L 405 236 M 326 548 L 326 340 C 326 306 342 290 384 280"/>
+            <path class="trace" data-key="p1-2" d="M 420 268 L 444 356"/>
+            <path class="trace" data-key="p1-3" d="M 500 452 C 506 400 500 320 488 232 L 486 200 L 486 150 M 206 138 L 846 138"/>
+            <path class="trace" data-key="p1-4" d="M 862 222 L 690 236 M 862 272 L 690 252"/>
+            <path class="trace" data-key="p1-5" d="M 660 264 L 648 356"/>
+            <path class="trace" data-key="p1-6" d="M 598 462 C 590 400 584 330 574 232 L 568 200 L 566 100 C 566 50 612 34 660 40 C 700 45 728 64 742 88"/>
+
+            <!-- 血液の流れ -->
+            <path class="flow" marker-end="url(#ah1)" d="M 420 272 L 442 350"/>
+            <path class="flow" marker-end="url(#ah1)" d="M 660 268 L 648 350"/>
+            <path class="flow" marker-end="url(#ah1)" d="M 500 452 C 506 400 500 320 488 232"/>
+            <path class="flow" marker-end="url(#ah1)" d="M 598 462 C 590 400 584 330 574 232"/>
+
+            <!-- 部屋の名前（色だけに頼らず、血液の種類も文字で示す） -->
+            <text class="ch" x="404" y="242">右心房</text>
+            <text class="tag b" x="404" y="268">静脈血</text>
+            <text class="ch" x="672" y="238">左心房</text>
+            <text class="tag r" x="672" y="263">動脈血</text>
+            <text class="ch" x="436" y="396">右心室</text>
+            <text class="tag b" x="446" y="420">静脈血</text>
+            <text class="ch" x="648" y="394">左心室</text>
+            <text class="tag r" x="640" y="418">動脈血</text>
+
+            <!-- 血管の名前 -->
+            <text class="lb" x="202" y="32">大静脈</text>
+            <text class="sb" x="202" y="58">上半身から</text>
+            <text class="lb" x="292" y="470" text-anchor="end">大静脈</text>
+            <text class="sb" x="292" y="496" text-anchor="end">下半身から</text>
+            <text class="lb" x="202" y="106">肺動脈</text>
+            <text class="sb" x="274" y="106">（静脈血）</text>
+            <text class="sb" x="186" y="145" text-anchor="end">右の肺へ</text>
+            <text class="sb" x="866" y="145">左の肺へ</text>
+            <text class="lb" x="788" y="58">大動脈</text>
+            <text class="sb" x="788" y="84">全身へ（動脈血）</text>
+            <text class="lb" x="882" y="236">肺静脈</text>
+            <text class="sb" x="882" y="262">肺から</text>
+            <text class="sb" x="882" y="286">（動脈血）</text>
+
+            <!-- 弁 -->
+            <text class="lb" x="262" y="384" text-anchor="end">弁</text>
+            <path class="lead" d="M 268 377 L 430 322"/>
+            <text class="lb" x="800" y="372">弁</text>
+            <text class="sb" x="828" y="371">逆流を防ぐ</text>
+            <path class="lead" d="M 794 365 L 664 322"/>
+            <!-- 左心室の壁 -->
+            <text class="sb" x="760" y="440" style="fill:#1E2A32;font-weight:700">左心室の壁は</text>
+            <text class="sb" x="760" y="464" style="fill:#1E2A32;font-weight:700">もっとも厚い</text>
+            <path class="lead" d="M 754 448 L 700 420"/>
+
+            <!-- 番号マーカー -->
+            <g class="mk" data-key="p1-1" tabindex="0" role="button" aria-label="1 大静脈から右心房"><circle cx="172" cy="24" r="21"/><text x="172" y="25">1</text></g>
+            <g class="mk" data-key="p1-2" tabindex="0" role="button" aria-label="2 右心房から右心室"><circle cx="252" cy="300" r="21"/><text x="252" y="301">2</text></g>
+            <g class="mk" data-key="p1-3" tabindex="0" role="button" aria-label="3 右心室から肺動脈"><circle cx="172" cy="98" r="21"/><text x="172" y="99">3</text></g>
+            <g class="mk" data-key="p1-4" tabindex="0" role="button" aria-label="4 肺静脈から左心房"><circle cx="836" cy="186" r="21"/><text x="836" y="187">4</text></g>
+            <g class="mk" data-key="p1-5" tabindex="0" role="button" aria-label="5 左心房から左心室"><circle cx="772" cy="312" r="21"/><text x="772" y="313">5</text></g>
+            <g class="mk" data-key="p1-6" tabindex="0" role="button" aria-label="6 左心室から大動脈"><circle cx="640" cy="90" r="21"/><text x="640" y="91">6</text></g>
+        </svg>
+        <figcaption class="cap">
+            <span><span class="fno">図1</span>　心臓のつくり（正面から見た図）</span>
+            <span class="lg"><i class="sw r"></i>動脈血（酸素が多い）</span>
+            <span class="lg"><i class="sw b"></i>静脈血（酸素が少ない）</span>
+            <span class="grow"></span>
+            <button class="stepbtn screen-only" type="button" data-fig="p1">①から順に</button>
+        </figcaption>
+    </figure>
+
+    <ol class="segs" style="top: 948px">
+        <li class="seg" data-key="p1-1" tabindex="0"><span class="no">1</span><b>大静脈 → 右心房</b><span class="t">全身をめぐった<span class="k-b">静脈血</span>が、大静脈から右心房に入る。</span></li>
+        <li class="seg" data-key="p1-2" tabindex="0"><span class="no">2</span><b>右心房 → 右心室</b><span class="t">血液は弁を通って、右心房から右心室へ流れこむ。</span></li>
+        <li class="seg" data-key="p1-3" tabindex="0"><span class="no">3</span><b>右心室 → 肺動脈</b><span class="t">右心室が縮むと、血液は肺動脈へ押し出され肺へ。</span></li>
+        <li class="seg" data-key="p1-4" tabindex="0"><span class="no">4</span><b>肺静脈 → 左心房</b><span class="t">肺で酸素を受け取った<span class="k-r">動脈血</span>が、左心房に入る。</span></li>
+        <li class="seg" data-key="p1-5" tabindex="0"><span class="no">5</span><b>左心房 → 左心室</b><span class="t">血液は弁を通って、左心房から左心室へ流れこむ。</span></li>
+        <li class="seg" data-key="p1-6" tabindex="0"><span class="no">6</span><b>左心室 → 大動脈</b><span class="t">左心室が強く縮み、大動脈から全身へ送り出す。</span></li>
+    </ol>
+
+    <div class="band">
+        <section class="matome">
+            <h2>まとめ</h2>
+            <ul>
+                <li>心臓は<em>右心房・右心室・左心房・左心室</em>の4つの部屋に分かれる。</li>
+                <li>心室が縮んで血液を送り出し、<em>弁</em>が逆流を防ぐ。</li>
+                <li>全身へ送り出す<em>左心室</em>の壁がもっとも厚い。</li>
+            </ul>
+        </section>
+        <section class="quiz">
+            <h2>確認問題 <span class="hint screen-only">答えはタップで表示</span><span class="hint print-hint">答えはページの下（逆さ）</span></h2>
+            <div class="q"><span class="qn">問1</span><span class="qt">全身からもどった血液が最初に入る部屋は？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">右心房</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p1-q1">できた</label></div></div>
+            <div class="q"><span class="qn">問2</span><span class="qt">4つの部屋のうち、壁がもっとも厚いのは？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">左心室</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p1-q2">できた</label></div></div>
+            <div class="q"><span class="qn">問3</span><span class="qt">心臓の弁は、どんなはたらきをしている？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">血液の逆流を防ぐ</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p1-q3">できた</label></div></div>
+        </section>
+    </div>
+
+    <div class="foot-ans">
+        <span class="screen-hint">印刷すると、この欄に答えが逆さまに入ります。</span>
+        <span class="print-only">46ページの答え　問1 右心房　問2 左心室　問3 血液の逆流を防ぐ</span>
+    </div>
+    <span class="folio">46</span>
+</section>
+
+<!-- ============ PAGE 47：体循環と肺循環 ============ -->
+<section class="page right" data-fig="p2">
+    <header class="rh"><span>3章 動物のからだのつくりとはたらき</span><span><b>4 血液の循環</b></span></header>
+    <div class="tab"><span class="tcu">2</span><span>生物</span></div>
+
+    <div class="head">
+        <div>
+            <div class="kicker"><span class="lesson">4-2</span>血液の循環　体循環と肺循環</div>
+            <h1>血液は、肺循環と体循環の<br>2つの道すじをめぐる</h1>
+        </div>
+        <aside class="goal">
+            <h2>このページで分かること</h2>
+            <ul>
+                <li>肺循環と体循環の道すじ</li>
+                <li>肺と全身で血液に起こること</li>
+                <li>「動脈」と「動脈血」のちがい</li>
+            </ul>
+        </aside>
+    </div>
+
+    <figure class="fig">
+        <svg viewBox="0 0 1048 520" height="520" role="img" aria-labelledby="f2t">
+            <title id="f2t">血液の循環の模式図。右心室から肺動脈、肺、肺静脈、左心房へもどる肺循環と、左心室から大動脈、全身、大静脈、右心房へもどる体循環。</title>
+            <defs>
+                <path id="chev2" d="M -6 -6 L 2 0 L -6 6" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </defs>
+            <text class="sb" x="0" y="26">← からだの右側</text>
+            <text class="sb" x="1048" y="26" text-anchor="end">からだの左側 →</text>
+
+            <!-- 肺 -->
+            <rect x="300" y="16" width="448" height="110" rx="40" fill="#fff" stroke="#8B979D" stroke-width="2.5"/>
+            <text class="ch" x="524" y="50">肺（毛細血管）</text>
+            <text class="sb" x="524" y="77" text-anchor="middle">二酸化炭素を出し、酸素を受け取る</text>
+            <path class="v-blue" stroke-width="8" stroke-linejoin="round" d="M 508 110 L 524 96 L 540 110 L 556 96 L 572 110 L 588 96 L 604 110 L 620 102"/>
+            <path class="v-red" stroke-width="8" stroke-linejoin="round" d="M 620 102 L 636 96 L 652 110 L 668 96 L 684 110 L 700 96 L 716 110 L 748 110"/>
+
+            <!-- 全身 -->
+            <rect x="300" y="410" width="448" height="102" rx="36" fill="#fff" stroke="#8B979D" stroke-width="2.5"/>
+            <text class="ch" x="524" y="442">全身の細胞（毛細血管）</text>
+            <text class="sb" x="524" y="469" text-anchor="middle">酸素・養分をわたし、二酸化炭素などを受け取る</text>
+            <path class="v-red" stroke-width="8" stroke-linejoin="round" d="M 748 496 L 716 496 L 700 486 L 684 500 L 668 486 L 652 500 L 636 486 L 620 496 L 524 496"/>
+            <path class="v-blue" stroke-width="8" stroke-linejoin="round" d="M 524 496 L 428 496 L 412 486 L 396 500 L 380 486 L 364 500 L 348 486 L 332 496 L 300 496"/>
+
+            <!-- 血管 -->
+            <path class="v-blue" stroke-width="26" d="M 508 276 L 508 112"/>
+            <path class="v-red" stroke-width="26" stroke-linejoin="round" d="M 742 110 L 800 110 L 800 230 L 650 230"/>
+            <path class="v-red" stroke-width="26" stroke-linejoin="round" d="M 650 329 L 890 329 L 890 496 L 742 496"/>
+            <path class="v-blue" stroke-width="26" stroke-linejoin="round" d="M 306 496 L 166 496 L 166 230 L 398 230"/>
+            <use href="#chev2" transform="translate(508 160) rotate(-90)"/>
+            <use href="#chev2" transform="translate(772 110)"/>
+            <use href="#chev2" transform="translate(800 172) rotate(90)"/>
+            <use href="#chev2" transform="translate(736 230) rotate(180)"/>
+            <use href="#chev2" transform="translate(780 329)"/>
+            <use href="#chev2" transform="translate(890 420) rotate(90)"/>
+            <use href="#chev2" transform="translate(820 496) rotate(180)"/>
+            <use href="#chev2" transform="translate(236 496) rotate(180)"/>
+            <use href="#chev2" transform="translate(166 360) rotate(-90)"/>
+            <use href="#chev2" transform="translate(290 230)"/>
+
+            <!-- 心臓 -->
+            <rect x="370" y="180" width="308" height="198" rx="40" fill="#EFD0C5" stroke="#A86A5C" stroke-width="3"/>
+            <rect x="384" y="194" width="110" height="72" rx="16" fill="#DCE5F5"/>
+            <rect x="554" y="194" width="110" height="72" rx="16" fill="#F8DCD6"/>
+            <rect x="384" y="274" width="136" height="90" rx="16" fill="#DCE5F5"/>
+            <rect x="534" y="274" width="130" height="90" rx="16" fill="#F8DCD6" stroke="#A86A5C" stroke-width="0"/>
+            <path class="v-blue" stroke-width="26" d="M 508 300 L 508 176"/>
+            <g stroke="#A86A5C" stroke-width="5" stroke-linecap="round" fill="none">
+                <path d="M 426 262 L 439 282 L 452 262"/>
+                <path d="M 596 262 L 609 282 L 622 262"/>
+            </g>
+            <text class="ch" x="439" y="230" style="font-size:22px">右心房</text>
+            <text class="tag b" x="439" y="254">静脈血</text>
+            <text class="ch" x="609" y="230" style="font-size:22px">左心房</text>
+            <text class="tag r" x="609" y="254">動脈血</text>
+            <text class="ch" x="446" y="318" style="font-size:22px">右心室</text>
+            <text class="tag b" x="446" y="344">静脈血</text>
+            <text class="ch" x="599" y="318" style="font-size:22px">左心室</text>
+            <text class="tag r" x="599" y="344">動脈血</text>
+            <text class="sb" x="524" y="400" text-anchor="middle">心臓</text>
+
+            <!-- 循環の名前 -->
+            <text class="loop" x="654" y="164">肺循環</text>
+            <text class="loop" x="236" y="396">体循環</text>
+            <text class="loop" x="784" y="420">体循環</text>
+
+            <!-- なぞり -->
+            <path class="trace" data-key="p2-1" d="M 508 290 L 508 112 L 524 100 L 620 102"/>
+            <path class="trace" data-key="p2-2" d="M 620 102 L 748 110 L 800 110 L 800 230 L 640 230"/>
+            <path class="trace" data-key="p2-3" d="M 650 329 L 890 329 L 890 496 L 620 496"/>
+            <path class="trace" data-key="p2-4" d="M 620 496 L 166 496 L 166 230 L 398 230"/>
+
+            <!-- 血管の名前 -->
+            <text class="lb" x="488" y="152" text-anchor="end">肺動脈</text>
+            <text class="tag b" x="442" y="174">（静脈血）</text>
+            <text class="lb" x="818" y="188">肺静脈</text>
+            <text class="tag r" x="818" y="212" style="text-anchor:start">（動脈血）</text>
+            <text class="lb" x="696" y="282">大動脈</text>
+            <text class="tag r" x="696" y="306" style="text-anchor:start">（動脈血）</text>
+            <text class="lb" x="186" y="282">大静脈</text>
+            <text class="tag b" x="186" y="306" style="text-anchor:start">（静脈血）</text>
+
+            <!-- 番号マーカー -->
+            <g class="mk" data-key="p2-1" tabindex="0" role="button" aria-label="1 肺動脈"><circle cx="354" cy="152" r="21"/><text x="354" y="153">1</text></g>
+            <g class="mk" data-key="p2-2" tabindex="0" role="button" aria-label="2 肺から肺静脈"><circle cx="842" cy="144" r="21"/><text x="842" y="145">2</text></g>
+            <g class="mk" data-key="p2-3" tabindex="0" role="button" aria-label="3 大動脈"><circle cx="934" cy="284" r="21"/><text x="934" y="285">3</text></g>
+            <g class="mk" data-key="p2-4" tabindex="0" role="button" aria-label="4 全身から大静脈"><circle cx="112" cy="360" r="21"/><text x="112" y="361">4</text></g>
+        </svg>
+        <figcaption class="cap">
+            <span><span class="fno">図2</span>　血液の循環（模式図）</span>
+            <span class="lg"><i class="sw r"></i>動脈血（酸素が多い）</span>
+            <span class="lg"><i class="sw b"></i>静脈血（酸素が少ない）</span>
+            <span class="grow"></span>
+            <button class="stepbtn screen-only" type="button" data-fig="p2">①から順に</button>
+        </figcaption>
+    </figure>
+
+    <ol class="segs wide" style="top: 900px">
+        <li class="seg" data-key="p2-1" tabindex="0"><span class="no">1</span><b><span class="grp">肺</span>右心室 → 肺動脈 → 肺</b><span class="t"><span class="k-b">静脈血</span>が、肺動脈を通って肺へ送られる。</span></li>
+        <li class="seg" data-key="p2-2" tabindex="0"><span class="no">2</span><b><span class="grp">肺</span>肺 → 肺静脈 → 左心房</b><span class="t">肺で二酸化炭素を出し酸素を受け取り、<span class="k-r">動脈血</span>になる。</span></li>
+        <li class="seg" data-key="p2-3" tabindex="0"><span class="no">3</span><b><span class="grp">体</span>左心室 → 大動脈 → 全身</b><span class="t"><span class="k-r">動脈血</span>が、大動脈から全身の毛細血管へ送られる。</span></li>
+        <li class="seg" data-key="p2-4" tabindex="0"><span class="no">4</span><b><span class="grp">体</span>全身 → 大静脈 → 右心房</b><span class="t">細胞に酸素をわたし二酸化炭素を受け取り、<span class="k-b">静脈血</span>になる。</span></li>
+    </ol>
+
+    <div class="miss" style="top: 1124px">
+        <div class="mh">よくある<br>間違い</div>
+        <div class="mb">
+            <p class="wrong"><s>「動脈には動脈血が流れる」</s>→ 肺動脈には静脈血、肺静脈には動脈血が流れる。</p>
+            <dl>
+                <dt>動脈・静脈</dt><dd>血管の名前。心臓から出ていく血管が動脈、もどる血管が静脈。</dd>
+                <dt>動脈血・静脈血</dt><dd>血液の名前。酸素が多い血液が動脈血、少ない血液が静脈血。</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="band">
+        <section class="matome">
+            <h2>まとめ</h2>
+            <ul>
+                <li><em>肺循環</em>：右心室→肺動脈→肺→肺静脈→左心房</li>
+                <li><em>体循環</em>：左心室→大動脈→全身→大静脈→右心房</li>
+                <li>血液は肺で酸素を受け取り、全身の細胞にわたす。</li>
+            </ul>
+        </section>
+        <section class="quiz">
+            <h2>確認問題 <span class="hint screen-only">答えはタップで表示</span><span class="hint print-hint">答えはページの下（逆さ）</span></h2>
+            <div class="q"><span class="qn">問1</span><span class="qt">肺静脈を流れる血液は、動脈血？静脈血？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">動脈血</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p2-q1">できた</label></div></div>
+            <div class="q"><span class="qn">問2</span><span class="qt">心臓→肺→心臓という血液の道すじの名前は？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">肺循環</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p2-q2">できた</label></div></div>
+            <div class="q"><span class="qn">問3</span><span class="qt">体循環で、血液が心臓にもどる血管の名前は？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">大静脈</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p2-q3">できた</label></div></div>
+        </section>
+    </div>
+
+    <div class="foot-ans">
+        <span class="screen-hint">印刷すると、この欄に答えが逆さまに入ります。</span>
+        <span class="print-only">47ページの答え　問1 動脈血　問2 肺循環　問3 大静脈</span>
+    </div>
+    <span class="folio">47</span>
+</section>
+
+<!-- ============ PAGE 50：単元のまとめ・確認テスト ============ -->
+<section class="page left" data-fig="p50">
+    <header class="rh"><span><b>みどり理科 2年</b>（架空の教材）</span><span>単元2 生物のからだのつくりとはたらき</span></header>
+    <div class="tab"><span class="tcu">2</span><span>生物</span></div>
+
+    <div class="head">
+        <div>
+            <div class="kicker"><span class="lesson">4</span>血液の循環　単元のまとめ・確認テスト</div>
+            <h1>思い出して解き、<br>単元の問いに答えよう</h1>
+        </div>
+        <aside class="goal">
+            <h2>このページでできること</h2>
+            <ul>
+                <li>血液の成分を、図で見分ける</li>
+                <li>2つの循環の道すじを答える</li>
+                <li>脈拍から、拍動の数を求める</li>
+            </ul>
+        </aside>
+    </div>
+
+    <section class="t-sec" style="top: 346px">
+        <h2 class="t-h"><span class="dn">1</span>図の A〜D の名前を答えよう <span class="hint">ヒントは下の説明（4-3で学習）</span><span class="grow"></span><span class="tally screen-only" data-tally>できた <b>0</b> / 8</span></h2>
+    </section>
+    <figure class="fig" style="top: 400px">
+        <svg viewBox="0 0 1048 280" height="280" role="img" aria-labelledby="f3t">
+            <title id="f3t">血液の成分の模式図。A 中央がくぼんだ円盤形の粒、B 核のある大きな粒、C 小さな粒、D 粒のまわりの液体。名前は問題の答えなので図には書かない。</title>
+            <rect class="blood" x="1" y="1" width="1046" height="278" rx="36"/>
+            <g>
+                <circle class="rbc" cx="90" cy="90" r="28"/><circle class="rbc-c" cx="90" cy="90" r="11"/>
+                <circle class="rbc" cx="170" cy="200" r="28"/><circle class="rbc-c" cx="170" cy="200" r="11"/>
+                <circle class="rbc" cx="250" cy="80" r="28"/><circle class="rbc-c" cx="250" cy="80" r="11"/>
+                <circle class="rbc" cx="330" cy="170" r="28"/><circle class="rbc-c" cx="330" cy="170" r="11"/>
+                <circle class="rbc" cx="420" cy="90" r="28"/><circle class="rbc-c" cx="420" cy="90" r="11"/>
+                <circle class="rbc" cx="560" cy="200" r="28"/><circle class="rbc-c" cx="560" cy="200" r="11"/>
+                <circle class="rbc" cx="640" cy="90" r="28"/><circle class="rbc-c" cx="640" cy="90" r="11"/>
+                <circle class="rbc" cx="730" cy="190" r="28"/><circle class="rbc-c" cx="730" cy="190" r="11"/>
+                <circle class="rbc" cx="830" cy="100" r="28"/><circle class="rbc-c" cx="830" cy="100" r="11"/>
+                <circle class="rbc" cx="960" cy="200" r="28"/><circle class="rbc-c" cx="960" cy="200" r="11"/>
+                <circle class="rbc" cx="990" cy="80" r="28"/><circle class="rbc-c" cx="990" cy="80" r="11"/>
+                <circle class="wbc" cx="480" cy="185" r="48"/>
+                <path class="wbc-n" d="M 456 180 c 0 -16 16 -20 22 -10 c 6 -12 26 -10 26 6 c 0 12 -12 16 -18 12 c -6 12 -30 10 -30 -8 z"/>
+                <path class="plt" d="M 204 124 l 10 -2 l 4 8 l -6 7 l -9 -3 z"/>
+                <path class="plt" d="M 594 134 l 11 -1 l 3 9 l -7 6 l -9 -4 z"/>
+                <path class="plt" d="M 874 204 l 10 -2 l 4 8 l -6 7 l -9 -3 z"/>
+                <path class="plt" d="M 124 234 l 10 -2 l 4 8 l -6 7 l -9 -3 z"/>
+            </g>
+            <!-- 引き出し線 -->
+            <path class="lead" d="M 312 46 L 272 66"/>
+            <path class="lead" d="M 546 66 L 512 148"/>
+            <path class="lead" d="M 664 230 L 608 146"/>
+            <path class="lead" d="M 896 150 L 924 108"/><circle class="dot" cx="924" cy="108" r="5"/>
+            <!-- なぞり -->
+            <path class="trace" data-key="p50-a" d="M 222 80 A 28 28 0 1 1 278 80 A 28 28 0 1 1 222 80"/>
+            <path class="trace" data-key="p50-b" d="M 432 185 A 48 48 0 1 1 528 185 A 48 48 0 1 1 432 185"/>
+            <path class="trace" data-key="p50-c" d="M 588 140 A 14 14 0 1 1 616 140 A 14 14 0 1 1 588 140"/>
+            <path class="trace" data-key="p50-d" d="M 30 1 L 1018 1 C 1034 1 1047 14 1047 30 L 1047 250 C 1047 266 1034 279 1018 279 L 30 279 C 14 279 1 266 1 250 L 1 30 C 1 14 14 1 30 1 Z"/>
+            <!-- 記号マーカー -->
+            <g class="mk" data-key="p50-a" tabindex="0" role="button" aria-label="A 円盤形の粒"><circle cx="330" cy="38" r="21"/><text x="330" y="39">A</text></g>
+            <g class="mk" data-key="p50-b" tabindex="0" role="button" aria-label="B 核のある大きな粒"><circle cx="556" cy="46" r="21"/><text x="556" y="47">B</text></g>
+            <g class="mk" data-key="p50-c" tabindex="0" role="button" aria-label="C 小さな粒"><circle cx="680" cy="246" r="21"/><text x="680" y="247">C</text></g>
+            <g class="mk" data-key="p50-d" tabindex="0" role="button" aria-label="D 粒のまわりの液体"><circle cx="884" cy="166" r="21"/><text x="884" y="167">D</text></g>
+        </svg>
+        <figcaption class="cap">
+            <span><span class="fno">図3</span>　血液の成分（顕微鏡で見たようすの模式図）</span>
+            <span class="grow"></span>
+            <button class="stepbtn screen-only" type="button" data-fig="p50">Aから順に</button>
+        </figcaption>
+    </figure>
+
+    <ol class="segs qa" style="top: 734px">
+        <li class="seg" data-key="p50-a" tabindex="0"><span class="no">A</span><span class="t">ヘモグロビンをふくみ、酸素を運ぶ。</span>
+            <div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">赤血球</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-a">できた</label></li>
+        <li class="seg" data-key="p50-b" tabindex="0"><span class="no">B</span><span class="t">体内に入った細菌などをとらえて、分解する。</span>
+            <div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">白血球</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-b">できた</label></li>
+        <li class="seg" data-key="p50-c" tabindex="0"><span class="no">C</span><span class="t">出血したとき、血液を固める。</span>
+            <div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">血小板</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-c">できた</label></li>
+        <li class="seg" data-key="p50-d" tabindex="0"><span class="no">D</span><span class="t">養分や二酸化炭素などをとかして運ぶ液体。</span>
+            <div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">血しょう</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-d">できた</label></li>
+    </ol>
+
+    <div class="t-sec t-cols" style="top: 1004px">
+        <section>
+            <h2 class="t-h"><span class="dn">2</span>循環の道すじ</h2>
+            <div class="q"><span class="qn">(1)</span><span class="qt">肺動脈を流れるのは、動脈血？静脈血？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">静脈血</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-2-1">できた</label></div></div>
+            <div class="q"><span class="qn">(2)</span><span class="qt wrap">左心室を出た血液が全身をめぐり、右心房にもどる道すじの名前は？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">体循環</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-2-2">できた</label></div></div>
+        </section>
+        <section>
+            <h2 class="t-h"><span class="dn">3</span>拍動と脈拍（計算）</h2>
+            <div class="q"><span class="qn">(1)</span><span class="qt wrap">手首の脈拍を15秒間数えると18回だった。1分間では何回？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">72回（18×4）</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-3-1">できた</label></div></div>
+            <div class="q"><span class="qn">(2)</span><span class="qt wrap">1回の拍動で70mLを送り出し、1分間に72回拍動する。1分間に送り出す血液は何L？</span>
+                <div class="arow"><div class="ans"><button class="ans-btn" type="button" aria-expanded="false">答えを見る</button><span class="ans-text">5040mL＝5.04L</span><span class="ans-blank">答え</span></div><label class="done"><input type="checkbox" data-store="p50-3-2">できた</label></div></div>
+        </section>
+    </div>
+
+    <section class="back">
+        <div class="th">単元の<br>問いに<br>もどろう</div>
+        <div class="tb">
+            <p class="q-mid">からだのすみずみの細胞まで、酸素はどうやって届くのだろう？</p>
+            <div class="two">
+                <div>
+                    <h3>45ページに書いた、はじめの考え</h3>
+                    <div class="echo empty" data-echo="u4-idea">45ページの欄に書くと、ここに出ます。</div>
+                </div>
+                <div>
+                    <h3>いまなら、こう答える（答えの例）</h3>
+                    <div class="ans long"><button class="ans-btn" type="button" aria-expanded="false">自分で答えてから見る</button><span class="ans-text">肺で赤血球のヘモグロビンが酸素と結びつく。心臓の拍動で動脈から全身へ送られ、毛細血管で酸素をはなし、組織液を通して細胞にわたす。</span><span class="ans-blank"></span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="foot-ans" style="max-width: 980px">
+        <span class="screen-hint">印刷すると、この欄に答えが逆さまに入ります。</span>
+        <span class="print-only">50ページの答え　1 A赤血球 B白血球 C血小板 D血しょう　2 (1)静脈血 (2)体循環　3 (1)72回 (2)5.04L</span>
+    </div>
+    <span class="folio">50</span>
+</section>
+
+</main>
+<script>
+/* === FIT: scale the 1240px column to the window width; print resets it === */
+const stage = document.getElementById('docStage');
+/* visualViewport: mobile Chrome widens the layout viewport to the 1240px column before the zoom applies */
+const vv = window.visualViewport;
+const viewW = () => Math.min(window.innerWidth, vv ? vv.width * vv.scale : window.innerWidth);   /* × scale: pinch-zoom does not shrink the pages */
+const fit = () => { stage.style.zoom = Math.min(1, (viewW() - 32) / 1240); };
+fit();
+window.addEventListener('resize', fit);
+
+/* === 図の番号 ⇄ 解説の番号 を連動させる === */
+const pinned = {};                       // page id -> pinned key
+const setOn = (scope, key) => {
+    scope.querySelectorAll('.mk[data-key], .seg[data-key], .trace[data-key]').forEach(el => el.classList.toggle('on', el.dataset.key === key));
+};
+const CIRC = '①②③④⑤⑥⑦⑧⑨';
+document.querySelectorAll('.page[data-fig]').forEach(pg => {
+    const id = pg.dataset.fig;
+    const restore = () => setOn(pg, pinned[id] || null);
+    pg.querySelectorAll('.seg[data-key], .mk[data-key]').forEach(el => {
+        const key = el.dataset.key;
+        el.addEventListener('mouseenter', () => setOn(pg, key));
+        el.addEventListener('mouseleave', restore);
+        el.addEventListener('focus', () => setOn(pg, key));
+        el.addEventListener('blur', restore);
+        el.addEventListener('click', e => {
+            if (e.target.closest && e.target.closest('.ans, .done')) return;   /* 行の中の答え・できたは行の連動と別 */
+            pinned[id] = pinned[id] === key ? null : key;
+            setOn(pg, pinned[id] || key);
+            if (!pinned[id] && el.blur) el.blur();
+        });
+        el.addEventListener('keydown', e => {
+            if (e.target !== el) return;
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.dispatchEvent(new Event('click')); }
+        });
+    });
+    /* 「①から順に」：押すたびに次の番号へ */
+    const btn = pg.querySelector('.stepbtn');
+    const segs = [...pg.querySelectorAll('.seg[data-key]')];
+    const keys = [...new Set(segs.map(s => s.dataset.key))];
+    const label = k => { const t = pg.querySelector('.seg[data-key="' + k + '"] .no').textContent.trim(); return /^[1-9]$/.test(t) ? CIRC[t - 1] : t; };
+    if (btn) btn.addEventListener('click', () => {
+        const i = keys.indexOf(pinned[id]);
+        pinned[id] = i + 1 < keys.length ? keys[i + 1] : null;
+        setOn(pg, pinned[id]);
+        const n = keys.indexOf(pinned[id]);
+        btn.textContent = n < 0 ? label(keys[0]) + 'から順に' : (n + 1 < keys.length ? '次へ（' + label(keys[n + 1]) + '）' : 'はじめにもどる');
+    });
+});
+
+/* === 確認問題：タップで答え === */
+document.querySelectorAll('.ans').forEach(a => {
+    const b = a.querySelector('.ans-btn');
+    const t = a.querySelector('.ans-text');
+    b.addEventListener('click', () => { a.classList.add('open'); b.setAttribute('aria-expanded', 'true'); t.setAttribute('tabindex', '0'); t.focus(); });
+    t.addEventListener('click', () => { a.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); });
+});
+
+/* === 「できた」と「いまの考え」を保存（保存できない環境でも動く） === */
+const KEY = 'tbv-midori2-u4-circulation-v1';
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) { /* private mode etc. */ } };
+const tally = () => document.querySelectorAll('[data-tally]').forEach(t => {
+    const boxes = t.closest('.page').querySelectorAll('input[data-store]');
+    t.querySelector('b').textContent = [...boxes].filter(c => c.checked).length;
+    t.lastChild.textContent = ' / ' + boxes.length;
+});
+document.querySelectorAll('input[data-store]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.store];
+    cb.addEventListener('change', () => { saved[cb.dataset.store] = cb.checked; save(); tally(); });
+});
+tally();
+/* 単元の問い：扉ページで書いた考えを、まとめのページに映す */
+const echo = name => document.querySelectorAll('[data-echo="' + name + '"]').forEach(el => {
+    const v = (saved['text:' + name] || '').trim();
+    if (!el.dataset.empty) el.dataset.empty = el.textContent;
+    el.textContent = v || el.dataset.empty;
+    el.classList.toggle('empty', !v);
+});
+document.querySelectorAll('textarea[data-store-text]').forEach(ta => {
+    const name = ta.dataset.storeText;
+    ta.value = saved['text:' + name] || '';
+    ta.addEventListener('input', () => { saved['text:' + name] = ta.value; save(); echo(name); });
+    echo(name);
+});
+</script>
+</body>
+</html>
