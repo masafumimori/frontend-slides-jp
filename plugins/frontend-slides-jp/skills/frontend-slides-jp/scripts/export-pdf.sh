@@ -2,18 +2,20 @@
 # export-pdf.sh — Export an HTML presentation to PDF
 #
 # Usage:
-#   bash scripts/export-pdf.sh <path-to-html> [output.pdf]
+#   bash scripts/export-pdf.sh <path-to-html> [output.pdf] [--compact] [--compress]
 #
 # Examples:
 #   bash scripts/export-pdf.sh ./my-deck/index.html
 #   bash scripts/export-pdf.sh ./presentation.html ./presentation.pdf
+#   bash scripts/export-pdf.sh ./report.html ./report-compressed.pdf --compress
 #
 # What this does:
 #   1. Starts a local server to serve the HTML (fonts and assets need HTTP)
 #   2. Uses Playwright to screenshot each slide at 1920x1080
 #   3. Combines all screenshots into a single PDF
 #      (a doc-a4 document is printed directly as A4 pages instead)
-#   4. Cleans up the server and temp files
+#   4. With --compress, compresses the PDF with Ghostscript (gs)
+#   5. Cleans up the server and temp files
 #
 # The PDF preserves colors, fonts, and layout — but not animations.
 # Perfect for email attachments, printing, or embedding in documents.
@@ -39,6 +41,7 @@ err()   { echo -e "${RED}✗${NC} $*" >&2; }
 VIEWPORT_W=1920
 VIEWPORT_H=1080
 COMPACT=false
+COMPRESS=false
 
 POSITIONAL=()
 for arg in "$@"; do
@@ -47,6 +50,9 @@ for arg in "$@"; do
             COMPACT=true
             VIEWPORT_W=1280
             VIEWPORT_H=720
+            ;;
+        --compress)
+            COMPRESS=true
             ;;
         *)
             POSITIONAL+=("$arg")
@@ -58,12 +64,13 @@ set -- "${POSITIONAL[@]}"
 # ─── Input validation ─────────────────────────────────────
 
 if [[ $# -lt 1 ]]; then
-    err "Usage: bash scripts/export-pdf.sh <path-to-html> [output.pdf] [--compact]"
+    err "Usage: bash scripts/export-pdf.sh <path-to-html> [output.pdf] [--compact] [--compress]"
     err ""
     err "Examples:"
     err "  bash scripts/export-pdf.sh ./my-deck/index.html"
     err "  bash scripts/export-pdf.sh ./presentation.html ./slides.pdf"
     err "  bash scripts/export-pdf.sh ./presentation.html --compact   # smaller file size"
+    err "  bash scripts/export-pdf.sh ./report.html --compress        # Ghostscript, keeps text"
     exit 1
 fi
 
@@ -109,6 +116,18 @@ if ! command -v npx &>/dev/null; then
 fi
 
 ok "Node.js found"
+
+if [[ "$COMPRESS" == "true" ]]; then
+    if ! command -v gs &>/dev/null; then
+        err "--compress needs Ghostscript, which is not installed."
+        err ""
+        err "Install Ghostscript and run the export again:"
+        err "  macOS:   brew install ghostscript"
+        err "  Linux:   sudo apt install ghostscript"
+        exit 1
+    fi
+    ok "Ghostscript found"
+fi
 
 # ─── Step 2: Create the export script ─────────────────────
 
@@ -423,7 +442,29 @@ node "$TEMP_SCRIPT" "$SERVE_DIR" "$HTML_FILENAME" "$OUTPUT_PDF" "$SCREENSHOT_DIR
     exit 1
 }
 
-# ─── Step 5: Cleanup and success ──────────────────────────
+# ─── Step 5: Compress with Ghostscript (--compress only) ──
+# Chrome embeds every Google Fonts subset slice as a separate font, so an
+# 18-page A4 document prints at ~12MB. Ghostscript's pdfwrite merges them and
+# keeps the text selectable (that document went from 11.6MB to 1.4MB);
+# re-rendering the pages as images would shrink it less and lose the text.
+
+if [[ "$COMPRESS" == "true" ]]; then
+    info "Compressing with Ghostscript..."
+    GS_PDF="$TEMP_DIR/compressed.pdf"
+    BEFORE_BYTES=$(wc -c < "$OUTPUT_PDF" | xargs)
+    if gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dPDFSETTINGS=/printer \
+        -dCompatibilityLevel=1.7 -dDetectDuplicateImages=true \
+        -sOutputFile="$GS_PDF" "$OUTPUT_PDF" \
+        && [[ $(wc -c < "$GS_PDF" | xargs) -lt $BEFORE_BYTES ]]; then
+        BEFORE_SIZE=$(du -h "$OUTPUT_PDF" | cut -f1 | xargs)
+        mv "$GS_PDF" "$OUTPUT_PDF"
+        ok "Compressed with Ghostscript: $BEFORE_SIZE → $(du -h "$OUTPUT_PDF" | cut -f1 | xargs)"
+    else
+        warn "Ghostscript did not make the PDF smaller; kept the uncompressed PDF."
+    fi
+fi
+
+# ─── Step 6: Cleanup and success ──────────────────────────
 
 rm -rf "$TEMP_DIR"
 
