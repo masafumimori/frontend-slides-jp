@@ -3,7 +3,7 @@
 //   node scripts/check-styles.mjs [styles-dir] [--only <slug>]
 
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -11,6 +11,8 @@ const args = process.argv.slice(2);
 const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : null;
 const customDir = args[0] && !args[0].startsWith('--') ? args[0] : null;
 const stylesDir = customDir ?? join(root, 'styles');
+// Index paths are relative to the skill for its own styles, absolute for a brands folder.
+const base = customDir ? resolve(customDir) : 'styles';
 const catalog = new Map(JSON.parse(readFileSync(join(root, 'fonts/catalog.json'), 'utf8')).fonts.map(f => [f.family, f]));
 const formats = JSON.parse(readFileSync(join(root, 'formats.json'), 'utf8'));
 const bases = Object.fromEntries(Object.values(formats).map(f => [f.base, readFileSync(join(root, f.base), 'utf8').trim()]));
@@ -91,11 +93,11 @@ for (const slug of readdirSync(stylesDir, { withFileTypes: true }).filter(d => d
     ...meta,
     fonts,
     palette: Object.values(palette ?? {}),
-    preview_md: `styles/${slug}/preview.md`,
-    design_md: `styles/${slug}/design.md`,
+    preview_md: `${base}/${slug}/preview.md`,
+    design_md: `${base}/${slug}/design.md`,
     references: Object.fromEntries((style.formats ?? []).filter(f => formats[f]).map(f => [f, {
-      html: `styles/${slug}/${formats[f].reference}`,
-      thumbs: ['01', '02', '03', '04'].map(n => `styles/${slug}/${formats[f].thumbs}/${n}.jpg`),
+      html: `${base}/${slug}/${formats[f].reference}`,
+      thumbs: ['01', '02', '03', '04'].map(n => `${base}/${slug}/${formats[f].thumbs}/${n}.jpg`),
     }])),
   });
 }
