@@ -135,7 +135,20 @@ for (const [i, url] of urls.entries()) {
   const target = await send(url).catch(e => { throw new Error(`cannot open ${url}: ${e.message}${allowPrivate ? '' : ' (use --allow-private for your own staging site)'}`); });
   await page.goto(target.url, { waitUntil: 'networkidle', timeout: 45000 }).catch(() => page.waitForLoadState('load'));
   await page.evaluate(() => document.fonts.ready);
-  await page.waitForTimeout(800);
+  // Let a preloader finish, then scroll the whole page once so content that appears on scroll
+  // (Webflow, GSAP and similar) is drawn before the screenshots.
+  await page.waitForTimeout(2500);
+  await page.evaluate(async () => {
+    const step = innerHeight * 0.8;
+    for (let y = 0; y < document.documentElement.scrollHeight && y < 20000; y += step) {
+      scrollTo(0, y);
+      await new Promise(r => setTimeout(r, 250));
+    }
+    scrollTo(0, 0);
+  });
+  await page.waitForTimeout(1200);
+  // Hide cookie and consent banners (never click them), so they stay out of screenshots and facts.
+  await page.addStyleTag({ content: '[class*="cookie" i], [id*="cookie" i], [class*="consent" i], [id*="consent" i], [aria-label*="cookie" i] { display: none !important; }' }).catch(() => {});
   const n = i + 1;
   await page.screenshot({ path: join(out, `site-${n}.png`) });
   const height = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -198,8 +211,23 @@ for (const [i, url] of urls.entries()) {
       }
     }
 
+    // Body type is the paragraph style that carries the most text, outside cookie and consent banners.
+    const bodyText = () => {
+      const styles = new Map();
+      for (const p of document.querySelectorAll('p, li')) {
+        if (p.closest('[class*="cookie" i], [id*="cookie" i], [class*="consent" i], [id*="consent" i], footer')) continue;
+        const cs = getComputedStyle(p);
+        const key = [cs.fontFamily, cs.fontSize, cs.fontWeight].join('|');
+        const entry = styles.get(key) ?? { el: p, chars: 0 };
+        entry.chars += p.textContent.trim().length;
+        styles.set(key, entry);
+      }
+      return [...styles.values()].sort((a, b) => b.chars - a.chars)[0]?.el ?? null;
+    };
     const type = sel => {
-      const el = typeof sel === 'string' ? document.querySelector(sel) : sel;
+      if (!sel) return null;
+      const shown = e => e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden';
+      const el = typeof sel === 'string' ? [...document.querySelectorAll(sel)].find(shown) : sel;
       if (!el) return null;
       const cs = getComputedStyle(el);
       return { selector: typeof sel === 'string' ? sel : sel.tagName.toLowerCase() + (sel.className ? '.' + String(sel.className).split(' ')[0] : ''), family: cs.fontFamily, weight: cs.fontWeight, size: cs.fontSize, lineHeight: cs.lineHeight, letterSpacing: cs.letterSpacing, sample: el.textContent.trim().slice(0, 40) };
@@ -208,7 +236,7 @@ for (const [i, url] of urls.entries()) {
     const roles = {
       display: type(largest),
       h1: type('h1'), h2: type('h2'), h3: type('h3'),
-      body: type('main p, article p, p'), link: type('nav a, header a'), button: type('button, .btn, a[class*="button"]'),
+      body: type(bodyText()), link: type('nav a, header a'), button: type('button, .btn, a[class*="button"]'),
     };
     const loaded = [...new Set([...document.fonts].filter(f => f.status === 'loaded').map(f => f.family.replace(/"/g, '')))];
     const fontServices = [...document.querySelectorAll('link[href], script[src]')]
